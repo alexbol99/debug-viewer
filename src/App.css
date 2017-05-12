@@ -1,0 +1,81 @@
+.App {
+  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column
+}
+
+.App-body {
+  display: flex;
+  flex:1 0 auto;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  /*height: 150px;*/
+  padding: 20px;
+  color: white;
+  flex: none;
+}
+
+.App-footer {
+  flex:none;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+}
+
+.App-layers {
+  /* put the layer list on the left */
+  order: -1;
+}
+
+.App-layers, .App-ads {
+  /* 12em is the width of the columns */
+  flex: 0 0 12em;
+  background: rgba(147, 128, 108, 0.1);
+}
+
+.App-toolbar {
+
+}
+
+.App-canvas-wrapper {
+    display:flex;
+    flex: 1 1 auto;
+}
+
+.App-graphics {
+    flex: 1;
+}
+
+@media (min-width: 768px) {
+  .HolyGrail-body {
+    flex-direction: row;
+    flex:1;
+  }
+  .HolyGrail-content {
+    flex: 1;
+  }
+  .HolyGrail-layers, .HolyGrail-ads {
+    flex: 0 0 12em;
+  }
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,123 @@
+/**
+ * Created by alexanderbol on 13/04/2017.
+ */
+
+import * as ActionTypes from './actions/action-types';
+import {combineReducers} from 'redux';
+
+import {Stage} from './models/stage';
+import {Layer} from './models/layer';
+import {Layers} from './models/layers';
+
+const defaultAppState = {
+    title: "Debug Viewer",
+};
+
+const defaultMouseState = {
+    x: 0,
+    y: 0,
+    startX: undefined,
+    startY: undefined
+};
+
+function app(state = defaultAppState, action) {
+    switch (action.type) {
+        case ActionTypes.STAGE_UPDATED:
+            return state;
+        default:
+            return state;
+    }
+}
+
+function layers(state = [], action) {
+    switch (action.type) {
+        case ActionTypes.ADD_LAYER_PRESSED:
+            let layer = new Layer(action.stage);
+            layer.name = Layers.getNewName(state);
+            return [...state, layer];
+        case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
+            return state.map((layer) => {
+                if (layer !== action.layer) {
+                    return layer;
+                }
+                return Object.assign({}, layer, {
+                    displayed: !layer.displayed,
+                })
+
+            });
+        default:
+            return state;
+    }
+}
+
+function stage(state = null, action) {
+    switch (action.type) {
+        case ActionTypes.MAIN_CANVAS_MOUNTED:
+            return new Stage(action.canvas);
+        case ActionTypes.ADD_SHAPE_TO_STAGE:
+            return state;
+        // return state.add(action.shape);   // stage already mutated !!!
+        case ActionTypes.PAN_TO_COORDINATE:
+            state.panToCoordinate(action.x, action.y);
+            state.needToBeUpdated = true;
+            return state;
+        case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
+            state.panToCoordinate(action.x, action.y);
+            state.zoomToLimits(action.width, action.height);
+            state.needToBeUpdated = true;
+            return state;
+        case ActionTypes.MOUSE_DOWN_ON_STAGE:
+            state.panByMouseStart();
+            state.needToBeUpdated = false;
+            return state;
+        case ActionTypes.MOUSE_MOVED_ON_STAGE:
+            if (action.dx !== undefined && action.dy !== undefined) {
+                state.panByMouseMove(action.dx, action.dy);
+                state.needToBeUpdated = true;
+            }
+            return state;
+        case ActionTypes.MOUSE_UP_ON_STAGE:
+            state.panByMouseStop();
+            state.needToBeUpdated = false;
+            return state;
+        case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
+            let bIn = action.delta > 0;
+            state.zoom(action.x, action.y, bIn, 1.05);
+            state.needToBeUpdated = true;
+            return state;
+        default:
+            if (state) {
+                state.needToBeUpdated = false;
+            }
+            return state;
+    }
+}
+
+function mouse(state = defaultMouseState, action) {
+    switch (action.type) {
+        case ActionTypes.MOUSE_MOVED_ON_STAGE:
+            return Object.assign({}, state, {
+                x: action.x,
+                y: action.y
+            });
+        case ActionTypes.MOUSE_DOWN_ON_STAGE:
+            return Object.assign({}, state, {
+                startX: action.x,
+                startY: action.y
+            });
+        case ActionTypes.MOUSE_UP_ON_STAGE:
+            return Object.assign({}, state, {
+                startX: undefined,
+                startY: undefined
+            });
+        default:
+            return state;
+    }
+}
+
+export let reducer = combineReducers({
+    app,
+    layers,
+    stage,
+    mouse
+});
