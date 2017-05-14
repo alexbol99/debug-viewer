@@ -1,0 +1,133 @@
+.App {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column
+}
+
+.App-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex:1;
+      -ms-flex:1 0 auto;
+          flex:1 0 auto;
+}
+
+.App-logo {
+  -webkit-animation: App-logo-spin infinite 20s linear;
+          animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  /*height: 150px;*/
+  padding: 20px;
+  color: white;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+
+.App-footer {
+  -webkit-box-flex:0;
+      -ms-flex:none;
+          flex:none;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-content {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    background-color: aqua;
+}
+
+.App-layers {
+  /* put the layer list on the left */
+  -webkit-box-ordinal-group: 0;
+      -ms-flex-order: -1;
+          order: -1;
+}
+
+.App-layers, .App-ads {
+  /* 12em is the width of the columns */
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 12em;
+          flex: 0 0 12em;
+  background: rgba(147, 128, 108, 0.1);
+}
+
+.App-toolbar {
+
+}
+
+.App-canvas-wrapper {
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+}
+
+.App-graphics {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+@media (min-width: 768px) {
+  .HolyGrail-body {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-flex:1;
+        -ms-flex:1;
+            flex:1;
+  }
+  .HolyGrail-content {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .HolyGrail-layers, .HolyGrail-ads {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 12em;
+            flex: 0 0 12em;
+  }
+}
+
+@-webkit-keyframes App-logo-spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@keyframes App-logo-spin {
+  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/*# sourceMappingURL=main.5a062bfe.css.map*/
