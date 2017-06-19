@@ -42,59 +42,47 @@ class App extends Component {
     }
 
     handlePaste(event) {
+        if (this.state.layers.length == 0) return;
+
+        let layer = this.state.layers.find((lay) => lay.affected)
+
+        if (!layer) return;
+
+        let parser = new Parser();
+
+        let dispatch = this.dispatch;
+
         for (let item of event.clipboardData.items) {
-            item.getAsString(function(string) {
-                // console.log('Pasted: ', string)
+            item.getAsString( (string) => {
+                let poly = parser.parseDebugString(string);
+
+                layer.add(poly);
+
+                let box;
+                for (let face of poly.faces) {
+                    box = face.box;
+                }
+
+                let center = new Point((box.xmin + box.xmax)/2, (box.ymin + box.ymax)/2);
+
+                dispatch({
+                    type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+                    x: center.x,
+                    y: center.y,
+                    width: box.xmax - box.xmin,
+                    height: box.ymax - box.ymin
+                });
+
             })
         }
 
-        if (this.state.layers.length > 0) {
-            let point = new Point(0, 0);
-            let seg1 = new Segment(new Point(-10, 0), new Point(10, 0));
-            let seg2 = new Segment(new Point(0, -10), new Point(0, 10));
+            // let point = new Point(0, 0);
+            // let seg1 = new Segment(new Point(-10, 0), new Point(10, 0));
+            // let seg2 = new Segment(new Point(0, -10), new Point(0, 10));
 
-            // let layer = this.state.layers[0];
-
-            let layer = this.state.layers.find((lay) => lay.affected)
-
-            if (!layer) return;
-
-            layer.add(point);
-            layer.add(seg1);
-            layer.add(seg2);
-
-            // layer.add(new Point(50,0)).on("click", this.clickOnShape);
-            // layer.add(new Point(50,50)).on("click", this.clickOnShape);
-            // layer.add(new Point(0,50)).on("click", this.clickOnShape);
-            // layer.add(new Point(-50,50)).on("click", this.clickOnShape);
-            // layer.add(new Point(-50,0)).on("click", this.clickOnShape);
-
-            let parser = new Parser();
-            let poly = parser.parseDebugString("123");
-
-            layer.add(poly);
-
-            let box;
-            for (let face of poly.faces) {
-                box = face.box;
-            }
-
-            let center = new Point((box.xmin + box.xmax)/2, (box.ymin + box.ymax)/2);
-
-            // this.dispatch({
-            //     type: ActionTypes.PAN_TO_COORDINATE,
-            //     x: center.x,
-            //     y: center.y
-            // })
-
-            this.dispatch({
-                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-                x: center.x,
-                y: center.y,
-                width: box.xmax - box.xmin,
-                height: box.ymax - box.ymin
-            });
-        }
+            // layer.add(point);
+            // layer.add(seg1);
+            // layer.add(seg2);
     }
 
     clickOnShape(event) {

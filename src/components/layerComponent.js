@@ -56,6 +56,7 @@ export class LayerComponent extends Component {
                 [...this.props.layer.shapes].map( shape => {
                     return (
                         <PolygonTool
+                            key={shape.id}
                             polygon={shape}
                         />
                     )

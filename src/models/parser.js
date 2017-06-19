@@ -43,7 +43,7 @@ export class Parser {
     parseDebugString(str) {
         let polygon = new Polygon();
         // let mulitystr = debug_str;
-        let arrayOfLines = debug_str.match(/[^\r\n]+/g);
+        let arrayOfLines = str.match(/[^\r\n]+/g);
 
         for (let i=0; i < arrayOfLines.length; i++) {
             let line = arrayOfLines[i];
