@@ -23751,6 +23751,18 @@
 	    }, {
 	        key: 'handlePaste',
 	        value: function handlePaste(event) {
+	            if (this.state.layers.length == 0) return;
+	
+	            var layer = this.state.layers.find(function (lay) {
+	                return lay.affected;
+	            });
+	
+	            if (!layer) return;
+	
+	            var parser = new _parser.Parser();
+	
+	            var dispatch = this.dispatch;
+	
 	            var _iteratorNormalCompletion = true;
 	            var _didIteratorError = false;
 	            var _iteratorError = undefined;
@@ -23760,9 +23772,55 @@
 	                    var item = _step.value;
 	
 	                    item.getAsString(function (string) {
-	                        // console.log('Pasted: ', string)
+	                        var poly = parser.parseDebugString(string);
+	
+	                        layer.add(poly);
+	
+	                        var box = void 0;
+	                        var _iteratorNormalCompletion2 = true;
+	                        var _didIteratorError2 = false;
+	                        var _iteratorError2 = undefined;
+	
+	                        try {
+	                            for (var _iterator2 = poly.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                                var face = _step2.value;
+	
+	                                box = face.box;
+	                            }
+	                        } catch (err) {
+	                            _didIteratorError2 = true;
+	                            _iteratorError2 = err;
+	                        } finally {
+	                            try {
+	                                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                                    _iterator2.return();
+	                                }
+	                            } finally {
+	                                if (_didIteratorError2) {
+	                                    throw _iteratorError2;
+	                                }
+	                            }
+	                        }
+	
+	                        var center = new Point((box.xmin + box.xmax) / 2, (box.ymin + box.ymax) / 2);
+	
+	                        dispatch({
+	                            type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                            x: center.x,
+	                            y: center.y,
+	                            width: box.xmax - box.xmin,
+	                            height: box.ymax - box.ymin
+	                        });
 	                    });
 	                }
+	
+	                // let point = new Point(0, 0);
+	                // let seg1 = new Segment(new Point(-10, 0), new Point(10, 0));
+	                // let seg2 = new Segment(new Point(0, -10), new Point(0, 10));
+	
+	                // layer.add(point);
+	                // layer.add(seg1);
+	                // layer.add(seg2);
 	            } catch (err) {
 	                _didIteratorError = true;
 	                _iteratorError = err;
@@ -23776,77 +23834,6 @@
 	                        throw _iteratorError;
 	                    }
 	                }
-	            }
-	
-	            if (this.state.layers.length > 0) {
-	                var point = new Point(0, 0);
-	                var seg1 = new Segment(new Point(-10, 0), new Point(10, 0));
-	                var seg2 = new Segment(new Point(0, -10), new Point(0, 10));
-	
-	                // let layer = this.state.layers[0];
-	
-	                var layer = this.state.layers.find(function (lay) {
-	                    return lay.affected;
-	                });
-	
-	                if (!layer) return;
-	
-	                layer.add(point);
-	                layer.add(seg1);
-	                layer.add(seg2);
-	
-	                // layer.add(new Point(50,0)).on("click", this.clickOnShape);
-	                // layer.add(new Point(50,50)).on("click", this.clickOnShape);
-	                // layer.add(new Point(0,50)).on("click", this.clickOnShape);
-	                // layer.add(new Point(-50,50)).on("click", this.clickOnShape);
-	                // layer.add(new Point(-50,0)).on("click", this.clickOnShape);
-	
-	                var parser = new _parser.Parser();
-	                var poly = parser.parseDebugString("123");
-	
-	                layer.add(poly);
-	
-	                var box = void 0;
-	                var _iteratorNormalCompletion2 = true;
-	                var _didIteratorError2 = false;
-	                var _iteratorError2 = undefined;
-	
-	                try {
-	                    for (var _iterator2 = poly.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                        var face = _step2.value;
-	
-	                        box = face.box;
-	                    }
-	                } catch (err) {
-	                    _didIteratorError2 = true;
-	                    _iteratorError2 = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                            _iterator2.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError2) {
-	                            throw _iteratorError2;
-	                        }
-	                    }
-	                }
-	
-	                var center = new Point((box.xmin + box.xmax) / 2, (box.ymin + box.ymax) / 2);
-	
-	                // this.dispatch({
-	                //     type: ActionTypes.PAN_TO_COORDINATE,
-	                //     x: center.x,
-	                //     y: center.y
-	                // })
-	
-	                this.dispatch({
-	                    type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                    x: center.x,
-	                    y: center.y,
-	                    width: box.xmax - box.xmin,
-	                    height: box.ymax - box.ymin
-	                });
 	            }
 	        }
 	    }, {
@@ -24127,6 +24114,7 @@
 	                null,
 	                [].concat(_toConsumableArray(this.props.layer.shapes)).map(function (shape) {
 	                    return _react2.default.createElement(_polygonTool.PolygonTool, {
+	                        key: shape.id,
 	                        polygon: shape
 	                    });
 	                })
@@ -24924,7 +24912,7 @@
 	        value: function parseDebugString(str) {
 	            var polygon = new Polygon();
 	            // let mulitystr = debug_str;
-	            var arrayOfLines = debug_str.match(/[^\r\n]+/g);
+	            var arrayOfLines = str.match(/[^\r\n]+/g);
 	
 	            for (var i = 0; i < arrayOfLines.length; i++) {
 	                var line = arrayOfLines[i];
@@ -41018,4 +41006,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.acd5827d.js.map
+//# sourceMappingURL=main.f66c7da7.js.map
