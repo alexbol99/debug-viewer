@@ -2,12 +2,17 @@
  * Created by alexanderbol on 21/04/2017.
  */
 
-import { Component } from 'react';
+import React, {Component} from 'react';
 // import createjs from 'easel-js';
 
 import '../App.css';
 
-// import { Stage } from '../models/stage';
+import { LayerComponent } from '../components/layerComponent';
+import { Stage } from '../models/stage';
+
+// import {Layer} from '../models/layer';
+// import {Layers} from '../models/layers';
+
 // import * as ActionTypes from '../actions/action-types';
 
 export class StageComponent extends Component {
@@ -18,18 +23,6 @@ export class StageComponent extends Component {
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleMouseWheel = this.handleMouseWheel.bind(this);
         this.handleMouseWheelFox = this.handleMouseWheelFox.bind(this);
-    }
-
-    componentDidMount() {
-        this.props.stage.on("stagemousemove", this.handleMouseMove);
-        this.props.stage.on("stagemousedown", this.handleMouseDown);
-        this.props.stage.on("stagemouseup", this.handleMouseUp);
-        this.props.stage.canvas.addEventListener("mousewheel", this.handleMouseWheel);
-        this.props.stage.canvas.addEventListener("DOMMouseScroll", this.handleMouseWheelFox);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.stage.needToBeUpdated;
     }
 
     handleMouseMove(event) {
@@ -60,18 +53,48 @@ export class StageComponent extends Component {
         }
     }
 
-    render() {
-        for (let layer of this.props.layers) {
-            for (let shape of layer.shapes) {
-                shape.alpha = layer.displayed ? 1 : 0;
-                shape.redraw();
-            }
-        }
+    componentWillMount() {
+        // this.dispatch = this.props.store.dispatch;
+        // this.setState(this.props.store.getState());
+    }
 
-        if (this.props.stage.canvas.getContext('2d')) {
+    componentDidMount() {
+        let stage = new Stage(this.refs.canvas);
+
+        stage.on("stagemousemove", this.handleMouseMove);
+        stage.on("stagemousedown", this.handleMouseDown);
+        stage.on("stagemouseup", this.handleMouseUp);
+        stage.canvas.addEventListener("mousewheel", this.handleMouseWheel);
+        stage.canvas.addEventListener("DOMMouseScroll", this.handleMouseWheelFox);
+
+        this.props.onStageCreated(stage);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.stage ? nextProps.stage.needToBeUpdated : true;
+    }
+
+    componentDidUpdate() {
+        if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
             this.props.stage.update();
         }
+    }
 
-        return null;
+    componentWillUnmount() {
+
+    }
+
+    render() {
+        return (
+            <canvas ref="canvas" id="mainCanvas" className="App-graphics">
+                {
+                    this.props.layers.map((layer) =>
+                        <LayerComponent
+                            key={layer.name}
+                            layer={layer}
+                        />)
+                }
+            </canvas>
+        )
     }
 }

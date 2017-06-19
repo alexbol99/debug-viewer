@@ -4,7 +4,7 @@ import './App.css';
 
 import { HeaderComponent } from './components/headerComponent';
 import { MainComponent } from './components/mainComponent';
-import { LayersComponent } from './components/layersComponent';
+import { LayersListComponent } from './components/layersListComponent';
 import { AsideComponent } from './components/asideComponent';
 
 import * as ActionTypes from './actions/action-types';
@@ -53,7 +53,11 @@ class App extends Component {
             let seg1 = new Segment(new Point(-10, 0), new Point(10, 0));
             let seg2 = new Segment(new Point(0, -10), new Point(0, 10));
 
-            let layer = this.state.layers[0];
+            // let layer = this.state.layers[0];
+
+            let layer = this.state.layers.find((lay) => lay.affected)
+
+            if (!layer) return;
 
             layer.add(point);
             layer.add(seg1);
@@ -109,7 +113,7 @@ class App extends Component {
                 <div className="App-body"
                      onPaste={(e) => this.handlePaste(e)}>
                     <MainComponent {... this.props } />
-                    <LayersComponent {... this.props} />
+                    <LayersListComponent {... this.props} />
                     <AsideComponent {... this.props} />
                 </div>
             </div>

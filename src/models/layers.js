@@ -13,7 +13,7 @@ export class Layers {
     }
 
     static get defaultName() {
-        return "new layer";
+        return "layer";
     }
 
     static getNewName(layers) {
@@ -26,4 +26,5 @@ export class Layers {
         }
         return name;
     }
+
 }

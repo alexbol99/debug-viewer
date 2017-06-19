@@ -1,8 +1,11 @@
 /**
+ * Created by alexanderbol on 19/06/2017.
+ */
+/**
  * Created by alexanderbol on 21/04/2017.
  */
 
-import React, {Component} from 'react';
+import {Component} from 'react';
 // import createjs from 'easel-js';
 
 import '../App.css';
@@ -13,15 +16,7 @@ import '../App.css';
 
 // import * as ActionTypes from '../actions/action-types';
 
-import { PolygonTool } from '../tools/polygonTool';
-
-class ShapeContainerComponent extends Component {
-    render() {
-        return null;
-    }
-}
-
-export class LayerComponent extends Component {
+export class PolygonTool extends Component {
     // constructor() {
     //     super();
     //     // this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -40,10 +35,10 @@ export class LayerComponent extends Component {
     }
 
     componentDidUpdate() {
-        for (let shape of this.props.layer.shapes) {
-            shape.alpha = this.props.layer.displayed ? 1 : 0;
-            shape.redraw();
-        }
+
+        this.props.polygon.alpha = this.props.layer.displayed ? 1 : 0;
+        this.props.polygon.redraw();
+
     }
 
     componentWillUnmount() {
@@ -51,16 +46,6 @@ export class LayerComponent extends Component {
     }
 
     render() {
-        return <ShapeContainerComponent>
-            {
-                [...this.props.layer.shapes].map( shape => {
-                    return (
-                        <PolygonTool
-                            polygon={shape}
-                        />
-                    )
-                })
-            }
-        </ShapeContainerComponent>
+        return null
     }
 }

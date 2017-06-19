@@ -13,6 +13,13 @@ export class Layer {
         this.shapes = new Flatten.PlanarSet();
         this.name = "";
         this.displayed = true;
+        this.edited = false;
+        this.affected = false;
+    }
+
+    clone() {
+        let layer = new Layer(this.stage);
+        return Object.assign(layer, this);
     }
 
     add(geom) {
@@ -22,7 +29,19 @@ export class Layer {
     }
 
     toggleDisplayed() {
-        this.displayed = !this.displayed;
+        return Object.assign(this.clone(),
+            {
+                displayed : !this.displayed
+            });
+    }
+
+    setAffected(affected) {
+        let layer = new Layer(this.stage);
+        layer = Object.assign(layer, this,
+            {
+                affected : affected
+            });
+        return layer;
     }
 
     setAlpha() {

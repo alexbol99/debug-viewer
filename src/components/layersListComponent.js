@@ -6,16 +6,18 @@ import React, {Component} from 'react';
 // import logo from './logo.svg';
 import '../App.css';
 
-import { LayerComponent } from './layerComponent';
+import {LayerListElement} from './layerListElement';
 
 import * as ActionTypes from '../actions/action-types';
 // import { Layers } from '../models/layers';
 
-export class LayersComponent extends Component {
+export class LayersListComponent extends Component {
     constructor() {
         super();
         this.onLayerClicked = this.onLayerClicked.bind(this);
+        this.onLayerDoubleClicked = this.onLayerDoubleClicked.bind(this);
         this.onAddLayerSelected = this.onAddLayerSelected.bind(this);
+        this.onAffectedBoxClicked = this.onAffectedBoxClicked.bind(this);
     }
 
     componentWillMount() {
@@ -32,15 +34,20 @@ export class LayersComponent extends Component {
             type: ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED,
             layer: layer
         });
+    }
 
-        //debug remove later
-        // let shape = new Shape();
-        // shape.graphics.beginFill('red').drawRect(0, 0, 20, 20);
+    onLayerDoubleClicked(layer) {
+        this.dispatch({
+            type: ActionTypes.EDIT_LAYER_NAME_PRESSED,
+            layer: layer
+        });
+    }
 
-        // this.dispatch({
-        //     type: ActionTypes.ADD_SHAPE_TO_STAGE,
-        //     shape: shape
-        // })
+    onAffectedBoxClicked(layer) {
+        this.dispatch({
+            type: ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED,
+            layer: layer
+        });
     }
 
     onAddLayerSelected() {
@@ -51,13 +58,6 @@ export class LayersComponent extends Component {
     }
 
     render() {
-        let layers = this.state.layers.map((layer) =>
-            <LayerComponent {...this.props}
-                onLayerClicked={() => this.onLayerClicked(layer)}
-                            key={layer.name}
-                            layer={layer}
-            />
-        );
         let addLayer =
             (<div onClick={this.onAddLayerSelected}>
                 <h4>add layer</h4>
@@ -65,7 +65,16 @@ export class LayersComponent extends Component {
 
         return (
             <div className="App-layers">
-                { layers }
+                <h4>LayerList</h4>
+                { this.state.layers.map((layer) =>
+                    <LayerListElement
+                        onLayerClicked={() => this.onLayerClicked(layer)}
+                        onLayerDoubleClicked={() => this.onLayerDoubleClicked(layer)}
+                        onAffectedBoxClicked={() => this.onAffectedBoxClicked(layer)}
+                        key={layer.name}
+                        layer={layer}
+                    />)
+                }
                 { addLayer }
             </div>
         )

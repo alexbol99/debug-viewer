@@ -18,7 +18,7 @@
 .App-header {
   background-color: #222;
   /*height: 150px;*/
-  padding: 20px;
+  /*padding: 20px;*/
   color: white;
   flex: none;
 }
@@ -35,7 +35,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: aqua;
 }
 
 .App-layers {
@@ -43,14 +42,79 @@
   order: -1;
 }
 
-.App-layers, .App-ads {
+.App-layers {
+  /* 12em is the width of the columns */
+  flex: 0 0 12em;
+  background: rgba(147, 128, 108, 0.1);
+  overflow: auto;
+  height: inherit;
+}
+
+.App-ads {
   /* 12em is the width of the columns */
   flex: 0 0 12em;
   background: rgba(147, 128, 108, 0.1);
 }
 
-.App-toolbar {
+.Layer {
+  padding: 5px;
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: row;
+}
 
+.Layer-displayed {
+  background-color: aquamarine;
+}
+
+.Layer-undisplayed {
+  background-color: aliceblue;
+}
+
+.App-toolbar {
+  background: rgba(147, 128, 108, 0.1);
+  /*background-color: aqua;*/
+  /*padding: 10px;*/
+  text-align: left;
+}
+
+.App-toolbar button {
+  width:40px;
+  height:40px;
+  margin-left: 6px;
+  margin-right: 6px;
+  /*background-repeat: no-repeat;*/
+  /*background-position-x: center;*/
+  /*background-position-y: center;*/
+  background-size: 100%;
+}
+
+.Button-select-feature {
+  background-image: url("../public/icons/selectFeature.png");
+}
+
+.Button-drag {
+  background-image: url("../public/icons/handDrag20.png");
+}
+
+.Button-home {
+  background-image: url("../public/icons/homeIcon20x20.png");
+}
+
+.Button-zoom-area {
+  background-image: url("../public/icons/Zoom-area.png");
+}
+
+.Button-measure-between-points {
+  background-image: url("../public/icons/measurePoints.png");
+}
+
+.Button-measure-between-features {
+  background-image: url("../public/icons/measureContour.png");
+}
+
+.Button-pan-to-coordinated {
+  background-image: url("../public/icons/Pan-to-coordinate.png");
 }
 
 .App-canvas-wrapper {
@@ -60,6 +124,12 @@
 
 .App-graphics {
     flex: 1;
+}
+
+.App-status-bar {
+  display: flex;
+  flex-direction: row;
+  background: rgba(147, 128, 108, 0.1);
 }
 
 @media (min-width: 768px) {

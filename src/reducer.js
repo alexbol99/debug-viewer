@@ -5,12 +5,32 @@
 import * as ActionTypes from './actions/action-types';
 import {combineReducers} from 'redux';
 
-import {Stage} from './models/stage';
+// import {Stage} from './models/stage';
 import {Layer} from './models/layer';
 import {Layers} from './models/layers';
 
+const unitsList=[
+    {
+        name: "pixels",
+        decimals: 0,
+        divisor: 1
+    },
+    {
+        name: "inch",
+        decimals: 7,
+        divisor: 10160000
+    },
+    {
+        name: "mm",
+        decimals: 6,
+        divisor: 400000
+    }];
+
 const defaultAppState = {
     title: "Debug Viewer",
+    units: "pixels",
+    decimals: 0,
+    divisor: 1
 };
 
 const defaultMouseState = {
@@ -24,6 +44,14 @@ function app(state = defaultAppState, action) {
     switch (action.type) {
         case ActionTypes.STAGE_UPDATED:
             return state;
+        case ActionTypes.TOGGLE_UNITS_CLICKED:
+            let curUnitsId = unitsList.findIndex(units => state.units === units.name);
+            let newUnits = unitsList[ (curUnitsId + 1) % 3];
+            return Object.assign({}, state, {
+                units: newUnits.name,
+                decimals: newUnits.decimals,
+                divisor: newUnits.divisor
+            });
         default:
             return state;
     }
@@ -31,6 +59,8 @@ function app(state = defaultAppState, action) {
 
 function layers(state = [], action) {
     switch (action.type) {
+        case ActionTypes.NEW_STAGE_CREATED:
+            return [...state, action.layer];
         case ActionTypes.ADD_LAYER_PRESSED:
             let layer = new Layer(action.stage);
             layer.name = Layers.getNewName(state);
@@ -40,8 +70,24 @@ function layers(state = [], action) {
                 if (layer !== action.layer) {
                     return layer;
                 }
+                return layer.toggleDisplayed();
+            });
+        case ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED:
+            return state.map((layer) => {
+                if (layer !== action.layer) {
+                    return layer.setAffected(false);
+                }
+                else {
+                    return layer.setAffected(!layer.affected);
+                }
+            });
+        case ActionTypes.EDIT_LAYER_NAME_PRESSED:
+            return state.map((layer) => {
+                if (layer !== action.layer) {
+                    return layer;
+                }
                 return Object.assign({}, layer, {
-                    displayed: !layer.displayed,
+                    edited: true,
                 })
 
             });
@@ -52,8 +98,11 @@ function layers(state = [], action) {
 
 function stage(state = null, action) {
     switch (action.type) {
-        case ActionTypes.MAIN_CANVAS_MOUNTED:
-            return new Stage(action.canvas);
+        case ActionTypes.NEW_STAGE_CREATED:
+            return action.stage;
+        case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
+            state.needToBeUpdated = true;
+            return state;
         case ActionTypes.ADD_SHAPE_TO_STAGE:
             return state;
         // return state.add(action.shape);   // stage already mutated !!!
