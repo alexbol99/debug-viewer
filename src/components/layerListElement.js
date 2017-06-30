@@ -13,7 +13,7 @@ export class LayerListElement extends Component {
          //     styleSheet.displayed : styleSheet.undisplayed;
 
         let displayed = this.props.layer.displayed ? "Layer-displayed" : "Layer-undisplayed"
-        let alpha = this.props.layer.affected ? 1 : 0.5;
+        let alpha = this.props.layer.affected ? 1 : 0;
         return this.props.layer.edited ? (
             <div
                 className={`Layer ${displayed}`}
@@ -25,19 +25,21 @@ export class LayerListElement extends Component {
                 <div
                     className={`Layer ${displayed}`}
                     onClick={this.props.onLayerClicked}
-                    onDoubleClick={this.props.onLayerDoubleClicked}
-                >
-                    <h4
-                        style={{flex:8}}
+                    onDoubleClick={this.props.onLayerDoubleClicked}>
+
+                    <div
+                        style={{flex: 2}}
+                        onClick={this.props.onAffectedBoxClicked}
                     >
+                        <h4 style={{opacity: alpha}}>
+                        V
+                        </h4>
+                    </div>
+
+                    <h4 style={{flex:8}}>
                         {this.props.layer.name}
                     </h4>
-                    <h4
-                        onClick={this.props.onAffectedBoxClicked}
-                        style={{flex: 2, opacity: alpha}}
-                    >
-                        V
-                    </h4>
+
                 </div>
             )
 

@@ -7,8 +7,9 @@ import React, {Component} from 'react';
 
 import '../App.css';
 
-import { LayerComponent } from '../components/layerComponent';
+// import { LayerComponent } from '../components/layerComponent';
 import { Stage } from '../models/stage';
+// import {PolygonTool} from '../tools/polygonTool';
 
 // import {Layer} from '../models/layer';
 // import {Layers} from '../models/layers';
@@ -86,15 +87,18 @@ export class StageComponent extends Component {
 
     render() {
         return (
-            <canvas ref="canvas" id="mainCanvas" className="App-graphics">
-                {
-                    this.props.layers.map((layer) =>
-                        <LayerComponent
-                            key={layer.name}
-                            layer={layer}
-                        />)
-                }
+            <canvas ref="canvas" id="mainCanvas" className="App-canvas">
             </canvas>
         )
     }
 }
+/*
+ {
+ this.props.layers.map((layer) =>
+ <LayerComponent
+ key={layer.name}
+ layer={layer}
+ />)
+ }
+
+ */

@@ -9,11 +9,13 @@ import { ToolbarComponent } from './toolbarComponent';
 // import { CanvasComponent } from './canvasComponent';
 import { StageComponent } from './stageComponent';
 import { StatusComponent } from './statusComponent';
-
+// import { LayerComponent } from './layerComponent';
 import * as ActionTypes from '../actions/action-types';
 // import {Stage} from '../models/stage';
 import {Layer} from '../models/layer';
 import {Layers} from '../models/layers';
+
+import { PolygonTool } from '../tools/polygonTool';
 
 export class MainComponent extends Component {
     constructor() {
@@ -25,7 +27,11 @@ export class MainComponent extends Component {
         this.registerStage = this.registerStage.bind(this);
         this.toggleUnits = this.toggleUnits.bind(this);
 
+        this.onMouseRollOverShape = this.onMouseRollOverShape.bind(this);
+        this.onMouseRollOutShape = this.onMouseRollOutShape.bind(this);
+
         this.buttonClicked = this.buttonClicked.bind(this);
+        this.resizeStage = this.resizeStage.bind(this);
     }
 
     registerStage(stage) {
@@ -37,6 +43,13 @@ export class MainComponent extends Component {
             type: ActionTypes.NEW_STAGE_CREATED,
             stage: stage,
             layer: layer
+        });
+    }
+
+    resizeStage() {
+        // alert("resized")
+        this.dispatch({
+            type: ActionTypes.STAGE_RESIZED
         });
     }
 
@@ -85,6 +98,19 @@ export class MainComponent extends Component {
         }
     }
 
+    onMouseRollOverShape(shape) {
+        this.dispatch({
+            type: ActionTypes.MOUSE_ROLL_OVER_SHAPE,
+            shape: shape
+        })
+    }
+
+    onMouseRollOutShape() {
+        this.dispatch({
+            type: ActionTypes.MOUSE_ROLL_OUT_SHAPE,
+        })
+    }
+
     buttonClicked() {
         alert("button clicked")
     }
@@ -94,8 +120,18 @@ export class MainComponent extends Component {
         this.setState(this.props.store.getState());
     }
 
+    componentDidMount() {
+        window.onresize = this.resizeStage;
+    }
+
     componentWillReceiveProps(nextProps) {
         this.setState(nextProps.store.getState());
+    }
+
+    componentDidUpdate() {
+        if (this.state.stage.canvas && this.state.stage.canvas.getContext('2d')) {
+            this.state.stage.update();
+        }
     }
 
     render() {
@@ -127,6 +163,23 @@ export class MainComponent extends Component {
                     onMouseUp={this.handleMouseUp}
                     onMouseWheelMove={this.handleMouseWheelMove}
                 />
+
+                {
+                    this.state.layers.map((layer) => {
+                        return (
+                            [...layer.shapes].map((shape, index) =>
+                                <PolygonTool
+                                    key={index}
+                                    polygon={shape}
+                                    displayed={layer.displayed}
+                                    displayVertices={this.state.app.hoveredShape === shape ? true : false}
+                                    onMouseOver={this.onMouseRollOverShape}
+                                    onMouseOut={this.onMouseRollOutShape}
+                                />
+                            )
+                        )
+                    })
+                }
 
                 <StatusComponent
                     units={this.state.app.units}

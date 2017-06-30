@@ -9,21 +9,33 @@ import createjs from 'easel-js';
 let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
 
 export class Shape extends createjs.Shape {
-    constructor(geom = undefined, stage = undefined) {
+    constructor(geom = undefined, stage = undefined, watch = undefined) {
         super();
         this.geom = geom;
         stage.addChild(this);
         // this.stage = stage;
         this.graphics = this.setGraphics();
+        this.watch = watch;
+        this.expanded = false;
     }
 
     get box() {
-        return this.geom.box;
+        // TODO: add method box to Polygon
+        return this.geom instanceof Polygon ?
+            [...this.geom.faces][0].box :
+            this.geom.box;
     }
 
-    redraw() {
+    get center() {
+        let box = this.box;
+        return new Point((box.xmin + box.xmax)/2, (box.ymin + box.ymax)/2);
+    }
+
+    redraw(displayed=true) {
+        this.alpha = displayed ? 1 : 0;
         this.graphics.clear();
         this.graphics = this.setGraphics();
+        return this;
     }
 
     setGraphics() {
@@ -87,9 +99,9 @@ export class Shape extends createjs.Shape {
     setGraphicsPolygon() {
         let graphics = new createjs.Graphics();
 
-        graphics.setStrokeStyle(2);
-        graphics.beginStroke("black");
-        graphics.beginFill("#C0FFFF");
+        graphics.setStrokeStyle(1);
+        graphics.beginStroke("#FF0303");
+        graphics.beginFill("#FF0303");
 
         for (let face of this.geom.faces) {
             this.setGraphicsFace(graphics, face);

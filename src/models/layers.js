@@ -27,4 +27,7 @@ export class Layers {
         return name;
     }
 
+    static getAffected(layers) {
+        return layers.find((lay) => lay.affected);
+    }
 }

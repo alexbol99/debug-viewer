@@ -9,14 +9,13 @@ import { AsideComponent } from './components/asideComponent';
 
 import * as ActionTypes from './actions/action-types';
 
-import Flatten from 'flatten-js';
-
-import { Parser } from './models/parser';
-
+// import Flatten from 'flatten-js';
+// import { Parser } from './models/parser';
 // import { Layer } from './models/layer';
-// import { Shape } from './models/shape';
 
-let {Point, Segment} = Flatten;
+import { Shape } from './models/shape';
+
+// let {Point} = Flatten;
 
 class App extends Component {
     constructor(props) {
@@ -32,48 +31,47 @@ class App extends Component {
         // this.showImportFilesPopup = this.showImportFilesPopup.bind(this);
         // this.showDownloadFilesPopup = this.showDownloadFilesPopup.bind(this);
     }
-    componentWillMount() {
-        this.dispatch = this.props.store.dispatch;
-        this.setState(this.props.store.getState());
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState(nextProps.store.getState());
-    }
-
     handlePaste(event) {
-        if (this.state.layers.length == 0) return;
+        if (this.state.layers.length === 0) return;
 
-        let layer = this.state.layers.find((lay) => lay.affected)
-
+        let layer = this.state.layers.find((lay) => lay.affected);
         if (!layer) return;
 
-        let parser = new Parser();
-
+        let parser = this.state.app.parser;
         let dispatch = this.dispatch;
 
         for (let item of event.clipboardData.items) {
             item.getAsString( (string) => {
-                let poly = parser.parseDebugString(string);
+                let poly = parser.parseToPolygon(string);
+                let watch = parser.parseToWatchArray(string);
 
-                layer.add(poly);
+                let shape = new Shape(poly, this.state.stage, watch);
 
-                let box;
-                for (let face of poly.faces) {
-                    box = face.box;
-                }
+                // layer.add(poly);
+                this.dispatch({
+                    type: ActionTypes.NEW_SHAPE_PASTED,
+                    shape: shape
+                });
 
-                let center = new Point((box.xmin + box.xmax)/2, (box.ymin + box.ymax)/2);
+                // let box;
+                // for (let face of poly.faces) {
+                //     box = face.box;
+                // }
+                //
+                // let center = new Point((box.xmin + box.xmax)/2, (box.ymin + box.ymax)/2);
 
                 dispatch({
                     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-                    x: center.x,
-                    y: center.y,
-                    width: box.xmax - box.xmin,
-                    height: box.ymax - box.ymin
+                    shape: shape
+                    // x: center.x,
+                    // y: center.y,
+                    // width: box.xmax - box.xmin,
+                    // height: box.ymax - box.ymin
                 });
 
             })
+
+            break;
         }
 
             // let point = new Point(0, 0);
@@ -92,6 +90,15 @@ class App extends Component {
             x: shape.geom.x,
             y: shape.geom.y
         })
+    }
+
+    componentWillMount() {
+        this.dispatch = this.props.store.dispatch;
+        this.setState(this.props.store.getState());
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(nextProps.store.getState());
     }
 
     render() {

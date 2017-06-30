@@ -4,32 +4,16 @@
 
 import React, {Component} from 'react';
 // import createjs from 'easel-js';
-
+import { PolygonTool } from '../tools/polygonTool';
 import '../App.css';
 
-// import { Stage } from '../models/stage';
-// import {Layer} from '../models/layer';
-// import {Layers} from '../models/layers';
-
-// import * as ActionTypes from '../actions/action-types';
-
-import { PolygonTool } from '../tools/polygonTool';
-
-class ShapeContainerComponent extends Component {
+class ShapesContainer extends Component {
     render() {
-        return null;
+        return null
     }
 }
-
 export class LayerComponent extends Component {
-    // constructor() {
-    //     super();
-    //     // this.handleMouseMove = this.handleMouseMove.bind(this);
-    // }
-
     componentWillMount() {
-        // this.dispatch = this.props.store.dispatch;
-        // this.setState(this.props.store.getState());
     }
 
     componentDidMount() {
@@ -40,10 +24,10 @@ export class LayerComponent extends Component {
     }
 
     componentDidUpdate() {
-        for (let shape of this.props.layer.shapes) {
-            shape.alpha = this.props.layer.displayed ? 1 : 0;
-            shape.redraw();
-        }
+        // for (let shape of this.props.layer.shapes) {
+        //     shape.alpha = this.props.layer.displayed ? 1 : 0;
+        //     shape.redraw();
+        // }
     }
 
     componentWillUnmount() {
@@ -51,17 +35,19 @@ export class LayerComponent extends Component {
     }
 
     render() {
-        return <ShapeContainerComponent>
-            {
-                [...this.props.layer.shapes].map( shape => {
-                    return (
+        let displayed = this.props.layer.displayed;
+        return (
+            <ShapesContainer>
+                {
+                    [...this.props.layer.shapes].map( (shape, index) => {
                         <PolygonTool
-                            key={shape.id}
+                            key={index}
                             polygon={shape}
+                            displayed={displayed}
                         />
-                    )
-                })
-            }
-        </ShapeContainerComponent>
+                    })
+                }
+            </ShapesContainer>
+        )
     }
 }

@@ -39,11 +39,19 @@ let debug_str = `+		[0]	{nrec=27 nalloc=27 h_ind_id=-1 ...} mat_cont_hdr_struc	m
 `;
 
 export class Parser {
+    parseToWatchArray(str) {
+        let arrayOfLines = debug_str.match(/[^\r\n]+/g);
+        let watchArray = [];
+        for (let line of arrayOfLines) {
+            watchArray.push(line.substring(line.indexOf('{')));
+        }
+        return watchArray;
+    }
 
-    parseDebugString(str) {
+    parseToPolygon(str) {
         let polygon = new Polygon();
         // let mulitystr = debug_str;
-        let arrayOfLines = str.match(/[^\r\n]+/g);
+        let arrayOfLines = debug_str.match(/[^\r\n]+/g);
 
         for (let i=0; i < arrayOfLines.length; i++) {
             let line = arrayOfLines[i];

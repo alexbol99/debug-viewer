@@ -11,30 +11,35 @@ export class ToolbarComponent extends Component {
     render() {
         return (
             <div className="App-toolbar">
-                <button
-                    className="Button-select-feature"
-                    onClick={this.props.buttonClicked} />
-                <button
-                    className="Button-drag"
-                    onClick={this.props.buttonClicked} />
-                <button
-                    className="Button-zoom-area"
-                    onClick={this.props.buttonClicked} />
-                <button
-                    className="Button-home"
-                    onClick={this.props.buttonClicked} />
-                <button
-                    className="Button-pan-to-coordinated"
-                    onClick={this.props.buttonClicked} />
-                <button
-                    className="Button-measure-between-points"
-                    onClick={this.props.buttonClicked} />
-                <button
-                    className="Button-measure-between-features"
-                    onClick={this.props.buttonClicked} />
-
-
+                {/*<h4>Toolbar</h4>*/}
             </div>
         )
     }
 };
+
+/*
+ <button
+ className="Button-select-feature"
+ onClick={this.props.buttonClicked} />
+ <button
+ className="Button-drag"
+ onClick={this.props.buttonClicked} />
+ <button
+ className="Button-zoom-area"
+ onClick={this.props.buttonClicked} />
+ <button
+ className="Button-home"
+ onClick={this.props.buttonClicked} />
+ <button
+ className="Button-pan-to-coordinated"
+ onClick={this.props.buttonClicked} />
+ <button
+ className="Button-measure-between-points"
+ onClick={this.props.buttonClicked} />
+ <button
+ className="Button-measure-between-features"
+ onClick={this.props.buttonClicked} />
+
+
+
+ */

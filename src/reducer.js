@@ -8,6 +8,7 @@ import {combineReducers} from 'redux';
 // import {Stage} from './models/stage';
 import {Layer} from './models/layer';
 import {Layers} from './models/layers';
+import { Parser } from './models/parser';
 
 const unitsList=[
     {
@@ -30,7 +31,9 @@ const defaultAppState = {
     title: "Debug Viewer",
     units: "pixels",
     decimals: 0,
-    divisor: 1
+    divisor: 1,
+    hoveredShape: null,
+    parser: new Parser()
 };
 
 const defaultMouseState = {
@@ -52,6 +55,14 @@ function app(state = defaultAppState, action) {
                 decimals: newUnits.decimals,
                 divisor: newUnits.divisor
             });
+        case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
+            return Object.assign({}, state, {
+                hoveredShape:action.shape
+            });
+        case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
+            return Object.assign({}, state, {
+                hoveredShape:null
+            });
         default:
             return state;
     }
@@ -61,10 +72,12 @@ function layers(state = [], action) {
     switch (action.type) {
         case ActionTypes.NEW_STAGE_CREATED:
             return [...state, action.layer];
+
         case ActionTypes.ADD_LAYER_PRESSED:
             let layer = new Layer(action.stage);
             layer.name = Layers.getNewName(state);
             return [...state, layer];
+
         case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
             return state.map((layer) => {
                 if (layer !== action.layer) {
@@ -72,6 +85,7 @@ function layers(state = [], action) {
                 }
                 return layer.toggleDisplayed();
             });
+
         case ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED:
             return state.map((layer) => {
                 if (layer !== action.layer) {
@@ -81,6 +95,27 @@ function layers(state = [], action) {
                     return layer.setAffected(!layer.affected);
                 }
             });
+
+        case ActionTypes.NEW_SHAPE_PASTED:
+            return state.map((layer) => {
+                if (layer.affected) {
+                    return layer.add(action.shape);
+                }
+                else {
+                    return layer;
+                }
+            });
+
+        case ActionTypes.TOGGLE_WATCH_EXPAND_CLICKED:
+            return state.map((layer) => {
+                if (layer.affected) {
+                    return layer.toggleExpanded(action.shape);
+                }
+                else {
+                    return layer;
+                }
+            });
+
         case ActionTypes.EDIT_LAYER_NAME_PRESSED:
             return state.map((layer) => {
                 if (layer !== action.layer) {
@@ -100,40 +135,55 @@ function stage(state = null, action) {
     switch (action.type) {
         case ActionTypes.NEW_STAGE_CREATED:
             return action.stage;
+
+        case ActionTypes.STAGE_RESIZED:
+            state.resize();
+            return state;
+
         case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
             state.needToBeUpdated = true;
             return state;
+
         case ActionTypes.ADD_SHAPE_TO_STAGE:
             return state;
+
         // return state.add(action.shape);   // stage already mutated !!!
         case ActionTypes.PAN_TO_COORDINATE:
             state.panToCoordinate(action.x, action.y);
             state.needToBeUpdated = true;
             return state;
+
         case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
-            state.panToCoordinate(action.x, action.y);
-            state.zoomToLimits(action.width, action.height);
+            let center = action.shape.center;
+            let box = action.shape.box;
+            state.panToCoordinate(center.x, center.y);
+            state.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
             state.needToBeUpdated = true;
             return state;
+
         case ActionTypes.MOUSE_DOWN_ON_STAGE:
             state.panByMouseStart();
             state.needToBeUpdated = false;
             return state;
+
         case ActionTypes.MOUSE_MOVED_ON_STAGE:
             if (action.dx !== undefined && action.dy !== undefined) {
                 state.panByMouseMove(action.dx, action.dy);
                 state.needToBeUpdated = true;
             }
             return state;
+
         case ActionTypes.MOUSE_UP_ON_STAGE:
             state.panByMouseStop();
             state.needToBeUpdated = false;
             return state;
+
         case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
             let bIn = action.delta > 0;
             state.zoom(action.x, action.y, bIn, 1.05);
             state.needToBeUpdated = true;
             return state;
+
         default:
             if (state) {
                 state.needToBeUpdated = false;

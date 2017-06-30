@@ -59,13 +59,15 @@ export class LayersListComponent extends Component {
 
     render() {
         let addLayer =
-            (<div onClick={this.onAddLayerSelected}>
-                <h4>add layer</h4>
+            (<div
+                style={{padding:4, backgroundColor: "lightgray"}}
+                onClick={this.onAddLayerSelected}>
+                <h4 style={{margin:0}}>Add layer</h4>
             </div>)
 
         return (
             <div className="App-layers">
-                <h4>LayerList</h4>
+                {/*<h4>Layers List</h4>*/}
                 { this.state.layers.map((layer) =>
                     <LayerListElement
                         onLayerClicked={() => this.onLayerClicked(layer)}

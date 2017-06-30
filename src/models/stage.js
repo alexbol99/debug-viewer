@@ -10,9 +10,10 @@ import { Shape } from '../models/shape';
 export class Stage extends createjs.Stage {
     constructor(canvas) {
         super(canvas);
+
         createjs.Touch.enable(this);
         this.mouseMoveOutside = false;   // true;
-        this.enableMouseOver(50);
+        this.enableMouseOver(1);
 
         if (this.canvas.clientWidth > 0 && this.canvas.clientHeight > 0) {
             this.canvas.width = this.canvas.clientWidth;
@@ -118,8 +119,12 @@ export class Stage extends createjs.Stage {
     }
 
     resize() {
-        this.origin.x = this.canvas.width / 2;
-        this.origin.y = this.canvas.height / 2;
+        // this.origin.x = this.canvas.width / 2;
+        // this.origin.y = this.canvas.height / 2;
+        if (this.canvas.clientWidth > 0 && this.canvas.clientHeight > 0) {
+            this.canvas.width = this.canvas.clientWidth;
+            this.canvas.height = this.canvas.clientHeight;
+        }
     }
 
     drawSomething() {

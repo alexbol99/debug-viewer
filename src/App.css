@@ -50,19 +50,42 @@
   height: inherit;
 }
 
-.App-ads {
+.App-aside {
   /* 12em is the width of the columns */
   flex: 0 0 12em;
   background: rgba(147, 128, 108, 0.1);
+  display: flex;
+  flex-direction: column;
+  /*height: 100%;*/
+  flex-wrap: wrap;
+}
+
+.Watch-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.Watch-element-title {
+  height: 25px;
+  line-height: 25px;
+  overflow: hidden;
+  display: flex;
 }
 
 .Layer {
   padding: 5px;
-  border-bottom: 1px solid black;
+  /*border-bottom: 1px solid black;*/
   display: flex;
   flex-direction: row;
+  margin-bottom: 2px;
 }
 
+.Layer h4 {
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: left;
+}
 .Layer-displayed {
   background-color: aquamarine;
 }
@@ -122,8 +145,9 @@
     flex: 1 1 auto;
 }
 
-.App-graphics {
-    flex: 1;
+.App-canvas {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .App-status-bar {

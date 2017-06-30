@@ -22,10 +22,16 @@ export class Layer {
         return Object.assign(layer, this);
     }
 
-    add(geom) {
-        let shape = new Shape(geom, this.stage);
-        this.shapes.add(shape);
-        return shape;
+    add(shape) {
+        if (shape instanceof Shape) {
+            this.shapes.add(shape)
+        }
+        else {
+            let geom = shape;
+            let newShape = new Shape(geom, this.stage);
+            this.shapes.add(newShape);
+        }
+        return this;
     }
 
     toggleDisplayed() {
@@ -49,5 +55,14 @@ export class Layer {
             shape.alpha = this.displayed ? 1 : 0;
         }
         return this.shapes;
+    }
+
+    toggleExpanded(shapeToggle) {
+        for(let shape of this.shapes) {
+            if (shape === shapeToggle) {
+                shape.expanded = !shape.expanded;
+            }
+        }
+        return this;
     }
 }
