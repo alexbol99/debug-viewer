@@ -121,6 +121,7 @@
       -ms-flex-direction: row;
           flex-direction: row;
   margin-bottom: 2px;
+  background-color: aliceblue;
 }
 
 .Layer h4 {
@@ -129,11 +130,11 @@
   text-align: left;
 }
 .Layer-displayed {
-  background-color: aquamarine;
+  /*background-color: aquamarine;*/
 }
 
 .Layer-undisplayed {
-  background-color: aliceblue;
+  /*background-color: aliceblue;*/
 }
 
 .App-toolbar {
@@ -248,4 +249,4 @@ html,body {
   height:100%;
 }
 
-/*# sourceMappingURL=main.b5ed9501.css.map*/
+/*# sourceMappingURL=main.6863452d.css.map*/
