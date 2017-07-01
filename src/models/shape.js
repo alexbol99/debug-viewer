@@ -9,14 +9,15 @@ import createjs from 'easel-js';
 let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
 
 export class Shape extends createjs.Shape {
-    constructor(geom = undefined, stage = undefined, watch = undefined) {
+    constructor(geom = undefined, stage = undefined, style={}, watch = undefined ) {
         super();
         this.geom = geom;
         stage.addChild(this);
         // this.stage = stage;
-        this.graphics = this.setGraphics();
+        this.graphics = this.setGraphics(style);
         this.watch = watch;
         this.expanded = false;
+        this.vertices = [];
     }
 
     get box() {
@@ -31,77 +32,86 @@ export class Shape extends createjs.Shape {
         return new Point((box.xmin + box.xmax)/2, (box.ymin + box.ymax)/2);
     }
 
-    redraw(displayed=true) {
-        this.alpha = displayed ? 1 : 0;
+    redraw(style={}) {
+        this.alpha = style && style.alpha !== undefined ? style.alpha : 1.0;
         this.graphics.clear();
-        this.graphics = this.setGraphics();
+        this.graphics = this.setGraphics(style);
         return this;
     }
 
-    setGraphics() {
+    setGraphics(style) {
         if (!this.geom)
             return;
         if (this.geom instanceof Point) {
-            return this.setGraphicsPoint();
+            return this.setGraphicsPoint(style);
         }
         else if (this.geom instanceof Segment) {
-            return this.setGraphicsSegment();
+            return this.setGraphicsSegment(style);
         }
         else if (this.geom instanceof Line) {
 
         }
         else if (this.geom instanceof Circle) {
-            return this.setGraphicsCircle();
+            return this.setGraphicsCircle(style);
         }
         else if (this.geom instanceof Arc) {
-            return this.setGraphicsArc();
+            return this.setGraphicsArc(style);
 
         }
         else if (this.geom instanceof Vector) {
 
         }
         else if (this.geom instanceof Polygon) {
-            return this.setGraphicsPolygon();
+            return this.setGraphicsPolygon(style);
         }
     }
 
-    setGraphicsPoint() {
-        let radius = 3;
+    setGraphicsPoint(style) {
         let pt = this.stage.W2C(this.geom);
         let graphics = new createjs.Graphics();
-        return graphics.beginFill("red").drawCircle(pt.x, pt.y, radius);
+        let radius = (style && style.radius) ? style.radius : 3;
+        let fill = style && style.fill ? style.fill : "red";
+        return graphics.beginFill(fill).drawCircle(pt.x, pt.y, radius);
     }
 
-    setGraphicsSegment() {
+    setGraphicsSegment(style) {
         let ps = this.stage.W2C(this.geom.ps);
         let pe = this.stage.W2C(this.geom.pe);
         let graphics = new createjs.Graphics();
-        return graphics.setStrokeStyle(2).beginStroke("black").moveTo(ps.x, ps.y).lineTo(pe.x, pe.y).endStroke();
+        let strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+        let stroke = style && style.stroke ? style.stroke : "black";
+        return graphics.setStrokeStyle(strokeStyle).beginStroke(stroke).moveTo(ps.x, ps.y).lineTo(pe.x, pe.y).endStroke();
     }
 
-    setGraphicsArc() {
+    setGraphicsArc(style) {
         let pc = this.stage.W2C(this.geom.pc);
         let r = this.stage.W2C_Scalar(this.geom.r);
         let startAngle = 2 * Math.PI - this.geom.startAngle;
         let endAngle =  2 * Math.PI - this.geom.endAngle;
         let graphics = new createjs.Graphics();
-        return graphics.setStrokeStyle(2).beginStroke("black").arc(pc.x, pc.y, r, startAngle, endAngle, this.geom.counterClockwise).endStroke();
+        let strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+        let stroke = style && style.stroke ? style.stroke : "black";
+        return graphics.setStrokeStyle(strokeStyle).beginStroke(stroke).arc(pc.x, pc.y, r, startAngle, endAngle, this.geom.counterClockwise).endStroke();
     }
 
-    setGraphicsCircle() {
+    setGraphicsCircle(style) {
         let pc = this.stage.W2C(this.geom.pc);
         let r = this.stage.W2C_Scalar(this.geom.r);
         let graphics = new createjs.Graphics();
+        let strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+        let stroke = style && style.stroke ? style.stroke : "black";
         // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
-        return graphics.setStrokeStyle(2).beginStroke("black").drawCircle(pc.x, pc.y, r);
+        return graphics.setStrokeStyle(strokeStyle).beginStroke(stroke).drawCircle(pc.x, pc.y, r);
     }
 
-    setGraphicsPolygon() {
+    setGraphicsPolygon(style) {
         let graphics = new createjs.Graphics();
-
-        graphics.setStrokeStyle(1);
-        graphics.beginStroke("#FF0303");
-        graphics.beginFill("#FF0303");
+        let strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
+        let stroke = style && style.stroke ? style.stroke : "#FF0303";
+        let fill = style && style.fill ? style.fill : "#FF0303";
+        graphics.setStrokeStyle(strokeStyle);
+        graphics.beginStroke(stroke);
+        graphics.beginFill(fill);
 
         for (let face of this.geom.faces) {
             this.setGraphicsFace(graphics, face);

@@ -25,11 +25,7 @@ class App extends Component {
             this.setState(this.props.store.getState());
         });
 
-        // this.handlePaste = this.handlePaste.bind.this;
         this.clickOnShape = this.clickOnShape.bind(this);
-
-        // this.showImportFilesPopup = this.showImportFilesPopup.bind(this);
-        // this.showDownloadFilesPopup = this.showDownloadFilesPopup.bind(this);
     }
     handlePaste(event) {
         if (this.state.layers.length === 0) return;
@@ -45,28 +41,16 @@ class App extends Component {
                 let poly = parser.parseToPolygon(string);
                 let watch = parser.parseToWatchArray(string);
 
-                let shape = new Shape(poly, this.state.stage, watch);
+                let shape = new Shape(poly, this.state.stage, {}, watch);
 
-                // layer.add(poly);
                 this.dispatch({
                     type: ActionTypes.NEW_SHAPE_PASTED,
                     shape: shape
                 });
 
-                // let box;
-                // for (let face of poly.faces) {
-                //     box = face.box;
-                // }
-                //
-                // let center = new Point((box.xmin + box.xmax)/2, (box.ymin + box.ymax)/2);
-
                 dispatch({
                     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
                     shape: shape
-                    // x: center.x,
-                    // y: center.y,
-                    // width: box.xmax - box.xmin,
-                    // height: box.ymax - box.ymin
                 });
 
             })

@@ -12,7 +12,8 @@ export class Layer {
         this.stage = stage;
         this.shapes = new Flatten.PlanarSet();
         this.name = "";
-        this.displayed = true;
+        this.color = "";
+        this.displayed = false;
         this.edited = false;
         this.affected = false;
     }
@@ -34,20 +35,19 @@ export class Layer {
         return this;
     }
 
-    toggleDisplayed() {
+    toggleDisplayed(color) {
         return Object.assign(this.clone(),
             {
-                displayed : !this.displayed
+                displayed : !this.displayed,
+                color: color
             });
     }
 
     setAffected(affected) {
-        let layer = new Layer(this.stage);
-        layer = Object.assign(layer, this,
+        return Object.assign(this.clone(),
             {
                 affected : affected
             });
-        return layer;
     }
 
     setAlpha() {

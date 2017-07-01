@@ -9,7 +9,7 @@ import '../App.css';
 import {LayerListElement} from './layerListElement';
 
 import * as ActionTypes from '../actions/action-types';
-// import { Layers } from '../models/layers';
+import { Layers } from '../models/layers';
 
 export class LayersListComponent extends Component {
     constructor() {
@@ -51,9 +51,12 @@ export class LayersListComponent extends Component {
     }
 
     onAddLayerSelected() {
+        let layer = Layers.newLayer(this.state.stage, this.state.layers);
+
         this.dispatch({
             type: ActionTypes.ADD_LAYER_PRESSED,
-            stage: this.state.stage
+            stage: this.state.stage,
+            layer: layer
         })
     }
 

@@ -12,7 +12,7 @@ import { StatusComponent } from './statusComponent';
 // import { LayerComponent } from './layerComponent';
 import * as ActionTypes from '../actions/action-types';
 // import {Stage} from '../models/stage';
-import {Layer} from '../models/layer';
+// import {Layer} from '../models/layer';
 import {Layers} from '../models/layers';
 
 import { PolygonTool } from '../tools/polygonTool';
@@ -35,10 +35,7 @@ export class MainComponent extends Component {
     }
 
     registerStage(stage) {
-        let layer = new Layer(stage);
-        layer.name = Layers.getNewName(this.state.layers);
-        layer.affected = true;
-
+        let layer = Layers.newLayer(stage, this.state.layers);
         this.dispatch({
             type: ActionTypes.NEW_STAGE_CREATED,
             stage: stage,
@@ -172,6 +169,7 @@ export class MainComponent extends Component {
                                     key={index}
                                     polygon={shape}
                                     displayed={layer.displayed}
+                                    color={layer.color}
                                     displayVertices={this.state.app.hoveredShape === shape ? true : false}
                                     onMouseOver={this.onMouseRollOverShape}
                                     onMouseOut={this.onMouseRollOutShape}

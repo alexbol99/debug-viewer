@@ -13,7 +13,7 @@ export class Stage extends createjs.Stage {
 
         createjs.Touch.enable(this);
         this.mouseMoveOutside = false;   // true;
-        this.enableMouseOver(1);
+        this.enableMouseOver(20);
 
         if (this.canvas.clientWidth > 0 && this.canvas.clientHeight > 0) {
             this.canvas.width = this.canvas.clientWidth;

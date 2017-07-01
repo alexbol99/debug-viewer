@@ -6,7 +6,7 @@ import * as ActionTypes from './actions/action-types';
 import {combineReducers} from 'redux';
 
 // import {Stage} from './models/stage';
-import {Layer} from './models/layer';
+// import {Layer} from './models/layer';
 import {Layers} from './models/layers';
 import { Parser } from './models/parser';
 
@@ -32,6 +32,7 @@ const defaultAppState = {
     units: "pixels",
     decimals: 0,
     divisor: 1,
+    bg: "#F1F1F1",
     hoveredShape: null,
     parser: new Parser()
 };
@@ -74,16 +75,19 @@ function layers(state = [], action) {
             return [...state, action.layer];
 
         case ActionTypes.ADD_LAYER_PRESSED:
-            let layer = new Layer(action.stage);
-            layer.name = Layers.getNewName(state);
-            return [...state, layer];
+            return [...state, action.layer];
 
         case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
+            let color = "";
+            if (!action.layer.displayed) {
+                color = Layers.getNextColor(state);
+                if (color === "") return;  // no free colors
+            }
             return state.map((layer) => {
                 if (layer !== action.layer) {
                     return layer;
                 }
-                return layer.toggleDisplayed();
+                return layer.toggleDisplayed(color);
             });
 
         case ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED:

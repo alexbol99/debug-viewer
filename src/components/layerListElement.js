@@ -13,6 +13,7 @@ export class LayerListElement extends Component {
          //     styleSheet.displayed : styleSheet.undisplayed;
 
         let displayed = this.props.layer.displayed ? "Layer-displayed" : "Layer-undisplayed"
+        let color = displayed ? this.props.layer.color : "black";
         let alpha = this.props.layer.affected ? 1 : 0;
         return this.props.layer.edited ? (
             <div
@@ -31,12 +32,12 @@ export class LayerListElement extends Component {
                         style={{flex: 2}}
                         onClick={this.props.onAffectedBoxClicked}
                     >
-                        <h4 style={{opacity: alpha}}>
+                        <h4 style={{opacity: alpha, color: color}}>
                         V
                         </h4>
                     </div>
 
-                    <h4 style={{flex:8}}>
+                    <h4 style={{flex:8, color: color}}>
                         {this.props.layer.name}
                     </h4>
 
