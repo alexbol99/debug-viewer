@@ -39,21 +39,24 @@ class App extends Component {
         for (let item of event.clipboardData.items) {
             item.getAsString( (string) => {
                 let poly = parser.parseToPolygon(string);
-                let watch = parser.parseToWatchArray(string);
+                // TODO: add something like poly.valid()
+                if (poly.edges.size > 0 && poly.faces.size > 0) {
+                    let watch = parser.parseToWatchArray(string);
 
-                let shape = new Shape(poly, this.state.stage, {}, watch);
+                    let shape = new Shape(poly, this.state.stage, {}, watch);
 
-                this.dispatch({
-                    type: ActionTypes.NEW_SHAPE_PASTED,
-                    shape: shape
-                });
+                    this.dispatch({
+                        type: ActionTypes.NEW_SHAPE_PASTED,
+                        shape: shape
+                    });
 
-                dispatch({
-                    type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-                    shape: shape
-                });
+                    dispatch({
+                        type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+                        shape: shape
+                    });
+                }
 
-            })
+            });
 
             break;
         }

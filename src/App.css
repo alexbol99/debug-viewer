@@ -63,7 +63,7 @@
 .Watch-container {
   flex-grow: 1;
   overflow-y: auto;
-  max-height: 400px;
+  /*max-height: 400px;*/
 }
 
 .Watch-element-title {
@@ -71,6 +71,12 @@
   line-height: 25px;
   overflow: hidden;
   display: flex;
+}
+
+.Aside-add-sample-polygon {
+  position: absolute;
+  bottom: 5px;
+  font-size: small;
 }
 
 .Layer {

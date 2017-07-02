@@ -37,10 +37,10 @@ export class LayersListComponent extends Component {
     }
 
     onLayerDoubleClicked(layer) {
-        this.dispatch({
-            type: ActionTypes.EDIT_LAYER_NAME_PRESSED,
-            layer: layer
-        });
+        // this.dispatch({
+        //     type: ActionTypes.EDIT_LAYER_NAME_PRESSED,
+        //     layer: layer
+        // });
     }
 
     onAffectedBoxClicked(layer) {
