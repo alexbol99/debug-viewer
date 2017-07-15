@@ -35,6 +35,19 @@ export class Layer {
         return this;
     }
 
+    get box() {
+        let box = new Flatten.Box();
+        for (let shape of this.shapes) {
+            box = box.merge(shape.box);
+        }
+        return box;
+    }
+
+    get center() {
+        let box = this.box;
+        return new Flatten.Point((box.xmin + box.xmax)/2, (box.ymin + box.ymax)/2);
+    }
+
     toggleDisplayed(color) {
         return Object.assign(this.clone(),
             {

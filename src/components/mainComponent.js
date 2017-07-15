@@ -32,6 +32,8 @@ export class MainComponent extends Component {
 
         this.buttonClicked = this.buttonClicked.bind(this);
         this.resizeStage = this.resizeStage.bind(this);
+
+        this.setHomeView = this.setHomeView.bind(this);
     }
 
     registerStage(stage) {
@@ -77,6 +79,8 @@ export class MainComponent extends Component {
 
     handleMouseUp(stageX, stageY) {
         // stop pan stage
+        // Patch bug in Firefox when dispatch is not fired
+        this.state.stage.panByMouseStop();
         this.dispatch({
             type: ActionTypes.MOUSE_UP_ON_STAGE,
             x: event.stageX,
@@ -110,6 +114,16 @@ export class MainComponent extends Component {
 
     buttonClicked() {
         alert("button clicked")
+    }
+
+    setHomeView() {
+        let layer = Layers.getAffected(this.state.layers);
+        if (!layer) return;
+        // TODO: dispatch PAN_AND_ZOOM instead ?
+        this.dispatch({
+            type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+            shape: layer
+        })
     }
 
     componentWillMount() {
@@ -159,6 +173,7 @@ export class MainComponent extends Component {
                     onMouseMove={this.handleMouseMove}
                     onMouseUp={this.handleMouseUp}
                     onMouseWheelMove={this.handleMouseWheelMove}
+                    onHomeKeyPressed={this.setHomeView}
                 />
 
                 {

@@ -188,6 +188,10 @@ function stage(state = null, action) {
             state.needToBeUpdated = true;
             return state;
 
+        // case ActionTypes.HOME_BUTTON_CLICKED:
+        //     state.needToBeUpdated = true;
+        //     return state;
+
         default:
             if (state) {
                 state.needToBeUpdated = false;

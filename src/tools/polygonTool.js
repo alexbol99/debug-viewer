@@ -16,8 +16,9 @@ import { Shape } from '../models/shape';
 // import * as ActionTypes from '../actions/action-types';
 
 export class PolygonTool extends Component {
-    constructor() {
+    constructor(params) {
         super();
+        this.vertices = undefined;
         // this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
@@ -37,18 +38,35 @@ export class PolygonTool extends Component {
 
         for (let face of polygon.geom.faces) {
             let edge = face.first;
-            let style = {
-                fill: this.props.color
-            };
-
             do {
                 let geom = edge.start;   // Point
-                let vertex = new Shape(geom, parent, style);
+                let vertex = new Shape(geom, parent);
                 vertices.push(vertex);
                 edge = edge.next;
             } while (edge !== face.first);
         }
         return vertices;
+    }
+
+    redraw(polygon) {
+        // Draw polygon
+        polygon.redraw({
+            stroke: this.props.color,
+            fill: this.props.displayVertices ? "white" : this.props.color,
+            alpha: this.props.displayed ? 0.6 : 0.0
+        });
+
+        if (!this.props.displayed)
+            return;
+
+        /* Update  vertices */
+        for (let vertex of this.vertices) {
+            vertex.redraw({
+                stroke: this.props.color,
+                fill: this.props.color,
+                alpha: this.props.displayVertices ? 1.0 : 0.0
+            });
+        }
     }
 
     componentWillMount() {
@@ -57,6 +75,8 @@ export class PolygonTool extends Component {
     componentDidMount() {
         this.props.polygon.on("mouseover",this.handleMouseOver);
         this.props.polygon.on("mouseout",this.handleMouseOut);
+        this.vertices = this.createVertices(this.props.polygon);
+        this.redraw(this.props.polygon);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -68,37 +88,27 @@ export class PolygonTool extends Component {
     }
 
     componentDidUpdate() {
-        // Draw polygon
-        let style = this.props.displayed ? {
-            stroke: this.props.color,
-            fill: this.props.displayVertices ? "white" : this.props.color,
-            alpha: 0.6
-        } : {
-            alpha: 0.0
-        };
-        let polygon = this.props.polygon.redraw(style);
+        this.redraw(this.props.polygon);
 
-        if (!this.props.displayed)
-            return;
+        // let vertices = this.props.polygon.vertices;
 
-        let vertices = this.props.polygon.vertices;
-
-        // Remove old vertices
-        for (let oldVertex of vertices) {
-            oldVertex.parent.removeChild(oldVertex);
-        }
-
-        // Create new vertices
-        vertices = [];
-        if (this.props.displayVertices) {
-            vertices = this.createVertices(polygon);
-        }
-        polygon.vertices = vertices;
+        // // Remove old vertices
+        // for (let oldVertex of vertices) {
+        //     oldVertex.parent.removeChild(oldVertex);
+        // }
+        //
+        // // Create new vertices
+        // if (this.props.displayVertices) {
+        //     this.vertices = this.createVertices(polygon);
+        // }
+        // polygon.vertices = vertices;
 
     }
 
     componentWillUnmount() {
-
+        this.vertices = undefined;
+        this.props.polygon.off("mouseover",this.handleMouseOver);
+        this.props.polygon.off("mouseout",this.handleMouseOut);
     }
 
     render() {

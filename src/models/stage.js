@@ -111,7 +111,7 @@ export class Stage extends createjs.Stage {
         let resolution = Math.min(this.canvas.width / (1.1*width), this.canvas.height / (1.1*height));
         let zoomFactor = resolution / this.resolution;
         let ratio = zoomFactor / this.zoomFactor;
-        let bIn = ratio > 1;
+        let bIn = true; //ratio > 1;
 
         let focusX = this.canvas.width/2;
         let focusY = this.canvas.height/2;

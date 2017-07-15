@@ -17,7 +17,6 @@ export class Shape extends createjs.Shape {
         this.graphics = this.setGraphics(style);
         this.watch = watch;
         this.expanded = false;
-        this.vertices = [];
     }
 
     get box() {
