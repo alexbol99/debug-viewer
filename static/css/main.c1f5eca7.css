@@ -7,7 +7,8 @@
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
-          flex-direction: column
+          flex-direction: column;
+  overflow: hidden;
 }
 
 .App-body {
@@ -255,4 +256,4 @@ html,body {
   height:100%;
 }
 
-/*# sourceMappingURL=main.fa8685fa.css.map*/
+/*# sourceMappingURL=main.c1f5eca7.css.map*/

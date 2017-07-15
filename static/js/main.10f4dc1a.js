@@ -2221,6 +2221,7 @@
 	var MOUSE_ROLL_OVER_SHAPE = exports.MOUSE_ROLL_OVER_SHAPE = "MOUSE_ROLL_OVER_SHAPE";
 	var MOUSE_ROLL_OUT_SHAPE = exports.MOUSE_ROLL_OUT_SHAPE = "MOUSE_ROLL_OUT_SHAPE";
 	
+	// export const HOME_BUTTON_CLICKED = "HOME_BUTTON_CLICKED";
 	var PAN_TO_COORDINATE = exports.PAN_TO_COORDINATE = "PAN_TO_COORDINATE";
 	var PAN_AND_ZOOM_TO_SHAPE = exports.PAN_AND_ZOOM_TO_SHAPE = "PAN_AND_ZOOM_TO_SHAPE";
 	
@@ -2291,7 +2292,6 @@
 	        _this.graphics = _this.setGraphics(style);
 	        _this.watch = watch;
 	        _this.expanded = false;
-	        _this.vertices = [];
 	        return _this;
 	    }
 	
@@ -24427,6 +24427,8 @@
 	
 	        _this.buttonClicked = _this.buttonClicked.bind(_this);
 	        _this.resizeStage = _this.resizeStage.bind(_this);
+	
+	        _this.setHomeView = _this.setHomeView.bind(_this);
 	        return _this;
 	    }
 	
@@ -24480,6 +24482,8 @@
 	        key: 'handleMouseUp',
 	        value: function handleMouseUp(stageX, stageY) {
 	            // stop pan stage
+	            // Patch bug in Firefox when dispatch is not fired
+	            this.state.stage.panByMouseStop();
 	            this.dispatch({
 	                type: ActionTypes.MOUSE_UP_ON_STAGE,
 	                x: event.stageX,
@@ -24517,6 +24521,17 @@
 	        key: 'buttonClicked',
 	        value: function buttonClicked() {
 	            alert("button clicked");
+	        }
+	    }, {
+	        key: 'setHomeView',
+	        value: function setHomeView() {
+	            var layer = _layers.Layers.getAffected(this.state.layers);
+	            if (!layer) return;
+	            // TODO: dispatch PAN_AND_ZOOM instead ?
+	            this.dispatch({
+	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                shape: layer
+	            });
 	        }
 	    }, {
 	        key: 'componentWillMount',
@@ -24572,7 +24587,8 @@
 	                    onMouseDown: this.handleMouseDown,
 	                    onMouseMove: this.handleMouseMove,
 	                    onMouseUp: this.handleMouseUp,
-	                    onMouseWheelMove: this.handleMouseWheelMove
+	                    onMouseWheelMove: this.handleMouseWheelMove,
+	                    onHomeKeyPressed: this.setHomeView
 	                }),
 	                this.state.layers.map(function (layer) {
 	                    return [].concat(_toConsumableArray(layer.shapes)).map(function (shape, index) {
@@ -24655,14 +24671,18 @@
 	        _this.handleMouseMove = _this.handleMouseMove.bind(_this);
 	        _this.handleMouseDown = _this.handleMouseDown.bind(_this);
 	        _this.handleMouseUp = _this.handleMouseUp.bind(_this);
+	        _this.handleMouseLeave = _this.handleMouseLeave.bind(_this);
 	        _this.handleMouseWheel = _this.handleMouseWheel.bind(_this);
 	        _this.handleMouseWheelFox = _this.handleMouseWheelFox.bind(_this);
+	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
+	        _this.handleKeyUp = _this.handleKeyUp.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(StageComponent, [{
 	        key: 'handleMouseMove',
 	        value: function handleMouseMove(event) {
+	            this.props.stage.canvas.focus();
 	            this.props.onMouseMove(event.stageX, event.stageY);
 	        }
 	    }, {
@@ -24673,7 +24693,16 @@
 	    }, {
 	        key: 'handleMouseUp',
 	        value: function handleMouseUp(event) {
+	            event.stopPropagation();
+	            event.preventDefault();
 	            this.props.onMouseUp(event.stageX, event.stageY);
+	        }
+	    }, {
+	        key: 'handleMouseLeave',
+	        value: function handleMouseLeave(event) {
+	            // nothing works except click
+	            this.props.stage.canvas.blur();
+	            document.body.focus();
 	        }
 	    }, {
 	        key: 'handleMouseWheel',
@@ -24694,6 +24723,36 @@
 	            }
 	        }
 	    }, {
+	        key: 'handleKeyDown',
+	        value: function handleKeyDown(e) {
+	            // let ctrl = e.ctrlKey;
+	            if (e.target.id !== "mainCanvas") return;
+	            switch (e.code) {
+	                case "KeyH":
+	                    this.props.onHomeKeyPressed();
+	                    // _graphicsView.goHome(true);   /* keep input coordinates == true */
+	                    break;
+	
+	                case "KeyW":
+	                    // _graphicsView.toggleWidthMode()      // toggle width On/Off in graphics model
+	                    break;
+	
+	                case "ArrowRight":
+	                    break;
+	                case "ArrowLeft":
+	                    break;
+	                case "ArrowUp":
+	                    break;
+	                case "ArrowDown":
+	                    break;
+	                default:
+	                    break;
+	            }
+	        }
+	    }, {
+	        key: 'handleKeyUp',
+	        value: function handleKeyUp(event) {}
+	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            // this.dispatch = this.props.store.dispatch;
@@ -24707,8 +24766,15 @@
 	            stage.on("stagemousemove", this.handleMouseMove);
 	            stage.on("stagemousedown", this.handleMouseDown);
 	            stage.on("stagemouseup", this.handleMouseUp);
+	            stage.on("mouseleave", this.handleMouseLeave);
 	            stage.canvas.addEventListener("mousewheel", this.handleMouseWheel);
 	            stage.canvas.addEventListener("DOMMouseScroll", this.handleMouseWheelFox);
+	
+	            // Keyboard event
+	            // var _keydown = _.throttle(this.keydown, 100);
+	            document.addEventListener('keydown', this.handleKeyDown);
+	            // var _keyup = _.throttle(this.keyup, 500);
+	            document.addEventListener('keyup', this.handleKeyUp);
 	
 	            this.props.onStageCreated(stage);
 	        }
@@ -24730,7 +24796,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('canvas', { ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' });
+	            return _react2.default.createElement('canvas', { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' });
 	        }
 	    }]);
 	
@@ -25062,6 +25128,43 @@
 	
 	            return this;
 	        }
+	    }, {
+	        key: 'box',
+	        get: function get() {
+	            var box = new _flattenJs2.default.Box();
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = this.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var shape = _step3.value;
+	
+	                    box = box.merge(shape.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            return box;
+	        }
+	    }, {
+	        key: 'center',
+	        get: function get() {
+	            var box = this.box;
+	            return new _flattenJs2.default.Point((box.xmin + box.xmax) / 2, (box.ymin + box.ymax) / 2);
+	        }
 	    }]);
 
 	    return Layer;
@@ -25355,7 +25458,7 @@
 	            var resolution = Math.min(this.canvas.width / (1.1 * width), this.canvas.height / (1.1 * height));
 	            var zoomFactor = resolution / this.resolution;
 	            var ratio = zoomFactor / this.zoomFactor;
-	            var bIn = ratio > 1;
+	            var bIn = true; //ratio > 1;
 	
 	            var focusX = this.canvas.width / 2;
 	            var focusY = this.canvas.height / 2;
@@ -25638,6 +25741,10 @@
 	            state.needToBeUpdated = true;
 	            return state;
 	
+	        // case ActionTypes.HOME_BUTTON_CLICKED:
+	        //     state.needToBeUpdated = true;
+	        //     return state;
+	
 	        default:
 	            if (state) {
 	                state.needToBeUpdated = false;
@@ -25731,12 +25838,13 @@
 	var PolygonTool = exports.PolygonTool = function (_Component) {
 	    _inherits(PolygonTool, _Component);
 	
-	    function PolygonTool() {
+	    function PolygonTool(params) {
 	        _classCallCheck(this, PolygonTool);
 	
-	        // this.handleMouseMove = this.handleMouseMove.bind(this);
 	        var _this = _possibleConstructorReturn(this, (PolygonTool.__proto__ || Object.getPrototypeOf(PolygonTool)).call(this));
 	
+	        _this.vertices = undefined;
+	        // this.handleMouseMove = this.handleMouseMove.bind(this);
 	        _this.handleMouseOver = _this.handleMouseOver.bind(_this);
 	        _this.handleMouseOut = _this.handleMouseOut.bind(_this);
 	        return _this;
@@ -25767,13 +25875,9 @@
 	                    var face = _step.value;
 	
 	                    var edge = face.first;
-	                    var style = {
-	                        fill: this.props.color
-	                    };
-	
 	                    do {
 	                        var geom = edge.start; // Point
-	                        var vertex = new _shape.Shape(geom, parent, style);
+	                        var vertex = new _shape.Shape(geom, parent);
 	                        vertices.push(vertex);
 	                        edge = edge.next;
 	                    } while (edge !== face.first);
@@ -25796,52 +25900,32 @@
 	            return vertices;
 	        }
 	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {}
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            this.props.polygon.on("mouseover", this.handleMouseOver);
-	            this.props.polygon.on("mouseout", this.handleMouseOut);
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {}
-	    }, {
-	        key: 'shouldComponentUpdate',
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return true;
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
+	        key: 'redraw',
+	        value: function redraw(polygon) {
 	            // Draw polygon
-	            var style = this.props.displayed ? {
+	            polygon.redraw({
 	                stroke: this.props.color,
 	                fill: this.props.displayVertices ? "white" : this.props.color,
-	                alpha: 0.6
-	            } : {
-	                alpha: 0.0
-	            };
-	            var polygon = this.props.polygon.redraw(style);
+	                alpha: this.props.displayed ? 0.6 : 0.0
+	            });
 	
 	            if (!this.props.displayed) return;
 	
-	            var vertices = this.props.polygon.vertices;
-	
-	            // Remove old vertices
+	            /* Update  vertices */
 	            var _iteratorNormalCompletion2 = true;
 	            var _didIteratorError2 = false;
 	            var _iteratorError2 = undefined;
 	
 	            try {
-	                for (var _iterator2 = vertices[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var oldVertex = _step2.value;
+	                for (var _iterator2 = this.vertices[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var vertex = _step2.value;
 	
-	                    oldVertex.parent.removeChild(oldVertex);
+	                    vertex.redraw({
+	                        stroke: this.props.color,
+	                        fill: this.props.color,
+	                        alpha: this.props.displayVertices ? 1.0 : 0.0
+	                    });
 	                }
-	
-	                // Create new vertices
 	            } catch (err) {
 	                _didIteratorError2 = true;
 	                _iteratorError2 = err;
@@ -25856,16 +25940,51 @@
 	                    }
 	                }
 	            }
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {}
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.props.polygon.on("mouseover", this.handleMouseOver);
+	            this.props.polygon.on("mouseout", this.handleMouseOut);
+	            this.vertices = this.createVertices(this.props.polygon);
+	            this.redraw(this.props.polygon);
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {}
+	    }, {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            return true;
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            this.redraw(this.props.polygon);
 	
-	            vertices = [];
-	            if (this.props.displayVertices) {
-	                vertices = this.createVertices(polygon);
-	            }
-	            polygon.vertices = vertices;
+	            // let vertices = this.props.polygon.vertices;
+	
+	            // // Remove old vertices
+	            // for (let oldVertex of vertices) {
+	            //     oldVertex.parent.removeChild(oldVertex);
+	            // }
+	            //
+	            // // Create new vertices
+	            // if (this.props.displayVertices) {
+	            //     this.vertices = this.createVertices(polygon);
+	            // }
+	            // polygon.vertices = vertices;
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {}
+	        value: function componentWillUnmount() {
+	            this.vertices = undefined;
+	            this.props.polygon.off("mouseover", this.handleMouseOver);
+	            this.props.polygon.off("mouseout", this.handleMouseOut);
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -41406,4 +41525,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.684b108a.js.map
+//# sourceMappingURL=main.10f4dc1a.js.map
