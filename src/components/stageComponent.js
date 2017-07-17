@@ -76,7 +76,7 @@ export class StageComponent extends Component {
                 break;
 
             case "KeyW":
-                // _graphicsView.toggleWidthMode()      // toggle width On/Off in graphics model
+                this.props.onToggleWidthModePressed();     // toggle width On/Off in graphics model
                 break;
 
             case "ArrowRight":

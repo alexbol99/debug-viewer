@@ -3,7 +3,7 @@
  */
 
 import {Component} from 'react';
-// import createjs from 'easel-js';
+import createjs from 'easel-js';
 
 import '../App.css';
 
@@ -52,7 +52,7 @@ export class PolygonTool extends Component {
         // Draw polygon
         polygon.redraw({
             stroke: this.props.color,
-            fill: this.props.displayVertices ? "white" : this.props.color,
+            fill: (this.props.widthOn && !this.props.displayVertices) ? this.props.color : "white",
             alpha: this.props.displayed ? 0.6 : 0.0
         });
 
@@ -84,7 +84,8 @@ export class PolygonTool extends Component {
 
 
     shouldComponentUpdate(nextProps, nextState) {
-        return true;
+        // while parent == stage, we can use needToBeUpdated flag
+        return true; // nextProps.polygon.parent.needToBeUpdated;
     }
 
     componentDidUpdate() {

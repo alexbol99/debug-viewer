@@ -34,6 +34,7 @@ export class MainComponent extends Component {
         this.resizeStage = this.resizeStage.bind(this);
 
         this.setHomeView = this.setHomeView.bind(this);
+        this.toggleWidthMode = this.toggleWidthMode.bind(this);
     }
 
     registerStage(stage) {
@@ -126,6 +127,13 @@ export class MainComponent extends Component {
         })
     }
 
+    toggleWidthMode() {
+        this.dispatch({
+            type: ActionTypes.TOGGLE_WIDTH_MODE_CLICKED
+        })
+
+    }
+
     componentWillMount() {
         this.dispatch = this.props.store.dispatch;
         this.setState(this.props.store.getState());
@@ -174,6 +182,7 @@ export class MainComponent extends Component {
                     onMouseUp={this.handleMouseUp}
                     onMouseWheelMove={this.handleMouseWheelMove}
                     onHomeKeyPressed={this.setHomeView}
+                    onToggleWidthModePressed={this.toggleWidthMode}
                 />
 
                 {
@@ -185,6 +194,7 @@ export class MainComponent extends Component {
                                     polygon={shape}
                                     displayed={layer.displayed}
                                     color={layer.color}
+                                    widthOn={this.state.app.widthOn}
                                     displayVertices={this.state.app.hoveredShape === shape ? true : false}
                                     onMouseOver={this.onMouseRollOverShape}
                                     onMouseOut={this.onMouseRollOutShape}

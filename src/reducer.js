@@ -34,7 +34,8 @@ const defaultAppState = {
     divisor: 1,
     bg: "#F1F1F1",
     hoveredShape: null,
-    parser: new Parser()
+    parser: new Parser(),
+    widthOn: true
 };
 
 const defaultMouseState = {
@@ -63,6 +64,10 @@ function app(state = defaultAppState, action) {
         case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
             return Object.assign({}, state, {
                 hoveredShape:null
+            });
+        case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
+            return Object.assign({}, state, {
+                widthOn: !state.widthOn
             });
         default:
             return state;
