@@ -917,12 +917,6 @@
 
 /***/ },
 /* 11 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1194,7 +1188,7 @@
 	}
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports) {
 
 	/**
@@ -1229,6 +1223,12 @@
 	module.exports = ReactCurrentOwner;
 
 /***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
 /* 14 */
 [236, 3],
 /* 15 */
@@ -1246,10 +1246,10 @@
 	
 	'use strict';
 	
-	var DOMNamespaces = __webpack_require__(38);
+	var DOMNamespaces = __webpack_require__(37);
 	var setInnerHTML = __webpack_require__(34);
 	
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(46);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(45);
 	var setTextContent = __webpack_require__(82);
 	
 	var ELEMENT_NODE_TYPE = 1;
@@ -1757,7 +1757,7 @@
 	var _assign = __webpack_require__(4);
 	
 	var ReactChildren = __webpack_require__(218);
-	var ReactComponent = __webpack_require__(53);
+	var ReactComponent = __webpack_require__(52);
 	var ReactPureComponent = __webpack_require__(223);
 	var ReactClass = __webpack_require__(219);
 	var ReactDOMFactories = __webpack_require__(220);
@@ -1864,7 +1864,7 @@
 	
 	var _assign = __webpack_require__(4);
 	
-	var ReactCurrentOwner = __webpack_require__(13);
+	var ReactCurrentOwner = __webpack_require__(12);
 	
 	var warning = __webpack_require__(2);
 	var canDefineProperty = __webpack_require__(86);
@@ -2232,6 +2232,8 @@
 	var EDIT_LAYER_NAME_PRESSED = exports.EDIT_LAYER_NAME_PRESSED = "EDIT_LAYER_NAME_PRESSED";
 	
 	var TOGGLE_WATCH_EXPAND_CLICKED = exports.TOGGLE_WATCH_EXPAND_CLICKED = "TOGGLE_WATCH_EXPAND_CLICKED";
+	
+	var INPUT_FILE_LOADED = exports.INPUT_FILE_LOADED = "INPUT_FILE_LOADED";
 
 /***/ },
 /* 22 */
@@ -2246,13 +2248,15 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _flattenJs = __webpack_require__(29);
+	var _flattenJs = __webpack_require__(24);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _easelJs = __webpack_require__(35);
+	var _easeljsNEXTCombined = __webpack_require__(54);
 	
-	var _easelJs2 = _interopRequireDefault(_easelJs);
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2265,6 +2269,9 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import createjs from 'easel-js';
+	
 	
 	var Point = _flattenJs2.default.Point,
 	    Segment = _flattenJs2.default.Segment,
@@ -2326,7 +2333,7 @@
 	        key: 'setGraphicsPoint',
 	        value: function setGraphicsPoint(style) {
 	            var pt = this.stage.W2C(this.geom);
-	            var graphics = new _easelJs2.default.Graphics();
+	            var graphics = new createjs.Graphics();
 	            var radius = style && style.radius ? style.radius : 3;
 	            var fill = style && style.fill ? style.fill : "red";
 	            return graphics.beginFill(fill).drawCircle(pt.x, pt.y, radius);
@@ -2336,7 +2343,7 @@
 	        value: function setGraphicsSegment(style) {
 	            var ps = this.stage.W2C(this.geom.ps);
 	            var pe = this.stage.W2C(this.geom.pe);
-	            var graphics = new _easelJs2.default.Graphics();
+	            var graphics = new createjs.Graphics();
 	            var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
 	            var stroke = style && style.stroke ? style.stroke : "black";
 	            return graphics.setStrokeStyle(strokeStyle).beginStroke(stroke).moveTo(ps.x, ps.y).lineTo(pe.x, pe.y).endStroke();
@@ -2348,7 +2355,7 @@
 	            var r = this.stage.W2C_Scalar(this.geom.r);
 	            var startAngle = 2 * Math.PI - this.geom.startAngle;
 	            var endAngle = 2 * Math.PI - this.geom.endAngle;
-	            var graphics = new _easelJs2.default.Graphics();
+	            var graphics = new createjs.Graphics();
 	            var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
 	            var stroke = style && style.stroke ? style.stroke : "black";
 	            return graphics.setStrokeStyle(strokeStyle).beginStroke(stroke).arc(pc.x, pc.y, r, startAngle, endAngle, this.geom.counterClockwise).endStroke();
@@ -2358,7 +2365,7 @@
 	        value: function setGraphicsCircle(style) {
 	            var pc = this.stage.W2C(this.geom.pc);
 	            var r = this.stage.W2C_Scalar(this.geom.r);
-	            var graphics = new _easelJs2.default.Graphics();
+	            var graphics = new createjs.Graphics();
 	            var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
 	            var stroke = style && style.stroke ? style.stroke : "black";
 	            // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
@@ -2367,7 +2374,7 @@
 	    }, {
 	        key: 'setGraphicsPolygon',
 	        value: function setGraphicsPolygon(style) {
-	            var graphics = new _easelJs2.default.Graphics();
+	            var graphics = new createjs.Graphics();
 	            var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
 	            var stroke = style && style.stroke ? style.stroke : "#FF0303";
 	            var fill = style && style.fill ? style.fill : "#FF0303";
@@ -2454,7 +2461,7 @@
 	    }]);
 	
 	    return Shape;
-	}(_easelJs2.default.Shape);
+	}(createjs.Shape);
 
 /***/ },
 /* 23 */
@@ -2485,6 +2492,53 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Created by Alex Bol on 2/18/2017.
+	 */
+	'use strict';
+	
+	let Utils = __webpack_require__(136);
+	let Errors = __webpack_require__(135);
+	
+	/**
+	 * FlattenJS - library for 2d geometry
+	 * @type {Flatten}
+	 */
+	let Flatten = class Flatten {
+	    constructor() {
+	        this.version = "0.0.1";
+	        this.DP_TOL = Utils.DP_TOL;
+	        this.CCW = true;
+	        this.CW = false;
+	        this.ORIENTATION = {CCW:-1, CW:1, NOT_ORIENTABLE: 0};
+	        this.PIx2 = 2 * Math.PI;
+	        this.PI_2 = 0.5 * Math.PI;
+	        this.Utils = Utils;
+	        this.Errors = Errors;
+	    }
+	};
+	
+	let f = new Flatten();
+	
+	__webpack_require__(134)(f);
+	__webpack_require__(130)(f);
+	__webpack_require__(133)(f);
+	__webpack_require__(129)(f);
+	__webpack_require__(126)(f);
+	__webpack_require__(132)(f);
+	__webpack_require__(124)(f);
+	__webpack_require__(125)(f);
+	__webpack_require__(127)(f);
+	__webpack_require__(128)(f);
+	__webpack_require__(131)(f);
+	
+	module.exports = f;
+
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Copyright 2013-present, Facebook, Inc.
 	 * All rights reserved.
 	 *
@@ -2498,9 +2552,9 @@
 	
 	var _prodInvariant = __webpack_require__(3);
 	
-	var EventPluginRegistry = __webpack_require__(39);
-	var EventPluginUtils = __webpack_require__(40);
-	var ReactErrorUtils = __webpack_require__(44);
+	var EventPluginRegistry = __webpack_require__(38);
+	var EventPluginUtils = __webpack_require__(39);
+	var ReactErrorUtils = __webpack_require__(43);
 	
 	var accumulateInto = __webpack_require__(76);
 	var forEachAccumulated = __webpack_require__(77);
@@ -2763,7 +2817,7 @@
 	module.exports = EventPluginHub;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2778,8 +2832,8 @@
 	
 	'use strict';
 	
-	var EventPluginHub = __webpack_require__(24);
-	var EventPluginUtils = __webpack_require__(40);
+	var EventPluginHub = __webpack_require__(25);
+	var EventPluginUtils = __webpack_require__(39);
 	
 	var accumulateInto = __webpack_require__(76);
 	var forEachAccumulated = __webpack_require__(77);
@@ -2901,7 +2955,7 @@
 	module.exports = EventPropagators;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	/**
@@ -2953,7 +3007,7 @@
 	module.exports = ReactInstanceMap;
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2968,9 +3022,9 @@
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	
-	var getEventTarget = __webpack_require__(49);
+	var getEventTarget = __webpack_require__(48);
 	
 	/**
 	 * @interface UIEvent
@@ -3016,7 +3070,7 @@
 	module.exports = SyntheticUIEvent;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3129,53 +3183,6 @@
 	}();
 
 /***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by Alex Bol on 2/18/2017.
-	 */
-	'use strict';
-	
-	let Utils = __webpack_require__(136);
-	let Errors = __webpack_require__(135);
-	
-	/**
-	 * FlattenJS - library for 2d geometry
-	 * @type {Flatten}
-	 */
-	let Flatten = class Flatten {
-	    constructor() {
-	        this.version = "0.0.1";
-	        this.DP_TOL = Utils.DP_TOL;
-	        this.CCW = true;
-	        this.CW = false;
-	        this.ORIENTATION = {CCW:-1, CW:1, NOT_ORIENTABLE: 0};
-	        this.PIx2 = 2 * Math.PI;
-	        this.PI_2 = 0.5 * Math.PI;
-	        this.Utils = Utils;
-	        this.Errors = Errors;
-	    }
-	};
-	
-	let f = new Flatten();
-	
-	__webpack_require__(134)(f);
-	__webpack_require__(130)(f);
-	__webpack_require__(133)(f);
-	__webpack_require__(129)(f);
-	__webpack_require__(126)(f);
-	__webpack_require__(132)(f);
-	__webpack_require__(124)(f);
-	__webpack_require__(125)(f);
-	__webpack_require__(127)(f);
-	__webpack_require__(128)(f);
-	__webpack_require__(131)(f);
-	
-	module.exports = f;
-
-
-/***/ },
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3193,12 +3200,12 @@
 	
 	var _assign = __webpack_require__(4);
 	
-	var EventPluginRegistry = __webpack_require__(39);
+	var EventPluginRegistry = __webpack_require__(38);
 	var ReactEventEmitterMixin = __webpack_require__(179);
 	var ViewportMetrics = __webpack_require__(75);
 	
 	var getVendorPrefixedEventName = __webpack_require__(211);
-	var isEventSupported = __webpack_require__(50);
+	var isEventSupported = __webpack_require__(49);
 	
 	/**
 	 * Summary of `ReactBrowserEventEmitter` event handling:
@@ -3523,10 +3530,10 @@
 	
 	'use strict';
 	
-	var SyntheticUIEvent = __webpack_require__(27);
+	var SyntheticUIEvent = __webpack_require__(28);
 	var ViewportMetrics = __webpack_require__(75);
 	
-	var getEventModifierState = __webpack_require__(48);
+	var getEventModifierState = __webpack_require__(47);
 	
 	/**
 	 * @interface MouseEvent
@@ -3956,12 +3963,12 @@
 	'use strict';
 	
 	var ExecutionEnvironment = __webpack_require__(6);
-	var DOMNamespaces = __webpack_require__(38);
+	var DOMNamespaces = __webpack_require__(37);
 	
 	var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 	var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
 	
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(46);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(45);
 	
 	// SVG temp container for IE lacking innerHTML
 	var reusableSVGContainer;
@@ -4045,6 +4052,2284 @@
 /* 35 */
 /***/ function(module, exports) {
 
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 * 
+	 */
+	
+	/*eslint-disable no-self-compare */
+	
+	'use strict';
+	
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	
+	/**
+	 * inlined Object.is polyfill to avoid requiring consumers ship their own
+	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+	 */
+	function is(x, y) {
+	  // SameValue algorithm
+	  if (x === y) {
+	    // Steps 1-5, 7-10
+	    // Steps 6.b-6.e: +0 != -0
+	    // Added the nonzero y check to make Flow happy, but it is redundant
+	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+	  } else {
+	    // Step 6.a: NaN == NaN
+	    return x !== x && y !== y;
+	  }
+	}
+	
+	/**
+	 * Performs equality by iterating through keys on an object and returning false
+	 * when any key has values which are not strictly equal between the arguments.
+	 * Returns true when the values of all keys are strictly equal.
+	 */
+	function shallowEqual(objA, objB) {
+	  if (is(objA, objB)) {
+	    return true;
+	  }
+	
+	  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+	    return false;
+	  }
+	
+	  var keysA = Object.keys(objA);
+	  var keysB = Object.keys(objB);
+	
+	  if (keysA.length !== keysB.length) {
+	    return false;
+	  }
+	
+	  // Test for A's keys different from B.
+	  for (var i = 0; i < keysA.length; i++) {
+	    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+	      return false;
+	    }
+	  }
+	
+	  return true;
+	}
+	
+	module.exports = shallowEqual;
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var DOMLazyTree = __webpack_require__(15);
+	var Danger = __webpack_require__(156);
+	var ReactDOMComponentTree = __webpack_require__(5);
+	var ReactInstrumentation = __webpack_require__(8);
+	
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(45);
+	var setInnerHTML = __webpack_require__(34);
+	var setTextContent = __webpack_require__(82);
+	
+	function getNodeAfter(parentNode, node) {
+	  // Special case for text components, which return [open, close] comments
+	  // from getHostNode.
+	  if (Array.isArray(node)) {
+	    node = node[1];
+	  }
+	  return node ? node.nextSibling : parentNode.firstChild;
+	}
+	
+	/**
+	 * Inserts `childNode` as a child of `parentNode` at the `index`.
+	 *
+	 * @param {DOMElement} parentNode Parent node in which to insert.
+	 * @param {DOMElement} childNode Child node to insert.
+	 * @param {number} index Index at which to insert the child.
+	 * @internal
+	 */
+	var insertChildAt = createMicrosoftUnsafeLocalFunction(function (parentNode, childNode, referenceNode) {
+	  // We rely exclusively on `insertBefore(node, null)` instead of also using
+	  // `appendChild(node)`. (Using `undefined` is not allowed by all browsers so
+	  // we are careful to use `null`.)
+	  parentNode.insertBefore(childNode, referenceNode);
+	});
+	
+	function insertLazyTreeChildAt(parentNode, childTree, referenceNode) {
+	  DOMLazyTree.insertTreeBefore(parentNode, childTree, referenceNode);
+	}
+	
+	function moveChild(parentNode, childNode, referenceNode) {
+	  if (Array.isArray(childNode)) {
+	    moveDelimitedText(parentNode, childNode[0], childNode[1], referenceNode);
+	  } else {
+	    insertChildAt(parentNode, childNode, referenceNode);
+	  }
+	}
+	
+	function removeChild(parentNode, childNode) {
+	  if (Array.isArray(childNode)) {
+	    var closingComment = childNode[1];
+	    childNode = childNode[0];
+	    removeDelimitedText(parentNode, childNode, closingComment);
+	    parentNode.removeChild(closingComment);
+	  }
+	  parentNode.removeChild(childNode);
+	}
+	
+	function moveDelimitedText(parentNode, openingComment, closingComment, referenceNode) {
+	  var node = openingComment;
+	  while (true) {
+	    var nextNode = node.nextSibling;
+	    insertChildAt(parentNode, node, referenceNode);
+	    if (node === closingComment) {
+	      break;
+	    }
+	    node = nextNode;
+	  }
+	}
+	
+	function removeDelimitedText(parentNode, startNode, closingComment) {
+	  while (true) {
+	    var node = startNode.nextSibling;
+	    if (node === closingComment) {
+	      // The closing comment is removed by ReactMultiChild.
+	      break;
+	    } else {
+	      parentNode.removeChild(node);
+	    }
+	  }
+	}
+	
+	function replaceDelimitedText(openingComment, closingComment, stringText) {
+	  var parentNode = openingComment.parentNode;
+	  var nodeAfterComment = openingComment.nextSibling;
+	  if (nodeAfterComment === closingComment) {
+	    // There are no text nodes between the opening and closing comments; insert
+	    // a new one if stringText isn't empty.
+	    if (stringText) {
+	      insertChildAt(parentNode, document.createTextNode(stringText), nodeAfterComment);
+	    }
+	  } else {
+	    if (stringText) {
+	      // Set the text content of the first node after the opening comment, and
+	      // remove all following nodes up until the closing comment.
+	      setTextContent(nodeAfterComment, stringText);
+	      removeDelimitedText(parentNode, nodeAfterComment, closingComment);
+	    } else {
+	      removeDelimitedText(parentNode, openingComment, closingComment);
+	    }
+	  }
+	
+	  if (false) {
+	    ReactInstrumentation.debugTool.onHostOperation({
+	      instanceID: ReactDOMComponentTree.getInstanceFromNode(openingComment)._debugID,
+	      type: 'replace text',
+	      payload: stringText
+	    });
+	  }
+	}
+	
+	var dangerouslyReplaceNodeWithMarkup = Danger.dangerouslyReplaceNodeWithMarkup;
+	if (false) {
+	  dangerouslyReplaceNodeWithMarkup = function (oldChild, markup, prevInstance) {
+	    Danger.dangerouslyReplaceNodeWithMarkup(oldChild, markup);
+	    if (prevInstance._debugID !== 0) {
+	      ReactInstrumentation.debugTool.onHostOperation({
+	        instanceID: prevInstance._debugID,
+	        type: 'replace with',
+	        payload: markup.toString()
+	      });
+	    } else {
+	      var nextInstance = ReactDOMComponentTree.getInstanceFromNode(markup.node);
+	      if (nextInstance._debugID !== 0) {
+	        ReactInstrumentation.debugTool.onHostOperation({
+	          instanceID: nextInstance._debugID,
+	          type: 'mount',
+	          payload: markup.toString()
+	        });
+	      }
+	    }
+	  };
+	}
+	
+	/**
+	 * Operations for updating with DOM children.
+	 */
+	var DOMChildrenOperations = {
+	
+	  dangerouslyReplaceNodeWithMarkup: dangerouslyReplaceNodeWithMarkup,
+	
+	  replaceDelimitedText: replaceDelimitedText,
+	
+	  /**
+	   * Updates a component's children by processing a series of updates. The
+	   * update configurations are each expected to have a `parentNode` property.
+	   *
+	   * @param {array<object>} updates List of update configurations.
+	   * @internal
+	   */
+	  processUpdates: function (parentNode, updates) {
+	    if (false) {
+	      var parentNodeDebugID = ReactDOMComponentTree.getInstanceFromNode(parentNode)._debugID;
+	    }
+	
+	    for (var k = 0; k < updates.length; k++) {
+	      var update = updates[k];
+	      switch (update.type) {
+	        case 'INSERT_MARKUP':
+	          insertLazyTreeChildAt(parentNode, update.content, getNodeAfter(parentNode, update.afterNode));
+	          if (false) {
+	            ReactInstrumentation.debugTool.onHostOperation({
+	              instanceID: parentNodeDebugID,
+	              type: 'insert child',
+	              payload: { toIndex: update.toIndex, content: update.content.toString() }
+	            });
+	          }
+	          break;
+	        case 'MOVE_EXISTING':
+	          moveChild(parentNode, update.fromNode, getNodeAfter(parentNode, update.afterNode));
+	          if (false) {
+	            ReactInstrumentation.debugTool.onHostOperation({
+	              instanceID: parentNodeDebugID,
+	              type: 'move child',
+	              payload: { fromIndex: update.fromIndex, toIndex: update.toIndex }
+	            });
+	          }
+	          break;
+	        case 'SET_MARKUP':
+	          setInnerHTML(parentNode, update.content);
+	          if (false) {
+	            ReactInstrumentation.debugTool.onHostOperation({
+	              instanceID: parentNodeDebugID,
+	              type: 'replace children',
+	              payload: update.content.toString()
+	            });
+	          }
+	          break;
+	        case 'TEXT_CONTENT':
+	          setTextContent(parentNode, update.content);
+	          if (false) {
+	            ReactInstrumentation.debugTool.onHostOperation({
+	              instanceID: parentNodeDebugID,
+	              type: 'replace text',
+	              payload: update.content.toString()
+	            });
+	          }
+	          break;
+	        case 'REMOVE_NODE':
+	          removeChild(parentNode, update.fromNode);
+	          if (false) {
+	            ReactInstrumentation.debugTool.onHostOperation({
+	              instanceID: parentNodeDebugID,
+	              type: 'remove child',
+	              payload: { fromIndex: update.fromIndex }
+	            });
+	          }
+	          break;
+	      }
+	    }
+	  }
+	
+	};
+	
+	module.exports = DOMChildrenOperations;
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var DOMNamespaces = {
+	  html: 'http://www.w3.org/1999/xhtml',
+	  mathml: 'http://www.w3.org/1998/Math/MathML',
+	  svg: 'http://www.w3.org/2000/svg'
+	};
+	
+	module.exports = DOMNamespaces;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+	
+	'use strict';
+	
+	var _prodInvariant = __webpack_require__(3);
+	
+	var invariant = __webpack_require__(1);
+	
+	/**
+	 * Injectable ordering of event plugins.
+	 */
+	var eventPluginOrder = null;
+	
+	/**
+	 * Injectable mapping from names to event plugin modules.
+	 */
+	var namesToPlugins = {};
+	
+	/**
+	 * Recomputes the plugin list using the injected plugins and plugin ordering.
+	 *
+	 * @private
+	 */
+	function recomputePluginOrdering() {
+	  if (!eventPluginOrder) {
+	    // Wait until an `eventPluginOrder` is injected.
+	    return;
+	  }
+	  for (var pluginName in namesToPlugins) {
+	    var pluginModule = namesToPlugins[pluginName];
+	    var pluginIndex = eventPluginOrder.indexOf(pluginName);
+	    !(pluginIndex > -1) ?  false ? invariant(false, 'EventPluginRegistry: Cannot inject event plugins that do not exist in the plugin ordering, `%s`.', pluginName) : _prodInvariant('96', pluginName) : void 0;
+	    if (EventPluginRegistry.plugins[pluginIndex]) {
+	      continue;
+	    }
+	    !pluginModule.extractEvents ?  false ? invariant(false, 'EventPluginRegistry: Event plugins must implement an `extractEvents` method, but `%s` does not.', pluginName) : _prodInvariant('97', pluginName) : void 0;
+	    EventPluginRegistry.plugins[pluginIndex] = pluginModule;
+	    var publishedEvents = pluginModule.eventTypes;
+	    for (var eventName in publishedEvents) {
+	      !publishEventForPlugin(publishedEvents[eventName], pluginModule, eventName) ?  false ? invariant(false, 'EventPluginRegistry: Failed to publish event `%s` for plugin `%s`.', eventName, pluginName) : _prodInvariant('98', eventName, pluginName) : void 0;
+	    }
+	  }
+	}
+	
+	/**
+	 * Publishes an event so that it can be dispatched by the supplied plugin.
+	 *
+	 * @param {object} dispatchConfig Dispatch configuration for the event.
+	 * @param {object} PluginModule Plugin publishing the event.
+	 * @return {boolean} True if the event was successfully published.
+	 * @private
+	 */
+	function publishEventForPlugin(dispatchConfig, pluginModule, eventName) {
+	  !!EventPluginRegistry.eventNameDispatchConfigs.hasOwnProperty(eventName) ?  false ? invariant(false, 'EventPluginHub: More than one plugin attempted to publish the same event name, `%s`.', eventName) : _prodInvariant('99', eventName) : void 0;
+	  EventPluginRegistry.eventNameDispatchConfigs[eventName] = dispatchConfig;
+	
+	  var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
+	  if (phasedRegistrationNames) {
+	    for (var phaseName in phasedRegistrationNames) {
+	      if (phasedRegistrationNames.hasOwnProperty(phaseName)) {
+	        var phasedRegistrationName = phasedRegistrationNames[phaseName];
+	        publishRegistrationName(phasedRegistrationName, pluginModule, eventName);
+	      }
+	    }
+	    return true;
+	  } else if (dispatchConfig.registrationName) {
+	    publishRegistrationName(dispatchConfig.registrationName, pluginModule, eventName);
+	    return true;
+	  }
+	  return false;
+	}
+	
+	/**
+	 * Publishes a registration name that is used to identify dispatched events and
+	 * can be used with `EventPluginHub.putListener` to register listeners.
+	 *
+	 * @param {string} registrationName Registration name to add.
+	 * @param {object} PluginModule Plugin publishing the event.
+	 * @private
+	 */
+	function publishRegistrationName(registrationName, pluginModule, eventName) {
+	  !!EventPluginRegistry.registrationNameModules[registrationName] ?  false ? invariant(false, 'EventPluginHub: More than one plugin attempted to publish the same registration name, `%s`.', registrationName) : _prodInvariant('100', registrationName) : void 0;
+	  EventPluginRegistry.registrationNameModules[registrationName] = pluginModule;
+	  EventPluginRegistry.registrationNameDependencies[registrationName] = pluginModule.eventTypes[eventName].dependencies;
+	
+	  if (false) {
+	    var lowerCasedName = registrationName.toLowerCase();
+	    EventPluginRegistry.possibleRegistrationNames[lowerCasedName] = registrationName;
+	
+	    if (registrationName === 'onDoubleClick') {
+	      EventPluginRegistry.possibleRegistrationNames.ondblclick = registrationName;
+	    }
+	  }
+	}
+	
+	/**
+	 * Registers plugins so that they can extract and dispatch events.
+	 *
+	 * @see {EventPluginHub}
+	 */
+	var EventPluginRegistry = {
+	
+	  /**
+	   * Ordered list of injected plugins.
+	   */
+	  plugins: [],
+	
+	  /**
+	   * Mapping from event name to dispatch config
+	   */
+	  eventNameDispatchConfigs: {},
+	
+	  /**
+	   * Mapping from registration name to plugin module
+	   */
+	  registrationNameModules: {},
+	
+	  /**
+	   * Mapping from registration name to event name
+	   */
+	  registrationNameDependencies: {},
+	
+	  /**
+	   * Mapping from lowercase registration names to the properly cased version,
+	   * used to warn in the case of missing event handlers. Available
+	   * only in __DEV__.
+	   * @type {Object}
+	   */
+	  possibleRegistrationNames:  false ? {} : null,
+	  // Trust the developer to only use possibleRegistrationNames in __DEV__
+	
+	  /**
+	   * Injects an ordering of plugins (by plugin name). This allows the ordering
+	   * to be decoupled from injection of the actual plugins so that ordering is
+	   * always deterministic regardless of packaging, on-the-fly injection, etc.
+	   *
+	   * @param {array} InjectedEventPluginOrder
+	   * @internal
+	   * @see {EventPluginHub.injection.injectEventPluginOrder}
+	   */
+	  injectEventPluginOrder: function (injectedEventPluginOrder) {
+	    !!eventPluginOrder ?  false ? invariant(false, 'EventPluginRegistry: Cannot inject event plugin ordering more than once. You are likely trying to load more than one copy of React.') : _prodInvariant('101') : void 0;
+	    // Clone the ordering so it cannot be dynamically mutated.
+	    eventPluginOrder = Array.prototype.slice.call(injectedEventPluginOrder);
+	    recomputePluginOrdering();
+	  },
+	
+	  /**
+	   * Injects plugins to be used by `EventPluginHub`. The plugin names must be
+	   * in the ordering injected by `injectEventPluginOrder`.
+	   *
+	   * Plugins can be injected as part of page initialization or on-the-fly.
+	   *
+	   * @param {object} injectedNamesToPlugins Map from names to plugin modules.
+	   * @internal
+	   * @see {EventPluginHub.injection.injectEventPluginsByName}
+	   */
+	  injectEventPluginsByName: function (injectedNamesToPlugins) {
+	    var isOrderingDirty = false;
+	    for (var pluginName in injectedNamesToPlugins) {
+	      if (!injectedNamesToPlugins.hasOwnProperty(pluginName)) {
+	        continue;
+	      }
+	      var pluginModule = injectedNamesToPlugins[pluginName];
+	      if (!namesToPlugins.hasOwnProperty(pluginName) || namesToPlugins[pluginName] !== pluginModule) {
+	        !!namesToPlugins[pluginName] ?  false ? invariant(false, 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `%s`.', pluginName) : _prodInvariant('102', pluginName) : void 0;
+	        namesToPlugins[pluginName] = pluginModule;
+	        isOrderingDirty = true;
+	      }
+	    }
+	    if (isOrderingDirty) {
+	      recomputePluginOrdering();
+	    }
+	  },
+	
+	  /**
+	   * Looks up the plugin for the supplied event.
+	   *
+	   * @param {object} event A synthetic event.
+	   * @return {?object} The plugin that created the supplied event.
+	   * @internal
+	   */
+	  getPluginModuleForEvent: function (event) {
+	    var dispatchConfig = event.dispatchConfig;
+	    if (dispatchConfig.registrationName) {
+	      return EventPluginRegistry.registrationNameModules[dispatchConfig.registrationName] || null;
+	    }
+	    if (dispatchConfig.phasedRegistrationNames !== undefined) {
+	      // pulling phasedRegistrationNames out of dispatchConfig helps Flow see
+	      // that it is not undefined.
+	      var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
+	
+	      for (var phase in phasedRegistrationNames) {
+	        if (!phasedRegistrationNames.hasOwnProperty(phase)) {
+	          continue;
+	        }
+	        var pluginModule = EventPluginRegistry.registrationNameModules[phasedRegistrationNames[phase]];
+	        if (pluginModule) {
+	          return pluginModule;
+	        }
+	      }
+	    }
+	    return null;
+	  },
+	
+	  /**
+	   * Exposed for unit testing.
+	   * @private
+	   */
+	  _resetEventPlugins: function () {
+	    eventPluginOrder = null;
+	    for (var pluginName in namesToPlugins) {
+	      if (namesToPlugins.hasOwnProperty(pluginName)) {
+	        delete namesToPlugins[pluginName];
+	      }
+	    }
+	    EventPluginRegistry.plugins.length = 0;
+	
+	    var eventNameDispatchConfigs = EventPluginRegistry.eventNameDispatchConfigs;
+	    for (var eventName in eventNameDispatchConfigs) {
+	      if (eventNameDispatchConfigs.hasOwnProperty(eventName)) {
+	        delete eventNameDispatchConfigs[eventName];
+	      }
+	    }
+	
+	    var registrationNameModules = EventPluginRegistry.registrationNameModules;
+	    for (var registrationName in registrationNameModules) {
+	      if (registrationNameModules.hasOwnProperty(registrationName)) {
+	        delete registrationNameModules[registrationName];
+	      }
+	    }
+	
+	    if (false) {
+	      var possibleRegistrationNames = EventPluginRegistry.possibleRegistrationNames;
+	      for (var lowerCasedName in possibleRegistrationNames) {
+	        if (possibleRegistrationNames.hasOwnProperty(lowerCasedName)) {
+	          delete possibleRegistrationNames[lowerCasedName];
+	        }
+	      }
+	    }
+	  }
+	
+	};
+	
+	module.exports = EventPluginRegistry;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var _prodInvariant = __webpack_require__(3);
+	
+	var ReactErrorUtils = __webpack_require__(43);
+	
+	var invariant = __webpack_require__(1);
+	var warning = __webpack_require__(2);
+	
+	/**
+	 * Injected dependencies:
+	 */
+	
+	/**
+	 * - `ComponentTree`: [required] Module that can convert between React instances
+	 *   and actual node references.
+	 */
+	var ComponentTree;
+	var TreeTraversal;
+	var injection = {
+	  injectComponentTree: function (Injected) {
+	    ComponentTree = Injected;
+	    if (false) {
+	      process.env.NODE_ENV !== 'production' ? warning(Injected && Injected.getNodeFromInstance && Injected.getInstanceFromNode, 'EventPluginUtils.injection.injectComponentTree(...): Injected ' + 'module is missing getNodeFromInstance or getInstanceFromNode.') : void 0;
+	    }
+	  },
+	  injectTreeTraversal: function (Injected) {
+	    TreeTraversal = Injected;
+	    if (false) {
+	      process.env.NODE_ENV !== 'production' ? warning(Injected && Injected.isAncestor && Injected.getLowestCommonAncestor, 'EventPluginUtils.injection.injectTreeTraversal(...): Injected ' + 'module is missing isAncestor or getLowestCommonAncestor.') : void 0;
+	    }
+	  }
+	};
+	
+	function isEndish(topLevelType) {
+	  return topLevelType === 'topMouseUp' || topLevelType === 'topTouchEnd' || topLevelType === 'topTouchCancel';
+	}
+	
+	function isMoveish(topLevelType) {
+	  return topLevelType === 'topMouseMove' || topLevelType === 'topTouchMove';
+	}
+	function isStartish(topLevelType) {
+	  return topLevelType === 'topMouseDown' || topLevelType === 'topTouchStart';
+	}
+	
+	var validateEventDispatches;
+	if (false) {
+	  validateEventDispatches = function (event) {
+	    var dispatchListeners = event._dispatchListeners;
+	    var dispatchInstances = event._dispatchInstances;
+	
+	    var listenersIsArr = Array.isArray(dispatchListeners);
+	    var listenersLen = listenersIsArr ? dispatchListeners.length : dispatchListeners ? 1 : 0;
+	
+	    var instancesIsArr = Array.isArray(dispatchInstances);
+	    var instancesLen = instancesIsArr ? dispatchInstances.length : dispatchInstances ? 1 : 0;
+	
+	    process.env.NODE_ENV !== 'production' ? warning(instancesIsArr === listenersIsArr && instancesLen === listenersLen, 'EventPluginUtils: Invalid `event`.') : void 0;
+	  };
+	}
+	
+	/**
+	 * Dispatch the event to the listener.
+	 * @param {SyntheticEvent} event SyntheticEvent to handle
+	 * @param {boolean} simulated If the event is simulated (changes exn behavior)
+	 * @param {function} listener Application-level callback
+	 * @param {*} inst Internal component instance
+	 */
+	function executeDispatch(event, simulated, listener, inst) {
+	  var type = event.type || 'unknown-event';
+	  event.currentTarget = EventPluginUtils.getNodeFromInstance(inst);
+	  if (simulated) {
+	    ReactErrorUtils.invokeGuardedCallbackWithCatch(type, listener, event);
+	  } else {
+	    ReactErrorUtils.invokeGuardedCallback(type, listener, event);
+	  }
+	  event.currentTarget = null;
+	}
+	
+	/**
+	 * Standard/simple iteration through an event's collected dispatches.
+	 */
+	function executeDispatchesInOrder(event, simulated) {
+	  var dispatchListeners = event._dispatchListeners;
+	  var dispatchInstances = event._dispatchInstances;
+	  if (false) {
+	    validateEventDispatches(event);
+	  }
+	  if (Array.isArray(dispatchListeners)) {
+	    for (var i = 0; i < dispatchListeners.length; i++) {
+	      if (event.isPropagationStopped()) {
+	        break;
+	      }
+	      // Listeners and Instances are two parallel arrays that are always in sync.
+	      executeDispatch(event, simulated, dispatchListeners[i], dispatchInstances[i]);
+	    }
+	  } else if (dispatchListeners) {
+	    executeDispatch(event, simulated, dispatchListeners, dispatchInstances);
+	  }
+	  event._dispatchListeners = null;
+	  event._dispatchInstances = null;
+	}
+	
+	/**
+	 * Standard/simple iteration through an event's collected dispatches, but stops
+	 * at the first dispatch execution returning true, and returns that id.
+	 *
+	 * @return {?string} id of the first dispatch execution who's listener returns
+	 * true, or null if no listener returned true.
+	 */
+	function executeDispatchesInOrderStopAtTrueImpl(event) {
+	  var dispatchListeners = event._dispatchListeners;
+	  var dispatchInstances = event._dispatchInstances;
+	  if (false) {
+	    validateEventDispatches(event);
+	  }
+	  if (Array.isArray(dispatchListeners)) {
+	    for (var i = 0; i < dispatchListeners.length; i++) {
+	      if (event.isPropagationStopped()) {
+	        break;
+	      }
+	      // Listeners and Instances are two parallel arrays that are always in sync.
+	      if (dispatchListeners[i](event, dispatchInstances[i])) {
+	        return dispatchInstances[i];
+	      }
+	    }
+	  } else if (dispatchListeners) {
+	    if (dispatchListeners(event, dispatchInstances)) {
+	      return dispatchInstances;
+	    }
+	  }
+	  return null;
+	}
+	
+	/**
+	 * @see executeDispatchesInOrderStopAtTrueImpl
+	 */
+	function executeDispatchesInOrderStopAtTrue(event) {
+	  var ret = executeDispatchesInOrderStopAtTrueImpl(event);
+	  event._dispatchInstances = null;
+	  event._dispatchListeners = null;
+	  return ret;
+	}
+	
+	/**
+	 * Execution of a "direct" dispatch - there must be at most one dispatch
+	 * accumulated on the event or it is considered an error. It doesn't really make
+	 * sense for an event with multiple dispatches (bubbled) to keep track of the
+	 * return values at each dispatch execution, but it does tend to make sense when
+	 * dealing with "direct" dispatches.
+	 *
+	 * @return {*} The return value of executing the single dispatch.
+	 */
+	function executeDirectDispatch(event) {
+	  if (false) {
+	    validateEventDispatches(event);
+	  }
+	  var dispatchListener = event._dispatchListeners;
+	  var dispatchInstance = event._dispatchInstances;
+	  !!Array.isArray(dispatchListener) ?  false ? invariant(false, 'executeDirectDispatch(...): Invalid `event`.') : _prodInvariant('103') : void 0;
+	  event.currentTarget = dispatchListener ? EventPluginUtils.getNodeFromInstance(dispatchInstance) : null;
+	  var res = dispatchListener ? dispatchListener(event) : null;
+	  event.currentTarget = null;
+	  event._dispatchListeners = null;
+	  event._dispatchInstances = null;
+	  return res;
+	}
+	
+	/**
+	 * @param {SyntheticEvent} event
+	 * @return {boolean} True iff number of dispatches accumulated is greater than 0.
+	 */
+	function hasDispatches(event) {
+	  return !!event._dispatchListeners;
+	}
+	
+	/**
+	 * General utilities that are useful in creating custom Event Plugins.
+	 */
+	var EventPluginUtils = {
+	  isEndish: isEndish,
+	  isMoveish: isMoveish,
+	  isStartish: isStartish,
+	
+	  executeDirectDispatch: executeDirectDispatch,
+	  executeDispatchesInOrder: executeDispatchesInOrder,
+	  executeDispatchesInOrderStopAtTrue: executeDispatchesInOrderStopAtTrue,
+	  hasDispatches: hasDispatches,
+	
+	  getInstanceFromNode: function (node) {
+	    return ComponentTree.getInstanceFromNode(node);
+	  },
+	  getNodeFromInstance: function (node) {
+	    return ComponentTree.getNodeFromInstance(node);
+	  },
+	  isAncestor: function (a, b) {
+	    return TreeTraversal.isAncestor(a, b);
+	  },
+	  getLowestCommonAncestor: function (a, b) {
+	    return TreeTraversal.getLowestCommonAncestor(a, b);
+	  },
+	  getParentInstance: function (inst) {
+	    return TreeTraversal.getParentInstance(inst);
+	  },
+	  traverseTwoPhase: function (target, fn, arg) {
+	    return TreeTraversal.traverseTwoPhase(target, fn, arg);
+	  },
+	  traverseEnterLeave: function (from, to, fn, argFrom, argTo) {
+	    return TreeTraversal.traverseEnterLeave(from, to, fn, argFrom, argTo);
+	  },
+	
+	  injection: injection
+	};
+	
+	module.exports = EventPluginUtils;
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+	
+	'use strict';
+	
+	/**
+	 * Escape and wrap key so it is safe to use as a reactid
+	 *
+	 * @param {string} key to be escaped.
+	 * @return {string} the escaped key.
+	 */
+	
+	function escape(key) {
+	  var escapeRegex = /[=:]/g;
+	  var escaperLookup = {
+	    '=': '=0',
+	    ':': '=2'
+	  };
+	  var escapedString = ('' + key).replace(escapeRegex, function (match) {
+	    return escaperLookup[match];
+	  });
+	
+	  return '$' + escapedString;
+	}
+	
+	/**
+	 * Unescape and unwrap key for human-readable display
+	 *
+	 * @param {string} key to unescape.
+	 * @return {string} the unescaped key.
+	 */
+	function unescape(key) {
+	  var unescapeRegex = /(=0|=2)/g;
+	  var unescaperLookup = {
+	    '=0': '=',
+	    '=2': ':'
+	  };
+	  var keySubstring = key[0] === '.' && key[1] === '$' ? key.substring(2) : key.substring(1);
+	
+	  return ('' + keySubstring).replace(unescapeRegex, function (match) {
+	    return unescaperLookup[match];
+	  });
+	}
+	
+	var KeyEscapeUtils = {
+	  escape: escape,
+	  unescape: unescape
+	};
+	
+	module.exports = KeyEscapeUtils;
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var _prodInvariant = __webpack_require__(3);
+	
+	var ReactPropTypesSecret = __webpack_require__(185);
+	var propTypesFactory = __webpack_require__(63);
+	
+	var React = __webpack_require__(18);
+	var PropTypes = propTypesFactory(React.isValidElement);
+	
+	var invariant = __webpack_require__(1);
+	var warning = __webpack_require__(2);
+	
+	var hasReadOnlyValue = {
+	  'button': true,
+	  'checkbox': true,
+	  'image': true,
+	  'hidden': true,
+	  'radio': true,
+	  'reset': true,
+	  'submit': true
+	};
+	
+	function _assertSingleLink(inputProps) {
+	  !(inputProps.checkedLink == null || inputProps.valueLink == null) ?  false ? invariant(false, 'Cannot provide a checkedLink and a valueLink. If you want to use checkedLink, you probably don\'t want to use valueLink and vice versa.') : _prodInvariant('87') : void 0;
+	}
+	function _assertValueLink(inputProps) {
+	  _assertSingleLink(inputProps);
+	  !(inputProps.value == null && inputProps.onChange == null) ?  false ? invariant(false, 'Cannot provide a valueLink and a value or onChange event. If you want to use value or onChange, you probably don\'t want to use valueLink.') : _prodInvariant('88') : void 0;
+	}
+	
+	function _assertCheckedLink(inputProps) {
+	  _assertSingleLink(inputProps);
+	  !(inputProps.checked == null && inputProps.onChange == null) ?  false ? invariant(false, 'Cannot provide a checkedLink and a checked property or onChange event. If you want to use checked or onChange, you probably don\'t want to use checkedLink') : _prodInvariant('89') : void 0;
+	}
+	
+	var propTypes = {
+	  value: function (props, propName, componentName) {
+	    if (!props[propName] || hasReadOnlyValue[props.type] || props.onChange || props.readOnly || props.disabled) {
+	      return null;
+	    }
+	    return new Error('You provided a `value` prop to a form field without an ' + '`onChange` handler. This will render a read-only field. If ' + 'the field should be mutable use `defaultValue`. Otherwise, ' + 'set either `onChange` or `readOnly`.');
+	  },
+	  checked: function (props, propName, componentName) {
+	    if (!props[propName] || props.onChange || props.readOnly || props.disabled) {
+	      return null;
+	    }
+	    return new Error('You provided a `checked` prop to a form field without an ' + '`onChange` handler. This will render a read-only field. If ' + 'the field should be mutable use `defaultChecked`. Otherwise, ' + 'set either `onChange` or `readOnly`.');
+	  },
+	  onChange: PropTypes.func
+	};
+	
+	var loggedTypeFailures = {};
+	function getDeclarationErrorAddendum(owner) {
+	  if (owner) {
+	    var name = owner.getName();
+	    if (name) {
+	      return ' Check the render method of `' + name + '`.';
+	    }
+	  }
+	  return '';
+	}
+	
+	/**
+	 * Provide a linked `value` attribute for controlled forms. You should not use
+	 * this outside of the ReactDOM controlled form components.
+	 */
+	var LinkedValueUtils = {
+	  checkPropTypes: function (tagName, props, owner) {
+	    for (var propName in propTypes) {
+	      if (propTypes.hasOwnProperty(propName)) {
+	        var error = propTypes[propName](props, propName, tagName, 'prop', null, ReactPropTypesSecret);
+	      }
+	      if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+	        // Only monitor this failure once because there tends to be a lot of the
+	        // same error.
+	        loggedTypeFailures[error.message] = true;
+	
+	        var addendum = getDeclarationErrorAddendum(owner);
+	         false ? warning(false, 'Failed form propType: %s%s', error.message, addendum) : void 0;
+	      }
+	    }
+	  },
+	
+	  /**
+	   * @param {object} inputProps Props for form component
+	   * @return {*} current value of the input either from value prop or link.
+	   */
+	  getValue: function (inputProps) {
+	    if (inputProps.valueLink) {
+	      _assertValueLink(inputProps);
+	      return inputProps.valueLink.value;
+	    }
+	    return inputProps.value;
+	  },
+	
+	  /**
+	   * @param {object} inputProps Props for form component
+	   * @return {*} current checked status of the input either from checked prop
+	   *             or link.
+	   */
+	  getChecked: function (inputProps) {
+	    if (inputProps.checkedLink) {
+	      _assertCheckedLink(inputProps);
+	      return inputProps.checkedLink.value;
+	    }
+	    return inputProps.checked;
+	  },
+	
+	  /**
+	   * @param {object} inputProps Props for form component
+	   * @param {SyntheticEvent} event change event to handle
+	   */
+	  executeOnChange: function (inputProps, event) {
+	    if (inputProps.valueLink) {
+	      _assertValueLink(inputProps);
+	      return inputProps.valueLink.requestChange(event.target.value);
+	    } else if (inputProps.checkedLink) {
+	      _assertCheckedLink(inputProps);
+	      return inputProps.checkedLink.requestChange(event.target.checked);
+	    } else if (inputProps.onChange) {
+	      return inputProps.onChange.call(undefined, event);
+	    }
+	  }
+	};
+	
+	module.exports = LinkedValueUtils;
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2014-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+	
+	'use strict';
+	
+	var _prodInvariant = __webpack_require__(3);
+	
+	var invariant = __webpack_require__(1);
+	
+	var injected = false;
+	
+	var ReactComponentEnvironment = {
+	
+	  /**
+	   * Optionally injectable hook for swapping out mount images in the middle of
+	   * the tree.
+	   */
+	  replaceNodeWithMarkup: null,
+	
+	  /**
+	   * Optionally injectable hook for processing a queue of child updates. Will
+	   * later move into MultiChildComponents.
+	   */
+	  processChildrenUpdates: null,
+	
+	  injection: {
+	    injectEnvironment: function (environment) {
+	      !!injected ?  false ? invariant(false, 'ReactCompositeComponent: injectEnvironment() can only be called once.') : _prodInvariant('104') : void 0;
+	      ReactComponentEnvironment.replaceNodeWithMarkup = environment.replaceNodeWithMarkup;
+	      ReactComponentEnvironment.processChildrenUpdates = environment.processChildrenUpdates;
+	      injected = true;
+	    }
+	  }
+	
+	};
+	
+	module.exports = ReactComponentEnvironment;
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * 
+	 */
+	
+	'use strict';
+	
+	var caughtError = null;
+	
+	/**
+	 * Call a function while guarding against errors that happens within it.
+	 *
+	 * @param {String} name of the guard to use for logging or debugging
+	 * @param {Function} func The function to invoke
+	 * @param {*} a First argument
+	 * @param {*} b Second argument
+	 */
+	function invokeGuardedCallback(name, func, a) {
+	  try {
+	    func(a);
+	  } catch (x) {
+	    if (caughtError === null) {
+	      caughtError = x;
+	    }
+	  }
+	}
+	
+	var ReactErrorUtils = {
+	  invokeGuardedCallback: invokeGuardedCallback,
+	
+	  /**
+	   * Invoked by ReactTestUtils.Simulate so that any errors thrown by the event
+	   * handler are sure to be rethrown by rethrowCaughtError.
+	   */
+	  invokeGuardedCallbackWithCatch: invokeGuardedCallback,
+	
+	  /**
+	   * During execution of guarded functions we will capture the first error which
+	   * we will rethrow to be handled by the top level error handler.
+	   */
+	  rethrowCaughtError: function () {
+	    if (caughtError) {
+	      var error = caughtError;
+	      caughtError = null;
+	      throw error;
+	    }
+	  }
+	};
+	
+	if (false) {
+	  /**
+	   * To help development we can get better devtools integration by simulating a
+	   * real browser event.
+	   */
+	  if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof document !== 'undefined' && typeof document.createEvent === 'function') {
+	    var fakeNode = document.createElement('react');
+	    ReactErrorUtils.invokeGuardedCallback = function (name, func, a) {
+	      var boundFunc = func.bind(null, a);
+	      var evtType = 'react-' + name;
+	      fakeNode.addEventListener(evtType, boundFunc, false);
+	      var evt = document.createEvent('Event');
+	      evt.initEvent(evtType, false, false);
+	      fakeNode.dispatchEvent(evt);
+	      fakeNode.removeEventListener(evtType, boundFunc, false);
+	    };
+	  }
+	}
+	
+	module.exports = ReactErrorUtils;
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2015-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var _prodInvariant = __webpack_require__(3);
+	
+	var ReactCurrentOwner = __webpack_require__(12);
+	var ReactInstanceMap = __webpack_require__(27);
+	var ReactInstrumentation = __webpack_require__(8);
+	var ReactUpdates = __webpack_require__(10);
+	
+	var invariant = __webpack_require__(1);
+	var warning = __webpack_require__(2);
+	
+	function enqueueUpdate(internalInstance) {
+	  ReactUpdates.enqueueUpdate(internalInstance);
+	}
+	
+	function formatUnexpectedArgument(arg) {
+	  var type = typeof arg;
+	  if (type !== 'object') {
+	    return type;
+	  }
+	  var displayName = arg.constructor && arg.constructor.name || type;
+	  var keys = Object.keys(arg);
+	  if (keys.length > 0 && keys.length < 20) {
+	    return displayName + ' (keys: ' + keys.join(', ') + ')';
+	  }
+	  return displayName;
+	}
+	
+	function getInternalInstanceReadyForUpdate(publicInstance, callerName) {
+	  var internalInstance = ReactInstanceMap.get(publicInstance);
+	  if (!internalInstance) {
+	    if (false) {
+	      var ctor = publicInstance.constructor;
+	      // Only warn when we have a callerName. Otherwise we should be silent.
+	      // We're probably calling from enqueueCallback. We don't want to warn
+	      // there because we already warned for the corresponding lifecycle method.
+	      process.env.NODE_ENV !== 'production' ? warning(!callerName, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, ctor && (ctor.displayName || ctor.name) || 'ReactClass') : void 0;
+	    }
+	    return null;
+	  }
+	
+	  if (false) {
+	    process.env.NODE_ENV !== 'production' ? warning(ReactCurrentOwner.current == null, '%s(...): Cannot update during an existing state transition (such as ' + 'within `render` or another component\'s constructor). Render methods ' + 'should be a pure function of props and state; constructor ' + 'side-effects are an anti-pattern, but can be moved to ' + '`componentWillMount`.', callerName) : void 0;
+	  }
+	
+	  return internalInstance;
+	}
+	
+	/**
+	 * ReactUpdateQueue allows for state updates to be scheduled into a later
+	 * reconciliation step.
+	 */
+	var ReactUpdateQueue = {
+	
+	  /**
+	   * Checks whether or not this composite component is mounted.
+	   * @param {ReactClass} publicInstance The instance we want to test.
+	   * @return {boolean} True if mounted, false otherwise.
+	   * @protected
+	   * @final
+	   */
+	  isMounted: function (publicInstance) {
+	    if (false) {
+	      var owner = ReactCurrentOwner.current;
+	      if (owner !== null) {
+	        process.env.NODE_ENV !== 'production' ? warning(owner._warnedAboutRefsInRender, '%s is accessing isMounted inside its render() function. ' + 'render() should be a pure function of props and state. It should ' + 'never access something that requires stale data from the previous ' + 'render, such as refs. Move this logic to componentDidMount and ' + 'componentDidUpdate instead.', owner.getName() || 'A component') : void 0;
+	        owner._warnedAboutRefsInRender = true;
+	      }
+	    }
+	    var internalInstance = ReactInstanceMap.get(publicInstance);
+	    if (internalInstance) {
+	      // During componentWillMount and render this will still be null but after
+	      // that will always render to something. At least for now. So we can use
+	      // this hack.
+	      return !!internalInstance._renderedComponent;
+	    } else {
+	      return false;
+	    }
+	  },
+	
+	  /**
+	   * Enqueue a callback that will be executed after all the pending updates
+	   * have processed.
+	   *
+	   * @param {ReactClass} publicInstance The instance to use as `this` context.
+	   * @param {?function} callback Called after state is updated.
+	   * @param {string} callerName Name of the calling function in the public API.
+	   * @internal
+	   */
+	  enqueueCallback: function (publicInstance, callback, callerName) {
+	    ReactUpdateQueue.validateCallback(callback, callerName);
+	    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance);
+	
+	    // Previously we would throw an error if we didn't have an internal
+	    // instance. Since we want to make it a no-op instead, we mirror the same
+	    // behavior we have in other enqueue* methods.
+	    // We also need to ignore callbacks in componentWillMount. See
+	    // enqueueUpdates.
+	    if (!internalInstance) {
+	      return null;
+	    }
+	
+	    if (internalInstance._pendingCallbacks) {
+	      internalInstance._pendingCallbacks.push(callback);
+	    } else {
+	      internalInstance._pendingCallbacks = [callback];
+	    }
+	    // TODO: The callback here is ignored when setState is called from
+	    // componentWillMount. Either fix it or disallow doing so completely in
+	    // favor of getInitialState. Alternatively, we can disallow
+	    // componentWillMount during server-side rendering.
+	    enqueueUpdate(internalInstance);
+	  },
+	
+	  enqueueCallbackInternal: function (internalInstance, callback) {
+	    if (internalInstance._pendingCallbacks) {
+	      internalInstance._pendingCallbacks.push(callback);
+	    } else {
+	      internalInstance._pendingCallbacks = [callback];
+	    }
+	    enqueueUpdate(internalInstance);
+	  },
+	
+	  /**
+	   * Forces an update. This should only be invoked when it is known with
+	   * certainty that we are **not** in a DOM transaction.
+	   *
+	   * You may want to call this when you know that some deeper aspect of the
+	   * component's state has changed but `setState` was not called.
+	   *
+	   * This will not invoke `shouldComponentUpdate`, but it will invoke
+	   * `componentWillUpdate` and `componentDidUpdate`.
+	   *
+	   * @param {ReactClass} publicInstance The instance that should rerender.
+	   * @internal
+	   */
+	  enqueueForceUpdate: function (publicInstance) {
+	    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'forceUpdate');
+	
+	    if (!internalInstance) {
+	      return;
+	    }
+	
+	    internalInstance._pendingForceUpdate = true;
+	
+	    enqueueUpdate(internalInstance);
+	  },
+	
+	  /**
+	   * Replaces all of the state. Always use this or `setState` to mutate state.
+	   * You should treat `this.state` as immutable.
+	   *
+	   * There is no guarantee that `this.state` will be immediately updated, so
+	   * accessing `this.state` after calling this method may return the old value.
+	   *
+	   * @param {ReactClass} publicInstance The instance that should rerender.
+	   * @param {object} completeState Next state.
+	   * @internal
+	   */
+	  enqueueReplaceState: function (publicInstance, completeState, callback) {
+	    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'replaceState');
+	
+	    if (!internalInstance) {
+	      return;
+	    }
+	
+	    internalInstance._pendingStateQueue = [completeState];
+	    internalInstance._pendingReplaceState = true;
+	
+	    // Future-proof 15.5
+	    if (callback !== undefined && callback !== null) {
+	      ReactUpdateQueue.validateCallback(callback, 'replaceState');
+	      if (internalInstance._pendingCallbacks) {
+	        internalInstance._pendingCallbacks.push(callback);
+	      } else {
+	        internalInstance._pendingCallbacks = [callback];
+	      }
+	    }
+	
+	    enqueueUpdate(internalInstance);
+	  },
+	
+	  /**
+	   * Sets a subset of the state. This only exists because _pendingState is
+	   * internal. This provides a merging strategy that is not available to deep
+	   * properties which is confusing. TODO: Expose pendingState or don't use it
+	   * during the merge.
+	   *
+	   * @param {ReactClass} publicInstance The instance that should rerender.
+	   * @param {object} partialState Next partial state to be merged with state.
+	   * @internal
+	   */
+	  enqueueSetState: function (publicInstance, partialState) {
+	    if (false) {
+	      ReactInstrumentation.debugTool.onSetState();
+	      process.env.NODE_ENV !== 'production' ? warning(partialState != null, 'setState(...): You passed an undefined or null state object; ' + 'instead, use forceUpdate().') : void 0;
+	    }
+	
+	    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'setState');
+	
+	    if (!internalInstance) {
+	      return;
+	    }
+	
+	    var queue = internalInstance._pendingStateQueue || (internalInstance._pendingStateQueue = []);
+	    queue.push(partialState);
+	
+	    enqueueUpdate(internalInstance);
+	  },
+	
+	  enqueueElementInternal: function (internalInstance, nextElement, nextContext) {
+	    internalInstance._pendingElement = nextElement;
+	    // TODO: introduce _pendingContext instead of setting it directly.
+	    internalInstance._context = nextContext;
+	    enqueueUpdate(internalInstance);
+	  },
+	
+	  validateCallback: function (callback, callerName) {
+	    !(!callback || typeof callback === 'function') ?  false ? invariant(false, '%s(...): Expected the last optional `callback` argument to be a function. Instead received: %s.', callerName, formatUnexpectedArgument(callback)) : _prodInvariant('122', callerName, formatUnexpectedArgument(callback)) : void 0;
+	  }
+	
+	};
+	
+	module.exports = ReactUpdateQueue;
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	/* globals MSApp */
+	
+	'use strict';
+	
+	/**
+	 * Create a function which has 'unsafe' privileges (required by windows8 apps)
+	 */
+	
+	var createMicrosoftUnsafeLocalFunction = function (func) {
+	  if (typeof MSApp !== 'undefined' && MSApp.execUnsafeLocalFunction) {
+	    return function (arg0, arg1, arg2, arg3) {
+	      MSApp.execUnsafeLocalFunction(function () {
+	        return func(arg0, arg1, arg2, arg3);
+	      });
+	    };
+	  } else {
+	    return func;
+	  }
+	};
+	
+	module.exports = createMicrosoftUnsafeLocalFunction;
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	/**
+	 * `charCode` represents the actual "character code" and is safe to use with
+	 * `String.fromCharCode`. As such, only keys that correspond to printable
+	 * characters produce a valid `charCode`, the only exception to this is Enter.
+	 * The Tab-key is considered non-printable and does not have a `charCode`,
+	 * presumably because it does not produce a tab-character in browsers.
+	 *
+	 * @param {object} nativeEvent Native browser event.
+	 * @return {number} Normalized `charCode` property.
+	 */
+	
+	function getEventCharCode(nativeEvent) {
+	  var charCode;
+	  var keyCode = nativeEvent.keyCode;
+	
+	  if ('charCode' in nativeEvent) {
+	    charCode = nativeEvent.charCode;
+	
+	    // FF does not set `charCode` for the Enter-key, check against `keyCode`.
+	    if (charCode === 0 && keyCode === 13) {
+	      charCode = 13;
+	    }
+	  } else {
+	    // IE8 does not implement `charCode`, but `keyCode` has the correct value.
+	    charCode = keyCode;
+	  }
+	
+	  // Some non-printable keys are reported in `charCode`/`keyCode`, discard them.
+	  // Must not discard the (non-)printable Enter-key.
+	  if (charCode >= 32 || charCode === 13) {
+	    return charCode;
+	  }
+	
+	  return 0;
+	}
+	
+	module.exports = getEventCharCode;
+
+/***/ },
+/* 47 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	/**
+	 * Translation from modifier key to the associated property in the event.
+	 * @see http://www.w3.org/TR/DOM-Level-3-Events/#keys-Modifiers
+	 */
+	
+	var modifierKeyToProp = {
+	  'Alt': 'altKey',
+	  'Control': 'ctrlKey',
+	  'Meta': 'metaKey',
+	  'Shift': 'shiftKey'
+	};
+	
+	// IE8 does not implement getModifierState so we simply map it to the only
+	// modifier keys exposed by the event itself, does not support Lock-keys.
+	// Currently, all major browsers except Chrome seems to support Lock-keys.
+	function modifierStateGetter(keyArg) {
+	  var syntheticEvent = this;
+	  var nativeEvent = syntheticEvent.nativeEvent;
+	  if (nativeEvent.getModifierState) {
+	    return nativeEvent.getModifierState(keyArg);
+	  }
+	  var keyProp = modifierKeyToProp[keyArg];
+	  return keyProp ? !!nativeEvent[keyProp] : false;
+	}
+	
+	function getEventModifierState(nativeEvent) {
+	  return modifierStateGetter;
+	}
+	
+	module.exports = getEventModifierState;
+
+/***/ },
+/* 48 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	/**
+	 * Gets the target node from a native browser event by accounting for
+	 * inconsistencies in browser DOM APIs.
+	 *
+	 * @param {object} nativeEvent Native browser event.
+	 * @return {DOMEventTarget} Target node.
+	 */
+	
+	function getEventTarget(nativeEvent) {
+	  var target = nativeEvent.target || nativeEvent.srcElement || window;
+	
+	  // Normalize SVG <use> element events #4963
+	  if (target.correspondingUseElement) {
+	    target = target.correspondingUseElement;
+	  }
+	
+	  // Safari may fire events on text nodes (Node.TEXT_NODE is 3).
+	  // @see http://www.quirksmode.org/js/events_properties.html
+	  return target.nodeType === 3 ? target.parentNode : target;
+	}
+	
+	module.exports = getEventTarget;
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var ExecutionEnvironment = __webpack_require__(6);
+	
+	var useHasFeature;
+	if (ExecutionEnvironment.canUseDOM) {
+	  useHasFeature = document.implementation && document.implementation.hasFeature &&
+	  // always returns true in newer browsers as per the standard.
+	  // @see http://dom.spec.whatwg.org/#dom-domimplementation-hasfeature
+	  document.implementation.hasFeature('', '') !== true;
+	}
+	
+	/**
+	 * Checks if an event is supported in the current execution environment.
+	 *
+	 * NOTE: This will not work correctly for non-generic events such as `change`,
+	 * `reset`, `load`, `error`, and `select`.
+	 *
+	 * Borrows from Modernizr.
+	 *
+	 * @param {string} eventNameSuffix Event name, e.g. "click".
+	 * @param {?boolean} capture Check if the capture phase is supported.
+	 * @return {boolean} True if the event is supported.
+	 * @internal
+	 * @license Modernizr 3.0.0pre (Custom Build) | MIT
+	 */
+	function isEventSupported(eventNameSuffix, capture) {
+	  if (!ExecutionEnvironment.canUseDOM || capture && !('addEventListener' in document)) {
+	    return false;
+	  }
+	
+	  var eventName = 'on' + eventNameSuffix;
+	  var isSupported = eventName in document;
+	
+	  if (!isSupported) {
+	    var element = document.createElement('div');
+	    element.setAttribute(eventName, 'return;');
+	    isSupported = typeof element[eventName] === 'function';
+	  }
+	
+	  if (!isSupported && useHasFeature && eventNameSuffix === 'wheel') {
+	    // This is the only way to test support for the `wheel` event in IE9+.
+	    isSupported = document.implementation.hasFeature('Events.wheel', '3.0');
+	  }
+	
+	  return isSupported;
+	}
+	
+	module.exports = isEventSupported;
+
+/***/ },
+/* 50 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	/**
+	 * Given a `prevElement` and `nextElement`, determines if the existing
+	 * instance should be updated as opposed to being destroyed or replaced by a new
+	 * instance. Both arguments are elements. This ensures that this logic can
+	 * operate on stateless trees without any backing instance.
+	 *
+	 * @param {?object} prevElement
+	 * @param {?object} nextElement
+	 * @return {boolean} True if the existing instance should be updated.
+	 * @protected
+	 */
+	
+	function shouldUpdateReactComponent(prevElement, nextElement) {
+	  var prevEmpty = prevElement === null || prevElement === false;
+	  var nextEmpty = nextElement === null || nextElement === false;
+	  if (prevEmpty || nextEmpty) {
+	    return prevEmpty === nextEmpty;
+	  }
+	
+	  var prevType = typeof prevElement;
+	  var nextType = typeof nextElement;
+	  if (prevType === 'string' || prevType === 'number') {
+	    return nextType === 'string' || nextType === 'number';
+	  } else {
+	    return nextType === 'object' && prevElement.type === nextElement.type && prevElement.key === nextElement.key;
+	  }
+	}
+	
+	module.exports = shouldUpdateReactComponent;
+
+/***/ },
+/* 51 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2015-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var _assign = __webpack_require__(4);
+	
+	var emptyFunction = __webpack_require__(7);
+	var warning = __webpack_require__(2);
+	
+	var validateDOMNesting = emptyFunction;
+	
+	if (false) {
+	  // This validation code was written based on the HTML5 parsing spec:
+	  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-scope
+	  //
+	  // Note: this does not catch all invalid nesting, nor does it try to (as it's
+	  // not clear what practical benefit doing so provides); instead, we warn only
+	  // for cases where the parser will give a parse tree differing from what React
+	  // intended. For example, <b><div></div></b> is invalid but we don't warn
+	  // because it still parses correctly; we do warn for other cases like nested
+	  // <p> tags where the beginning of the second element implicitly closes the
+	  // first, causing a confusing mess.
+	
+	  // https://html.spec.whatwg.org/multipage/syntax.html#special
+	  var specialTags = ['address', 'applet', 'area', 'article', 'aside', 'base', 'basefont', 'bgsound', 'blockquote', 'body', 'br', 'button', 'caption', 'center', 'col', 'colgroup', 'dd', 'details', 'dir', 'div', 'dl', 'dt', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'iframe', 'img', 'input', 'isindex', 'li', 'link', 'listing', 'main', 'marquee', 'menu', 'menuitem', 'meta', 'nav', 'noembed', 'noframes', 'noscript', 'object', 'ol', 'p', 'param', 'plaintext', 'pre', 'script', 'section', 'select', 'source', 'style', 'summary', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'title', 'tr', 'track', 'ul', 'wbr', 'xmp'];
+	
+	  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-scope
+	  var inScopeTags = ['applet', 'caption', 'html', 'table', 'td', 'th', 'marquee', 'object', 'template',
+	
+	  // https://html.spec.whatwg.org/multipage/syntax.html#html-integration-point
+	  // TODO: Distinguish by namespace here -- for <title>, including it here
+	  // errs on the side of fewer warnings
+	  'foreignObject', 'desc', 'title'];
+	
+	  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-button-scope
+	  var buttonScopeTags = inScopeTags.concat(['button']);
+	
+	  // https://html.spec.whatwg.org/multipage/syntax.html#generate-implied-end-tags
+	  var impliedEndTags = ['dd', 'dt', 'li', 'option', 'optgroup', 'p', 'rp', 'rt'];
+	
+	  var emptyAncestorInfo = {
+	    current: null,
+	
+	    formTag: null,
+	    aTagInScope: null,
+	    buttonTagInScope: null,
+	    nobrTagInScope: null,
+	    pTagInButtonScope: null,
+	
+	    listItemTagAutoclosing: null,
+	    dlItemTagAutoclosing: null
+	  };
+	
+	  var updatedAncestorInfo = function (oldInfo, tag, instance) {
+	    var ancestorInfo = _assign({}, oldInfo || emptyAncestorInfo);
+	    var info = { tag: tag, instance: instance };
+	
+	    if (inScopeTags.indexOf(tag) !== -1) {
+	      ancestorInfo.aTagInScope = null;
+	      ancestorInfo.buttonTagInScope = null;
+	      ancestorInfo.nobrTagInScope = null;
+	    }
+	    if (buttonScopeTags.indexOf(tag) !== -1) {
+	      ancestorInfo.pTagInButtonScope = null;
+	    }
+	
+	    // See rules for 'li', 'dd', 'dt' start tags in
+	    // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inbody
+	    if (specialTags.indexOf(tag) !== -1 && tag !== 'address' && tag !== 'div' && tag !== 'p') {
+	      ancestorInfo.listItemTagAutoclosing = null;
+	      ancestorInfo.dlItemTagAutoclosing = null;
+	    }
+	
+	    ancestorInfo.current = info;
+	
+	    if (tag === 'form') {
+	      ancestorInfo.formTag = info;
+	    }
+	    if (tag === 'a') {
+	      ancestorInfo.aTagInScope = info;
+	    }
+	    if (tag === 'button') {
+	      ancestorInfo.buttonTagInScope = info;
+	    }
+	    if (tag === 'nobr') {
+	      ancestorInfo.nobrTagInScope = info;
+	    }
+	    if (tag === 'p') {
+	      ancestorInfo.pTagInButtonScope = info;
+	    }
+	    if (tag === 'li') {
+	      ancestorInfo.listItemTagAutoclosing = info;
+	    }
+	    if (tag === 'dd' || tag === 'dt') {
+	      ancestorInfo.dlItemTagAutoclosing = info;
+	    }
+	
+	    return ancestorInfo;
+	  };
+	
+	  /**
+	   * Returns whether
+	   */
+	  var isTagValidWithParent = function (tag, parentTag) {
+	    // First, let's check if we're in an unusual parsing mode...
+	    switch (parentTag) {
+	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inselect
+	      case 'select':
+	        return tag === 'option' || tag === 'optgroup' || tag === '#text';
+	      case 'optgroup':
+	        return tag === 'option' || tag === '#text';
+	      // Strictly speaking, seeing an <option> doesn't mean we're in a <select>
+	      // but
+	      case 'option':
+	        return tag === '#text';
+	
+	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intd
+	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incaption
+	      // No special behavior since these rules fall back to "in body" mode for
+	      // all except special table nodes which cause bad parsing behavior anyway.
+	
+	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intr
+	      case 'tr':
+	        return tag === 'th' || tag === 'td' || tag === 'style' || tag === 'script' || tag === 'template';
+	
+	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intbody
+	      case 'tbody':
+	      case 'thead':
+	      case 'tfoot':
+	        return tag === 'tr' || tag === 'style' || tag === 'script' || tag === 'template';
+	
+	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incolgroup
+	      case 'colgroup':
+	        return tag === 'col' || tag === 'template';
+	
+	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intable
+	      case 'table':
+	        return tag === 'caption' || tag === 'colgroup' || tag === 'tbody' || tag === 'tfoot' || tag === 'thead' || tag === 'style' || tag === 'script' || tag === 'template';
+	
+	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inhead
+	      case 'head':
+	        return tag === 'base' || tag === 'basefont' || tag === 'bgsound' || tag === 'link' || tag === 'meta' || tag === 'title' || tag === 'noscript' || tag === 'noframes' || tag === 'style' || tag === 'script' || tag === 'template';
+	
+	      // https://html.spec.whatwg.org/multipage/semantics.html#the-html-element
+	      case 'html':
+	        return tag === 'head' || tag === 'body';
+	      case '#document':
+	        return tag === 'html';
+	    }
+	
+	    // Probably in the "in body" parsing mode, so we outlaw only tag combos
+	    // where the parsing rules cause implicit opens or closes to be added.
+	    // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inbody
+	    switch (tag) {
+	      case 'h1':
+	      case 'h2':
+	      case 'h3':
+	      case 'h4':
+	      case 'h5':
+	      case 'h6':
+	        return parentTag !== 'h1' && parentTag !== 'h2' && parentTag !== 'h3' && parentTag !== 'h4' && parentTag !== 'h5' && parentTag !== 'h6';
+	
+	      case 'rp':
+	      case 'rt':
+	        return impliedEndTags.indexOf(parentTag) === -1;
+	
+	      case 'body':
+	      case 'caption':
+	      case 'col':
+	      case 'colgroup':
+	      case 'frame':
+	      case 'head':
+	      case 'html':
+	      case 'tbody':
+	      case 'td':
+	      case 'tfoot':
+	      case 'th':
+	      case 'thead':
+	      case 'tr':
+	        // These tags are only valid with a few parents that have special child
+	        // parsing rules -- if we're down here, then none of those matched and
+	        // so we allow it only if we don't know what the parent is, as all other
+	        // cases are invalid.
+	        return parentTag == null;
+	    }
+	
+	    return true;
+	  };
+	
+	  /**
+	   * Returns whether
+	   */
+	  var findInvalidAncestorForTag = function (tag, ancestorInfo) {
+	    switch (tag) {
+	      case 'address':
+	      case 'article':
+	      case 'aside':
+	      case 'blockquote':
+	      case 'center':
+	      case 'details':
+	      case 'dialog':
+	      case 'dir':
+	      case 'div':
+	      case 'dl':
+	      case 'fieldset':
+	      case 'figcaption':
+	      case 'figure':
+	      case 'footer':
+	      case 'header':
+	      case 'hgroup':
+	      case 'main':
+	      case 'menu':
+	      case 'nav':
+	      case 'ol':
+	      case 'p':
+	      case 'section':
+	      case 'summary':
+	      case 'ul':
+	      case 'pre':
+	      case 'listing':
+	      case 'table':
+	      case 'hr':
+	      case 'xmp':
+	      case 'h1':
+	      case 'h2':
+	      case 'h3':
+	      case 'h4':
+	      case 'h5':
+	      case 'h6':
+	        return ancestorInfo.pTagInButtonScope;
+	
+	      case 'form':
+	        return ancestorInfo.formTag || ancestorInfo.pTagInButtonScope;
+	
+	      case 'li':
+	        return ancestorInfo.listItemTagAutoclosing;
+	
+	      case 'dd':
+	      case 'dt':
+	        return ancestorInfo.dlItemTagAutoclosing;
+	
+	      case 'button':
+	        return ancestorInfo.buttonTagInScope;
+	
+	      case 'a':
+	        // Spec says something about storing a list of markers, but it sounds
+	        // equivalent to this check.
+	        return ancestorInfo.aTagInScope;
+	
+	      case 'nobr':
+	        return ancestorInfo.nobrTagInScope;
+	    }
+	
+	    return null;
+	  };
+	
+	  /**
+	   * Given a ReactCompositeComponent instance, return a list of its recursive
+	   * owners, starting at the root and ending with the instance itself.
+	   */
+	  var findOwnerStack = function (instance) {
+	    if (!instance) {
+	      return [];
+	    }
+	
+	    var stack = [];
+	    do {
+	      stack.push(instance);
+	    } while (instance = instance._currentElement._owner);
+	    stack.reverse();
+	    return stack;
+	  };
+	
+	  var didWarn = {};
+	
+	  validateDOMNesting = function (childTag, childText, childInstance, ancestorInfo) {
+	    ancestorInfo = ancestorInfo || emptyAncestorInfo;
+	    var parentInfo = ancestorInfo.current;
+	    var parentTag = parentInfo && parentInfo.tag;
+	
+	    if (childText != null) {
+	      process.env.NODE_ENV !== 'production' ? warning(childTag == null, 'validateDOMNesting: when childText is passed, childTag should be null') : void 0;
+	      childTag = '#text';
+	    }
+	
+	    var invalidParent = isTagValidWithParent(childTag, parentTag) ? null : parentInfo;
+	    var invalidAncestor = invalidParent ? null : findInvalidAncestorForTag(childTag, ancestorInfo);
+	    var problematic = invalidParent || invalidAncestor;
+	
+	    if (problematic) {
+	      var ancestorTag = problematic.tag;
+	      var ancestorInstance = problematic.instance;
+	
+	      var childOwner = childInstance && childInstance._currentElement._owner;
+	      var ancestorOwner = ancestorInstance && ancestorInstance._currentElement._owner;
+	
+	      var childOwners = findOwnerStack(childOwner);
+	      var ancestorOwners = findOwnerStack(ancestorOwner);
+	
+	      var minStackLen = Math.min(childOwners.length, ancestorOwners.length);
+	      var i;
+	
+	      var deepestCommon = -1;
+	      for (i = 0; i < minStackLen; i++) {
+	        if (childOwners[i] === ancestorOwners[i]) {
+	          deepestCommon = i;
+	        } else {
+	          break;
+	        }
+	      }
+	
+	      var UNKNOWN = '(unknown)';
+	      var childOwnerNames = childOwners.slice(deepestCommon + 1).map(function (inst) {
+	        return inst.getName() || UNKNOWN;
+	      });
+	      var ancestorOwnerNames = ancestorOwners.slice(deepestCommon + 1).map(function (inst) {
+	        return inst.getName() || UNKNOWN;
+	      });
+	      var ownerInfo = [].concat(
+	      // If the parent and child instances have a common owner ancestor, start
+	      // with that -- otherwise we just start with the parent's owners.
+	      deepestCommon !== -1 ? childOwners[deepestCommon].getName() || UNKNOWN : [], ancestorOwnerNames, ancestorTag,
+	      // If we're warning about an invalid (non-parent) ancestry, add '...'
+	      invalidAncestor ? ['...'] : [], childOwnerNames, childTag).join(' > ');
+	
+	      var warnKey = !!invalidParent + '|' + childTag + '|' + ancestorTag + '|' + ownerInfo;
+	      if (didWarn[warnKey]) {
+	        return;
+	      }
+	      didWarn[warnKey] = true;
+	
+	      var tagDisplayName = childTag;
+	      var whitespaceInfo = '';
+	      if (childTag === '#text') {
+	        if (/\S/.test(childText)) {
+	          tagDisplayName = 'Text nodes';
+	        } else {
+	          tagDisplayName = 'Whitespace text nodes';
+	          whitespaceInfo = ' Make sure you don\'t have any extra whitespace between tags on ' + 'each line of your source code.';
+	        }
+	      } else {
+	        tagDisplayName = '<' + childTag + '>';
+	      }
+	
+	      if (invalidParent) {
+	        var info = '';
+	        if (ancestorTag === 'table' && childTag === 'tr') {
+	          info += ' Add a <tbody> to your code to match the DOM tree generated by ' + 'the browser.';
+	        }
+	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>.%s ' + 'See %s.%s', tagDisplayName, ancestorTag, whitespaceInfo, ownerInfo, info) : void 0;
+	      } else {
+	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a descendant of ' + '<%s>. See %s.', tagDisplayName, ancestorTag, ownerInfo) : void 0;
+	      }
+	    }
+	  };
+	
+	  validateDOMNesting.updatedAncestorInfo = updatedAncestorInfo;
+	
+	  // For testing
+	  validateDOMNesting.isTagValidInContext = function (tag, ancestorInfo) {
+	    ancestorInfo = ancestorInfo || emptyAncestorInfo;
+	    var parentInfo = ancestorInfo.current;
+	    var parentTag = parentInfo && parentInfo.tag;
+	    return isTagValidWithParent(tag, parentTag) && !findInvalidAncestorForTag(tag, ancestorInfo);
+	  };
+	}
+	
+	module.exports = validateDOMNesting;
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var _prodInvariant = __webpack_require__(20);
+	
+	var ReactNoopUpdateQueue = __webpack_require__(53);
+	
+	var canDefineProperty = __webpack_require__(86);
+	var emptyObject = __webpack_require__(23);
+	var invariant = __webpack_require__(1);
+	var warning = __webpack_require__(2);
+	
+	/**
+	 * Base class helpers for the updating state of a component.
+	 */
+	function ReactComponent(props, context, updater) {
+	  this.props = props;
+	  this.context = context;
+	  this.refs = emptyObject;
+	  // We initialize the default updater but the real one gets injected by the
+	  // renderer.
+	  this.updater = updater || ReactNoopUpdateQueue;
+	}
+	
+	ReactComponent.prototype.isReactComponent = {};
+	
+	/**
+	 * Sets a subset of the state. Always use this to mutate
+	 * state. You should treat `this.state` as immutable.
+	 *
+	 * There is no guarantee that `this.state` will be immediately updated, so
+	 * accessing `this.state` after calling this method may return the old value.
+	 *
+	 * There is no guarantee that calls to `setState` will run synchronously,
+	 * as they may eventually be batched together.  You can provide an optional
+	 * callback that will be executed when the call to setState is actually
+	 * completed.
+	 *
+	 * When a function is provided to setState, it will be called at some point in
+	 * the future (not synchronously). It will be called with the up to date
+	 * component arguments (state, props, context). These values can be different
+	 * from this.* because your function may be called after receiveProps but before
+	 * shouldComponentUpdate, and this new state, props, and context will not yet be
+	 * assigned to this.
+	 *
+	 * @param {object|function} partialState Next partial state or function to
+	 *        produce next partial state to be merged with current state.
+	 * @param {?function} callback Called after state is updated.
+	 * @final
+	 * @protected
+	 */
+	ReactComponent.prototype.setState = function (partialState, callback) {
+	  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ?  false ? invariant(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : _prodInvariant('85') : void 0;
+	  this.updater.enqueueSetState(this, partialState);
+	  if (callback) {
+	    this.updater.enqueueCallback(this, callback, 'setState');
+	  }
+	};
+	
+	/**
+	 * Forces an update. This should only be invoked when it is known with
+	 * certainty that we are **not** in a DOM transaction.
+	 *
+	 * You may want to call this when you know that some deeper aspect of the
+	 * component's state has changed but `setState` was not called.
+	 *
+	 * This will not invoke `shouldComponentUpdate`, but it will invoke
+	 * `componentWillUpdate` and `componentDidUpdate`.
+	 *
+	 * @param {?function} callback Called after update is complete.
+	 * @final
+	 * @protected
+	 */
+	ReactComponent.prototype.forceUpdate = function (callback) {
+	  this.updater.enqueueForceUpdate(this);
+	  if (callback) {
+	    this.updater.enqueueCallback(this, callback, 'forceUpdate');
+	  }
+	};
+	
+	/**
+	 * Deprecated APIs. These APIs used to exist on classic React classes but since
+	 * we would like to deprecate them, we're not going to move them over to this
+	 * modern base class. Instead, we define a getter that warns if it's accessed.
+	 */
+	if (false) {
+	  var deprecatedAPIs = {
+	    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
+	    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
+	  };
+	  var defineDeprecationWarning = function (methodName, info) {
+	    if (canDefineProperty) {
+	      Object.defineProperty(ReactComponent.prototype, methodName, {
+	        get: function () {
+	          process.env.NODE_ENV !== 'production' ? warning(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]) : void 0;
+	          return undefined;
+	        }
+	      });
+	    }
+	  };
+	  for (var fnName in deprecatedAPIs) {
+	    if (deprecatedAPIs.hasOwnProperty(fnName)) {
+	      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
+	    }
+	  }
+	}
+	
+	module.exports = ReactComponent;
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2015-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var warning = __webpack_require__(2);
+	
+	function warnNoop(publicInstance, callerName) {
+	  if (false) {
+	    var constructor = publicInstance.constructor;
+	    process.env.NODE_ENV !== 'production' ? warning(false, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, constructor && (constructor.displayName || constructor.name) || 'ReactClass') : void 0;
+	  }
+	}
+	
+	/**
+	 * This is the abstract API for an update queue.
+	 */
+	var ReactNoopUpdateQueue = {
+	
+	  /**
+	   * Checks whether or not this composite component is mounted.
+	   * @param {ReactClass} publicInstance The instance we want to test.
+	   * @return {boolean} True if mounted, false otherwise.
+	   * @protected
+	   * @final
+	   */
+	  isMounted: function (publicInstance) {
+	    return false;
+	  },
+	
+	  /**
+	   * Enqueue a callback that will be executed after all the pending updates
+	   * have processed.
+	   *
+	   * @param {ReactClass} publicInstance The instance to use as `this` context.
+	   * @param {?function} callback Called after state is updated.
+	   * @internal
+	   */
+	  enqueueCallback: function (publicInstance, callback) {},
+	
+	  /**
+	   * Forces an update. This should only be invoked when it is known with
+	   * certainty that we are **not** in a DOM transaction.
+	   *
+	   * You may want to call this when you know that some deeper aspect of the
+	   * component's state has changed but `setState` was not called.
+	   *
+	   * This will not invoke `shouldComponentUpdate`, but it will invoke
+	   * `componentWillUpdate` and `componentDidUpdate`.
+	   *
+	   * @param {ReactClass} publicInstance The instance that should rerender.
+	   * @internal
+	   */
+	  enqueueForceUpdate: function (publicInstance) {
+	    warnNoop(publicInstance, 'forceUpdate');
+	  },
+	
+	  /**
+	   * Replaces all of the state. Always use this or `setState` to mutate state.
+	   * You should treat `this.state` as immutable.
+	   *
+	   * There is no guarantee that `this.state` will be immediately updated, so
+	   * accessing `this.state` after calling this method may return the old value.
+	   *
+	   * @param {ReactClass} publicInstance The instance that should rerender.
+	   * @param {object} completeState Next state.
+	   * @internal
+	   */
+	  enqueueReplaceState: function (publicInstance, completeState) {
+	    warnNoop(publicInstance, 'replaceState');
+	  },
+	
+	  /**
+	   * Sets a subset of the state. This only exists because _pendingState is
+	   * internal. This provides a merging strategy that is not available to deep
+	   * properties which is confusing. TODO: Expose pendingState or don't use it
+	   * during the merge.
+	   *
+	   * @param {ReactClass} publicInstance The instance that should rerender.
+	   * @param {object} partialState Next partial state to be merged with state.
+	   * @internal
+	   */
+	  enqueueSetState: function (publicInstance, partialState) {
+	    warnNoop(publicInstance, 'setState');
+	  }
+	};
+	
+	module.exports = ReactNoopUpdateQueue;
+
+/***/ },
+/* 54 */
+/***/ function(module, exports) {
+
 	/*!
 	* EaselJS
 	* Visit http://createjs.com/ for documentation, updates and examples.
@@ -4073,11 +6358,11 @@
 	* OTHER DEALINGS IN THE SOFTWARE.
 	*/
 	
-	let createjs = {};
+	
 	//##############################################################################
 	// extend.js
 	//##############################################################################
-	
+	let createjs = {};
 	this.createjs = this.createjs||{};
 	
 	/**
@@ -4200,6 +6485,94 @@
 			}
 		}
 		return -1;
+	};
+	
+	//##############################################################################
+	// UID.js
+	//##############################################################################
+	
+	this.createjs = this.createjs||{};
+	
+	(function() {
+		"use strict";
+	
+	
+	// constructor:
+		/**
+		 * Global utility for generating sequential unique ID numbers. The UID class uses a static interface (ex. <code>UID.get()</code>)
+		 * and should not be instantiated.
+		 * @class UID
+		 * @static
+		 **/
+		function UID() {
+			throw "UID cannot be instantiated";
+		}
+	
+	
+	// private static properties:
+		/**
+		 * @property _nextID
+		 * @type Number
+		 * @protected
+		 **/
+		UID._nextID = 0;
+	
+	
+	// public static methods:
+		/**
+		 * Returns the next unique id.
+		 * @method get
+		 * @return {Number} The next unique id
+		 * @static
+		 **/
+		UID.get = function() {
+			return UID._nextID++;
+		};
+	
+	
+		createjs.UID = UID;
+	}());
+	
+	//##############################################################################
+	// deprecate.js
+	//##############################################################################
+	
+	this.createjs = this.createjs||{};
+	
+	/**
+	 * @class Utility Methods
+	 */
+	
+	/**
+	 * Wraps deprecated methods so they still be used, but throw warnings to developers.
+	 *
+	 *	obj.deprecatedMethod = createjs.deprecate("Old Method Name", obj._fallbackMethod);
+	 *
+	 * The recommended approach for deprecated properties is:
+	 *
+	 *	try {
+	 *		Obj	ect.defineProperties(object, {
+	 *			readyOnlyProp: { get: createjs.deprecate("readOnlyProp", function() { return this.alternateProp; }) },
+	 *			readWriteProp: {
+	 *				get: createjs.deprecate("readOnlyProp", function() { return this.alternateProp; }),
+	 *				set: createjs.deprecate("readOnlyProp", function(val) { this.alternateProp = val; })
+	 *		});
+	 *	} catch (e) {}
+	 *
+	 * @method deprecate
+	 * @param {Function} [fallbackMethod=null] A method to call when the deprecated method is used. See the example for how
+	 * @param {String} [name=null] The name of the method or property to display in the console warning.
+	 * to deprecate properties.
+	 * @return {Function} If a fallbackMethod is supplied, returns a closure that will call the fallback method after
+	 * logging the warning in the console.
+	 */
+	createjs.deprecate = function(fallbackMethod, name) {
+		"use strict";
+		return function() {
+			var msg = "Deprecated property or method '"+name+"'. See docs for info.";
+			console && (console.warn ? console.warn(msg) : console.log(msg));
+			return fallbackMethod && fallbackMethod.apply(this, arguments);
+		}
 	};
 	
 	//##############################################################################
@@ -4337,19 +6710,6 @@
 			this.removed = false;
 		}
 		var p = Event.prototype;
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
 	
 	// public methods:
 		/**
@@ -4513,20 +6873,6 @@
 			this._captureListeners = null;
 		}
 		var p = EventDispatcher.prototype;
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
 	
 	// static public methods:
 		/**
@@ -4795,17 +7141,15 @@
 	// private methods:
 		/**
 		 * @method _dispatchEvent
-		 * @param {Object | String | Event} eventObj
+		 * @param {Object | Event} eventObj
 		 * @param {Object} eventPhase
 		 * @protected
 		 **/
 		p._dispatchEvent = function(eventObj, eventPhase) {
-			var l, listeners = (eventPhase==1) ? this._captureListeners : this._listeners;
-			if (eventObj && listeners) {
-				var arr = listeners[eventObj.type];
-				if (!arr||!(l=arr.length)) { return; }
+			var l, arr, listeners = (eventPhase <= 2) ? this._captureListeners : this._listeners;
+			if (eventObj && listeners && (arr = listeners[eventObj.type]) && (l=arr.length)) {
 				try { eventObj.currentTarget = this; } catch (e) {}
-				try { eventObj.eventPhase = eventPhase; } catch (e) {}
+				try { eventObj.eventPhase = eventPhase|0; } catch (e) {}
 				eventObj.removed = false;
 				
 				arr = arr.slice(); // to avoid issues with items being removed or added during the dispatch
@@ -4819,6 +7163,7 @@
 					}
 				}
 			}
+			if (eventPhase === 2) { this._dispatchEvent(eventObj, 2.1); }
 		};
 	
 	
@@ -4917,7 +7262,7 @@
 	// static events:
 		/**
 		 * Dispatched each tick. The event will be dispatched to each listener even when the Ticker has been paused using
-		 * {{#crossLink "Ticker/setPaused"}}{{/crossLink}}.
+		 * {{#crossLink "Ticker/paused:property"}}{{/crossLink}}.
 		 *
 		 * <h4>Example</h4>
 		 *
@@ -4940,20 +7285,9 @@
 	
 	// public static properties:
 		/**
-		 * Deprecated in favour of {{#crossLink "Ticker/timingMode"}}{{/crossLink}}, and will be removed in a future version. If true, timingMode will
-		 * use {{#crossLink "Ticker/RAF_SYNCHED"}}{{/crossLink}} by default.
-		 * @deprecated Deprecated in favour of {{#crossLink "Ticker/timingMode"}}{{/crossLink}}.
-		 * @property useRAF
-		 * @static
-		 * @type {Boolean}
-		 * @default false
-		 **/
-		Ticker.useRAF = false;
-	
-		/**
 		 * Specifies the timing api (setTimeout or requestAnimationFrame) and mode to use. See
-		 * {{#crossLink "Ticker/TIMEOUT"}}{{/crossLink}}, {{#crossLink "Ticker/RAF"}}{{/crossLink}}, and
-		 * {{#crossLink "Ticker/RAF_SYNCHED"}}{{/crossLink}} for mode details.
+		 * {{#crossLink "Ticker/TIMEOUT:property"}}{{/crossLink}}, {{#crossLink "Ticker/RAF:property"}}{{/crossLink}}, and
+		 * {{#crossLink "Ticker/RAF_SYNCHED:property"}}{{/crossLink}} for mode details.
 		 * @property timingMode
 		 * @static
 		 * @type {String}
@@ -5022,7 +7356,7 @@
 		 * @property _inited
 		 * @static
 		 * @type {Boolean}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._inited = false;
 	
@@ -5030,7 +7364,7 @@
 		 * @property _startTime
 		 * @static
 		 * @type {Number}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._startTime = 0;
 	
@@ -5038,7 +7372,7 @@
 		 * @property _pausedTime
 		 * @static
 		 * @type {Number}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._pausedTime=0;
 	
@@ -5047,7 +7381,7 @@
 		 * @property _ticks
 		 * @static
 		 * @type {Number}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._ticks = 0;
 	
@@ -5056,7 +7390,7 @@
 		 * @property _pausedTicks
 		 * @static
 		 * @type {Number}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._pausedTicks = 0;
 	
@@ -5064,7 +7398,7 @@
 		 * @property _interval
 		 * @static
 		 * @type {Number}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._interval = 50;
 	
@@ -5072,7 +7406,7 @@
 		 * @property _lastTime
 		 * @static
 		 * @type {Number}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._lastTime = 0;
 	
@@ -5080,7 +7414,7 @@
 		 * @property _times
 		 * @static
 		 * @type {Array}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._times = null;
 	
@@ -5088,7 +7422,7 @@
 		 * @property _tickTimes
 		 * @static
 		 * @type {Array}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._tickTimes = null;
 	
@@ -5097,7 +7431,7 @@
 		 * @property _timerId
 		 * @static
 		 * @type {Number}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._timerId = null;
 		
@@ -5107,7 +7441,7 @@
 		 * @property _raf
 		 * @static
 		 * @type {Boolean}
-		 * @protected
+		 * @private
 		 **/
 		Ticker._raf = true;
 		
@@ -5115,49 +7449,57 @@
 	// static getter / setters:
 		/**
 		 * Use the {{#crossLink "Ticker/interval:property"}}{{/crossLink}} property instead.
-		 * @method setInterval
+		 * @method _setInterval
+		 * @private
 		 * @static
 		 * @param {Number} interval
-		 * @deprecated
 		 **/
-		Ticker.setInterval = function(interval) {
+		Ticker._setInterval = function(interval) {
 			Ticker._interval = interval;
 			if (!Ticker._inited) { return; }
 			Ticker._setupTick();
 		};
+		// Ticker.setInterval is @deprecated. Remove for 1.1+
+		Ticker.setInterval = createjs.deprecate(Ticker._setInterval, "Ticker.setInterval");
 	
 		/**
 		 * Use the {{#crossLink "Ticker/interval:property"}}{{/crossLink}} property instead.
-		 * @method getInterval
+		 * @method _getInterval
+		 * @private
 		 * @static
 		 * @return {Number}
-		 * @deprecated
 		 **/
-		Ticker.getInterval = function() {
+		Ticker._getInterval = function() {
 			return Ticker._interval;
 		};
+		// Ticker.getInterval is @deprecated. Remove for 1.1+
+		Ticker.getInterval = createjs.deprecate(Ticker._getInterval, "Ticker.getInterval");
 	
 		/**
 		 * Use the {{#crossLink "Ticker/framerate:property"}}{{/crossLink}} property instead.
-		 * @method setFPS
+		 * @method _setFPS
+		 * @private
 		 * @static
 		 * @param {Number} value
-		 * @deprecated
 		 **/
-		Ticker.setFPS = function(value) {
-			Ticker.setInterval(1000/value);
+		Ticker._setFPS = function(value) {
+			Ticker._setInterval(1000/value);
 		};
+		// Ticker.setFPS is @deprecated. Remove for 1.1+
+		Ticker.setFPS = createjs.deprecate(Ticker._setFPS, "Ticker.setFPS");
 	
 		/**
 		 * Use the {{#crossLink "Ticker/framerate:property"}}{{/crossLink}} property instead.
-		 * @method getFPS
+		 * @method _getFPS
 		 * @static
+		 * @private
 		 * @return {Number}
-		 * @deprecated
 		 **/
-		Ticker.getFPS = function() {
+		Ticker._getFPS = function() {
 			return 1000/Ticker._interval;
 		};
+		// Ticker.getFPS is @deprecated. Remove for 1.1+
+		Ticker.getFPS = createjs.deprecate(Ticker._getFPS, "Ticker.getFPS");
 	
 		/**
 		 * Indicates the target time (in milliseconds) between ticks. Default is 50 (20 FPS).
@@ -5177,8 +7519,8 @@
 		 **/
 		try {
 			Object.defineProperties(Ticker, {
-				interval: { get: Ticker.getInterval, set: Ticker.setInterval },
-				framerate: { get: Ticker.getFPS, set: Ticker.setFPS }
+				interval: { get: Ticker._getInterval, set: Ticker._setInterval },
+				framerate: { get: Ticker._getFPS, set: Ticker._setFPS }
 			});
 		} catch (e) { console.log(e); }
 	
@@ -5213,7 +7555,7 @@
 			}
 			Ticker.removeAllEventListeners("tick");
 			Ticker._timerId = Ticker._times = Ticker._tickTimes = null;
-			Ticker._startTime = Ticker._lastTime = Ticker._ticks = 0;
+			Ticker._startTime = Ticker._lastTime = Ticker._ticks = Ticker._pausedTime = 0;
 			Ticker._inited = false;
 		};
 	
@@ -5225,9 +7567,10 @@
 		 * the end of one tick and the end of the next. However, getMeasuredTickTime() returns 15ms. This indicates that 
 		 * there may be up to 35ms of "idle" time between the end of one tick and the start of the next.
 		 *
-		 * Example 2: With a target FPS of 30, getFPS() returns 10fps, which indicates an average of 100ms between the end of
-		 * one tick and the end of the next. However, getMeasuredTickTime() returns 20ms. This would indicate that something
-		 * other than the tick is using ~80ms (another script, DOM rendering, etc).
+		 * Example 2: With a target FPS of 30, {{#crossLink "Ticker/framerate:property"}}{{/crossLink}} returns 10fps, which
+		 * indicates an average of 100ms between the end of one tick and the end of the next. However, {{#crossLink "Ticker/getMeasuredTickTime"}}{{/crossLink}}
+		 * returns 20ms. This would indicate that something other than the tick is using ~80ms (another script, DOM
+		 * rendering, etc).
 		 * @method getMeasuredTickTime
 		 * @static
 		 * @param {Number} [ticks] The number of previous ticks over which to measure the average time spent in a tick.
@@ -5239,7 +7582,7 @@
 			if (!times || times.length < 1) { return -1; }
 	
 			// by default, calculate average for the past ~1 second:
-			ticks = Math.min(times.length, ticks||(Ticker.getFPS()|0));
+			ticks = Math.min(times.length, ticks||(Ticker._getFPS()|0));
 			for (var i=0; i<ticks; i++) { ttl += times[i]; }
 			return ttl/ticks;
 		};
@@ -5258,32 +7601,8 @@
 			if (!times || times.length < 2) { return -1; }
 	
 			// by default, calculate fps for the past ~1 second:
-			ticks = Math.min(times.length-1, ticks||(Ticker.getFPS()|0));
+			ticks = Math.min(times.length-1, ticks||(Ticker._getFPS()|0));
 			return 1000/((times[0]-times[ticks])/ticks);
-		};
-	
-		/**
-		 * Use the {{#crossLink "Ticker/paused:property"}}{{/crossLink}} property instead.
-		 * @method setPaused
-		 * @static
-		 * @param {Boolean} value
-		 * @deprecated
-		 **/
-		Ticker.setPaused = function(value) {
-			// TODO: deprecated.
-			Ticker.paused = value;
-		};
-	
-		/**
-		 * Use the {{#crossLink "Ticker/paused:property"}}{{/crossLink}} property instead.
-		 * @method getPaused
-		 * @static
-		 * @return {Boolean}
-		 * @deprecated
-		 **/
-		Ticker.getPaused = function() {
-			// TODO: deprecated.
-			return Ticker.paused;
 		};
 	
 		/**
@@ -5331,7 +7650,7 @@
 		/**
 		 * @method _handleSynch
 		 * @static
-		 * @protected
+		 * @private
 		 **/
 		Ticker._handleSynch = function() {
 			Ticker._timerId = null;
@@ -5346,7 +7665,7 @@
 		/**
 		 * @method _handleRAF
 		 * @static
-		 * @protected
+		 * @private
 		 **/
 		Ticker._handleRAF = function() {
 			Ticker._timerId = null;
@@ -5357,7 +7676,7 @@
 		/**
 		 * @method _handleTimeout
 		 * @static
-		 * @protected
+		 * @private
 		 **/
 		Ticker._handleTimeout = function() {
 			Ticker._timerId = null;
@@ -5368,12 +7687,12 @@
 		/**
 		 * @method _setupTick
 		 * @static
-		 * @protected
+		 * @private
 		 **/
 		Ticker._setupTick = function() {
 			if (Ticker._timerId != null) { return; } // avoid duplicates
 	
-			var mode = Ticker.timingMode||(Ticker.useRAF&&Ticker.RAF_SYNCHED);
+			var mode = Ticker.timingMode;
 			if (mode == Ticker.RAF_SYNCHED || mode == Ticker.RAF) {
 				var f = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame;
 				if (f) {
@@ -5389,7 +7708,7 @@
 		/**
 		 * @method _tick
 		 * @static
-		 * @protected
+		 * @private
 		 **/
 		Ticker._tick = function() {
 			var paused = Ticker.paused;
@@ -5423,11 +7742,11 @@
 		/**
 		 * @method _getTime
 		 * @static
-		 * @protected
+		 * @private
 		 **/
-		var now = window.performance && (performance.now || performance.mozNow || performance.msNow || performance.oNow || performance.webkitNow);
+		var w=window, now=w.performance.now || w.performance.mozNow || w.performance.msNow || w.performance.oNow || w.performance.webkitNow;
 		Ticker._getTime = function() {
-			return ((now&&now.call(performance))||(new Date().getTime())) - Ticker._startTime;
+			return ((now&&now.call(w.performance))||(new Date().getTime())) - Ticker._startTime;
 		};
 	
 	
@@ -5435,7 +7754,7 @@
 	}());
 	
 	//##############################################################################
-	// UID.js
+	// VideoBuffer.js
 	//##############################################################################
 	
 	this.createjs = this.createjs||{};
@@ -5446,38 +7765,92 @@
 	
 	// constructor:
 		/**
-		 * Global utility for generating sequential unique ID numbers. The UID class uses a static interface (ex. <code>UID.get()</code>)
-		 * and should not be instantiated.
-		 * @class UID
-		 * @static
+		 * When an HTML video seeks, including when looping, there is an indeterminate period before a new frame is available.
+		 * This can result in the video blinking or flashing when it is drawn to a canvas. The VideoBuffer class resolves
+		 * this issue by drawing each frame to an off-screen canvas and preserving the prior frame during a seek.
+		 * 
+		 * 	var myBuffer = new createjs.VideoBuffer(myVideo);
+		 * 	var myBitmap = new Bitmap(myBuffer);
+		 * 
+		 * @class VideoBuffer
+		 * @param {HTMLVideoElement} video The HTML video element to buffer.
+		 * @constructor
 		 **/
-		function UID() {
-			throw "UID cannot be instantiated";
+		function VideoBuffer(video) {
+			
+		// private properties:
+			/**
+			 * Used by Bitmap to determine when the video buffer is ready to be drawn. Not intended for general use.
+			 * @property readyState
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this.readyState = video.readyState;
+			
+			/**
+			 * @property _video
+			 * @protected
+			 * @type {HTMLVideoElement}
+			 * @default 0
+			 **/
+			this._video = video;
+			
+			/**
+			 * @property _canvas
+			 * @protected
+			 * @type {HTMLCanvasElement}
+			 * @default 0
+			 **/
+			this._canvas = null;
+			
+			/**
+			 * @property _lastTime
+			 * @protected
+			 * @type {Number}
+			 * @default -1
+			 **/
+			this._lastTime = -1;
+			
+			if (this.readyState < 2) { video.addEventListener("canplaythrough", this._videoReady.bind(this)); } //once:true isn't supported everywhere, but its a non-critical optimization here.
 		}
-	
-	
-	// private static properties:
+		var p = VideoBuffer.prototype;
+		
+		
+	// public methods:
 		/**
-		 * @property _nextID
-		 * @type Number
+		 * Gets an HTML canvas element showing the current video frame, or the previous frame if in a seek / loop.
+		 * Primarily for use by {{#crossLink "Bitmap"}}{{/crossLink}}.
+		 * @method getImage
+		 **/
+		p.getImage = function() {
+			if (this.readyState < 2) { return; }
+			var canvas=this._canvas, video = this._video;
+			if (!canvas) {
+				canvas = this._canvas = createjs.createCanvas?createjs.createCanvas():document.createElement("canvas");
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+			}
+			if (video.readyState >= 2 && video.currentTime !== this._lastTime) {
+				var ctx = canvas.getContext("2d");
+				ctx.clearRect(0,0,canvas.width,canvas.height);
+				ctx.drawImage(video,0,0,canvas.width,canvas.height);
+				this._lastTime = video.currentTime;
+			}
+			return canvas;
+		};
+		
+	// private methods:
+		/**
+		 * @method _videoReady
 		 * @protected
 		 **/
-		UID._nextID = 0;
-	
-	
-	// public static methods:
-		/**
-		 * Returns the next unique id.
-		 * @method get
-		 * @return {Number} The next unique id
-		 * @static
-		 **/
-		UID.get = function() {
-			return UID._nextID++;
+		p._videoReady = function() {
+			this.readyState = 2;
 		};
 	
 	
-		createjs.UID = UID;
+		createjs.VideoBuffer = VideoBuffer;
 	}());
 	
 	//##############################################################################
@@ -5724,20 +8097,6 @@
 			 **/
 		}
 		var p = Matrix2D.prototype;
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
 	
 	// constants:
 		/**
@@ -6206,7 +8565,7 @@
 			/**
 			 * Property representing the compositeOperation that will be applied to a display object.
 			 * You can find a list of valid composite operations at:
-			 * <a href="https://developer.mozilla.org/en/Canvas_tutorial/Compositing">https://developer.mozilla.org/en/Canvas_tutorial/Compositing</a>
+			 * <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing">https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing</a>
 			 * @property compositeOperation
 			 * @type String
 			 **/
@@ -6366,20 +8725,6 @@
 			 **/
 		}
 		var p = Point.prototype;
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
 		
 	// public methods:
 		/** 
@@ -6488,20 +8833,6 @@
 		}
 		var p = Rectangle.prototype;
 	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
-	
 	// public methods:
 		/** 
 		 * Sets the specified values on this instance.
@@ -6547,8 +8878,8 @@
 		 * @method pad
 		 * @param {Number} top
 		 * @param {Number} left
-		 * @param {Number} right
 		 * @param {Number} bottom
+		 * @param {Number} right
 		 * @return {Rectangle} This instance. Useful for chaining method calls.
 		 * @chainable
 		*/
@@ -6775,29 +9106,16 @@
 			}
 		}
 		var p = ButtonHelper.prototype;
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
 		
 	// getter / setters:
 		/**
 		 * Use the {{#crossLink "ButtonHelper/enabled:property"}}{{/crossLink}} property instead.
 		 * @method setEnabled
-		 * @param {Boolean} value
-		 * @deprecated
+		 * @param {Boolean} value The enabled property to set the instance to.
+		 * @[rptected
+		 * @protected
 		 **/
-		p.setEnabled = function(value) { // TODO: deprecated.
+		p._setEnabled = function(value) {
 			if (value == this._enabled) { return; }
 			var o = this.target;
 			this._enabled = value;
@@ -6817,15 +9135,20 @@
 				if (o.__reset) { o._reset = o.__reset; delete(o.__reset); }
 			}
 		};
+		// ButtonHelper.setEnabled is @deprecated. Remove for 1.1+
+		p.setEnabled = createjs.deprecate(p._setEnabled, "ButtonHelper.setEnabled");
+	
 		/**
 		 * Use the {{#crossLink "ButtonHelper/enabled:property"}}{{/crossLink}} property instead.
 		 * @method getEnabled
+		 * @protected
 		 * @return {Boolean}
-		 * @deprecated
 		 **/
-		p.getEnabled = function() {
+		p._getEnabled = function() {
 			return this._enabled;
 		};
+		// ButtonHelper.getEnabled is @deprecated. Remove for 1.1+
+		p.getEnabled = createjs.deprecate(p._getEnabled, "ButtonHelper.getEnabled");
 	
 		/**
 		 * Enables or disables the button functionality on the target.
@@ -6834,7 +9157,7 @@
 		 **/
 		try {
 			Object.defineProperties(p, {
-				enabled: { get: p.getEnabled, set: p.setEnabled }
+				enabled: { get: p._getEnabled, set: p._setEnabled }
 			});
 		} catch (e) {} // TODO: use Log
 	
@@ -6954,20 +9277,6 @@
 			this.blur = blur||0;
 		}
 		var p = Shadow.prototype;
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
 	
 	// static public properties:
 		/**
@@ -7152,10 +9461,10 @@
 		 * Spritesheets can be created manually by combining images in PhotoShop, and specifying the frame size or
 		 * coordinates manually, however there are a number of tools that facilitate this.
 		 * <ul>
-		 *     <li>Exporting SpriteSheets or HTML5 content from Flash Pro supports the EaselJS SpriteSheet format.</li>
+		 *     <li>Exporting SpriteSheets or HTML5 content from Adobe Flash/Animate supports the EaselJS SpriteSheet format.</li>
 		 *     <li>The popular <a href="https://www.codeandweb.com/texturepacker/easeljs" target="_blank">Texture Packer</a> has
 		 *     EaselJS support.
-		 *     <li>SWF animations in Flash can be exported to SpriteSheets using <a href="http://createjs.com/zoe" target="_blank"></a></li>
+		 *     <li>SWF animations in Adobe Flash/Animate can be exported to SpriteSheets using <a href="http://createjs.com/zoe" target="_blank">Zo&euml;</a></li>
 		 * </ul>
 		 *
 		 * <h3>Cross Origin Issues</h3>
@@ -7339,13 +9648,15 @@
 	// getter / setters:
 		/**
 		 * Use the {{#crossLink "SpriteSheet/animations:property"}}{{/crossLink}} property instead.
-		 * @method getAnimations
+		 * @method _getAnimations
+		 * @protected
 		 * @return {Array}
-		 * @deprecated
 		 **/
-		p.getAnimations = function() {
+		p._getAnimations = function() {
 			return this._animations.slice();
 		};
+		// SpriteSheet.getAnimations is @deprecated. Remove for 1.1+
+		p.getAnimations = createjs.deprecate(p._getAnimations, "SpriteSheet.getAnimations");
 	
 		/**
 		 * Returns an array of all available animation names available on this sprite sheet as strings.
@@ -7355,7 +9666,7 @@
 		 **/
 		try {
 			Object.defineProperties(p, {
-				animations: { get: p.getAnimations }
+				animations: { get: p._getAnimations }
 			});
 		} catch (e) {}
 	
@@ -7575,7 +9886,7 @@
 			
 			imgLoop:
 			for (var i=0, imgs=this._images; i<imgs.length; i++) {
-				var img = imgs[i], imgW = img.width, imgH = img.height;
+				var img = imgs[i], imgW = (img.width||img.naturalWidth), imgH = (img.height||img.naturalHeight);
 	
 				var y = margin;
 				while (y <= imgH-margin-frameHeight) {
@@ -7822,20 +10133,6 @@
 		var p = Graphics.prototype;
 		var G = Graphics; // shortcut
 	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
-	
 	// static public methods:
 		/**
 		 * Returns a CSS compatible color string based on the specified RGB numeric color values in the format
@@ -7966,14 +10263,16 @@
 	// getter / setters:
 		/**
 		 * Use the {{#crossLink "Graphics/instructions:property"}}{{/crossLink}} property instead.
-		 * @method getInstructions
-		 * @return {Array}
-		 * @deprecated
+		 * @method _getInstructions
+		 * @protected
+		 * @return {Array} The instructions array, useful for chaining
 		 **/
-		p.getInstructions = function() {
+		p._getInstructions = function() {
 			this._updateInstructions();
 			return this._instructions;
 		};
+		// Graphics.getInstructions is @deprecated. Remove for 1.1+
+		p.getInstructions = createjs.deprecate(p._getInstructions, "Graphics.getInstructions");
 	
 		/**
 		 * Returns the graphics instructions array. Each entry is a graphics command object (ex. Graphics.Fill, Graphics.Rect)
@@ -7986,7 +10285,7 @@
 		 **/
 		try {
 			Object.defineProperties(p, {
-				instructions: { get: p.getInstructions }
+				instructions: { get: p._getInstructions }
 			});
 		} catch (e) {}
 	
@@ -8171,7 +10470,7 @@
 		};
 	
 	
-	// public methods that roughly map to Flash graphics APIs:
+	// public methods that roughly map to Adobe Flash/Animate graphics APIs:
 		/**
 		 * Clears all drawing instructions, effectively resetting this Graphics instance. Any line and fill styles will need
 		 * to be redefined to draw shapes following a clear call. A tiny API method "c" also exists.
@@ -8424,7 +10723,7 @@
 		/**
 		 * Maps the familiar ActionScript <code>curveTo()</code> method to the functionally similar {{#crossLink "Graphics/quadraticCurveTo"}}{{/crossLink}}
 		 * method.
-		 * @method quadraticCurveTo
+		 * @method curveTo
 		 * @param {Number} cpx
 		 * @param {Number} cpy
 		 * @param {Number} x
@@ -8553,13 +10852,6 @@
 		p.drawPolyStar = function(x, y, radius, sides, pointSize, angle) {
 			return this.append(new G.PolyStar(x, y, radius, sides, pointSize, angle));
 		};
-	
-		// TODO: deprecated.
-		/**
-		 * Removed in favour of using custom command objects with {{#crossLink "Graphics/append"}}{{/crossLink}}.
-		 * @method inject
-		 * @deprecated
-		 **/
 	
 		/**
 		 * Appends a graphics command object to the graphics queue. Command objects expose an "exec" method
@@ -9160,12 +11452,14 @@
 				if (this._stroke) {
 					// doesn't need to be re-applied if it hasn't changed.
 					if (this._strokeDash !== this._oldStrokeDash) {
-						this._oldStrokeDash = this._strokeDash;
 						instr.push(this._strokeDash);
 					}
 					if (this._strokeStyle !== this._oldStrokeStyle) {
-						this._oldStrokeStyle = this._strokeStyle;
 						instr.push(this._strokeStyle);
+					}
+					if (commit) {
+						this._oldStrokeStyle = this._strokeStyle;
+						this._oldStrokeDash = this._strokeDash;
 					}
 					instr.push(this._stroke);
 				}
@@ -9993,8 +12287,8 @@
 		 **/
 		function DisplayObject() {
 			this.EventDispatcher_constructor();
-			
-			
+	
+	
 		// public properties:
 			/**
 			 * The alpha (transparency) for this display object. 0 is fully transparent, 1 is fully opaque.
@@ -10003,26 +12297,27 @@
 			 * @default 1
 			 **/
 			this.alpha = 1;
-		
+	
 			/**
-			 * If a cache is active, this returns the canvas that holds the cached version of this display object. See {{#crossLink "cache"}}{{/crossLink}}
-			 * for more information.
+			 * If a cache is active, this returns the canvas that holds the image of this display object. See {{#crossLink "DisplayObject/cache:method"}}{{/crossLink}}
+			 * for more information. Use this to display the result of a cache. This will be a HTMLCanvasElement unless special cache rules have been deliberately enabled for this cache.
 			 * @property cacheCanvas
 			 * @type {HTMLCanvasElement | Object}
 			 * @default null
 			 * @readonly
 			 **/
 			this.cacheCanvas = null;
-		
+	
 			/**
-			 * Returns an ID number that uniquely identifies the current cache for this display object. This can be used to
-			 * determine if the cache has changed since a previous check.
-			 * @property cacheID
-			 * @type {Number}
-			 * @default 0
-			 */
-			this.cacheID = 0;
-		
+			 * If a cache has been made, this returns the class that is managing the cacheCanvas and its properties. See {{#crossLink "BitmapCache"}}{{/crossLink}}
+			 * for more information. Use this to control, inspect, and change the cache. In special circumstances this may be a modified or subclassed BitmapCache.
+			 * @property bitmapCache
+			 * @type {BitmapCache}
+			 * @default null
+			 * @readonly
+			 **/
+			this.bitmapCache = null;
+	
 			/**
 			 * Unique ID for this display object. Makes display objects easier for some uses.
 			 * @property id
@@ -10030,7 +12325,7 @@
 			 * @default -1
 			 **/
 			this.id = createjs.UID.get();
-		
+	
 			/**
 			 * Indicates whether to include this object when running mouse interactions. Setting this to `false` for children
 			 * of a {{#crossLink "Container"}}{{/crossLink}} will cause events on the Container to not fire when that child is
@@ -10045,17 +12340,17 @@
 			 * @default true
 			 **/
 			this.mouseEnabled = true;
-			
+	
 			/**
 			 * If false, the tick will not run on this display object (or its children). This can provide some performance benefits.
 			 * In addition to preventing the "tick" event from being dispatched, it will also prevent tick related updates
-			 * on some display objects (ex. Sprite & MovieClip frame advancing, DOMElement visibility handling).
+			 * on some display objects (ex. Sprite & MovieClip frame advancing, and DOMElement display properties).
 			 * @property tickEnabled
 			 * @type Boolean
 			 * @default true
 			 **/
 			this.tickEnabled = true;
-		
+	
 			/**
 			 * An optional name for this display object. Included in {{#crossLink "DisplayObject/toString"}}{{/crossLink}} . Useful for
 			 * debugging.
@@ -10064,7 +12359,7 @@
 			 * @default null
 			 **/
 			this.name = null;
-		
+	
 			/**
 			 * A reference to the {{#crossLink "Container"}}{{/crossLink}} or {{#crossLink "Stage"}}{{/crossLink}} object that
 			 * contains this display object, or null if it has not been added
@@ -10076,25 +12371,27 @@
 			 * @readonly
 			 **/
 			this.parent = null;
-		
+	
 			/**
 			 * The left offset for this display object's registration point. For example, to make a 100x100px Bitmap rotate
 			 * around its center, you would set regX and {{#crossLink "DisplayObject/regY:property"}}{{/crossLink}} to 50.
+			 * Cached object's registration points should be set based on pre-cache conditions, not cached size.
 			 * @property regX
 			 * @type {Number}
 			 * @default 0
 			 **/
 			this.regX = 0;
-		
+	
 			/**
 			 * The y offset for this display object's registration point. For example, to make a 100x100px Bitmap rotate around
 			 * its center, you would set {{#crossLink "DisplayObject/regX:property"}}{{/crossLink}} and regY to 50.
+			 * Cached object's registration points should be set based on pre-cache conditions, not cached size.
 			 * @property regY
 			 * @type {Number}
 			 * @default 0
 			 **/
 			this.regY = 0;
-		
+	
 			/**
 			 * The rotation in degrees for this display object.
 			 * @property rotation
@@ -10102,7 +12399,7 @@
 			 * @default 0
 			 **/
 			this.rotation = 0;
-		
+	
 			/**
 			 * The factor to stretch this display object horizontally. For example, setting scaleX to 2 will stretch the display
 			 * object to twice its nominal width. To horizontally flip an object, set the scale to a negative number.
@@ -10111,7 +12408,7 @@
 			 * @default 1
 			 **/
 			this.scaleX = 1;
-		
+	
 			/**
 			 * The factor to stretch this display object vertically. For example, setting scaleY to 0.5 will stretch the display
 			 * object to half its nominal height. To vertically flip an object, set the scale to a negative number.
@@ -10120,7 +12417,7 @@
 			 * @default 1
 			 **/
 			this.scaleY = 1;
-		
+	
 			/**
 			 * The factor to skew this display object horizontally.
 			 * @property skewX
@@ -10128,7 +12425,7 @@
 			 * @default 0
 			 **/
 			this.skewX = 0;
-		
+	
 			/**
 			 * The factor to skew this display object vertically.
 			 * @property skewY
@@ -10136,7 +12433,7 @@
 			 * @default 0
 			 **/
 			this.skewY = 0;
-		
+	
 			/**
 			 * A shadow object that defines the shadow to render on this display object. Set to `null` to remove a shadow. If
 			 * null, this property is inherited from the parent container.
@@ -10145,7 +12442,7 @@
 			 * @default null
 			 **/
 			this.shadow = null;
-		
+	
 			/**
 			 * Indicates whether this display object should be rendered to the canvas and included when running the Stage
 			 * {{#crossLink "Stage/getObjectsUnderPoint"}}{{/crossLink}} method.
@@ -10154,7 +12451,7 @@
 			 * @default true
 			 **/
 			this.visible = true;
-		
+	
 			/**
 			 * The x (horizontal) position of the display object, relative to its parent.
 			 * @property x
@@ -10162,14 +12459,14 @@
 			 * @default 0
 			 **/
 			this.x = 0;
-		
+	
 			/** The y (vertical) position of the display object, relative to its parent.
 			 * @property y
 			 * @type {Number}
 			 * @default 0
 			 **/
 			this.y = 0;
-			
+	
 			/**
 			 * If set, defines the transformation for this display object, overriding all other transformation properties
 			 * (x, y, rotation, scale, skew).
@@ -10178,18 +12475,19 @@
 			 * @default null
 			 **/
 			this.transformMatrix = null;
-			
+	
 			/**
 			 * The composite operation indicates how the pixels of this display object will be composited with the elements
 			 * behind it. If `null`, this property is inherited from the parent container. For more information, read the
-			 * <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#compositing">
-			 * whatwg spec on compositing</a>.
+			 * <a href="https://html.spec.whatwg.org/multipage/scripting.html#dom-context-2d-globalcompositeoperation">
+			 * whatwg spec on compositing</a>. For a list of supported compositeOperation value, visit
+			 * <a href="https://drafts.fxtf.org/compositing/">the W3C draft on Compositing and Blending</a>.
 			 * @property compositeOperation
 			 * @type {String}
 			 * @default null
 			 **/
 			this.compositeOperation = null;
-		
+	
 			/**
 			 * Indicates whether the display object should be drawn to a whole pixel when
 			 * {{#crossLink "Stage/snapToPixelEnabled"}}{{/crossLink}} is true. To enable/disable snapping on whole
@@ -10199,7 +12497,7 @@
 			 * @default true
 			 **/
 			this.snapToPixel = true;
-		
+	
 			/**
 			 * An array of Filter objects to apply to this display object. Filters are only applied / updated when {{#crossLink "cache"}}{{/crossLink}}
 			 * or {{#crossLink "updateCache"}}{{/crossLink}} is called on the display object, and only apply to the area that is
@@ -10209,7 +12507,7 @@
 			 * @default null
 			 **/
 			this.filters = null;
-			
+	
 			/**
 			 * A Shape instance that defines a vector mask (clipping path) for this display object.  The shape's transformation
 			 * will be applied relative to the display object's parent coordinates (as if it were a child of the parent).
@@ -10218,7 +12516,7 @@
 			 * @default null
 			 */
 			this.mask = null;
-			
+	
 			/**
 			 * A display object that will be tested when checking mouse interactions or testing {{#crossLink "Container/getObjectsUnderPoint"}}{{/crossLink}}.
 			 * The hit area will have its transformation applied relative to this display object's coordinate space (as though
@@ -10235,7 +12533,7 @@
 			 * @default null
 			 */
 			this.hitArea = null;
-			
+	
 			/**
 			 * A CSS cursor (ex. "pointer", "help", "text", etc) that will be displayed when the user hovers over this display
 			 * object. You must enable mouseover events using the {{#crossLink "Stage/enableMouseOver"}}{{/crossLink}} method to
@@ -10245,65 +12543,36 @@
 			 * @default null
 			 */
 			this.cursor = null;
-		
-		
+	
+	
 		// private properties:
 			/**
-			 * @property _cacheOffsetX
-			 * @protected
-			 * @type {Number}
-			 * @default 0
-			 **/
-			this._cacheOffsetX = 0;
-		
-			/**
-			 * @property _cacheOffsetY
-			 * @protected
-			 * @type {Number}
-			 * @default 0
-			 **/
-			this._cacheOffsetY = 0;
-			
-			/**
-			 * @property _filterOffsetX
-			 * @protected
-			 * @type {Number}
-			 * @default 0
-			 **/
-			this._filterOffsetX = 0;
-			
-			/**
-			 * @property _filterOffsetY
-			 * @protected
-			 * @type {Number}
-			 * @default 0
-			 **/
-			this._filterOffsetY = 0;
-			
-			/**
+			 * Moved to {{#crossLink "BitmapCache"}}{{/crossLink}}
 			 * @property _cacheScale
 			 * @protected
 			 * @type {Number}
 			 * @default 1
+			 * @deprecated
 			 **/
-			this._cacheScale = 1;
-		
+	
 			/**
-			* @property _cacheDataURLID
-			* @protected
-			* @type {Number}
-			* @default 0
-			*/
-			this._cacheDataURLID = 0;
-			
+			 * Moved to {{#crossLink "BitmapCache"}}{{/crossLink}}
+			 * @property _cacheDataURLID
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 * @deprecated
+			 */
+	
 			/**
-			* @property _cacheDataURL
-			* @protected
-			* @type {String}
-			* @default null
-			*/
-			this._cacheDataURL = null;
-		
+			 * Moved to {{#crossLink "BitmapCache"}}{{/crossLink}}
+			 * @property _cacheDataURL
+			 * @protected
+			 * @type {String}
+			 * @default null
+			 * @deprecated
+			 */
+	
 			/**
 			 * @property _props
 			 * @protected
@@ -10311,7 +12580,7 @@
 			 * @default null
 			 **/
 			this._props = new createjs.DisplayProps();
-		
+	
 			/**
 			 * @property _rectangle
 			 * @protected
@@ -10319,7 +12588,7 @@
 			 * @default null
 			 **/
 			this._rectangle = new createjs.Rectangle();
-		
+	
 			/**
 			 * @property _bounds
 			 * @protected
@@ -10327,12 +12596,19 @@
 			 * @default null
 			 **/
 			this._bounds = null;
+	
+			/**
+			 * Where StageGL should look for required display properties, matters only for leaf display objects. Containers
+			 * or cached objects won't use this property, it's for native display of terminal elements.
+			 * @property _webGLRenderStyle
+			 * @protected
+			 * @type {number}
+			 * @default 0
+			 */
+			this._webGLRenderStyle = DisplayObject._StageGL_NONE;
 		}
 		var p = createjs.extend(DisplayObject, createjs.EventDispatcher);
 	
-		// TODO: deprecated
-		// p.initialize = function() {}; // searchable for devs wondering where it is. REMOVED. See docs for details.
-		
 	// static properties:
 		/**
 		 * Listing of mouse event names. Used in _hasMouseEventListener.
@@ -10352,7 +12628,7 @@
 		 * @default false
 		 **/
 		DisplayObject.suppressCrossDomainErrors = false;
-		
+	
 		/**
 		 * @property _snapToPixelEnabled
 		 * @protected
@@ -10361,6 +12637,33 @@
 		 * @default false
 		 **/
 		DisplayObject._snapToPixelEnabled = false; // stage.snapToPixelEnabled is temporarily copied here during a draw to provide global access.
+	
+		/**
+		 * Enum like property for determining StageGL render lookup, i.e. where to expect properties.
+		 * @property _StageGL_NONE
+		 * @protected
+		 * @static
+		 * @type {number}
+		 */
+		DisplayObject._StageGL_NONE = 0;
+	
+		/**
+		 * Enum like property for determining StageGL render lookup, i.e. where to expect properties.
+		 * @property _StageGL_SPRITE
+		 * @protected
+		 * @static
+		 * @type {number}
+		 */
+		DisplayObject._StageGL_SPRITE = 1;
+	
+		/**
+		 * Enum like property for determining StageGL render lookup, i.e. where to expect properties.
+		 * @property _StageGL_BITMAP
+		 * @protected
+		 * @static
+		 * @type {number}
+		 */
+		DisplayObject._StageGL_BITMAP = 2;
 	
 		/**
 		 * @property _hitTestCanvas
@@ -10381,15 +12684,6 @@
 			canvas.width = canvas.height = 1;
 		}
 	
-		/**
-		 * @property _nextCacheID
-		 * @type {Number}
-		 * @static
-		 * @protected
-		 **/
-		DisplayObject._nextCacheID = 1;
-	
-	
 	// events:
 		/**
 		 * Dispatched when the user presses their left mouse button over the display object. See the 
@@ -10397,21 +12691,21 @@
 		 * @event mousedown
 		 * @since 0.6.0
 		 */
-		 
+	
 		/**
 		 * Dispatched when the user presses their left mouse button and then releases it while over the display object.
 		 * See the {{#crossLink "MouseEvent"}}{{/crossLink}} class for a listing of event properties.
 		 * @event click
 		 * @since 0.6.0
 		 */
-		 
+	
 		/**
 		 * Dispatched when the user double clicks their left mouse button over this display object.
 		 * See the {{#crossLink "MouseEvent"}}{{/crossLink}} class for a listing of event properties.
 		 * @event dblclick
 		 * @since 0.6.0
 		 */
-		 
+	
 		/**
 		 * Dispatched when the user's mouse enters this display object. This event must be enabled using 
 		 * {{#crossLink "Stage/enableMouseOver"}}{{/crossLink}}. See also {{#crossLink "DisplayObject/rollover:event"}}{{/crossLink}}.
@@ -10427,7 +12721,7 @@
 		 * @event mouseout
 		 * @since 0.6.0
 		 */
-		 
+	
 		/**
 		 * This event is similar to {{#crossLink "DisplayObject/mouseover:event"}}{{/crossLink}}, with the following
 		 * differences: it does not bubble, and it considers {{#crossLink "Container"}}{{/crossLink}} instances as an
@@ -10447,7 +12741,7 @@
 		 * @event rollover
 		 * @since 0.7.0
 		 */
-		 
+	
 		/**
 		 * This event is similar to {{#crossLink "DisplayObject/mouseout:event"}}{{/crossLink}}, with the following
 		 * differences: it does not bubble, and it considers {{#crossLink "Container"}}{{/crossLink}} instances as an
@@ -10467,33 +12761,47 @@
 		 * @event rollout
 		 * @since 0.7.0
 		 */
-		 
+	
 		/**
 		 * After a {{#crossLink "DisplayObject/mousedown:event"}}{{/crossLink}} occurs on a display object, a pressmove
 		 * event will be generated on that object whenever the mouse moves until the mouse press is released. This can be
 		 * useful for dragging and similar operations.
+		 *
+		 * **Please note** that if the initial mouse target from a `mousedown` event is removed from the stage after being pressed
+		 * (e.g. during a `pressmove` event), a `pressmove` event is still generated. However since it is no longer in the
+		 * display list, the event can not bubble. This means that previous ancestors (parent containers) will not receive
+		 * the event, and therefore can not re-dispatch it. If you intend to listen for `{{#crossLink "DisplayObject/pressup:event"}}{{/crossLink}}`
+		 * or `pressmove` on a dynamic object (such as a {{#crossLink "MovieClip"}}{{/crossLink}} or {{#crossLink "Container"}}{{/crossLink}}),
+		 * then ensure you set {{#crossLink "Container/mouseChildren:property"}}{{/crossLink}} to `false`.
 		 * @event pressmove
 		 * @since 0.7.0
 		 */
-		 
+	
 		/**
 		 * After a {{#crossLink "DisplayObject/mousedown:event"}}{{/crossLink}} occurs on a display object, a pressup event
 		 * will be generated on that object when that mouse press is released. This can be useful for dragging and similar
 		 * operations.
+		 *
+		 * **Please note** that if the initial mouse target from a `mousedown` event is removed from the stage after being pressed
+		 * (e.g. during a `pressmove` event), a `pressup` event is still generated. However since it is no longer in the
+		 * display list, the event can not bubble. This means that previous ancestors (parent containers) will not receive
+		 * the event, and therefore can not re-dispatch it. If you intend to listen for `{{#crossLink "DisplayObject/pressmove:event"}}{{/crossLink}}`
+		 * or `pressup` on a dynamic object (such as a {{#crossLink "MovieClip"}}{{/crossLink}} or {{#crossLink "Container"}}{{/crossLink}}),
+		 * then ensure you set {{#crossLink "Container/mouseChildren:property"}}{{/crossLink}} to `false`.
 		 * @event pressup
 		 * @since 0.7.0
 		 */
-		 
+	
 		/**
 		 * Dispatched when the display object is added to a parent container.
 		 * @event added
 		 */
-		 
+	
 		/**
 		 * Dispatched when the display object is removed from its parent container.
 		 * @event removed
 		 */
-		 
+	
 		/**
 		 * Dispatched on each display object on a stage whenever the stage updates. This occurs immediately before the
 		 * rendering (draw) pass. When {{#crossLink "Stage/update"}}{{/crossLink}} is called, first all display objects on
@@ -10507,22 +12815,24 @@
 		 *      example if you called stage.update("hello"), then the params would be ["hello"].
 		 * @since 0.6.0
 		 */
-		
-		
+	
+	
 	// getter / setters:
 		/**
 		 * Use the {{#crossLink "DisplayObject/stage:property"}}{{/crossLink}} property instead.
-		 * @method getStage
+		 * @method _getStage
+		 * @protected
 		 * @return {Stage}
-		 * @deprecated
 		 **/
-		p.getStage = function() {
+		p._getStage = function() {
 			// uses dynamic access to avoid circular dependencies;
 			var o = this, _Stage = createjs["Stage"];
 			while (o.parent) { o = o.parent; }
 			if (o instanceof _Stage) { return o; }
 			return null;
 		};
+		// DisplayObject.getStage is @deprecated. Remove for 1.1+
+		p.getStage = createjs.deprecate(p._getStage, "DisplayObject.getStage");
 	
 		/**
 		 * Returns the Stage instance that this display object will be rendered on, or null if it has not been added to one.
@@ -10530,9 +12840,36 @@
 		 * @type {Stage}
 		 * @readonly
 		 **/
+	
+		/**
+		 * Returns an ID number that uniquely identifies the current cache for this display object. This can be used to
+		 * determine if the cache has changed since a previous check.
+		 * Moved to {{#crossLink "BitmapCache"}}{{/crossLink}}
+		 * @property cacheID
+		 * @deprecated
+		 * @type {Number}
+		 * @default 0
+		 */
+	
+		/**
+		 * Set both the {{#crossLink "DisplayObject/scaleX:property"}}{{/crossLink}} and the {{#crossLink "DisplayObject/scaleY"}}{{/crossLink}}
+		 * property to the same value. Note that when you get the value, if the `scaleX` and `scaleY` are different values,
+		 * it will return only the `scaleX`.
+		 * @property scaleX
+		 * @type {Number}
+		 * @default 1
+		 */
 		try {
 			Object.defineProperties(p, {
-				stage: { get: p.getStage }
+				stage: { get: p._getStage },
+				cacheID: {
+					get: function(){ return this.bitmapCache && this.bitmapCache.cacheID },
+					set: function(a){ this.bitmapCache && (this.bitmapCache.cacheID = a) }
+				},
+				scale: {
+					get: function() { return this.scaleX; },
+					set: function(scale) { this.scaleX = this.scaleY = scale; },
+				}
 			});
 		} catch (e) {}
 	
@@ -10562,13 +12899,13 @@
 		 * @return {Boolean}
 		 **/
 		p.draw = function(ctx, ignoreCache) {
-			var cacheCanvas = this.cacheCanvas;
-			if (ignoreCache || !cacheCanvas) { return false; }
-			var scale = this._cacheScale;
-			ctx.drawImage(cacheCanvas, this._cacheOffsetX+this._filterOffsetX, this._cacheOffsetY+this._filterOffsetY, cacheCanvas.width/scale, cacheCanvas.height/scale);
-			return true;
+			var cache = this.bitmapCache;
+			if(cache && !ignoreCache) {
+				return cache.draw(ctx);
+			}
+			return false;
 		};
-		
+	
 		/**
 		 * Applies this display object's transformation, alpha, globalCompositeOperation, clipping path (mask), and shadow
 		 * to the specified context. This is typically called prior to {{#crossLink "DisplayObject/draw"}}{{/crossLink}}.
@@ -10602,26 +12939,30 @@
 		};
 	
 		/**
-		 * Draws the display object into a new canvas, which is then used for subsequent draws. For complex content
+		 * Draws the display object into a new element, which is then used for subsequent draws. Intended for complex content
 		 * that does not change frequently (ex. a Container with many children that do not move, or a complex vector Shape),
 		 * this can provide for much faster rendering because the content does not need to be re-rendered each tick. The
-		 * cached display object can be moved, rotated, faded, etc freely, however if its content changes, you must
-		 * manually update the cache by calling <code>updateCache()</code> or <code>cache()</code> again. You must specify
-		 * the cache area via the x, y, w, and h parameters. This defines the rectangle that will be rendered and cached
-		 * using this display object's coordinates.
+		 * cached display object can be moved, rotated, faded, etc freely, however if its content changes, you must manually
+		 * update the cache by calling <code>updateCache()</code> again. You must specify the cached area via the x, y, w,
+		 * and h parameters. This defines the rectangle that will be rendered and cached using this display object's coordinates.
 		 *
 		 * <h4>Example</h4>
 		 * For example if you defined a Shape that drew a circle at 0, 0 with a radius of 25:
 		 *
 		 *      var shape = new createjs.Shape();
 		 *      shape.graphics.beginFill("#ff0000").drawCircle(0, 0, 25);
-		 *      myShape.cache(-25, -25, 50, 50);
+		 *      shape.cache(-25, -25, 50, 50);
 		 *
-		 * Note that filters need to be defined <em>before</em> the cache is applied. Check out the {{#crossLink "Filter"}}{{/crossLink}}
-		 * class for more information. Some filters (ex. BlurFilter) will not work as expected in conjunction with the scale param.
+		 * Note that filters need to be defined <em>before</em> the cache is applied or you will have to call updateCache after
+		 * application. Check out the {{#crossLink "Filter"}}{{/crossLink}} class for more information. Some filters
+		 * (ex. BlurFilter) may not work as expected in conjunction with the scale param.
 		 * 
-		 * Usually, the resulting cacheCanvas will have the dimensions width*scale by height*scale, however some filters (ex. BlurFilter)
+		 * Usually, the resulting cacheCanvas will have the dimensions width * scale, height * scale, however some filters (ex. BlurFilter)
 		 * will add padding to the canvas dimensions.
+		 *
+		 * In previous versions caching was handled on DisplayObject but has since been moved to {{#crossLink "BitmapCache"}}{{/crossLink}}.
+		 * This allows for easier interaction and alternate cache methods like WebGL with {{#crossLink "StageGL"}}{{/crossLink}}.
+		 * For more information on the options object, see the BitmapCache {{#crossLink "BitmapCache/define"}}{{/crossLink}}.
 		 *
 		 * @method cache
 		 * @param {Number} x The x coordinate origin for the cache region.
@@ -10631,17 +12972,13 @@
 		 * @param {Number} [scale=1] The scale at which the cache will be created. For example, if you cache a vector shape using
 		 * 	myShape.cache(0,0,100,100,2) then the resulting cacheCanvas will be 200x200 px. This lets you scale and rotate
 		 * 	cached elements with greater fidelity. Default is 1.
+		 * @param {Object} [options=undefined] Specify additional parameters for the cache logic
 		 **/
-		p.cache = function(x, y, width, height, scale) {
-			// draw to canvas.
-			scale = scale||1;
-			if (!this.cacheCanvas) { this.cacheCanvas = createjs.createCanvas?createjs.createCanvas():document.createElement("canvas"); }
-			this._cacheWidth = width;
-			this._cacheHeight = height;
-			this._cacheOffsetX = x;
-			this._cacheOffsetY = y;
-			this._cacheScale = scale;
-			this.updateCache();
+		p.cache = function(x, y, width, height, scale, options) {
+			if(!this.bitmapCache){
+				this.bitmapCache = new createjs.BitmapCache();
+			}
+			this.bitmapCache.define(this, x, y, width, height, scale, options);
 		};
 	
 		/**
@@ -10658,39 +12995,19 @@
 		 *      shapeInstance.setStrokeStyle(3).beginStroke("#ff0000").moveTo(100, 100).lineTo(200,200);
 		 *      shapeInstance.updateCache();
 		 *
+		 * In previous versions caching was handled on DisplayObject but has since been moved to {{#crossLink "BitmapCache"}}{{/crossLink}}.
+		 * This allows for easier interaction and alternate cache methods like WebGL and {{#crossLink "StageGL"}}{{/crossLink}}.
+		 *
 		 * @method updateCache
 		 * @param {String} compositeOperation The compositeOperation to use, or null to clear the cache and redraw it.
-		 * <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#compositing">
+		 * <a href="https://html.spec.whatwg.org/multipage/scripting.html#dom-context-2d-globalcompositeoperation">
 		 * whatwg spec on compositing</a>.
 		 **/
 		p.updateCache = function(compositeOperation) {
-			var cacheCanvas = this.cacheCanvas;
-			if (!cacheCanvas) { throw "cache() must be called before updateCache()"; }
-			var scale = this._cacheScale, offX = this._cacheOffsetX*scale, offY = this._cacheOffsetY*scale;
-			var w = this._cacheWidth, h = this._cacheHeight, ctx = cacheCanvas.getContext("2d");
-			
-			var fBounds = this._getFilterBounds();
-			offX += (this._filterOffsetX = fBounds.x);
-			offY += (this._filterOffsetY = fBounds.y);
-			
-			w = Math.ceil(w*scale) + fBounds.width;
-			h = Math.ceil(h*scale) + fBounds.height;
-			if (w != cacheCanvas.width || h != cacheCanvas.height) {
-				// TODO: it would be nice to preserve the content if there is a compositeOperation.
-				cacheCanvas.width = w;
-				cacheCanvas.height = h;
-			} else if (!compositeOperation) {
-				ctx.clearRect(0, 0, w+1, h+1);
+			if(!this.bitmapCache) {
+				throw "cache() must be called before updateCache()";
 			}
-			
-			ctx.save();
-			ctx.globalCompositeOperation = compositeOperation;
-			ctx.setTransform(scale, 0, 0, scale, -offX, -offY);
-			this.draw(ctx, true);
-			// TODO: filters and cache scale don't play well together at present.
-			this._applyFilters();
-			ctx.restore();
-			this.cacheID = DisplayObject._nextCacheID++;
+			this.bitmapCache.update(compositeOperation);
 		};
 	
 		/**
@@ -10698,21 +13015,20 @@
 		 * @method uncache
 		 **/
 		p.uncache = function() {
-			this._cacheDataURL = this.cacheCanvas = null;
-			this.cacheID = this._cacheOffsetX = this._cacheOffsetY = this._filterOffsetX = this._filterOffsetY = 0;
-			this._cacheScale = 1;
+			if(this.bitmapCache) {
+				this.bitmapCache.release();
+				this.bitmapCache = undefined;
+			}
 		};
-		
+	
 		/**
 		 * Returns a data URL for the cache, or null if this display object is not cached.
-		 * Uses cacheID to ensure a new data URL is not generated if the cache has not changed.
+		 * Only generated if the cache has changed, otherwise returns last result.
 		 * @method getCacheDataURL
 		 * @return {String} The image data url for the cache.
 		 **/
 		p.getCacheDataURL = function() {
-			if (!this.cacheCanvas) { return null; }
-			if (this.cacheID != this._cacheDataURLID) { this._cacheDataURL = this.cacheCanvas.toDataURL(); }
-			return this._cacheDataURL;
+			return this.bitmapCache?this.bitmapCache.getDataURL():null;
 		};
 	
 		/**
@@ -10820,7 +13136,7 @@
 			this.regY = regY || 0;
 			return this;
 		};
-		
+	
 		/**
 		 * Returns a matrix based on this object's current transform.
 		 * @method getMatrix
@@ -10832,7 +13148,7 @@
 			var o = this, mtx = matrix&&matrix.identity() || new createjs.Matrix2D();
 			return o.transformMatrix ?  mtx.copy(o.transformMatrix) : mtx.appendTransform(o.x, o.y, o.scaleX, o.scaleY, o.rotation, o.skewX, o.skewY, o.regX, o.regY);
 		};
-		
+	
 		/**
 		 * Generates a Matrix2D object representing the combined transform of the display object and all of its
 		 * parent Containers up to the highest level ancestor (usually the {{#crossLink "Stage"}}{{/crossLink}}). This can
@@ -10850,7 +13166,7 @@
 			}
 			return mtx;
 		};
-		
+	
 		/**
 		 * Generates a DisplayProps object representing the combined display properties of the  object and all of its
 		 * parent Containers up to the highest level ancestor (usually the {{#crossLink "Stage"}}{{/crossLink}}).
@@ -10873,29 +13189,17 @@
 		};
 	
 		/**
-		 * Tests whether the display object intersects the specified point in <em>local</em> coordinates (ie. draws a pixel
-		 * with alpha > 0 at the specified position). This ignores the alpha, shadow, hitArea, mask, and compositeOperation
-		 * of the display object.
+		 * Tests whether the display object intersects the specified point in local coordinates (ie. draws a pixel with alpha > 0 at
+		 * the specified position). This ignores the alpha, shadow, hitArea, mask, and compositeOperation of the display object.
 		 *
 		 * <h4>Example</h4>
 		 *
-		 * 		var myShape = new createjs.Shape();
-		 * 		myShape.graphics.beginFill("red").drawRect(100, 100, 20, 50);
-		 *
-		 * 		console.log(myShape.hitTest(10,10); // false
-		 * 		console.log(myShape.hitTest(110, 25); // true
-		 *
-		 * Note that to use Stage coordinates (such as {{#crossLink "Stage/mouseX:property"}}{{/crossLink}}), they must
-		 * first be converted to local coordinates:
-		 *
 		 *      stage.addEventListener("stagemousedown", handleMouseDown);
 		 *      function handleMouseDown(event) {
-		 *      	var p = myShape.globalToLocal(stage.mouseX, stage.mouseY);
-		 *          var hit = myShape.hitTest(p.x, p.y);
+		 *          var hit = myShape.hitTest(event.stageX, event.stageY);
 		 *      }
 		 *
-		 * Shape-to-shape collision is not currently supported by EaselJS.
-		 *
+		 * Please note that shape-to-shape collision is not currently supported by EaselJS.
 		 * @method hitTest
 		 * @param {Number} x The x position to check in the display object's local coordinates.
 		 * @param {Number} y The y position to check in the display object's local coordinates.
@@ -10912,14 +13216,14 @@
 			ctx.clearRect(0, 0, 2, 2);
 			return hit;
 		};
-		
+	
 		/**
 		 * Provides a chainable shortcut method for setting a number of properties on the instance.
 		 *
 		 * <h4>Example</h4>
 		 *
 		 *      var myGraphics = new createjs.Graphics().beginFill("#ff0000").drawCircle(0, 0, 25);
-		 *      var shape = stage.addChild(new createjs.Shape()).set({graphics:myGraphics, x:100, y:100, alpha:0.5});
+		 *      var shape = stage.addChild(new Shape()).set({graphics:myGraphics, x:100, y:100, alpha:0.5});
 		 *
 		 * @method set
 		 * @param {Object} props A generic object containing properties to copy to the DisplayObject instance.
@@ -10930,7 +13234,7 @@
 			for (var n in props) { this[n] = props[n]; }
 			return this;
 		};
-		
+	
 		/**
 		 * Returns a rectangle representing this object's bounds in its local coordinate system (ie. with no transformation).
 		 * Objects that have been cached will return the bounds of the cache.
@@ -10996,7 +13300,7 @@
 			}
 			return null;
 		};
-		
+	
 		/**
 		 * Returns a rectangle representing this object's bounds in its parent's coordinate system (ie. with transformations applied).
 		 * Objects that have been cached will return the transformed bounds of the cache.
@@ -11015,7 +13319,7 @@
 		p.getTransformedBounds = function() {
 			return this._getBounds();
 		};
-		
+	
 		/**
 		 * Allows you to manually specify the bounds of an object that either cannot calculate their own bounds (ex. Shape &
 		 * Text) for future reference, or so the object can be included in Container bounds. Manually set bounds will always
@@ -11030,7 +13334,7 @@
 		 * @param {Number} height The height of the bounds.
 		 **/
 		p.setBounds = function(x, y, width, height) {
-			if (x == null) { this._bounds = x; }
+			if (x == null) { this._bounds = x; return; }
 			this._bounds = (this._bounds || new createjs.Rectangle()).setValues(x, y, width, height);
 		};
 	
@@ -11056,6 +13360,19 @@
 	
 	
 	// private methods:
+		/**
+		 * Called before the object gets drawn and is a chance to ensure the display state of the object is correct.
+		 * Mostly used by {{#crossLink "MovieClip"}}{{/crossLink}} and {{#crossLink "BitmapText"}}{{/crossLink}} to
+		 * correct their internal state and children prior to being drawn.
+		 *
+		 * Is manually called via draw in a {{#crossLink "Stage"}}{{/crossLink}} but is automatically called when
+		 * present in a {{#crossLink "StageGL"}}{{/crossLink}} instance.
+		 *
+		 * @method _updateState
+		 * @default null
+		 */
+		p._updateState = null;
+	
 		// separated so it can be used more easily in subclasses:
 		/**
 		 * @method _cloneProps
@@ -11103,8 +13420,7 @@
 			ctx.shadowOffsetY = shadow.offsetY;
 			ctx.shadowBlur = shadow.blur;
 		};
-		
-		
+	
 		/**
 		 * @method _tick
 		 * @param {Object} evtObj An event object that will be dispatched to all tick listeners. This object is reused between dispatchers to reduce construction & GC costs.
@@ -11139,37 +13455,6 @@
 		};
 	
 		/**
-		 * @method _applyFilters
-		 * @protected
-		 **/
-		p._applyFilters = function() {
-			if (!this.filters || this.filters.length == 0 || !this.cacheCanvas) { return; }
-			var l = this.filters.length;
-			var ctx = this.cacheCanvas.getContext("2d");
-			var w = this.cacheCanvas.width;
-			var h = this.cacheCanvas.height;
-			for (var i=0; i<l; i++) {
-				this.filters[i].applyFilter(ctx, 0, 0, w, h);
-			}
-		};
-		
-		/**
-		 * @method _getFilterBounds
-		 * @return {Rectangle}
-		 * @protected
-		 **/
-		p._getFilterBounds = function(rect) {
-			var l, filters = this.filters, bounds = this._rectangle.setValues(0,0,0,0);
-			if (!filters || !(l=filters.length)) { return bounds; }
-			
-			for (var i=0; i<l; i++) {
-				var f = this.filters[i];
-				f.getBounds&&f.getBounds(bounds);
-			}
-			return bounds;
-		};
-		
-		/**
 		 * @method _getBounds
 		 * @param {Matrix2D} matrix
 		 * @param {Boolean} ignoreTransform If true, does not apply this object's transform.
@@ -11179,7 +13464,7 @@
 		p._getBounds = function(matrix, ignoreTransform){
 			return this._transformBounds(this.getBounds(), matrix, ignoreTransform);
 		};
-		
+	
 		/**
 		 * @method _transformBounds
 		 * @param {Rectangle} bounds
@@ -11205,14 +13490,14 @@
 			if ((x = x_a + tx) < minX) { minX = x; } else if (x > maxX) { maxX = x; }
 			if ((x = x_a + y_c + tx) < minX) { minX = x; } else if (x > maxX) { maxX = x; }
 			if ((x = y_c + tx) < minX) { minX = x; } else if (x > maxX) { maxX = x; }
-			
+	
 			if ((y = x_b + ty) < minY) { minY = y; } else if (y > maxY) { maxY = y; }
 			if ((y = x_b + y_d + ty) < minY) { minY = y; } else if (y > maxY) { maxY = y; }
 			if ((y = y_d + ty) < minY) { minY = y; } else if (y > maxY) { maxY = y; }
-			
+	
 			return bounds.setValues(minX, minY, maxX-minX, maxY-minY);
 		};
-		
+	
 		/**
 		 * Indicates whether the display object has any mouse event listeners or a cursor.
 		 * @method _isMouseOpaque
@@ -11303,13 +13588,15 @@
 	// getter / setters:
 		/**
 		 * Use the {{#crossLink "Container/numChildren:property"}}{{/crossLink}} property instead.
-		 * @method getNumChildren
+		 * @method _getNumChildren
+		 * @protected
 		 * @return {Number}
-		 * @deprecated
 		 **/
-		p.getNumChildren = function() {
+		p._getNumChildren = function() {
 			return this.children.length;
 		};
+		// Container.getNumChildren is @deprecated. Remove for 1.1+
+		p.getNumChildren = createjs.deprecate(p._getNumChildren, "Container.getNumChildren");
 	
 		/**
 		 * Returns the number of children in the container.
@@ -11319,7 +13606,7 @@
 		 **/
 		try {
 			Object.defineProperties(p, {
-				numChildren: { get: p.getNumChildren }
+				numChildren: { get: p._getNumChildren }
 			});
 		} catch (e) {}
 		
@@ -11397,10 +13684,12 @@
 				for (var i=0; i<l; i++) { this.addChild(arguments[i]); }
 				return arguments[l-1];
 			}
-			if (child.parent) { child.parent.removeChild(child); }
+			// Note: a lot of duplication with addChildAt, but push is WAY faster than splice.
+			var par=child.parent, silent = par === this;
+			par&&par._removeChildAt(createjs.indexOf(par.children, child), silent);
 			child.parent = this;
 			this.children.push(child);
-			child.dispatchEvent("added");
+			if (!silent) { child.dispatchEvent("added"); }
 			return child;
 		};
 	
@@ -11436,10 +13725,11 @@
 				for (var i=0; i<l-1; i++) { this.addChildAt(arguments[i], indx+i); }
 				return arguments[l-2];
 			}
-			if (child.parent) { child.parent.removeChild(child); }
+			var par=child.parent, silent = par === this;
+			par&&par._removeChildAt(createjs.indexOf(par.children, child), silent);
 			child.parent = this;
 			this.children.splice(index, 0, child);
-			child.dispatchEvent("added");
+			if (!silent) { child.dispatchEvent("added"); }
 			return child;
 		};
 	
@@ -11467,7 +13757,7 @@
 				for (var i=0; i<l; i++) { good = good && this.removeChild(arguments[i]); }
 				return good;
 			}
-			return this.removeChildAt(createjs.indexOf(this.children, child));
+			return this._removeChildAt(createjs.indexOf(this.children, child));
 		};
 	
 		/**
@@ -11493,15 +13783,10 @@
 				for (var i=0; i<l; i++) { a[i] = arguments[i]; }
 				a.sort(function(a, b) { return b-a; });
 				var good = true;
-				for (var i=0; i<l; i++) { good = good && this.removeChildAt(a[i]); }
+				for (var i=0; i<l; i++) { good = good && this._removeChildAt(a[i]); }
 				return good;
 			}
-			if (index < 0 || index > this.children.length-1) { return false; }
-			var child = this.children[index];
-			if (child) { child.parent = null; }
-			this.children.splice(index, 1);
-			child.dispatchEvent("removed");
-			return true;
+			return this._removeChildAt(index);
 		};
 	
 		/**
@@ -11515,7 +13800,7 @@
 		 **/
 		p.removeAllChildren = function() {
 			var kids = this.children;
-			while (kids.length) { this.removeChildAt(0); }
+			while (kids.length) { this._removeChildAt(0); }
 		};
 	
 		/**
@@ -11781,6 +14066,24 @@
 				arr.push(clone);
 			}
 		};
+		
+		/**
+		 * Removes the child at the specified index from the display list, and sets its parent to null.
+		 * Used by `removeChildAt`, `addChild`, and `addChildAt`.
+		 * @method removeChildAt
+		 * @protected
+		 * @param {Number} index The index of the child to remove.
+		 * @param {Boolean} [silent] Prevents dispatch of `removed` event if true.
+		 * @return {Boolean} true if the child (or children) was removed, or false if any index was out of range.
+		 **/
+		p._removeChildAt = function(index, silent) {
+			if (index < 0 || index > this.children.length-1) { return false; }
+			var child = this.children[index];
+			if (child) { child.parent = null; }
+			this.children.splice(index, 1);
+			if (!silent) { child.dispatchEvent("removed"); }
+			return true;
+		};
 	
 		/**
 		 * @method _getObjectsUnderPoint
@@ -11807,7 +14110,7 @@
 				if (!child.visible || (!hitArea && !child.isVisible()) || (mouse && !child.mouseEnabled)) { continue; }
 				if (!hitArea && !this._testMask(child, x, y)) { continue; }
 				
-				// if a child container has a hitArea then we only need to check its hitArea, so we can treat it as a normal DO:
+				// if a child container has a hitArea then we only need to check its hitAre2a, so we can treat it as a normal DO:
 				if (!hitArea && child instanceof Container) {
 					var result = child._getObjectsUnderPoint(x, y, arr, mouse, activeListener, currentDepth+1);
 					if (!arr && result) { return (mouse && !this.mouseChildren) ? this : result; }
@@ -12100,20 +14403,6 @@
 		}
 		var p = createjs.extend(Stage, createjs.Container);
 	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
-	
 	// events:
 		/**
 		 * Dispatched when the user moves the mouse over the canvas.
@@ -12307,7 +14596,7 @@
 		 * event is received. This allows you to register a Stage instance as a event listener on {{#crossLink "Ticker"}}{{/crossLink}}
 		 * directly, using:
 		 *
-		 *      Ticker.addEventListener("tick", myStage");
+		 *      Ticker.addEventListener("tick", myStage);
 		 *
 		 * Note that if you subscribe to ticks using this pattern, then the tick event object will be passed through to
 		 * display object tick handlers, instead of <code>delta</code> and <code>paused</code> parameters.
@@ -12747,6 +15036,2392 @@
 	}());
 	
 	//##############################################################################
+	// StageGL.js
+	//##############################################################################
+	
+	this.createjs = this.createjs||{};
+	
+	/*
+	 * README IF EDITING:
+	 * Terminology for developers:
+	 *
+	 * Vertex: a point that help defines a shape, 3 per triangle. Usually has an x,y,z but can have more/less info.
+	 * Vertex Property: a piece of information attached to the vertex like a vector3 containing x,y,z
+	 * Index/Indices: used in groups of 3 to define a triangle, points to vertices by their index in an array (some render
+	 * 		modes do not use these)
+	 * Card: a group of 2 triangles used to display a rectangular image
+	 * U/V: common names for the [0-1] texture co-ordinates on an image
+	 * Batch: a single call to the renderer, best done as little as possible so multiple cards are put into a single batch
+	 * Buffer: WebGL array data
+	 * Program/Shader: For every vertex we run the Vertex shader. The results are used per pixel by the Fragment shader. When
+	 * 		combined and paired these are a shader "program"
+	 * Texture: WebGL representation of image data and associated extra information
+	 * Slot: A space on the GPU into which textures can be loaded for use in a batch, using "ActiveTexture" switches texture slot.
+	 */
+	
+	(function () {
+		"use strict";
+	
+		/**
+		 * A StageGL instance is the root level {{#crossLink "Container"}}{{/crossLink}} for an WebGL-optimized display list,
+		 * which is used in place of the usual {{#crossLink "Stage"}}{{/crossLink}}. This class should behave identically to
+		 * a {{#crossLink "Stage"}}{{/crossLink}} except for WebGL-specific functionality.
+		 *
+		 * Each time the {{#crossLink "Stage/tick"}}{{/crossLink}} method is called, the display list is rendered to the
+		 * target &lt;canvas/&gt; instance, ignoring non-WebGL-compatible display objects. On devices and browsers that don't
+		 * support WebGL, content will automatically be rendered to canvas 2D context instead.
+		 *
+		 * <h4>Limitations</h4>
+		 * - {{#crossLink "Shape"}}{{/crossLink}}, {{#crossLink "Shadow"}}{{/crossLink}}, and {{#crossLink "Text"}}{{/crossLink}}
+		 * 	are not rendered when added to the display list.
+		 * - To display something StageGL cannot render, {{#crossLink "displayObject/cache"}}{{/crossLink}} the object.
+		 *	Caches can be rendered regardless of source.
+		 * - Images are wrapped as a webGL "Texture". Each graphics card has a limit to its concurrent Textures, too many 
+		 * Textures will noticeably slow performance.
+		 * - Each cache counts as an individual Texture. As such {{#crossLink "SpriteSheet"}}{{/crossLink}} and 
+		 * {{#crossLink "SpriteSheetBuilder"}}{{/crossLink}} are recommended practices to help keep texture counts low.
+		 * - To use any image node (DOM Image/Canvas Element) between multiple StageGL instances it must be a 
+		 * {{#crossLink "Bitmap/clone"}}{{/crossLink}}, otherwise the GPU texture loading and tracking will get confused.
+		 * - to avoid an up/down scaled render you must call {{#crossLink "StageGL/updateViewport"}}{{/crossLink}} if you
+		 * resize your canvas after making a StageGL instance, this will properly size the WebGL context stored in memory.
+		 * - Best performance in demanding scenarios will come from manual management of texture memory, but it is handled
+		 * automatically by default. See {{#crossLink "StageGL/releaseTexture"}}{{/crossLink}} for details.
+		 *
+		 * <h4>Example</h4>
+		 * This example creates a StageGL instance, adds a child to it, then uses the EaselJS {{#crossLink "Ticker"}}{{/crossLink}}
+		 * to update the child and redraw the stage.
+		 *
+		 *      var stage = new createjs.StageGL("canvasElementId");
+		 *
+		 *      var image = new createjs.Bitmap("imagePath.png");
+		 *      stage.addChild(image);
+		 *
+		 *      createjs.Ticker.on("tick", handleTick);
+		 *
+		 *      function handleTick(event) {
+		 *          image.x += 10;
+		 *          stage.update();
+		 *      }
+		 *
+		 * <h4>Notes</h4>
+		 * - StageGL is not currently included in the minified version of EaselJS.
+		 * - {{#crossLink "SpriteContainer"}}{{/crossLink}} (the previous approach to WebGL with EaselJS) has been deprecated.
+		 * - Earlier versions of WebGL support in EaselJS (SpriteStage and SpriteContainer) had hard limitations on images
+		 * 	per container, which have been solved.
+		 *
+		 * @class StageGL
+		 * @extends Stage
+		 * @constructor
+		 * @param {HTMLCanvasElement | String | Object} canvas A canvas object that StageGL will render to, or the string id
+		 *  of a canvas object in the current DOM.
+		 * @param {Object} options All the option parameters in a reference object, some are not supported by some browsers.
+		 * @param {Boolean} [options.preserveBuffer=false] If `true`, the canvas is NOT auto-cleared by WebGL (the spec
+		 *  discourages setting this to `true`). This is useful if you want persistent draw effects.
+		 * @param {Boolean} [options.antialias=false] Specifies whether or not the browser's WebGL implementation should try
+		 *  to perform anti-aliasing. This will also enable linear pixel sampling on power-of-two textures (smoother images).
+		 * @param {Boolean} [options.transparent=false] If `true`, the canvas is transparent. This is <strong>very</strong>
+		 * expensive, and should be used with caution.
+		 * @param {Boolean} [options.premultiply=false] Alters color handling. If `true`, this assumes the shader must
+		 * account for pre-multiplied alpha. This can help avoid visual halo effects with some assets, but may also cause
+		 * problems with other assets.
+		 * @param {Integer} [options.autoPurge=1200] How often the system should automatically dump unused textures with
+		 * `purgeTextures(autoPurge)` every `autoPurge/2` draws. See {{#crossLink "StageGL/purgeTextures"}}{{/crossLink}} for more
+		 * information.
+		 */
+		function StageGL(canvas, options) {
+			this.Stage_constructor(canvas);
+	
+			if (options !== undefined) {
+				if (typeof options !== "object"){ throw("Invalid options object"); }
+				var premultiply = options.premultiply;
+				var transparent = options.transparent;
+				var antialias = options.antialias;
+				var preserveBuffer = options.preserveBuffer;
+				var autoPurge = options.autoPurge;
+			}
+	
+	// public properties:
+			/**
+			 * Console log potential issues and problems. This is designed to have <em>minimal</em> performance impact, so
+			 * if extensive debugging information is required, this may be inadequate. See {{#crossLink "WebGLInspector"}}{{/crossLink}}
+			 * @property vocalDebug
+			 * @type {Boolean}
+			 * @default false
+			 */
+			this.vocalDebug = false;
+	
+	// private properties:
+			/**
+			 * Specifies whether or not the canvas is auto-cleared by WebGL. The WebGL spec discourages `true`.
+			 * If true, the canvas is NOT auto-cleared by WebGL. Used when the canvas context is created and requires
+			 * context re-creation to update.
+			 * @property _preserveBuffer
+			 * @protected
+			 * @type {Boolean}
+			 * @default false
+			 */
+			this._preserveBuffer = preserveBuffer||false;
+	
+			/**
+			 * Specifies whether or not the browser's WebGL implementation should try to perform anti-aliasing.
+			 * @property _antialias
+			 * @protected
+			 * @type {Boolean}
+			 * @default false
+			 */
+			this._antialias = antialias||false;
+	
+			/**
+			 * Specifies whether or not the browser's WebGL implementation should be transparent.
+			 * @property _transparent
+			 * @protected
+			 * @type {Boolean}
+			 * @default false
+			 */
+			this._transparent = transparent||false;
+	
+			/**
+			 * Specifies whether or not StageGL is handling colours as premultiplied alpha.
+			 * @property _premultiply
+			 * @protected
+			 * @type {Boolean}
+			 * @default false
+			 */
+			this._premultiply = premultiply||false;
+	
+			/**
+			 * Internal value of {{#crossLink "StageGL/autoPurge"}}{{/crossLink}}
+			 * @property _autoPurge
+			 * @protected
+			 * @type {Integer}
+			 * @default null
+			 */
+			this._autoPurge = undefined;
+			this.autoPurge = autoPurge;	//getter/setter handles setting the real value and validating
+	
+			/**
+			 * The width in px of the drawing surface saved in memory.
+			 * @property _viewportWidth
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 */
+			this._viewportWidth = 0;
+	
+			/**
+			 * The height in px of the drawing surface saved in memory.
+			 * @property _viewportHeight
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 */
+			this._viewportHeight = 0;
+	
+			/**
+			 * A 2D projection matrix used to convert WebGL's viewspace into canvas co-ordinates. Regular canvas display
+			 * uses Top-Left values of [0,0] where WebGL uses a Center [0,0] Top-Right [1,1] (euclidean) system.
+			 * @property _projectionMatrix
+			 * @protected
+			 * @type {Float32Array}
+			 * @default null
+			 */
+			this._projectionMatrix = null;
+	
+			/**
+			 * The current WebGL canvas context. Often shorthanded to just "gl" in many parts of the code.
+			 * @property _webGLContext
+			 * @protected
+			 * @type {WebGLRenderingContext}
+			 * @default null
+			 */
+			this._webGLContext = null;
+	
+			/**
+			 * The color to use when the WebGL canvas has been cleared. May appear as a background color. Defaults to grey.
+			 * @property _clearColor
+			 * @protected
+			 * @type {Object}
+			 * @default {r: 0.50, g: 0.50, b: 0.50, a: 0.00}
+			 */
+			this._clearColor = {r: 0.50, g: 0.50, b: 0.50, a: 0.00};
+	
+			/**
+			 * The maximum number of cards (aka a single sprite) that can be drawn in one draw call. Use getter/setters to
+			 * modify otherwise internal buffers may be incorrect sizes.
+			 * @property _maxCardsPerBatch
+			 * @protected
+			 * @type {Number}
+			 * @default StageGL.DEFAULT_MAX_BATCH_SIZE (10000)
+			 */
+			this._maxCardsPerBatch = StageGL.DEFAULT_MAX_BATCH_SIZE;														//TODO: write getter/setters for this
+	
+			/**
+			 * The shader program used to draw the current batch.
+			 * @property _activeShader
+			 * @protected
+			 * @type {WebGLProgram}
+			 * @default null
+			 */
+			this._activeShader = null;
+	
+			/**
+			 * The vertex position data for the current draw call.
+			 * @property _vertices
+			 * @protected
+			 * @type {Float32Array}
+			 * @default null
+			 */
+			this._vertices = null;
+	
+			/**
+			 * The WebGL buffer attached to {{#crossLink "StageGL/_vertices:property"}}{{/crossLink}}.
+			 * @property _vertexPositionBuffer
+			 * @protected
+			 * @type {WebGLBuffer}
+			 * @default null
+			 */
+			this._vertexPositionBuffer = null;
+	
+			/**
+			 * The vertex U/V data for the current draw call.
+			 * @property _uvs
+			 * @protected
+			 * @type {Float32Array}
+			 * @default null
+			 */
+			this._uvs = null;
+	
+			/**
+			 * The WebGL buffer attached to {{#crossLink "StageGL/_uvs:property"}}{{/crossLink}}.
+			 * @property _uvPositionBuffer
+			 * @protected
+			 * @type {WebGLBuffer}
+			 * @default null
+			 */
+			this._uvPositionBuffer = null;
+	
+			/**
+			 * The vertex indices data for the current draw call.
+			 * @property _indices
+			 * @protected
+			 * @type {Float32Array}
+			 * @default null
+			 */
+			this._indices = null;
+	
+			/**
+			 * The WebGL buffer attached to {{#crossLink "StageGL/_indices:property"}}{{/crossLink}}.
+			 * @property _textureIndexBuffer
+			 * @protected
+			 * @type {WebGLBuffer}
+			 * @default null
+			 */
+			this._textureIndexBuffer = null;
+	
+			/**
+			 * The vertices data for the current draw call.
+			 * @property _alphas
+			 * @protected
+			 * @type {Float32Array}
+			 * @default null
+			 */
+			this._alphas = null;
+	
+			/**
+			 * The WebGL buffer attached to {{#crossLink "StageGL/_alphas:property"}}{{/crossLink}}.
+			 * @property _alphaBuffer
+			 * @protected
+			 * @type {WebGLBuffer}
+			 * @default null
+			 */
+			this._alphaBuffer = null;
+	
+			/**
+			 * An index based lookup of every WebGL Texture currently in use.
+			 * @property _drawTexture
+			 * @protected
+			 * @type {Array}
+			 */
+			this._textureDictionary = [];
+	
+			/**
+			 * A string based lookup hash of which index a texture is stored at in the dictionary. The lookup string is
+			 * often the src url.
+			 * @property _textureIDs
+			 * @protected
+			 * @type {Object}
+			 */
+			this._textureIDs = {};
+	
+			/**
+			 * An array of all the textures currently loaded into the GPU. The index in the array matches the GPU index.
+			 * @property _batchTextures
+			 * @protected
+			 * @type {Array}
+			 */
+			this._batchTextures = [];
+	
+			/**
+			 * An array of all the simple filler textures used to prevent issues with missing textures in a batch.
+			 * @property _baseTextures
+			 * @protected
+			 * @type {Array}
+			 */
+			this._baseTextures = [];
+	
+			/**
+			 * The number of concurrent textures the GPU can handle. This value is dynamically set from WebGL during initialization
+			 * via `gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS)`. The WebGL spec states that the lowest guaranteed value is 8,
+			 * but it could be higher. Do not set this value higher than the value returned by the GPU. Setting it lower will
+			 * probably reduce performance, but may be advisable to reserve slots for custom filter work.
+			 * NOTE: Can also act as a length for {{#crossLink "StageGL/_batchTextures:property"}}.
+			 * @property _batchTextureCount
+			 * @protected
+			 * @type {Number}
+			 * @default 8
+			 */
+			this._batchTextureCount = 8;
+	
+			/**
+			 * The location at which the last texture was inserted into a GPU slot in {{#crossLink "StageGL/_batchTextures:property"}}{{/crossLink}}.
+			 * Manual control of this variable can yield improvements in performance by intelligently replacing textures
+			 * inside a batch to reduce texture re-load. It is impossible to write automated general use code, as it requires
+			 * display list look ahead inspection and/or render foreknowledge.
+			 * @property _lastTextureInsert
+			 * @protected
+			 * @type {Number}
+			 * @default -1
+			 */
+			this._lastTextureInsert = -1;
+	
+			/**
+			 * The current batch being drawn, A batch consists of a call to `drawElements` on the GPU. Many of these calls
+			 * can occur per draw.
+			 * @property _batchId
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 */
+			this._batchID = 0;
+	
+			/**
+			 * The current draw being performed, may contain multiple batches. Comparing to {{#crossLink "StageGL/_batchID:property"}}{{/crossLink}}
+			 * can reveal batching efficiency.
+			 * @property _drawID
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 */
+			this._drawID = 0;
+	
+			/**
+			 * Used to prevent textures in certain GPU slots from being replaced by an insert.
+			 * @property _slotBlackList
+			 * @protected
+			 * @type {Array}
+			 */
+			this._slotBlacklist = [];
+	
+			/**
+			 * Used to prevent nested draw calls from accidentally overwriting drawing information by tracking depth.
+			 * @property _isDrawing
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 */
+			this._isDrawing = 0;
+	
+			/**
+			 * Used to ensure every canvas used as a texture source has a unique ID.
+			 * @property _lastTrackedCanvas
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 */
+			this._lastTrackedCanvas = 0;
+	
+			/**
+			 * Controls whether final rendering output of a {{#crossLink "cacheDraw"}}{{/crossLink}} is the canvas or a render
+			 * texture. See the {{#crossLink "cache"}}{{/crossLink}} function modifications for full implications and discussion.
+			 * @property isCacheControlled
+			 * @protected
+			 * @type {Boolean}
+			 * @default false
+			 * @todo LM: is this supposed to be _isCacheControlled since its private?
+			 */
+			this.isCacheControlled = false;
+	
+			/**
+			 * Used to counter-position the object being cached so it aligns with the cache surface. Additionally ensures
+			 * that all rendering starts with a top level container.
+			 * @property _cacheContainer
+			 * @protected
+			 * @type {Container}
+			 * @default An instance of an EaselJS Container.
+			 */
+			this._cacheContainer = new createjs.Container();
+	
+			// and begin
+			this._initializeWebGL();
+		}
+		var p = createjs.extend(StageGL, createjs.Stage);
+	
+	// static methods:
+		/**
+		 * Calculate the U/V co-ordinate based info for sprite frames. Instead of pixel count it uses a 0-1 space. Also includes
+		 * the ability to get info back for a specific frame, or only calculate that one frame.
+		 *
+		 *     //generate UV rects for all entries
+		 *     StageGL.buildUVRects( spriteSheetA );
+		 *     //generate all, fetch the first
+		 *     var firstFrame = StageGL.buildUVRects( spriteSheetB, 0 );
+		 *     //generate the rect for just a single frame for performance's sake
+		 *     var newFrame = StageGL.buildUVRects( dynamicSpriteSheet, newFrameIndex, true );
+		 *
+		 * NOTE: This method is mainly for internal use, though it may be useful for advanced uses.
+		 * @method buildUVRects
+		 * @param  {SpriteSheet} spritesheet The spritesheet to find the frames on
+		 * @param  {int} [target=-1] The index of the frame to return
+		 * @param  {Boolean} [onlyTarget=false] Whether "target" is the only frame that gets calculated
+		 * @static
+		 * @return {Object} the target frame if supplied and present or a generic frame {t, l, b, r}
+		 */
+		StageGL.buildUVRects = function (spritesheet, target, onlyTarget) {
+			if (!spritesheet || !spritesheet._frames) { return null; }
+			if (target === undefined) { target = -1; }
+			if (onlyTarget === undefined) { onlyTarget = false; }
+	
+			var start = (target != -1 && onlyTarget)?(target):(0);
+			var end = (target != -1 && onlyTarget)?(target+1):(spritesheet._frames.length);
+			for (var i=start; i<end; i++) {
+				var f = spritesheet._frames[i];
+				if (f.uvRect || f.image.width <= 0 || f.image.height <= 0) { continue; }
+	
+				var r = f.rect;
+				f.uvRect = {
+					t: r.y / f.image.height,
+					l: r.x / f.image.width,
+					b: (r.y + r.height) / f.image.height,
+					r: (r.x + r.width) / f.image.width
+				};
+			}
+	
+			return spritesheet._frames[(target != -1) ? target : 0].uvRect || {t:0, l:0, b:1, r:1};
+		};
+	
+		/**
+		 * Test a context to see if it has WebGL enabled on it.
+		 * @method isWebGLActive
+		 * @param {CanvasContext} ctx The context to test
+		 * @static
+		 * @return {Boolean} Whether WebGL is enabled
+		 */
+		StageGL.isWebGLActive = function (ctx) {
+			return ctx &&
+				ctx instanceof WebGLRenderingContext &&
+				typeof WebGLRenderingContext !== 'undefined';
+		};
+	
+	// static properties:
+		/**
+		 * The number of properties defined per vertex (x, y, textureU, textureV, textureIndex, alpha)
+		 * @property VERTEX_PROPERTY_COUNT
+		 * @static
+		 * @final
+		 * @type {Number}
+		 * @default 6
+		 * @readonly
+		 */
+		StageGL.VERTEX_PROPERTY_COUNT = 6;
+	
+		/**
+		 * The number of triangle indices it takes to form a Card. 3 per triangle, 2 triangles.
+		 * @property INDICIES_PER_CARD
+		 * @static
+		 * @final
+		 * @type {Number}
+		 * @default 6
+		 * @readonly
+		 */
+		StageGL.INDICIES_PER_CARD = 6;
+	
+		/**
+		 * The default value for the maximum number of cards we want to process in a batch. See
+		 * {{#crossLink "StageGL/WEBGL_MAX_INDEX_NUM:property"}}{{/crossLink}} for a hard limit.
+		 * @property DEFAULT_MAX_BATCH_SIZE
+		 * @static
+		 * @final
+		 * @type {Number}
+		 * @default 10000
+		 * @readonly
+		 */
+		StageGL.DEFAULT_MAX_BATCH_SIZE = 10000;
+	
+		/**
+		 * The maximum size WebGL allows for element index numbers. Uses a 16 bit unsigned integer. It takes 6 indices to
+		 * make a unique card.
+		 * @property WEBGL_MAX_INDEX_NUM
+		 * @static
+		 * @final
+		 * @type {Number}
+		 * @default 65536
+		 * @readonly
+		 */
+		StageGL.WEBGL_MAX_INDEX_NUM = Math.pow(2, 16);
+	
+		/**
+		 * Default U/V rect for dealing with full coverage from an image source.
+		 * @property UV_RECT
+		 * @static
+		 * @final
+		 * @type {Object}
+		 * @default {t:0, l:0, b:1, r:1}
+		 * @readonly
+		 */
+		StageGL.UV_RECT = {t:0, l:0, b:1, r:1};
+	
+		/**
+		 * Vertex positions for a card that covers the entire render. Used with render targets primarily.
+		 * @property COVER_VERT
+		 * @static
+		 * @final
+		 * @type {Float32Array}
+		 * @readonly
+		 */
+		StageGL.COVER_VERT = new Float32Array([
+			-1,		 1,		//TL
+			1,		 1,		//TR
+			-1,		-1,		//BL
+			1,		 1,		//TR
+			1,		-1,		//BR
+			-1,		-1		//BL
+		]);
+	
+		/**
+		 * U/V for {{#crossLink "StageGL/COVER_VERT:property"}}{{/crossLink}}.
+		 * @property COVER_UV
+		 * @static
+		 * @final
+		 * @type {Float32Array}
+		 * @readonly
+		 */
+		StageGL.COVER_UV = new Float32Array([
+			 0,		 0,		//TL
+			 1,		 0,		//TR
+			 0,		 1,		//BL
+			 1,		 0,		//TR
+			 1,		 1,		//BR
+			 0,		 1		//BL
+		]);
+	
+		/**
+		 * Flipped U/V for {{#crossLink "StageGL:COVER_VERT:property"}}{{/crossLink}}.
+		 * @property COVER_UV_FLIP
+		 * @static
+		 * @final
+		 * @type {Float32Array}
+		 * @readonly
+		 */
+		StageGL.COVER_UV_FLIP = new Float32Array([
+			 0,		 1,		//TL
+			 1,		 1,		//TR
+			 0,		 0,		//BL
+			 1,		 1,		//TR
+			 1,		 0,		//BR
+			 0,		 0		//BL
+		]);
+	
+		/**
+		 * Portion of the shader that contains the "varying" properties required in both vertex and fragment shaders. The
+		 * regular shader is designed to render all expected objects. Shader code may contain templates that are replaced
+		 * pre-compile.
+		 * @property REGULAR_VARYING_HEADER
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.REGULAR_VARYING_HEADER = (
+			"precision mediump float;" +
+			"varying vec2 vTextureCoord;" +
+			"varying lowp float indexPicker;" +
+			"varying lowp float alphaValue;"
+		);
+	
+		/**
+		 * Actual full header for the vertex shader. Includes the varying header. The regular shader is designed to render
+		 * all expected objects. Shader code may contain templates that are replaced pre-compile.
+		 * @property REGULAR_VERTEX_HEADER
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.REGULAR_VERTEX_HEADER = (
+			StageGL.REGULAR_VARYING_HEADER +
+			"attribute vec2 vertexPosition;" +
+			"attribute vec2 uvPosition;" +
+			"attribute lowp float textureIndex;" +
+			"attribute lowp float objectAlpha;" +
+			"uniform mat4 pMatrix;"
+		);
+	
+		/**
+		 * Actual full header for the fragment shader. Includes the varying header. The regular shader is designed to render
+		 * all expected objects. Shader code may contain templates that are replaced pre-compile.
+		 * @property REGULAR_FRAGMENT_HEADER
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.REGULAR_FRAGMENT_HEADER = (
+			StageGL.REGULAR_VARYING_HEADER +
+			"uniform sampler2D uSampler[{{count}}];"
+		);
+	
+		/**
+		 * Body of the vertex shader. The regular shader is designed to render all expected objects. Shader code may contain
+		 * templates that are replaced pre-compile.
+		 * @property REGULAR_VERTEX_BODY
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.REGULAR_VERTEX_BODY  = (
+			"void main(void) {" +
+				//DHG TODO: This doesn't work. Must be something wrong with the hand built matrix see js... bypass for now
+				//vertexPosition, round if flag
+				//"gl_Position = pMatrix * vec4(vertexPosition.x, vertexPosition.y, 0.0, 1.0);" +
+				"gl_Position = vec4("+
+					"(vertexPosition.x * pMatrix[0][0]) + pMatrix[3][0]," +
+					"(vertexPosition.y * pMatrix[1][1]) + pMatrix[3][1]," +
+					"pMatrix[3][2]," +
+					"1.0" +
+				");" +
+				"alphaValue = objectAlpha;" +
+				"indexPicker = textureIndex;" +
+				"vTextureCoord = uvPosition;" +
+			"}"
+		);
+	
+		/**
+		 * Body of the fragment shader. The regular shader is designed to render all expected objects. Shader code may
+		 * contain templates that are replaced pre-compile.
+		 * @property REGULAR_FRAGMENT_BODY
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.REGULAR_FRAGMENT_BODY = (
+			"void main(void) {" +
+				"vec4 color = vec4(1.0, 0.0, 0.0, 1.0);" +
+	
+				"if (indexPicker <= 0.5) {" +
+					"color = texture2D(uSampler[0], vTextureCoord);" +
+					"{{alternates}}" +
+				"}" +
+	
+				"gl_FragColor = vec4(color.rgb{{premultiply}}, color.a * alphaValue);" +
+			"}"
+		);
+	
+		//TODO: DHG: a real particle shader
+		/**
+		 * @property PARTICLE_VERTEX_BODY
+		 * @todo
+		 * @final
+		 * @static
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.PARTICLE_VERTEX_BODY = (
+			StageGL.REGULAR_VERTEX_BODY
+		);
+		/**
+		 * @property PARTICLE_FRAGMENT_BODY
+		 * @todo
+		 * @final
+		 * @static
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.PARTICLE_FRAGMENT_BODY = (
+			StageGL.REGULAR_FRAGMENT_BODY
+		);
+	
+		/**
+		 * Portion of the shader that contains the "varying" properties required in both vertex and fragment shaders. The
+		 * cover shader is designed to be a simple vertex/uv only texture render that covers the render surface. Shader
+		 * code may contain templates that are replaced pre-compile.
+		 * @property COVER_VARYING_HEADER
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.COVER_VARYING_HEADER = (
+			"precision mediump float;" +
+	
+			"varying highp vec2 vRenderCoord;" +
+			"varying highp vec2 vTextureCoord;"
+		);
+	
+		/**
+		 * Actual full header for the vertex shader. Includes the varying header. The cover shader is designed to be a
+		 * simple vertex/uv only texture render that covers the render surface. Shader code may contain templates that are
+		 * replaced pre-compile.
+		 * @property COVER_VERTEX_HEADER
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.COVER_VERTEX_HEADER = (
+			StageGL.COVER_VARYING_HEADER +
+			"attribute vec2 vertexPosition;" +
+			"attribute vec2 uvPosition;" +
+			"uniform float uUpright;"
+		);
+	
+		/**
+		 * Actual full header for the fragment shader. Includes the varying header. The cover shader is designed to be a
+		 * simple vertex/uv only texture render that covers the render surface. Shader code may contain templates that are
+		 * replaced pre-compile.
+		 * @property COVER_FRAGMENT_HEADER
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.COVER_FRAGMENT_HEADER = (
+			StageGL.COVER_VARYING_HEADER +
+			"uniform sampler2D uSampler;"
+		);
+	
+		/**
+		 * Body of the vertex shader. The cover shader is designed to be a simple vertex/uv only texture render that covers
+		 * the render surface. Shader code may contain templates that are replaced pre-compile.
+		 * @property COVER_VERTEX_BODY
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.COVER_VERTEX_BODY  = (
+			"void main(void) {" +
+				"gl_Position = vec4(vertexPosition.x, vertexPosition.y, 0.0, 1.0);" +
+				"vRenderCoord = uvPosition;" +
+				"vTextureCoord = vec2(uvPosition.x, abs(uUpright - uvPosition.y));" +
+			"}"
+		);
+	
+		/**
+		 * Body of the fragment shader. The cover shader is designed to be a simple vertex/uv only texture render that
+		 * covers the render surface. Shader code may contain templates that are replaced pre-compile.
+		 * @property COVER_FRAGMENT_BODY
+		 * @static
+		 * @final
+		 * @type {String}
+		 * @readonly
+		 */
+		StageGL.COVER_FRAGMENT_BODY = (
+			"void main(void) {" +
+				"vec4 color = texture2D(uSampler, vRenderCoord);" +
+				"gl_FragColor = color;" +
+			"}"
+		);
+	
+	// events:
+		/**
+		 * Dispatched each update immediately before the canvas is cleared and the display list is drawn to it. You can call
+		 * {{#crossLink "Event/preventDefault"}}{{/crossLink}} on the event to cancel the draw.
+		 * @event drawstart
+		 */
+	
+		/**
+		 * Dispatched each update immediately after the display list is drawn to the canvas and the canvas context is restored.
+		 * @event drawend
+		 */
+	
+	// getter / setters:
+		p._get_isWebGL = function () {
+			return !!this._webGLContext;
+		};
+	
+		p._set_autoPurge = function (value) {
+			value = isNaN(value)?1200:value;
+			if (value != -1) {
+				value = value<10?10:value;
+			}
+			this._autoPurge = value;
+		};
+		p._get_autoPurge = function () {
+			return Number(this._autoPurge);
+		};
+	
+		try {
+			Object.defineProperties(p, {
+				/**
+				 * Indicates whether WebGL is being used for rendering. For example, this would be `false` if WebGL is not
+				 * supported in the browser.
+				 * @property isWebGL
+				 * @type {Boolean}
+				 * @readonly
+				 */
+				isWebGL: { get: p._get_isWebGL },
+	
+				/**
+				 * Specifies whether or not StageGL is automatically purging unused textures. Higher numbers purge less
+				 * often. Values below 10 are upgraded to 10, and -1 disables this feature.
+				 * @property autoPurge
+				 * @protected
+				 * @type {Integer}
+				 * @default 1000
+				 */
+				autoPurge: { get: p._get_autoPurge, set: p._set_autoPurge }
+			});
+		} catch (e) {} // TODO: use Log
+	
+	
+	// constructor methods:
+		/**
+		 * Create and properly initialize the WebGL instance.
+		 * @method _initializeWebGL
+		 * @protected
+		 * @return {WebGLRenderingContext}
+		 */
+		p._initializeWebGL = function () {
+			if (this.canvas) {
+				if (!this._webGLContext || this._webGLContext.canvas !== this.canvas) {
+					// A context hasn't been defined yet,
+					// OR the defined context belongs to a different canvas, so reinitialize.
+	
+					// defaults and options
+					var options = {
+						depth: false, // Disable the depth buffer as it isn't used.
+						alpha: this._transparent, // Make the canvas background transparent.
+						stencil: true,
+						antialias: this._antialias,
+						premultipliedAlpha: this._premultiply, // Assume the drawing buffer contains colors with premultiplied alpha.
+						preserveDrawingBuffer: this._preserveBuffer
+					};
+	
+					var gl = this._webGLContext = this._fetchWebGLContext(this.canvas, options);
+					if (!gl) { return null; }
+	
+					this.updateSimultaneousTextureCount(gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS));
+					this._maxTextureSlots = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+					this._createBuffers(gl);
+					this._initTextures(gl);
+	
+					gl.disable(gl.DEPTH_TEST);
+					gl.enable(gl.BLEND);
+					gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+					gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, this._premultiply);
+					//gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, gl.NONE);
+	
+					this._webGLContext.clearColor(this._clearColor.r, this._clearColor.g, this._clearColor.b, this._clearColor.a);
+					this.updateViewport(this._viewportWidth || this.canvas.width, this._viewportHeight || this.canvas.height);
+				}
+			} else {
+				this._webGLContext = null;
+			}
+			return this._webGLContext;
+		};
+	
+	// public methods:
+		/**
+		 * Docced in superclass
+		 */
+		p.update = function (props) {
+			if (!this.canvas) { return; }
+			if (this.tickOnUpdate) { this.tick(props); }
+			this.dispatchEvent("drawstart");
+			if (this.autoClear) { this.clear(); }
+	
+			if (this._webGLContext) {
+				// Use WebGL.
+				this._batchDraw(this, this._webGLContext);
+				if (this._autoPurge != -1 && !(this._drawID%((this._autoPurge/2)|0))) {
+					this.purgeTextures(this._autoPurge);
+				}
+			} else {
+				// Use 2D.
+				var ctx = this.canvas.getContext("2d");
+				ctx.save();
+				this.updateContext(ctx);
+				this.draw(ctx, false);
+				ctx.restore();
+			}
+			this.dispatchEvent("drawend");
+		};
+	
+		/**
+		 * Docced in superclass
+		 */
+		p.clear = function () {
+			if (!this.canvas) { return; }
+			if (StageGL.isWebGLActive(this._webGLContext)) {
+				var gl = this._webGLContext;
+				var cc = this._clearColor;
+				var adjust = this._transparent ? cc.a : 1.0;
+				// Use WebGL settings; adjust for pre multiplied alpha appropriate to scenario
+				this._webGLContext.clearColor(cc.r * adjust, cc.g * adjust, cc.b * adjust, adjust);
+				gl.clear(gl.COLOR_BUFFER_BIT);
+				this._webGLContext.clearColor(cc.r, cc.g, cc.b, cc.a);
+			} else {
+				// Use 2D.
+				this.Stage_clear();
+			}
+		};
+	
+		/**
+		 * Draws the stage into the supplied context if possible. Many WebGL properties only exist on their context. As such
+		 * you cannot share contexts among many StageGLs and each context requires a unique StageGL instance. Contexts that
+		 * don't match the context managed by this StageGL will be treated as a 2D context.
+		 *
+		 * NOTE: This method is mainly for internal use, though it may be useful for advanced uses.
+		 * @method draw
+		 * @param {CanvasRenderingContext2D | WebGLRenderingContext} context The context object to draw into.
+		 * @param {Boolean} [ignoreCache=false] Indicates whether the draw operation should ignore any current cache. For
+		 *  example, used for drawing the cache (to prevent it from simply drawing an existing cache back into itself).
+		 * @return {Boolean} If the draw was handled by this function
+		 */
+		p.draw = function (context, ignoreCache) {
+			if (context === this._webGLContext && StageGL.isWebGLActive(this._webGLContext)) {
+				var gl = this._webGLContext;
+				this._batchDraw(this, gl, ignoreCache);
+				return true;
+			} else {
+				return this.Stage_draw(context, ignoreCache);
+			}
+		};
+	
+		/**
+		 * Draws the target into the correct context, be it a canvas or Render Texture using WebGL.
+		 *
+		 * NOTE: This method is mainly for internal use, though it may be useful for advanced uses.
+		 * @method cacheDraw
+		 * @param {DisplayObject} target The object we're drawing into cache.
+		 * For example, used for drawing the cache (to prevent it from simply drawing an existing cache back into itself).
+		 * @param {Array} filters The filters we're drawing into cache.
+		 * @param {BitmapCache} manager The BitmapCache instance looking after the cache
+		 * @return {Boolean} If the draw was handled by this function
+		 */
+		p.cacheDraw = function (target, filters, manager) {
+			if (StageGL.isWebGLActive(this._webGLContext)) {
+				var gl = this._webGLContext;
+				this._cacheDraw(gl, target, filters, manager);
+				return true;
+			} else {
+				return false;
+			}
+		};
+	
+		/**
+		 * Blocks, or frees a texture "slot" on the GPU. Can be useful if you are overflowing textures. When overflowing
+		 * textures they are re-uploaded to the GPU every time they're encountered, this can be expensive with large textures.
+		 * By blocking the slot you reduce available slots, potentially increasing draw calls, but mostly you prevent a
+		 * texture being re-uploaded if it would have moved slots due to overflow.
+		 *
+		 * NOTE: This method is mainly for internal use, though it may be useful for advanced uses.
+		 * For example, block the slot a background image is stored in so there is less re-loading of that image.
+		 * @method protectTextureSlot
+		 * @param  {Number} id The slot to be affected
+		 * @param  {Boolean} [lock=false] Whether this slot is the one being locked.
+		 */
+		p.protectTextureSlot = function (id, lock) {
+			if (id > this._maxTextureSlots || id < 0) {
+				throw "Slot outside of acceptable range";
+			}
+			this._slotBlacklist[id] = !!lock;
+		};
+	
+		/**
+		 * Render textures can't draw into themselves so any item being used for renderTextures needs two to alternate between.
+		 * This function creates, gets, and toggles the render surface between the two.
+		 *
+		 * NOTE: This method is mainly for internal use, though it may be useful for advanced uses.
+		 * @method getTargetRenderTexture
+		 * @param  {DisplayObject} target The object associated with the render textures, usually a cached object.
+		 * @param  {Number} w The width to create the texture at.
+		 * @param  {Number} h The height to create the texture at.
+		 * @return {Objet}
+		 * @todo fill in return type
+		 */
+		p.getTargetRenderTexture = function (target, w, h) {
+			var result, toggle = false;
+			var gl = this._webGLContext;
+			if (target.__lastRT !== undefined && target.__lastRT === target.__rtA) { toggle = true; }
+			if (!toggle) {
+				if (target.__rtA === undefined) {
+					target.__rtA = this.getRenderBufferTexture(w, h);
+				} else {
+					if (w != target.__rtA._width || h != target.__rtA._height) {
+						this.resizeTexture(target.__rtA, w, h);
+					}
+					this.setTextureParams(gl);
+				}
+				result = target.__rtA;
+			} else {
+				if (target.__rtB === undefined) {
+					target.__rtB = this.getRenderBufferTexture(w, h);
+				} else {
+					if (w != target.__rtB._width || h != target.__rtB._height) {
+						this.resizeTexture(target.__rtB, w, h);
+					}
+					this.setTextureParams(gl);
+				}
+				result = target.__rtB;
+			}
+			if (!result) {
+				throw "Problems creating render textures, known causes include using too much VRAM by not releasing WebGL texture instances";
+			}
+			target.__lastRT = result;
+			return result;
+		};
+	
+		/**
+		 * For every image encountered StageGL registers and tracks it automatically. This tracking can cause memory leaks 
+		 * if not purged. StageGL, by default, automatically purges them. This does have a cost and may unfortunately find
+		 * false positives. This function is for manual management of this memory instead of the automatic system controlled
+		 * by the {{#crossLink "StageGL/autoPurge:property"}}{{/crossLink}} property.
+		 *
+		 * This function will recursively remove all textures found on the object, its children, cache, etc. It will uncache 
+		 * objects and remove any texture it finds REGARDLESS of whether it is currently in use elsewhere. It is up to the
+		 * developer to ensure that a texture in use is not removed.
+		 *
+		 * Textures in use, or to be used again shortly, should not be removed. This is simply for performance reasons.
+		 * Removing a texture in use will cause the texture to have to be re-uploaded slowing rendering.
+		 * @method releaseTexture
+		 * @param  {DisplayObject | Texture | Image | Canvas} item An object that used the texture to be discarded.
+		 */
+		p.releaseTexture = function (item) {
+			var i, l;
+			if (!item) { return; }
+	
+			// this is a container object
+			if (item.children) {
+				for (i = 0, l = item.children.length; i < l; i++) {
+					this.releaseTexture(item.children[i]);
+				}
+			}
+	
+			// this has a cache canvas
+			if (item.cacheCanvas) {
+				item.uncache();
+			}
+	
+			var foundImage = undefined;
+			if (item._storeID !== undefined) {
+				// this is a texture itself
+				if (item === this._textureDictionary[item._storeID]) {
+					this._killTextureObject(item);
+					item._storeID = undefined;
+					return;
+				}
+	
+				// this is an image or canvas
+				foundImage = item;
+			} else if (item._webGLRenderStyle === 2) {
+				// this is a Bitmap class
+				foundImage = item.image;
+			} else if (item._webGLRenderStyle === 1) {
+				// this is a SpriteSheet, we can't tell which image we used from the list easily so remove them all!
+				for (i = 0, l = item.spriteSheet._images.length; i < l; i++) {
+					this.releaseTexture(item.spriteSheet._images[i]);
+				}
+				return;
+			}
+	
+			// did we find anything
+			if (foundImage === undefined) {
+				if (this.vocalDebug) {
+					console.log("No associated texture found on release");
+				}
+				return;
+			}
+	
+			// remove it
+			this._killTextureObject(this._textureDictionary[foundImage._storeID]);
+			foundImage._storeID = undefined;
+		};
+	
+		/**
+		 * Similar to {{#crossLink "releaseTexture"}}{{/crossLink}}, but this function differs by searching for textures to
+		 * release. It works by assuming that it can purge any texture which was last used more than "count" draw calls ago.
+		 * Because this process is unaware of the objects and whether they may be used on your stage, false positives can
+		 * occur. It is recommended to manually manage your memory with {{#crossLink "StageGL/releaseTexture"}}{{/crossLink}},
+		 * however, there are many use cases where this is simpler and error-free. This process is also run by default under
+		 * the hood to prevent leaks. To disable it see the {{#crossLink "StageGL/autoPurge:property"}}{{/crossLink}} property.
+		 * @method purgeTextures
+		 * @param {Number} [count=100] How many renders ago the texture was last used
+		 */
+		p.purgeTextures = function (count) {
+			if (count == undefined){ count = 100; }
+	
+			var dict = this._textureDictionary;
+			var l = dict.length;
+			for (var i= 0; i<l; i++) {
+				var item = dict[i];
+				if (!item) { continue; }
+				if (item._drawID + count <= this._drawID) {	// use draw not batch as draw is more indicative of time
+					this._killTextureObject(item);
+				}
+			}
+		};
+	
+		/**
+		 * Try to set the max textures the system can handle. It should default to the hardware maximum, and lower values
+		 * may limit performance. Some devices have been known to mis-report their max textures, or you may need a standard
+		 * baseline cross devices for testing. Barring the previous suggestions, there is little need to call this function
+		 * as the library will automatically try to find the best value.
+		 *
+		 * NOTE: This method is mainly for internal use, though it may be useful for advanced uses.
+		 * @method updateSimultaneousTextureCount
+		 * @param {Number} [count=1] The number of textures intended for simultaneous loading.
+		 */
+		p.updateSimultaneousTextureCount = function (count) {
+			// TODO: DHG: make sure API works in all instances, may be some issues with buffers etc I haven't foreseen
+			var gl = this._webGLContext;
+			var success = false;
+	
+			if (count < 1 || isNaN(count)) { count = 1; }
+			this._batchTextureCount = count;
+	
+			while (!success) {
+				try {
+					this._activeShader = this._fetchShaderProgram(gl);
+					success = true;
+				} catch(e) {
+					if (this._batchTextureCount == 1) {
+						throw "Cannot compile shader " + e;
+					}
+	
+					this._batchTextureCount -= 4;
+					if (this._batchTextureCount < 1) { this._batchTextureCount = 1; }
+	
+					if (this.vocalDebug) {
+						console.log("Reducing desired texture count due to errors: " + this._batchTextureCount);
+					}
+				}
+			}
+		};
+	
+		/**
+		 * Update the WebGL viewport. Note that this does <strong>not</strong> update the canvas element's width/height, but
+		 * the render surface's instead. This is necessary after manually resizing the canvas element on the DOM to avoid a
+		 * up/down scaled render.
+		 * @method updateViewport
+		 * @param {Integer} width The width of the render surface in pixels.
+		 * @param {Integer} height The height of the render surface in pixels.
+		 */
+		p.updateViewport = function (width, height) {
+			this._viewportWidth = width|0;
+			this._viewportHeight = height|0;
+			var gl = this._webGLContext;
+	
+			if (gl) {
+				gl.viewport(0, 0, this._viewportWidth, this._viewportHeight);
+	
+				// WebGL works with a -1,1 space on its screen. It also follows Y-Up
+				// we need to flip the y, scale and then translate the co-ordinates to match this
+				// additionally we offset into they Y so the polygons are inside the camera's "clipping" plane
+				this._projectionMatrix = new Float32Array([
+					2 / this._viewportWidth,	0,								0,							0,
+					0,							-2 / this._viewportHeight,		1,							0,
+					0,							0,								1,							0,
+					-1,							1,								0.1,						0
+				]);
+				// create the flipped version for use with render texture flipping
+				// DHG: this would be a slice/clone but some platforms don't offer them for Float32Array
+				this._projectionMatrixFlip = new Float32Array([0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0]);
+				this._projectionMatrixFlip.set(this._projectionMatrix);
+				this._projectionMatrixFlip[5] *= -1;
+				this._projectionMatrixFlip[13] *= -1;
+			}
+		};
+	
+		/**
+		 * Fetches the shader compiled and set up to work with the provided filter/object. The shader is compiled on first
+		 * use and returned on subsequent calls.
+		 * @method getFilterShader
+		 * @param  {Filter|Object} filter The object which will provide the information needed to construct the filter shader.
+		 * @return {WebGLProgram}
+		 */
+		p.getFilterShader = function (filter) {
+			if (!filter) { filter = this; }
+	
+			var gl = this._webGLContext;
+			var targetShader = this._activeShader;
+	
+			if (filter._builtShader) {
+				targetShader = filter._builtShader;
+				if (filter.shaderParamSetup) {
+					gl.useProgram(targetShader);
+					filter.shaderParamSetup(gl, this, targetShader);
+				}
+			} else {
+				try {
+					targetShader = this._fetchShaderProgram(
+						gl, "filter",
+						filter.VTX_SHADER_BODY, filter.FRAG_SHADER_BODY,
+						filter.shaderParamSetup && filter.shaderParamSetup.bind(filter)
+					);
+					filter._builtShader = targetShader;
+					targetShader._name = filter.toString();
+				} catch (e) {
+					console && console.log("SHADER SWITCH FAILURE", e);
+				}
+			}
+			return targetShader;
+		};
+	
+		/**
+		 * Returns a base texture that has no image or data loaded. Not intended for loading images. It may return `null`
+		 * in some error cases, and trying to use a "null" texture can cause renders to fail.
+		 * @method getBaseTexture
+		 * @param  {uint} [w=1] The width of the texture in pixels, defaults to 1
+		 * @param  {uint} [h=1] The height of the texture in pixels, defaults to 1
+		 */
+		p.getBaseTexture = function (w, h) {
+			var width = Math.ceil(w > 0 ? w : 1) || 1;
+			var height = Math.ceil(h > 0 ? h : 1) || 1;
+	
+			var gl = this._webGLContext;
+			var texture = gl.createTexture();
+			this.resizeTexture(texture, width, height);
+			this.setTextureParams(gl, false);
+	
+			return texture;
+		};
+	
+		/**
+		 * Resizes a supplied texture element. May generate invalid textures in some error cases such as; when the texture
+		 * is too large, when an out of texture memory error occurs, or other error scenarios. Trying to use an invalid texture
+		 * can cause renders to hard stop on some devices. Check the WebGL bound texture after running this function.
+		 *
+		 * NOTE: The supplied texture must have been made with the WebGL "texImage2D" function, all default APIs in StageGL
+		 * use this, so this note only matters for library developers and plugins.
+		 *
+		 * @protected
+		 * @method resizeTexture
+		 * @param  {WebGLTexture} texture The GL Texture to be modified.
+		 * @param  {uint} [width=1] The width of the texture in pixels, defaults to 1
+		 * @param  {uint} [height=1] The height of the texture in pixels, defaults to 1
+		 */
+		p.resizeTexture = function (texture, width,height) {
+			var gl = this._webGLContext;
+			gl.bindTexture(gl.TEXTURE_2D, texture);
+			gl.texImage2D(
+				gl.TEXTURE_2D,				// target
+				0,							// level of detail
+				gl.RGBA,					// internal format
+				width, height, 0,			// width, height, border (only for array/null sourced textures)
+				gl.RGBA,					// format (match internal format)
+				gl.UNSIGNED_BYTE,			// type of texture(pixel color depth)
+				null						// image data, we can do null because we're doing array data
+			);
+			texture.width = width;
+			texture.height = height;
+		};
+	
+		/**
+		 * Returns a base texture (see {{#crossLink "StageGL/getBaseTexture"}}{{/crossLink}}) for details. Also includes an
+		 * attached and linked render buffer in `texture._frameBuffer`. RenderTextures can be thought of as an internal
+		 * canvas on the GPU that can be drawn to.
+		 * @method getRenderBufferTexture
+		 * @param  {Number} w The width of the texture in pixels.
+		 * @param  {Number} h The height of the texture in pixels.
+		 * @return {Texture} the basic texture instance with a render buffer property.
+		 */
+		p.getRenderBufferTexture = function (w, h) {
+			var gl = this._webGLContext;
+	
+			// get the texture
+			var renderTexture = this.getBaseTexture(w, h);
+			if (!renderTexture) { return null; }
+	
+			// get the frame buffer
+			var frameBuffer = gl.createFramebuffer();
+			if (!frameBuffer) { return null; }
+	
+			// set its width and height for spoofing as an image
+			renderTexture.width = w;
+			renderTexture.height = h;
+	
+			// attach frame buffer to texture and provide cross links to look up each other
+			gl.bindFramebuffer(gl.FRAMEBUFFER, frameBuffer);
+			gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, renderTexture, 0);
+			frameBuffer._renderTexture = renderTexture;
+			renderTexture._frameBuffer = frameBuffer;
+	
+			// these keep track of themselves simply to reduce complexity of some lookup code
+			renderTexture._storeID = this._textureDictionary.length;
+			this._textureDictionary[renderTexture._storeID] = renderTexture;
+	
+			gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+			return renderTexture;
+		};
+	
+		/**
+		 * Common utility function used to apply the correct texture processing parameters for the bound texture.
+		 * @method setTextureParams
+		 * @param  {WebGLRenderingContext} gl The canvas WebGL context object to draw into.
+		 * @param  {Boolean} [isPOT=false] Marks whether the texture is "Power of Two", this may allow better quality AA.
+		 */
+		p.setTextureParams = function (gl, isPOT) {
+			if (isPOT && this._antialias) {
+				//non POT linear works in some devices, but performance is NOT good, investigate
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+			} else {
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+			}
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+		};
+	
+		/**
+		 * Changes the webGL clear, aka "background" color to the provided value. A transparent clear is recommended, as
+		 * non-transparent colours may create undesired boxes around some visuals.
+		 *
+		 * The clear color will also be used for filters and other "render textures". The stage background will ignore the
+		 * transparency value and display a solid color normally. For the stage to recognize and use transparency it must be
+		 * created with the transparent flag set to `true` (see {{#crossLink "StageGL/constructor"}}{{/crossLink}})).
+		 *
+		 * Using "transparent white" to demonstrate, the valid data formats are as follows:
+		 * <ul>
+		 *     <li>"#FFF"</li>
+		 *     <li>"#FFFFFF"</li>
+		 *     <li>"#FFFFFF00"</li>
+		 *     <li>"rgba(255,255,255,0.0)"</li>
+		 * </ul>
+		 * @method setClearColor
+		 * @param {String|int} [color=0x00000000] The new color to use as the background
+		 */
+		p.setClearColor = function (color) {
+			var r, g, b, a, output;
+	
+			if (typeof color == "string") {
+				if (color.indexOf("#") == 0) {
+					if (color.length == 4) {
+						color = "#" + color.charAt(1)+color.charAt(1) + color.charAt(2)+color.charAt(2) + color.charAt(3)+color.charAt(3)
+					}
+					r = Number("0x"+color.slice(1, 3))/255;
+					g = Number("0x"+color.slice(3, 5))/255;
+					b = Number("0x"+color.slice(5, 7))/255;
+					a = Number("0x"+color.slice(7, 9))/255;
+				} else if (color.indexOf("rgba(") == 0) {
+					output = color.slice(5, -1).split(",");
+					r = Number(output[0])/255;
+					g = Number(output[1])/255;
+					b = Number(output[2])/255;
+					a = Number(output[3]);
+				}
+			} else {	// >>> is an unsigned shift which is what we want as 0x80000000 and up are negative values
+				r = ((color & 0xFF000000) >>> 24)/255;
+				g = ((color & 0x00FF0000) >>> 16)/255;
+				b = ((color & 0x0000FF00) >>> 8)/255;
+				a = (color & 0x000000FF)/255;
+			}
+	
+			this._clearColor.r = r || 0;
+			this._clearColor.g = g || 0;
+			this._clearColor.b = b || 0;
+			this._clearColor.a = a || 0;
+	
+			if (!this._webGLContext) { return; }
+			this._webGLContext.clearColor(this._clearColor.r, this._clearColor.g, this._clearColor.b, this._clearColor.a);
+		};
+	
+		/**
+		 * docced in subclass
+		 */
+		p.toString = function () {
+			return "[StageGL (name="+  this.name +")]";
+		};
+	
+	// private methods:
+		/**
+		 * Sets up and returns the WebGL context for the canvas. May return undefined in error scenarios. These can include 
+		 * situations where the canvas element already has a context, 2D or GL.
+		 * @param  {Canvas} canvas The DOM canvas element to attach to
+		 * @param  {Object} options The options to be handed into the WebGL object, see WebGL spec
+		 * @method _fetchWebGLContext
+		 * @protected
+		 * @return {WebGLRenderingContext} The WebGL context, may return undefined in error scenarios
+		 */
+		p._fetchWebGLContext = function (canvas, options) {
+			var gl;
+	
+			try {
+				gl = canvas.getContext("webgl", options) || canvas.getContext("experimental-webgl", options);
+			} catch (e) {
+				// don't do anything in catch, null check will handle it
+			}
+	
+			if (!gl) {
+				var msg = "Could not initialize WebGL";
+				console.error?console.error(msg):console.log(msg);
+			} else {
+				gl.viewportWidth = canvas.width;
+				gl.viewportHeight = canvas.height;
+			}
+	
+			return gl;
+		};
+	
+		/**
+		 * Create the completed Shader Program from the vertex and fragment shaders. Allows building of custom shaders for
+		 * filters. Once compiled, shaders are saved so. If the Shader code requires dynamic alterations re-run this function
+		 * to generate a new shader.
+		 * @method _fetchShaderProgram
+		 * @param  {WebGLRenderingContext} gl The canvas WebGL context object to draw into.
+		 * @param  {String} [shaderName="regular"] Working values: "regular", "override", and "filter". Which type of shader to build.
+		 * Filter and override both accept the custom params. Regular and override have all features. Filter is a special case reduced feature shader meant to be over-ridden.
+		 * @param  {String} [customVTX] Extra vertex shader information to replace a regular draw, see 
+		 * {{#crossLink "StageGL/COVER_VERTEX_BODY"}}{{/crossLink}} for default and {{#crossLink "Filter"}}{{/crossLink}} for examples.
+		 * @param  {String} [customFRAG] Extra fragment shader information to replace a regular draw, see 
+		 * {{#crossLink "StageGL/COVER_FRAGMENT_BODY"}}{{/crossLink}} for default and {{#crossLink "Filter"}}{{/crossLink}} for examples.
+		 * @param  {Function} [shaderParamSetup] Function to run so custom shader parameters can get applied for the render.
+		 * @protected
+		 * @return {WebGLProgram} The compiled and linked shader
+		 */
+		p._fetchShaderProgram = function (gl, shaderName, customVTX, customFRAG, shaderParamSetup) {
+			gl.useProgram(null);		// safety to avoid collisions
+	
+			// build the correct shader string out of the right headers and bodies
+			var targetFrag, targetVtx;
+			switch (shaderName) {
+				case "filter":
+					targetVtx = StageGL.COVER_VERTEX_HEADER + (customVTX || StageGL.COVER_VERTEX_BODY);
+					targetFrag = StageGL.COVER_FRAGMENT_HEADER + (customFRAG || StageGL.COVER_FRAGMENT_BODY);
+					break;
+				case "particle": //TODO
+					targetVtx = StageGL.REGULAR_VERTEX_HEADER + StageGL.PARTICLE_VERTEX_BODY;
+					targetFrag = StageGL.REGULAR_FRAGMENT_HEADER + StageGL.PARTICLE_FRAGMENT_BODY;
+					break;
+				case "override":
+					targetVtx = StageGL.REGULAR_VERTEX_HEADER + (customVTX || StageGL.REGULAR_VERTEX_BODY);
+					targetFrag = StageGL.REGULAR_FRAGMENT_HEADER + (customFRAG || StageGL.REGULAR_FRAGMENT_BODY);
+					break;
+				case "regular":
+				default:
+					targetVtx = StageGL.REGULAR_VERTEX_HEADER + StageGL.REGULAR_VERTEX_BODY;
+					targetFrag = StageGL.REGULAR_FRAGMENT_HEADER + StageGL.REGULAR_FRAGMENT_BODY;
+					break;
+			}
+	
+			// create the separate vars
+			var vertexShader = this._createShader(gl, gl.VERTEX_SHADER, targetVtx);
+			var fragmentShader = this._createShader(gl, gl.FRAGMENT_SHADER, targetFrag);
+	
+			// link them together
+			var shaderProgram = gl.createProgram();
+			gl.attachShader(shaderProgram, vertexShader);
+			gl.attachShader(shaderProgram, fragmentShader);
+			gl.linkProgram(shaderProgram);
+			shaderProgram._type = shaderName;
+	
+			// check compile status
+			if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+				gl.useProgram(this._activeShader);
+				throw gl.getProgramInfoLog(shaderProgram);
+			}
+	
+			// set up the parameters on the shader
+			gl.useProgram(shaderProgram);
+			switch (shaderName) {
+				case "filter":
+					// get the places in memory the shader is stored so we can feed information into them
+					// then save it off on the shader because it's so tied to the shader itself
+					shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "vertexPosition");
+					gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+	
+					shaderProgram.uvPositionAttribute = gl.getAttribLocation(shaderProgram, "uvPosition");
+					gl.enableVertexAttribArray(shaderProgram.uvPositionAttribute);
+	
+					shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
+					gl.uniform1i(shaderProgram.samplerUniform, 0);
+	
+					shaderProgram.uprightUniform = gl.getUniformLocation(shaderProgram, "uUpright");
+					gl.uniform1f(shaderProgram.uprightUniform, 0);
+	
+					// if there's some custom attributes be sure to hook them up
+					if (shaderParamSetup) {
+						shaderParamSetup(gl, this, shaderProgram);
+					}
+					break;
+				case "override":
+				case "particle":
+				case "regular":
+				default:
+					// get the places in memory the shader is stored so we can feed information into them
+					// then save it off on the shader because it's so tied to the shader itself
+					shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "vertexPosition");
+					gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+	
+					shaderProgram.uvPositionAttribute = gl.getAttribLocation(shaderProgram, "uvPosition");
+					gl.enableVertexAttribArray(shaderProgram.uvPositionAttribute);
+	
+					shaderProgram.textureIndexAttribute = gl.getAttribLocation(shaderProgram, "textureIndex");
+					gl.enableVertexAttribArray(shaderProgram.textureIndexAttribute);
+	
+					shaderProgram.alphaAttribute = gl.getAttribLocation(shaderProgram, "objectAlpha");
+					gl.enableVertexAttribArray(shaderProgram.alphaAttribute);
+	
+					var samplers = [];
+					for (var i = 0; i < this._batchTextureCount; i++) {
+						samplers[i] = i;
+					}
+	
+					shaderProgram.samplerData = samplers;
+					shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
+					gl.uniform1iv(shaderProgram.samplerUniform, samplers);
+	
+					shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "pMatrix");
+					break;
+			}
+	
+			gl.useProgram(this._activeShader);
+			return shaderProgram;
+		};
+	
+		/**
+		 * Creates a shader from the specified string replacing templates. Template items are defined via `{{` `key` `}}``.
+		 * @method _createShader
+		 * @param  {WebGLRenderingContext} gl The canvas WebGL context object to draw into.
+		 * @param  {Number} type The type of shader to create. gl.VERTEX_SHADER | gl.FRAGMENT_SHADER
+		 * @param  {String} str The definition for the shader.
+		 * @return {WebGLShader}
+		 * @protected
+		 */
+		p._createShader = function (gl, type, str) {
+			// inject the static number
+			str = str.replace(/{{count}}/g, this._batchTextureCount);
+	
+			// resolve issue with no dynamic samplers by creating correct samplers in if else chain
+			// TODO: WebGL 2.0 does not need this support
+			var insert = "";
+			for (var i = 1; i<this._batchTextureCount; i++) {
+				insert += "} else if (indexPicker <= "+ i +".5) { color = texture2D(uSampler["+ i +"], vTextureCoord);";
+			}
+			str = str.replace(/{{alternates}}/g, insert);
+			str = str.replace(/{{premultiply}}/g, this._premultiply ? "/color.a" : "");
+	
+			// actually compile the shader
+			var shader = gl.createShader(type);
+			gl.shaderSource(shader, str);
+			gl.compileShader(shader);
+	
+			// check compile status
+			if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+				throw gl.getShaderInfoLog(shader);
+			}
+	
+			return shader;
+		};
+	
+		/**
+		 * Sets up the necessary vertex property buffers, including position and U/V.
+		 * @method _createBuffers
+		 * @param {WebGLRenderingContext} gl
+		 * @protected
+		 */
+		p._createBuffers = function (gl) {
+			var groupCount = this._maxCardsPerBatch * StageGL.INDICIES_PER_CARD;
+			var groupSize, i, l;
+	
+			// INFO:
+			// all buffers are created using this pattern
+			// create a WebGL buffer
+			// attach it to context
+			// figure out how many parts it has to an entry
+			// fill it with empty data to reserve the memory
+			// attach the empty data to the GPU
+			// track the sizes on the buffer object
+	
+			// INFO:
+			// a single buffer may be optimal in some situations and would be approached like this,
+			// currently not implemented due to lack of need and potential complications with drawCover
+	
+			// var vertexBuffer = this._vertexBuffer = gl.createBuffer();
+			// gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+			// groupSize = 2 + 2 + 1 + 1; //x/y, u/v, index, alpha
+			// var vertexData = this._vertexData = new Float32Array(groupCount * groupSize);
+			// for (i=0; i<vertexData.length; i+=groupSize) {
+			// 	vertexData[i+0] = vertexData[i+1] = 0;
+			// 	vertexData[i+2] = vertexData[i+3] = 0.5;
+			// 	vertexData[i+4] = 0;
+			// 	vertexData[i+5] = 1;
+			// }
+			// vertexBuffer.itemSize = groupSize;
+			// vertexBuffer.numItems = groupCount;
+			// TODO bechmark and test using unified buffer
+	
+			// the actual position information
+			var vertexPositionBuffer = this._vertexPositionBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+			groupSize = 2;
+			var vertices = this._vertices = new Float32Array(groupCount * groupSize);
+			for (i=0, l=vertices.length; i<l; i+=groupSize) { vertices[i] = vertices[i+1] = 0; }
+			gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.DYNAMIC_DRAW);
+			vertexPositionBuffer.itemSize = groupSize;
+			vertexPositionBuffer.numItems = groupCount;
+	
+			// where on the texture it gets its information
+			var uvPositionBuffer = this._uvPositionBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, uvPositionBuffer);
+			groupSize = 2;
+			var uvs = this._uvs = new Float32Array(groupCount * groupSize);
+			for (i=0, l=uvs.length; i<l; i+=groupSize) { uvs[i] = uvs[i+1] = 0; }
+			gl.bufferData(gl.ARRAY_BUFFER, uvs, gl.DYNAMIC_DRAW);
+			uvPositionBuffer.itemSize = groupSize;
+			uvPositionBuffer.numItems = groupCount;
+	
+			// what texture it should use
+			var textureIndexBuffer = this._textureIndexBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, textureIndexBuffer);
+			groupSize = 1;
+			var indices = this._indices = new Float32Array(groupCount * groupSize);
+			for (i=0, l=indices.length; i<l; i++) { indices[i] = 0; }
+			gl.bufferData(gl.ARRAY_BUFFER, indices, gl.DYNAMIC_DRAW);
+			textureIndexBuffer.itemSize = groupSize;
+			textureIndexBuffer.numItems = groupCount;
+	
+			// what alpha it should have
+			var alphaBuffer = this._alphaBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, alphaBuffer);
+			groupSize = 1;
+			var alphas = this._alphas = new Float32Array(groupCount * groupSize);
+			for (i=0, l=alphas.length; i<l; i++) { alphas[i] = 1; }
+			gl.bufferData(gl.ARRAY_BUFFER, alphas, gl.DYNAMIC_DRAW);
+			alphaBuffer.itemSize = groupSize;
+			alphaBuffer.numItems = groupCount;
+		};
+	
+		/**
+		 * Do all the setup steps for textures in the system.
+		 * @method _initTextures
+		 * @protected
+		 */
+		p._initTextures = function () {
+			//TODO: DHG: add a cleanup routine in here in case this happens mid stream
+	
+			// reset counters
+			this._lastTextureInsert = -1;
+	
+			// clear containers
+			this._textureDictionary = [];
+			this._textureIDs = {};
+			this._baseTextures = [];
+			this._batchTextures = [];
+	
+			// fill in blanks as it helps the renderer be stable while textures are loading and reduces need for safety code
+			for (var i=0; i<this._batchTextureCount;i++) {
+				var tex = this.getBaseTexture();
+				this._baseTextures[i] = this._batchTextures[i] = tex;
+				if (!tex) {
+					throw "Problems creating basic textures, known causes include using too much VRAM by not releasing WebGL texture instances";
+				}
+			}
+		};
+	
+		/**
+		 * Load a specific texture, accounting for potential delay, as it might not be preloaded.
+		 * @method _loadTextureImage
+		 * @param {WebGLRenderingContext} gl
+		 * @param {Image} image Actual image to be loaded
+		 * @return {WebGLTexture} The resulting Texture object
+		 * @protected
+		 */
+		p._loadTextureImage = function (gl, image) {
+			var src = image.src;
+	
+			if (!src) {
+				// one time canvas property setup
+				image._isCanvas = true;
+				src = image.src = "canvas_" + this._lastTrackedCanvas++;
+			}
+	
+			// put the texture into our storage system
+			var storeID = this._textureIDs[src];
+			if (storeID === undefined) {
+				storeID = this._textureIDs[src] = this._textureDictionary.length;
+			}
+			if (this._textureDictionary[storeID] === undefined) {
+				this._textureDictionary[storeID] = this.getBaseTexture();
+			}
+	
+			var texture = this._textureDictionary[storeID];
+	
+			if (texture) {
+				// get texture params all set up
+				texture._batchID = this._batchID;
+				texture._storeID = storeID;
+				texture._imageData = image;
+				this._insertTextureInBatch(gl, texture);
+	
+				// get the data into the texture or wait for it to load
+				image._storeID = storeID;
+				if (image.complete || image.naturalWidth || image._isCanvas) {	// is it already loaded
+					this._updateTextureImageData(gl, image);
+				} else  {
+					image.addEventListener("load", this._updateTextureImageData.bind(this, gl, image));
+				}
+			} else {
+				// we really really should have a texture, try to recover the error by using a saved empty texture so we don't crash
+				var msg = "Problem creating desired texture, known causes include using too much VRAM by not releasing WebGL texture instances";
+				(console.error && console.error(msg)) || console.log(msg);
+	
+				texture = this._baseTextures[0];
+				texture._batchID = this._batchID;
+				texture._storeID = -1;
+				texture._imageData = texture;
+				this._insertTextureInBatch(gl, texture);
+			}
+	
+			return texture;
+		};
+	
+		/**
+		 * Necessary to upload the actual image data to the GPU. Without this the texture will be blank. Called automatically
+		 * in most cases due to loading and caching APIs. Flagging an image source with `_invalid = true` will trigger this
+		 * next time the image is rendered.
+		 * @param {WebGLRenderingContext} gl
+		 * @param {Image | Canvas} image The image data to be uploaded
+		 * @protected
+		 */
+		p._updateTextureImageData = function (gl, image) {
+			// the bitwise & is intentional, cheap exponent 2 check
+			var isNPOT = (image.width & image.width-1) || (image.height & image.height-1);
+			var texture = this._textureDictionary[image._storeID];
+	
+			gl.activeTexture(gl.TEXTURE0 + texture._activeIndex);
+			gl.bindTexture(gl.TEXTURE_2D, texture);
+	
+			texture.isPOT = !isNPOT;
+			this.setTextureParams(gl, texture.isPOT);
+	
+			try {
+				gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+			} catch(e) {
+				var errString = "\nAn error has occurred. This is most likely due to security restrictions on WebGL images with local or cross-domain origins";
+				if(console.error) {
+					//TODO: LM: I recommend putting this into a log function internally, since you do it so often, and each is implemented differently.
+					console.error(errString);
+					console.error(e);
+				} else if (console) {
+					console.log(errString);
+					console.log(e);
+				}
+			}
+	
+			image._invalid = false;
+	
+			texture._w = image.width;
+			texture._h = image.height;
+	
+			if (this.vocalDebug) {
+				if (isNPOT) {
+					console.warn("NPOT(Non Power of Two) Texture: "+ image.src);
+				}
+				if (image.width > gl.MAX_TEXTURE_SIZE || image.height > gl.MAX_TEXTURE_SIZE){
+					console && console.error("Oversized Texture: "+ image.width+"x"+image.height +" vs "+ gl.MAX_TEXTURE_SIZE +"max");
+				}
+			}
+		};
+	
+		/**
+		 * Adds the texture to a spot in the current batch, forcing a draw if no spots are free.
+		 * @method _insertTextureInBatch
+		 * @param {WebGLRenderingContext} gl The canvas WebGL context object to draw into.
+		 * @param {WebGLTexture} texture The texture to be inserted.
+		 * @protected
+		 */
+		p._insertTextureInBatch = function (gl, texture) {
+			// if it wasn't used last batch
+			if (this._batchTextures[texture._activeIndex] !== texture) {
+				// we've got to find it a a spot.
+				var found = -1;
+				var start = (this._lastTextureInsert+1) % this._batchTextureCount;
+				var look = start;
+				do {
+					if (this._batchTextures[look]._batchID != this._batchID && !this._slotBlacklist[look]) {
+						found = look;
+						break;
+					}
+					look = (look+1) % this._batchTextureCount;
+				} while (look !== start);
+	
+				// we couldn't find anywhere for it go, meaning we're maxed out
+				if (found === -1) {
+					this.batchReason = "textureOverflow";
+					this._drawBuffers(gl);		// <------------------------------------------------------------------------
+					this.batchCardCount = 0;
+					found = start;
+				}
+	
+				// lets put it into that spot
+				this._batchTextures[found] = texture;
+				texture._activeIndex = found;
+				var image = texture._imageData;
+				if (image && image._invalid && texture._drawID !== undefined) {
+					this._updateTextureImageData(gl, image);
+				} else {
+					gl.activeTexture(gl.TEXTURE0 + found);
+					gl.bindTexture(gl.TEXTURE_2D, texture);
+					this.setTextureParams(gl);
+				}
+				this._lastTextureInsert = found;
+			} else {
+				var image = texture._imageData;
+				if (texture._storeID != undefined && image && image._invalid) {
+					this._updateTextureImageData(gl, image);
+				}
+			}
+	
+			texture._drawID = this._drawID;
+			texture._batchID = this._batchID;
+		};
+	
+		/**
+		 * Remove and clean the texture, expects a texture and is inflexible. Mostly for internal use, recommended to call 
+		 * {{#crossLink "StageGL/releaseTexture"}}{{/crossLink}} instead as it will call this with the correct texture object(s).
+		 * Note: Testing shows this may not happen immediately, have to wait frames for WebGL to have actually adjust memory.
+		 * @method _killTextureObject
+		 * @param {Texture} tex The texture to be cleaned out
+		 * @protected
+		 */
+		p._killTextureObject = function (tex) {
+			if (!tex) { return; }
+			var gl = this._webGLContext;
+	
+			// remove linkage
+			if (tex._storeID !== undefined && tex._storeID >= 0) {
+				this._textureDictionary[tex._storeID] = undefined;
+				for (var n in this._textureIDs) {
+					if (this._textureIDs[n] == tex._storeID) { delete this._textureIDs[n]; }
+				}
+				if(tex._imageData) { tex._imageData._storeID = undefined; }
+				tex._imageData = tex._storeID = undefined;
+			}
+	
+			// make sure to drop it out of an active slot
+			if (tex._activeIndex !== undefined && this._batchTextures[tex._activeIndex] === tex) {
+				this._batchTextures[tex._activeIndex] = this._baseTextures[tex._activeIndex];
+			}
+	
+			// remove buffers if present
+			try {
+				if (tex._frameBuffer) { gl.deleteFramebuffer(tex._frameBuffer); }
+				tex._frameBuffer = undefined;
+			} catch(e) {
+				/* suppress delete errors because it's already gone or didn't need deleting probably */
+				if (this.vocalDebug) { console.log(e); }
+			}
+	
+			// remove entry
+			try {
+				gl.deleteTexture(tex);
+			} catch(e) {
+				/* suppress delete errors because it's already gone or didn't need deleting probably */
+				if (this.vocalDebug) { console.log(e); }
+			}
+		};
+	
+		/**
+		 * Store or restore current batch textures into a backup array
+		 * @method _backupBatchTextures
+		 * @param {Boolean} restore Perform a restore instead of a store.
+		 * @param {Array} [target=this._backupTextures] Where to perform the backup, defaults to internal backup.
+		 * @protected
+		 */
+		p._backupBatchTextures = function (restore, target) {
+			var gl = this._webGLContext;
+	
+			if (!this._backupTextures) { this._backupTextures = []; }
+			if (target === undefined) { target = this._backupTextures; }
+	
+			for (var i=0; i<this._batchTextureCount; i++) {
+				gl.activeTexture(gl.TEXTURE0 + i);
+				if (restore) {
+					this._batchTextures[i] = target[i];
+				} else {
+					target[i] = this._batchTextures[i];
+					this._batchTextures[i] = this._baseTextures[i];
+				}
+				gl.bindTexture(gl.TEXTURE_2D, this._batchTextures[i]);
+				this.setTextureParams(gl, this._batchTextures[i].isPOT);
+			}
+	
+			if (restore && target === this._backupTextures) { this._backupTextures = []; }
+		};
+	
+		/**
+		 * Begin the drawing process for a regular render.
+		 * @method _batchDraw
+		 * @param {WebGLRenderingContext} gl The canvas WebGL context object to draw into.
+		 * @param {Stage || Container} sceneGraph {{#crossLink "Container"}}{{/crossLink}} object with all that needs to rendered, preferably a Stage.
+		 * @param {Boolean} ignoreCache
+		 * @protected
+		 */
+		p._batchDraw = function (sceneGraph, gl, ignoreCache) {
+			if (this._isDrawing > 0) {
+				this._drawBuffers(gl);
+			}
+			this._isDrawing++;
+			this._drawID++;
+	
+			this.batchCardCount = 0;
+			this.depth = 0;
+	
+			this._appendToBatchGroup(sceneGraph, gl, new createjs.Matrix2D(), this.alpha, ignoreCache);
+	
+			this.batchReason = "drawFinish";
+			this._drawBuffers(gl);								// <--------------------------------------------------------
+			this._isDrawing--;
+		};
+	
+		/**
+		 * Perform the drawing process to fill a specific cache texture, including applying filters.
+		 * @method _cacheDraw
+		 * @param {DisplayObject} target The object we're drawing into the cache. For example, used for drawing the cache
+		 * (to prevent it from simply drawing an existing cache back into itself).
+		 * @param {Array} filters The filters we're drawing into cache.
+		 * @param {BitmapCache} manager The BitmapCache instance looking after the cache
+		 * @protected
+		 */
+		p._cacheDraw = function (gl, target, filters, manager) {
+			/*
+			Implicitly there are 4 modes to this function: filtered-sameContext, filtered-uniqueContext, sameContext, uniqueContext.
+			Each situation must be handled slightly differently as 'sameContext' or 'uniqueContext' define how the output works,
+			one drawing directly into the main context and the other drawing into a stored renderTexture respectively.
+			When the draw is a 'filtered' draw, the filters are applied sequentially and will draw into saved textures repeatedly.
+			Once the final filter is done the final output is treated depending upon whether it is a same or unique context.
+			The internal complexity comes from reducing over-draw, shared code, and issues like textures needing to be flipped
+			sometimes when written to render textures.
+			*/
+			var renderTexture;
+			var shaderBackup = this._activeShader;
+			var blackListBackup = this._slotBlacklist;
+			var lastTextureSlot = this._maxTextureSlots-1;
+			var wBackup = this._viewportWidth, hBackup = this._viewportHeight;
+	
+			// protect the last slot so that we have somewhere to bind the renderTextures so it doesn't get upset
+			this.protectTextureSlot(lastTextureSlot, true);
+	
+			// create offset container for drawing item
+			var mtx = target.getMatrix();
+			mtx = mtx.clone();
+			mtx.scale(1/manager.scale, 1/manager.scale);
+			mtx = mtx.invert();
+			mtx.translate(-manager.offX/manager.scale, -manager.offY/manager.scale);
+			var container = this._cacheContainer;
+			container.children = [target];
+			container.transformMatrix = mtx;
+	
+			this._backupBatchTextures(false);
+	
+			var filterCount = filters && filters.length;
+			if (filterCount) {
+				this._drawFilters(target, filters, manager);
+			} else {
+				// is this for another stage or mine?
+				if (this.isCacheControlled) {
+					// draw item to canvas				I -> C
+					gl.clear(gl.COLOR_BUFFER_BIT);
+					this._batchDraw(container, gl, true);
+				} else {
+					gl.activeTexture(gl.TEXTURE0 + lastTextureSlot);
+					target.cacheCanvas = this.getTargetRenderTexture(target, manager._drawWidth, manager._drawHeight);
+					renderTexture = target.cacheCanvas;
+	
+					// draw item to render texture		I -> T
+					gl.bindFramebuffer(gl.FRAMEBUFFER, renderTexture._frameBuffer);
+					this.updateViewport(manager._drawWidth, manager._drawHeight);
+					this._projectionMatrix = this._projectionMatrixFlip;
+					gl.clear(gl.COLOR_BUFFER_BIT);
+					this._batchDraw(container, gl, true);
+	
+					gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+					this.updateViewport(wBackup, hBackup);
+				}
+			}
+	
+			this._backupBatchTextures(true);
+	
+			this.protectTextureSlot(lastTextureSlot, false);
+			this._activeShader = shaderBackup;
+			this._slotBlacklist = blackListBackup;
+		};
+	
+		/**
+		 * Sub portion of _cacheDraw, split off for readability. Do not call independently.
+		 * @method _drawFilters
+		 * @param {DisplayObject} target The object we're drawing with a filter.
+		 * @param {Array} filters The filters we're drawing into cache.
+		 * @param {BitmapCache} manager The BitmapCache instance looking after the cache
+		 */
+		p._drawFilters = function (target, filters, manager) {
+			var gl = this._webGLContext;
+			var renderTexture;
+			var lastTextureSlot = this._maxTextureSlots-1;
+			var wBackup = this._viewportWidth, hBackup = this._viewportHeight;
+	
+			var container = this._cacheContainer;
+			var filterCount = filters && filters.length;
+	
+			// we don't know which texture slot we're dealing with previously and we need one out of the way
+			// once we're using that slot activate it so when we make and bind our RenderTexture it's safe there
+			gl.activeTexture(gl.TEXTURE0 + lastTextureSlot);
+			renderTexture = this.getTargetRenderTexture(target, manager._drawWidth, manager._drawHeight);
+	
+			// draw item to render texture		I -> T
+			gl.bindFramebuffer(gl.FRAMEBUFFER, renderTexture._frameBuffer);
+			this.updateViewport(manager._drawWidth, manager._drawHeight);
+			gl.clear(gl.COLOR_BUFFER_BIT);
+			this._batchDraw(container, gl, true);
+	
+			// bind the result texture to slot 0 as all filters and cover draws assume original content is in slot 0
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D, renderTexture);
+			this.setTextureParams(gl);
+	
+			var flipY = false;
+	
+			// apply each filter in order, but remember to toggle used texture and render buffer
+			for (var i=0; i<filterCount; i++) {
+				var filter = filters[i];
+	
+				// swap to correct shader
+				this._activeShader = this.getFilterShader(filter);
+				if (!this._activeShader) { continue; }
+	
+				// now the old result is stored in slot 0, make a new render texture
+				gl.activeTexture(gl.TEXTURE0 + lastTextureSlot);
+				renderTexture = this.getTargetRenderTexture(target, manager._drawWidth, manager._drawHeight);
+				gl.bindFramebuffer(gl.FRAMEBUFFER, renderTexture._frameBuffer);
+	
+				// draw result to render texture	R -> T
+				gl.viewport(0, 0, manager._drawWidth, manager._drawHeight);
+				gl.clear(gl.COLOR_BUFFER_BIT);
+				this._drawCover(gl, flipY);
+	
+				// bind the result texture to slot 0 as all filters and cover draws assume original content is in slot 0
+				gl.activeTexture(gl.TEXTURE0);
+				gl.bindTexture(gl.TEXTURE_2D, renderTexture);
+				this.setTextureParams(gl);
+	
+				// use flipping to keep things upright, things already cancel out on a single filter
+				if (filterCount > 1) {
+					flipY = !flipY;
+				}
+			}
+	
+			// is this for another stage or mine
+			if (this.isCacheControlled) {
+				gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+				this.updateViewport(wBackup, hBackup);
+	
+				// draw result to canvas			R -> C
+				this._activeShader = this.getFilterShader(this);
+				gl.clear(gl.COLOR_BUFFER_BIT);
+				this._drawCover(gl, flipY);
+			} else {
+				//TODO: DHG: this is less than ideal. A flipped initial render for this circumstance might help. Adjust the perspective matrix?
+				if (flipY) {
+					gl.activeTexture(gl.TEXTURE0 + lastTextureSlot);
+					renderTexture = this.getTargetRenderTexture(target, manager._drawWidth, manager._drawHeight);
+					gl.bindFramebuffer(gl.FRAMEBUFFER, renderTexture._frameBuffer);
+	
+					this._activeShader = this.getFilterShader(this);
+					gl.viewport(0, 0, manager._drawWidth, manager._drawHeight);
+					gl.clear(gl.COLOR_BUFFER_BIT);
+					this._drawCover(gl, !flipY);
+				}
+				gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+				this.updateViewport(wBackup, hBackup);
+	
+				// make sure the last texture is the active thing to draw
+				target.cacheCanvas = renderTexture;
+			}
+		};
+	
+		/**
+		 * Add all the contents of a container to the pending buffers, called recursively on each container. This may
+		 * trigger a draw if a buffer runs out of space. This is the main workforce of the render loop.
+		 * @method _appendToBatchGroup
+		 * @param {Container} container The {{#crossLink "Container"}}{{/crossLink}} that contains everything to be drawn.
+		 * @param {WebGLRenderingContext} gl The canvas WebGL context object to draw into.
+		 * @param {Matrix2D} concatMtx The effective (concatenated) transformation matrix when beginning this container
+		 * @param {Number} concatAlpha The effective (concatenated) alpha when beginning this container
+		 * @param {Boolean} ignoreCache Don't use an element's cache during this draw
+		 * @protected
+		 */
+		p._appendToBatchGroup = function (container, gl, concatMtx, concatAlpha, ignoreCache) {
+			// sort out shared properties
+			if (!container._glMtx) { container._glMtx = new createjs.Matrix2D(); }
+			var cMtx = container._glMtx;
+			cMtx.copy(concatMtx);
+			if (container.transformMatrix) {
+				cMtx.appendMatrix(container.transformMatrix);
+			} else {
+				cMtx.appendTransform(
+					container.x, container.y,
+					container.scaleX, container.scaleY,
+					container.rotation, container.skewX, container.skewY,
+					container.regX, container.regY
+				);
+			}
+	
+			// sub components of figuring out the position an object holds
+			var subL, subT, subR, subB;
+	
+			// actually apply its data to the buffers
+			var l = container.children.length;
+			for (var i = 0; i < l; i++) {
+				var item = container.children[i];
+	
+				if (!(item.visible && concatAlpha)) { continue; }
+				if (!item.cacheCanvas || ignoreCache) {
+					if (item._updateState){
+						item._updateState();
+					}
+					if (item.children) {
+						this._appendToBatchGroup(item, gl, cMtx, item.alpha * concatAlpha);
+						continue;
+					}
+				}
+	
+				// check for overflowing batch, if yes then force a render
+				// TODO: DHG: consider making this polygon count dependant for things like vector draws
+				if (this.batchCardCount+1 > this._maxCardsPerBatch) {
+					this.batchReason = "vertexOverflow";
+					this._drawBuffers(gl);					// <------------------------------------------------------------
+					this.batchCardCount = 0;
+				}
+	
+				// keep track of concatenated position
+				if (!item._glMtx) { item._glMtx = new createjs.Matrix2D(); }
+				var iMtx = item._glMtx;
+				iMtx.copy(cMtx);
+				if (item.transformMatrix) {
+					iMtx.appendMatrix(item.transformMatrix);
+				} else {
+					iMtx.appendTransform(
+						item.x, item.y,
+						item.scaleX, item.scaleY,
+						item.rotation, item.skewX, item.skewY,
+						item.regX, item.regY
+					);
+				}
+	
+				var uvRect, texIndex, image, frame, texture, src;
+				var useCache = item.cacheCanvas && !ignoreCache;
+	
+				if (item._webGLRenderStyle === 2 || useCache) {			// BITMAP / Cached Canvas
+					image = (ignoreCache?false:item.cacheCanvas) || item.image;
+				} else if (item._webGLRenderStyle === 1) {											// SPRITE
+					frame = item.spriteSheet.getFrame(item.currentFrame);	//TODO: Faster way?
+					if (frame === null) { continue; }
+					image = frame.image;
+				} else {																			// MISC (DOM objects render themselves later)
+					continue;
+				}
+	
+				var uvs = this._uvs;
+				var vertices = this._vertices;
+				var texI = this._indices;
+				var alphas = this._alphas;
+	
+				// calculate texture
+				if (!image) { continue; }
+				if (image._storeID === undefined) {
+					// this texture is new to us so load it and add it to the batch
+					texture = this._loadTextureImage(gl, image);
+					this._insertTextureInBatch(gl, texture);
+				} else {
+					// fetch the texture (render textures know how to look themselves up to simplify this logic)
+					texture = this._textureDictionary[image._storeID];
+					if (!texture){
+						if (this.vocalDebug){ console.log("Texture should not be looked up while not being stored."); }
+						continue;
+					}
+	
+					// put it in the batch if needed
+					if (texture._batchID !== this._batchID) {
+						this._insertTextureInBatch(gl, texture);
+					}
+				}
+				texIndex = texture._activeIndex;
+	
+				if (item._webGLRenderStyle === 2 || useCache) {			// BITMAP / Cached Canvas
+					if (!useCache && item.sourceRect) {
+						// calculate uvs
+						if (!item._uvRect) { item._uvRect = {}; }
+						src = item.sourceRect;
+						uvRect = item._uvRect;
+						uvRect.t = (src.y)/image.height;
+						uvRect.l = (src.x)/image.width;
+						uvRect.b = (src.y + src.height)/image.height;
+						uvRect.r = (src.x + src.width)/image.width;
+	
+						// calculate vertices
+						subL = 0;							subT = 0;
+						subR = src.width+subL;				subB = src.height+subT;
+					} else {
+						// calculate uvs
+						uvRect = StageGL.UV_RECT;
+						// calculate vertices
+						if (useCache) {
+							src = item.bitmapCache;
+							subL = src.x+(src._filterOffX/src.scale);	subT = src.y+(src._filterOffY/src.scale);
+							subR = (src._drawWidth/src.scale)+subL;		subB = (src._drawHeight/src.scale)+subT;
+						} else {
+							subL = 0;						subT = 0;
+							subR = image.width+subL;		subB = image.height+subT;
+						}
+					}
+				} else if (item._webGLRenderStyle === 1) {											// SPRITE
+					var rect = frame.rect;
+	
+					// calculate uvs
+					uvRect = frame.uvRect;
+					if (!uvRect) {
+						uvRect = StageGL.buildUVRects(item.spriteSheet, item.currentFrame, false);
+					}
+	
+					// calculate vertices
+					subL = -frame.regX;								subT = -frame.regY;
+					subR = rect.width-frame.regX;					subB = rect.height-frame.regY;
+				}
+	
+				// These must be calculated here else a forced draw might happen after they're set
+				var offV1 = this.batchCardCount*StageGL.INDICIES_PER_CARD;		// offset for 1 component vectors
+				var offV2 = offV1*2;											// offset for 2 component vectors
+	
+				//DHG: See Matrix2D.transformPoint for why this math specifically
+				// apply vertices
+				vertices[offV2] =		subL *iMtx.a + subT *iMtx.c +iMtx.tx;		vertices[offV2+1] =		subL *iMtx.b + subT *iMtx.d +iMtx.ty;
+				vertices[offV2+2] =		subL *iMtx.a + subB *iMtx.c +iMtx.tx;		vertices[offV2+3] =		subL *iMtx.b + subB *iMtx.d +iMtx.ty;
+				vertices[offV2+4] =		subR *iMtx.a + subT *iMtx.c +iMtx.tx;		vertices[offV2+5] =		subR *iMtx.b + subT *iMtx.d +iMtx.ty;
+				vertices[offV2+6] =		vertices[offV2+2];							vertices[offV2+7] =		vertices[offV2+3];
+				vertices[offV2+8] =		vertices[offV2+4];							vertices[offV2+9] =		vertices[offV2+5];
+				vertices[offV2+10] =	subR *iMtx.a + subB *iMtx.c +iMtx.tx;		vertices[offV2+11] =	subR *iMtx.b + subB *iMtx.d +iMtx.ty;
+	
+				// apply uvs
+				uvs[offV2] =	uvRect.l;			uvs[offV2+1] =	uvRect.t;
+				uvs[offV2+2] =	uvRect.l;			uvs[offV2+3] =	uvRect.b;
+				uvs[offV2+4] =	uvRect.r;			uvs[offV2+5] =	uvRect.t;
+				uvs[offV2+6] =	uvRect.l;			uvs[offV2+7] =	uvRect.b;
+				uvs[offV2+8] =	uvRect.r;			uvs[offV2+9] =	uvRect.t;
+				uvs[offV2+10] =	uvRect.r;			uvs[offV2+11] =	uvRect.b;
+	
+				// apply texture
+				texI[offV1] = texI[offV1+1] = texI[offV1+2] = texI[offV1+3] = texI[offV1+4] = texI[offV1+5] = texIndex;
+	
+				// apply alpha
+				alphas[offV1] = alphas[offV1+1] = alphas[offV1+2] = alphas[offV1+3] = alphas[offV1+4] = alphas[offV1+5] = item.alpha * concatAlpha;
+	
+				this.batchCardCount++;
+			}
+		};
+	
+		/**
+		 * Draws all the currently defined cards in the buffer to the render surface.
+		 * @method _drawBuffers
+		 * @param {WebGLRenderingContext} gl The canvas WebGL context object to draw into.
+		 * @protected
+		 */
+		p._drawBuffers = function (gl) {
+			if (this.batchCardCount <= 0) { return; }	// prevents error logs on stages filled with un-renederable content.
+	
+			if (this.vocalDebug) {
+				console.log("Draw["+ this._drawID +":"+ this._batchID +"] : "+ this.batchReason);
+			}
+			var shaderProgram = this._activeShader;
+			var vertexPositionBuffer = this._vertexPositionBuffer;
+			var textureIndexBuffer = this._textureIndexBuffer;
+			var uvPositionBuffer = this._uvPositionBuffer;
+			var alphaBuffer = this._alphaBuffer;
+	
+			gl.useProgram(shaderProgram);
+	
+			gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+			gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, vertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+			gl.bufferSubData(gl.ARRAY_BUFFER, 0, this._vertices);
+	
+			gl.bindBuffer(gl.ARRAY_BUFFER, textureIndexBuffer);
+			gl.vertexAttribPointer(shaderProgram.textureIndexAttribute, textureIndexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+			gl.bufferSubData(gl.ARRAY_BUFFER, 0, this._indices);
+	
+			gl.bindBuffer(gl.ARRAY_BUFFER, uvPositionBuffer);
+			gl.vertexAttribPointer(shaderProgram.uvPositionAttribute, uvPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+			gl.bufferSubData(gl.ARRAY_BUFFER, 0, this._uvs);
+	
+			gl.bindBuffer(gl.ARRAY_BUFFER, alphaBuffer);
+			gl.vertexAttribPointer(shaderProgram.alphaAttribute, alphaBuffer.itemSize, gl.FLOAT, false, 0, 0);
+			gl.bufferSubData(gl.ARRAY_BUFFER, 0, this._alphas);
+	
+			gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, gl.FALSE, this._projectionMatrix);
+	
+			for (var i = 0; i < this._batchTextureCount; i++) {
+				var texture = this._batchTextures[i];
+				gl.activeTexture(gl.TEXTURE0 + i);
+				gl.bindTexture(gl.TEXTURE_2D, texture);
+				this.setTextureParams(gl, texture.isPOT);
+			}
+	
+			gl.drawArrays(gl.TRIANGLES, 0, this.batchCardCount*StageGL.INDICIES_PER_CARD);
+			this._batchID++;
+		};
+	
+		/**
+		 * Draws a card that covers the entire render surface. Mainly used for filters.
+		 * @method _drawBuffers
+		 * @param {WebGLRenderingContext} gl The canvas WebGL context object to draw into.
+		 * @param {Boolean} flipY Covers are used for things like RenderTextures and because of 3D vs Canvas space this can
+		 * end up meaning the `y` space sometimes requires flipping in the render.
+		 * @protected
+		 */
+		p._drawCover = function (gl, flipY) {
+			if (this._isDrawing > 0) {
+				this._drawBuffers(gl);
+			}
+	
+			if (this.vocalDebug) {
+				console.log("Draw["+ this._drawID +":"+ this._batchID +"] : "+ "Cover");
+			}
+			var shaderProgram = this._activeShader;
+			var vertexPositionBuffer = this._vertexPositionBuffer;
+			var uvPositionBuffer = this._uvPositionBuffer;
+	
+			gl.clear(gl.COLOR_BUFFER_BIT);
+			gl.useProgram(shaderProgram);
+	
+			gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
+			gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, vertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+			gl.bufferSubData(gl.ARRAY_BUFFER, 0, StageGL.COVER_VERT);
+			gl.bindBuffer(gl.ARRAY_BUFFER, uvPositionBuffer);
+			gl.vertexAttribPointer(shaderProgram.uvPositionAttribute, uvPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+			gl.bufferSubData(gl.ARRAY_BUFFER, 0, flipY?StageGL.COVER_UV_FLIP:StageGL.COVER_UV);
+	
+			gl.uniform1i(shaderProgram.samplerUniform, 0);
+			gl.uniform1f(shaderProgram.uprightUniform, flipY?0:1);
+	
+			gl.drawArrays(gl.TRIANGLES, 0, StageGL.INDICIES_PER_CARD);
+		};
+	
+		createjs.StageGL = createjs.promote(StageGL, "Stage");
+	}());
+	
+	//##############################################################################
 	// Bitmap.js
 	//##############################################################################
 	
@@ -12760,27 +17435,29 @@
 		 *
 		 * <h4>Example</h4>
 		 *
-		 *      var bitmap = new createjs.Bitmap("imagePath.jpg");
+		 * 	var bitmap = new createjs.Bitmap("imagePath.jpg");
 		 *
 		 * <strong>Notes:</strong>
 		 * <ol>
-		 *     <li>When a string path or image tag that is not yet loaded is used, the stage may need to be redrawn before it
-		 *      will be displayed.</li>
-		 *     <li>Bitmaps with an SVG source currently will not respect an alpha value other than 0 or 1. To get around this,
-		 *     the Bitmap can be cached.</li>
-		 *     <li>Bitmaps with an SVG source will taint the canvas with cross-origin data, which prevents interactivity. This
-		 *     happens in all browsers except recent Firefox builds.</li>
-		 *     <li>Images loaded cross-origin will throw cross-origin security errors when interacted with using a mouse, using
-		 *     methods such as `getObjectUnderPoint`, or using filters, or caching. You can get around this by setting
-		 *     `crossOrigin` flags on your images before passing them to EaselJS, eg: `img.crossOrigin="Anonymous";`</li>
+		 * 	<li>When using a video source that may loop or seek, use a {{#crossLink "VideoBuffer"}}{{/crossLink}} object to
+		 * 	 prevent blinking / flashing.
+		 * 	<li>When a string path or image tag that is not yet loaded is used, the stage may need to be redrawn before it
+		 * 	 will be displayed.</li>
+		 * 	<li>Bitmaps with an SVG source currently will not respect an alpha value other than 0 or 1. To get around this,
+		 * 	the Bitmap can be cached.</li>
+		 * 	<li>Bitmaps with an SVG source will taint the canvas with cross-origin data, which prevents interactivity. This
+		 * 	happens in all browsers except recent Firefox builds.</li>
+		 * 	<li>Images loaded cross-origin will throw cross-origin security errors when interacted with using a mouse, using
+		 * 	methods such as `getObjectUnderPoint`, or using filters, or caching. You can get around this by setting
+		 * 	`crossOrigin` flags on your images before passing them to EaselJS, eg: `img.crossOrigin="Anonymous";`</li>
 		 * </ol>
 		 *
 		 * @class Bitmap
 		 * @extends DisplayObject
 		 * @constructor
-		 * @param {HTMLImageElement | HTMLCanvasElement | HTMLVideoElement | String} imageOrUri The source object or URI to an image to
-		 * display. This can be either an Image, Canvas, or Video object, or a string URI to an image file to load and use.
-		 * If it is a URI, a new Image object will be constructed and assigned to the .image property.
+		 * @param {CanvasImageSource | String | Object} imageOrUri The source image to display. This can be a CanvasImageSource
+		 * (image, video, canvas), an object with a `getImage` method that returns a CanvasImageSource, or a string URL to an image.
+		 * If the latter, a new Image instance with the URL as its src will be used.
 		 **/
 		function Bitmap(imageOrUri) {
 			this.DisplayObject_constructor();
@@ -12788,10 +17465,11 @@
 			
 		// public properties:
 			/**
-			 * The image to render. This can be an Image, a Canvas, or a Video. Not all browsers (especially
-			 * mobile browsers) support drawing video to a canvas.
+			 * The source image to display. This can be a CanvasImageSource
+			 * (image, video, canvas), an object with a `getImage` method that returns a CanvasImageSource, or a string URL to an image.
+			 * If the latter, a new Image instance with the URL as its src will be used.
 			 * @property image
-			 * @type HTMLImageElement | HTMLCanvasElement | HTMLVideoElement
+			 * @type CanvasImageSource | Object
 			 **/
 			if (typeof imageOrUri == "string") {
 				this.image = document.createElement("img");
@@ -12802,12 +17480,22 @@
 		
 			/**
 			 * Specifies an area of the source image to draw. If omitted, the whole image will be drawn.
-			 * Note that video sources must have a width / height set to work correctly with `sourceRect`.
+			 * Notes:
+			 * <ul>
+			 *     <li>that video sources must have a width / height set to work correctly with `sourceRect`</li>
+			 *     <li>Cached objects will ignore the `sourceRect` property</li>
+			 * </ul>
 			 * @property sourceRect
 			 * @type Rectangle
 			 * @default null
 			 */
 			this.sourceRect = null;
+	
+		// private properties:
+			/**
+			 * Docced in superclass.
+			 */
+			this._webGLRenderStyle = createjs.DisplayObject._StageGL_BITMAP;
 		}
 		var p = createjs.extend(Bitmap, createjs.DisplayObject);
 		
@@ -12848,8 +17536,10 @@
 		 * @return {Boolean}
 		 **/
 		p.draw = function(ctx, ignoreCache) {
-			if (this.DisplayObject_draw(ctx, ignoreCache) || !this.image) { return true; }
+			if (this.DisplayObject_draw(ctx, ignoreCache)) { return true; }
 			var img = this.image, rect = this.sourceRect;
+			if (img.getImage) { img = img.getImage(); }
+			if (!img) { return true; }
 			if (rect) {
 				// some browsers choke on out of bound values, so we'll fix them:
 				var x1 = rect.x, y1 = rect.y, x2 = x1 + rect.width, y2 = y1 + rect.height, x = 0, y = 0, w = img.width, h = img.height;
@@ -12911,10 +17601,13 @@
 		/**
 		 * Returns a clone of the Bitmap instance.
 		 * @method clone
+		 * @param {Boolean} node Whether the underlying dom element should be cloned as well.
 		 * @return {Bitmap} a clone of the Bitmap instance.
 		 **/
-		p.clone = function() {
-			var o = new Bitmap(this.image);
+		p.clone = function(node) {
+			var image = this.image;
+			if(image && node){ image = image.cloneNode(); }
+			var o = new Bitmap(image);
 			if (this.sourceRect) { o.sourceRect = this.sourceRect.clone(); }
 			this._cloneProps(o);
 			return o;
@@ -13067,8 +17760,12 @@
 			 * @default false
 			 **/
 			this._skipAdvance = false;
-			
-			
+	
+			/**
+			 * Docced in superclass.
+			 */
+			this._webGLRenderStyle = createjs.DisplayObject._StageGL_SPRITE;
+	
 			if (frameOrAnimation != null) { this.gotoAndPlay(frameOrAnimation); }
 		}
 		var p = createjs.extend(Sprite, createjs.DisplayObject);
@@ -13079,7 +17776,7 @@
 		 * @method initialize
 		 * @deprecated in favour of `createjs.promote()`
 		 **/
-		p.initialize = Sprite; // TODO: Deprecated. This is for backwards support of FlashCC spritesheet export.
+		p.initialize = Sprite; // TODO: Deprecated. This is for backwards support of Flash/Animate spritesheet export.
 	
 	
 	// events:
@@ -13786,6 +18483,8 @@
 			ctx.font = this.font||"10px sans-serif";
 			ctx.textAlign = this.textAlign||"left";
 			ctx.textBaseline = this.textBaseline||"top";
+			ctx.lineJoin = "miter";
+			ctx.miterLimit = 2.5;
 			return ctx;
 		};
 	
@@ -13894,13 +18593,14 @@
 	
 	// constructor:
 		/**
-		 * Displays text using bitmap glyphs defined in a sprite sheet. Multi-line text is supported
-		 * using new line characters, but automatic wrapping is not supported. See the 
-		 * {{#crossLink "BitmapText/spriteSheet:property"}}{{/crossLink}}
+		 * Displays text using bitmap glyphs defined in a sprite sheet. Multi-line text is supported using new line characters,
+		 * but automatic wrapping is not supported. See the {{#crossLink "BitmapText/spriteSheet:property"}}{{/crossLink}}
 		 * property for more information on defining glyphs.
-		 * 
-		 * <strong>Important:</strong> BitmapText extends Container, but is not designed to be used as one.
+		 *
+		 * <strong>Important:</strong> While BitmapText extends Container, it is not designed to be used as one.
 		 * As such, methods like addChild and removeChild are disabled.
+		 *
+		 *
 		 * @class BitmapText
 		 * @extends DisplayObject
 		 * @param {String} [text=""] The text to display.
@@ -13981,21 +18681,23 @@
 			 * @protected
 			 **/
 			this._oldProps = {text:0,spriteSheet:0,lineHeight:0,letterSpacing:0,spaceWidth:0};
+	
+			/**
+			 * Used to track the object which this class attached listeners to, helps optimize listener attachment.
+			 * @property _oldStage
+			 * @type Stage
+			 * @protected
+			 */
+			this._oldStage = null;
+			/**
+			 * The event listener proxy triggered drawing draw for special circumstances.
+			 * @property _drawAction
+			 * @type function
+			 * @protected
+			 */
+			this._drawAction = null;
 		}
 		var p = createjs.extend(BitmapText, createjs.Container);
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
 	
 	// static properties:
 		/**
@@ -14024,7 +18726,7 @@
 		 **/
 		p.draw = function(ctx, ignoreCache) {
 			if (this.DisplayObject_draw(ctx, ignoreCache)) { return; }
-			this._updateText();
+			this._updateState();
 			this.Container_draw(ctx, ignoreCache);
 		};
 		
@@ -14076,6 +18778,13 @@
 	
 	
 	// private methods:
+		/**
+		 * Docced in superclass.
+		 **/
+		p._updateState = function() {
+			this._updateText();
+		};
+	
 	 	/**
 		 * @method _cloneProps
 		 * @param {BitmapText} o
@@ -14117,7 +18826,7 @@
 			var index = this._getFrameIndex(character, spriteSheet);
 			return index == null ? index : spriteSheet.getFrame(index);
 		};
-		
+	
 		/**
 		 * @method _getLineHeight
 		 * @param {SpriteSheet} ss
@@ -14128,6 +18837,7 @@
 			var frame = this._getFrame("1",ss) || this._getFrame("T",ss) || this._getFrame("L",ss) || ss.getFrame(0);
 			return frame ? frame.rect.height : 1;
 		};
+	
 		/**
 		 * @method _getSpaceWidth
 		 * @param {SpriteSheet} ss
@@ -14138,9 +18848,9 @@
 			var frame = this._getFrame("1",ss) || this._getFrame("l",ss) || this._getFrame("e",ss) || this._getFrame("a",ss) || ss.getFrame(0);
 			return frame ? frame.rect.width : 1;
 		};
-		
+	
 		/**
-		 * @method _drawText
+		 * @method _updateText
 		 * @protected
 		 **/
 		p._updateText = function() {
@@ -14215,9 +18925,8 @@
 	// constructor:
 		/**
 		 * The MovieClip class associates a TweenJS Timeline with an EaselJS {{#crossLink "Container"}}{{/crossLink}}. It allows
-		 * you to create objects which encapsulate timeline animations, state changes, and synched actions. Due to the
-		 * complexities inherent in correctly setting up a MovieClip, it is largely intended for tool output and is not included
-		 * in the main EaselJS library.
+		 * you to create objects which encapsulate timeline animations, state changes, and synched actions. The MovieClip
+		 * class has been included in the EaselJS minified file since 0.7.0.
 		 *
 		 * Currently MovieClip only works properly if it is tick based (as opposed to time based) though some concessions have
 		 * been made to support time-based timelines in the future.
@@ -14229,7 +18938,7 @@
 		 *      var stage = new createjs.Stage("canvas");
 		 *      createjs.Ticker.addEventListener("tick", stage);
 		 *
-		 *      var mc = new createjs.MovieClip(null, 0, true, {start:20});
+		 *      var mc = new createjs.MovieClip({loop:-1, labels:{myLabel:20}});
 		 *      stage.addChild(mc);
 		 *
 		 *      var child1 = new createjs.Shape(
@@ -14254,21 +18963,41 @@
 		 *
 		 * @class MovieClip
 		 * @main MovieClip
+		 * @param {Object} [props] The configuration properties to apply to this instance (ex. `{mode:MovieClip.SYNCHED}`).
+		 * Supported props for the MovieClip are listed below. These props are set on the corresponding instance properties except where
+		 * specified.<UL>
+		 *    <LI> `mode`</LI>
+		 *    <LI> `startPosition`</LI>
+		 *    <LI> `frameBounds`</LI>
+		 * </UL>
+		 * 
+		 * This object will also be passed into the Timeline instance associated with this MovieClip. See the documentation
+		 * for Timeline for a list of supported props (ex. `paused`, `labels`, `loop`, `reversed`, etc.)
 		 * @extends Container
 		 * @constructor
-		 * @param {String} [mode=independent] Initial value for the mode property. One of {{#crossLink "MovieClip/INDEPENDENT:property"}}{{/crossLink}},
-		 * {{#crossLink "MovieClip/SINGLE_FRAME:property"}}{{/crossLink}}, or {{#crossLink "MovieClip/SYNCHED:property"}}{{/crossLink}}.
-		 * The default is {{#crossLink "MovieClip/INDEPENDENT:property"}}{{/crossLink}}.
-		 * @param {Number} [startPosition=0] Initial value for the {{#crossLink "MovieClip/startPosition:property"}}{{/crossLink}}
-		 * property.
-		 * @param {Boolean} [loop=true] Initial value for the {{#crossLink "MovieClip/loop:property"}}{{/crossLink}}
-		 * property. The default is `true`.
-		 * @param {Object} [labels=null] A hash of labels to pass to the {{#crossLink "MovieClip/timeline:property"}}{{/crossLink}}
-		 * instance associated with this MovieClip. Labels only need to be passed if they need to be used.
 		 **/
-		function MovieClip(mode, startPosition, loop, labels) {
+		function MovieClip(props) {
 			this.Container_constructor();
 			!MovieClip.inited&&MovieClip.init(); // static init
+			
+			var mode, startPosition, loop, labels;
+			
+			// handle old params (mode, startPosition, loop, labels):
+			// TODO: deprecated param handling:
+			if (props instanceof String || arguments.length > 1) {
+				mode = props;
+				startPosition = arguments[1];
+				loop = arguments[2];
+				labels = arguments[3];
+				if (loop == null) { loop = -1; }
+				props = null;
+			} else if (props) {
+				mode = props.mode;
+				startPosition = props.startPosition;
+				loop = props.loop;
+				labels = props.labels;
+			}
+			if (!props) { props = {labels:labels}; }
 			
 			
 		// public properties:
@@ -14287,15 +19016,16 @@
 			 * @type Number
 			 * @default 0
 			 */
-			this.startPosition = startPosition || 0;
+			this.startPosition = startPosition||0;
 		
 			/**
-			 * Indicates whether this MovieClip should loop when it reaches the end of its timeline.
+			 * Specifies how many times this MovieClip should loop. A value of -1 indicates it should loop indefinitely. A value of
+			 * 1 would cause it to loop once (ie. play a total of twice).
 			 * @property loop
-			 * @type Boolean
-			 * @default true
+			 * @type Number
+			 * @default -1
 			 */
-			this.loop = loop;
+			this.loop = loop === true ? -1 : (loop || 0);
 		
 			/**
 			 * The current frame of the movieclip.
@@ -14307,38 +19037,12 @@
 			this.currentFrame = 0;
 		
 			/**
-			 * The TweenJS Timeline that is associated with this MovieClip. This is created automatically when the MovieClip
-			 * instance is initialized. Animations are created by adding <a href="http://tweenjs.com">TweenJS</a> Tween
-			 * instances to the timeline.
-			 *
-			 * <h4>Example</h4>
-			 *
-			 *      var tween = createjs.Tween.get(target).to({x:0}).to({x:100}, 30);
-			 *      var mc = new createjs.MovieClip();
-			 *      mc.timeline.addTween(tween);
-			 *
-			 * Elements can be added and removed from the timeline by toggling an "_off" property
-			 * using the <code>tweenInstance.to()</code> method. Note that using <code>Tween.set</code> is not recommended to
-			 * create MovieClip animations. The following example will toggle the target off on frame 0, and then back on for
-			 * frame 1. You can use the "visible" property to achieve the same effect.
-			 *
-			 *      var tween = createjs.Tween.get(target).to({_off:false})
-			 *          .wait(1).to({_off:true})
-			 *          .wait(1).to({_off:false});
-			 *
-			 * @property timeline
-			 * @type Timeline
-			 * @default null
-			 */
-			this.timeline = new createjs.Timeline(null, labels, {paused:true, position:startPosition, useTicks:true});
-		
-			/**
 			 * If true, the MovieClip's position will not advance when ticked.
 			 * @property paused
 			 * @type Boolean
 			 * @default false
 			 */
-			this.paused = false;
+			this.paused = props.paused||false;
 		
 			/**
 			 * If true, actions in this MovieClip's tweens will be run when the playhead advances.
@@ -14368,7 +19072,7 @@
 			 * @type Array
 			 * @default null
 			 */
-			this.frameBounds = this.frameBounds||null; // TODO: Deprecated. This is for backwards support of FlashCC
+			this.frameBounds = this.frameBounds||props.frameBounds; // frameBounds are set on the prototype in Animate.
 			
 			/**
 			 * By default MovieClip instances advance one frame per tick. Specifying a framerate for the MovieClip
@@ -14387,6 +19091,35 @@
 			 **/
 			this.framerate = null;
 			
+			// set up the needed props for Timeline:
+			props.useTicks = props.paused = true;
+			
+			/**
+			 * The TweenJS Timeline that is associated with this MovieClip. This is created automatically when the MovieClip
+			 * instance is initialized. Animations are created by adding <a href="http://tweenjs.com">TweenJS</a> Tween
+			 * instances to the timeline.
+			 *
+			 * <h4>Example</h4>
+			 *
+			 *      var tween = createjs.Tween.get(target).to({x:0}).to({x:100}, 30);
+			 *      var mc = new createjs.MovieClip();
+			 *      mc.timeline.addTween(tween);
+			 *
+			 * Elements can be added and removed from the timeline by toggling an "_off" property
+			 * using the <code>tweenInstance.to()</code> method. Note that using <code>Tween.set</code> is not recommended to
+			 * create MovieClip animations. The following example will toggle the target off on frame 0, and then back on for
+			 * frame 1. You can use the "visible" property to achieve the same effect.
+			 *
+			 *      var tween = createjs.Tween.get(target).to({_off:false})
+			 *          .wait(1).to({_off:true})
+			 *          .wait(1).to({_off:false});
+			 *
+			 * @property timeline
+			 * @type Timeline
+			 * @default null
+			 */
+			this.timeline = new createjs.Timeline(props);
+			
 			
 		// private properties:
 			/**
@@ -14398,20 +19131,20 @@
 			this._synchOffset = 0;
 		
 			/**
-			 * @property _prevPos
+			 * @property _rawPosition
 			 * @type Number
 			 * @default -1
 			 * @private
 			 */
-			this._prevPos = -1; // TODO: evaluate using a ._reset Boolean prop instead of -1.
-		
+			this._rawPosition = -1; // TODO: evaluate using a ._reset Boolean prop instead of -1.
+			
 			/**
-			 * @property _prevPosition
-			 * @type Number
-			 * @default 0
+			 * @property _bound_resolveState
+			 * @type Function
 			 * @private
 			 */
-			this._prevPosition = 0;
+			this._bound_resolveState = this._resolveState.bind(this);
+		
 		
 			/**
 			 * The time remaining from the previous tick, only applicable when .framerate is set.
@@ -14482,54 +19215,56 @@
 	// getter / setters:
 		/**
 		 * Use the {{#crossLink "MovieClip/labels:property"}}{{/crossLink}} property instead.
-		 * @method getLabels
+		 * @method _getLabels
+		 * @protected
 		 * @return {Array}
-		 * @deprecated
 		 **/
-		p.getLabels = function() {
+		p._getLabels = function() {
 			return this.timeline.getLabels();
 		};
-		
+		// MovieClip.getLabels is @deprecated. Remove for 1.1+
+		p.getLabels = createjs.deprecate(p._getLabels, "MovieClip.getLabels");
+	
 		/**
 		 * Use the {{#crossLink "MovieClip/currentLabel:property"}}{{/crossLink}} property instead.
-		 * @method getCurrentLabel
+		 * @method _getCurrentLabel
+		 * @protected
 		 * @return {String}
-		 * @deprecated
 		 **/
-		p.getCurrentLabel = function() {
-			this._updateTimeline();
-			return this.timeline.getCurrentLabel();
+		p._getCurrentLabel = function() {
+			return this.timeline.currentLabel;
 		};
-		
+		// MovieClip.getCurrentLabel is @deprecated. Remove for 1.1+
+		p.getCurrentLabel = createjs.deprecate(p._getCurrentLabel, "MovieClip.getCurrentLabel");
+	
 		/**
 		 * Use the {{#crossLink "MovieClip/duration:property"}}{{/crossLink}} property instead.
-		 * @method getDuration
-		 * @return {Number}
+		 * @method _getDuration
 		 * @protected
+		 * @return {Number}
 		 **/
-		p.getDuration = function() {
+		p._getDuration = function() {
 			return this.timeline.duration;
 		};
+		// MovieClip.getDuration is @deprecated. Remove for 1.1+
+		p.getDuration = createjs.deprecate(p._getDuration, "MovieClip.getDuration");
 	
 		/**
 		 * Returns an array of objects with label and position (aka frame) properties, sorted by position.
-		 * Shortcut to TweenJS: Timeline.getLabels();
 		 * @property labels
 		 * @type {Array}
 		 * @readonly
 		 **/
 		
 		/**
-		 * Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()
-		 * for more information.
+		 * Returns the name of the label on or immediately before the current frame.
 		 * @property currentLabel
 		 * @type {String}
 		 * @readonly
 		 **/
 		
 		/**
-		 * Returns the duration of this MovieClip in seconds or ticks. Identical to {{#crossLink "MovieClip/duration:property"}}{{/crossLink}}
-		 * and provided for Flash API compatibility.
+		 * Returns the duration of this MovieClip in seconds or ticks.
 		 * @property totalFrames
 		 * @type {Number}
 		 * @readonly
@@ -14543,10 +19278,11 @@
 		 **/
 		try {
 			Object.defineProperties(p, {
-				labels: { get: p.getLabels },
-				currentLabel: { get: p.getCurrentLabel },
-				totalFrames: { get: p.getDuration },
-				duration: { get: p.getDuration }
+				labels: { get: p._getLabels },
+				currentLabel: { get: p._getCurrentLabel },
+				totalFrames: { get: p._getDuration },
+				duration: { get: p._getDuration }
+				// TODO: can we just proxy .currentFrame to tl.position as well? Ditto for .loop (or just remove entirely).
 			});
 		} catch (e) {}
 	
@@ -14558,7 +19294,7 @@
 		 * @method initialize
 		 * @deprecated in favour of `createjs.promote()`
 		 **/
-		p.initialize = MovieClip; // TODO: Deprecated. This is for backwards support of FlashCC
+		p.initialize = MovieClip; // TODO: Deprecated. This is for backwards support of Adobe Flash/Animate
 	
 		/**
 		 * Returns true or false indicating whether the display object would be visible if drawn to a canvas.
@@ -14585,11 +19321,11 @@
 		p.draw = function(ctx, ignoreCache) {
 			// draw to cache first:
 			if (this.DisplayObject_draw(ctx, ignoreCache)) { return true; }
-			this._updateTimeline();
+			this._updateState();
 			this.Container_draw(ctx, ignoreCache);
 			return true;
 		};
-		
+	
 		/**
 		 * Sets paused to false.
 		 * @method play
@@ -14632,24 +19368,22 @@
 		 * @method advance
 		*/
 		p.advance = function(time) {
-			// TODO: should we worry at all about clips who change their own modes via frame scripts?
 			var independent = MovieClip.INDEPENDENT;
-			if (this.mode != independent) { return; }
+			if (this.mode !== independent) { return; } // update happens in draw for synched clips
 			
+			// if this MC doesn't have a framerate, hunt ancestors for one:
 			var o=this, fps = o.framerate;
-			while ((o = o.parent) && fps == null) {
-				if (o.mode == independent) { fps = o._framerate; }
-			}
+			while ((o = o.parent) && fps === null) { if (o.mode === independent) { fps = o._framerate; } }
 			this._framerate = fps;
 			
-			var t = (fps != null && fps != -1 && time != null) ? time/(1000/fps) + this._t : 1;
-			var frames = t|0;
-			this._t = t-frames; // leftover time
+			if (this.paused) { return; }
 			
-			while (!this.paused && frames--) {
-				this._prevPosition = (this._prevPos < 0) ? 0 : this._prevPosition+1;
-				this._updateTimeline();
-			}
+			// calculate how many frames to advance:
+			var t = (fps !== null && fps !== -1 && time !== null) ? time/(1000/fps) + this._t : 1;
+			var frames = t|0;
+			this._t = t-frames; // leftover time, save to add to next advance.
+			
+			while (frames--) { this._updateTimeline(this._rawPosition+1, false); }
 		};
 		
 		/**
@@ -14658,7 +19392,7 @@
 		 **/
 		p.clone = function() {
 			// TODO: add support for this? Need to clone the Timeline & retarget tweens - pretty complex.
-			throw("MovieClip cannot be cloned.")
+			throw("MovieClip cannot be cloned.");
 		};
 		
 		/**
@@ -14672,6 +19406,13 @@
 	
 	
 	// private methods:
+		/**
+		 * Docced in superclass.
+		 **/
+		p._updateState = function() {
+			if (this._rawPosition === -1 || this.mode !== MovieClip.INDEPENDENT) { this._updateTimeline(-1); }
+		};
+	
 		/**
 		 * @method _tick
 		 * @param {Object} evtObj An event object that will be dispatched to all tick listeners. This object is reused between dispatchers to reduce construction & GC costs.
@@ -14691,11 +19432,8 @@
 		p._goto = function(positionOrLabel) {
 			var pos = this.timeline.resolve(positionOrLabel);
 			if (pos == null) { return; }
-			// prevent _updateTimeline from overwriting the new position because of a reset:
-			if (this._prevPos == -1) { this._prevPos = NaN; }
-			this._prevPosition = pos;
 			this._t = 0;
-			this._updateTimeline();
+			this._updateTimeline(pos, true);
 		};
 		
 		/**
@@ -14703,40 +19441,56 @@
 		 * @private
 		 **/
 		p._reset = function() {
-			this._prevPos = -1;
+			this._rawPosition = -1;
 			this._t = this.currentFrame = 0;
 			this.paused = false;
 		};
 		
 		/**
 		 * @method _updateTimeline
+		 * @param {Boolean} jump Indicates whether this update is due to jumping (via gotoAndXX) to a new position.
 		 * @protected
 		 **/
-		p._updateTimeline = function() {
-			var tl = this.timeline;
-			var synched = this.mode != MovieClip.INDEPENDENT;
-			tl.loop = (this.loop==null) ? true : this.loop;
-			
-			var pos = synched ? this.startPosition + (this.mode==MovieClip.SINGLE_FRAME?0:this._synchOffset) : (this._prevPos < 0 ? 0 : this._prevPosition);
-			var mode = synched || !this.actionsEnabled ? createjs.Tween.NONE : null;
-			
-			// pre-assign currentFrame so it is available to frame scripts:
-			this.currentFrame = tl._calcPosition(pos);
+		p._updateTimeline = function(rawPosition, jump) {
+			var synced = this.mode !== MovieClip.INDEPENDENT, tl = this.timeline;
+			if (synced) { rawPosition = this.startPosition + (this.mode===MovieClip.SINGLE_FRAME?0:this._synchOffset); }
+			if (rawPosition < 0) { rawPosition = 0; }
+			if (this._rawPosition === rawPosition && !synced) { return; }
+			this._rawPosition = rawPosition;
 			
 			// update timeline position, ignoring actions if this is a graphic.
-			tl.setPosition(pos, mode);
-	
-			this._prevPosition = tl._prevPosition;
-			if (this._prevPos == tl._prevPos) { return; }
-			this.currentFrame = this._prevPos = tl._prevPos;
-	
+			tl.loop = this.loop; // TODO: should we maintain this on MovieClip, or just have it on timeline?
+			tl.setPosition(rawPosition, synced || !this.actionsEnabled, jump, this._bound_resolveState);
+		};
+		
+		/**
+		 * Renders position 0 without running actions or updating _rawPosition.
+		 * Primarily used by Animate CC to build out the first frame in the constructor of MC symbols.
+		 * NOTE: not tested when run after the MC advances past the first frame.
+		 * @method _renderFirstFrame
+		 * @protected
+		 **/
+		p._renderFirstFrame = function() {
+			var tl = this.timeline, pos = tl.rawPosition;
+			tl.setPosition(0, true, true, this._bound_resolveState);
+			tl.rawPosition = pos;
+		};
+		
+		/**
+		 * Runs via a callback after timeline property updates and before actions.
+		 * @method _resolveState
+		 * @protected
+		 **/
+		p._resolveState = function() {
+			var tl = this.timeline;
+			this.currentFrame = tl.position;
+			
 			for (var n in this._managed) { this._managed[n] = 1; }
 	
-			var tweens = tl._tweens;
+			var tweens = tl.tweens;
 			for (var i=0, l=tweens.length; i<l; i++) {
-				var tween = tweens[i];
-				var target = tween._target;
-				if (target == this || tween.passive) { continue; } // TODO: this assumes actions tween has this as the target. Valid?
+				var tween = tweens[i],  target = tween.target;
+				if (target === this || tween.passive) { continue; } // TODO: this assumes the actions tween from Animate has `this` as the target. There's likely a better approach.
 				var offset = tween._stepPosition;
 	
 				if (target instanceof createjs.DisplayObject) {
@@ -14751,7 +19505,7 @@
 			var kids = this.children;
 			for (i=kids.length-1; i>=0; i--) {
 				var id = kids[i].id;
-				if (this._managed[id] == 1) {
+				if (this._managed[id] === 1) {
 					this.removeChildAt(i);
 					delete(this._managed[id]);
 				}
@@ -14788,8 +19542,9 @@
 	
 			if (child instanceof MovieClip) {
 				child._synchOffset = offset;
-				// TODO: this does not precisely match Flash. Flash loses track of the clip if it is renamed or removed from the timeline, which causes it to reset.
-				if (child.mode == MovieClip.INDEPENDENT && child.autoReset && !this._managed[child.id]) { child._reset(); }
+				// TODO: this does not precisely match Adobe Flash/Animate, which loses track of the clip if it is renamed or removed from the timeline, which causes it to reset.
+				// TODO: should also reset when MovieClip loops, though that will be a bit tricky to detect.
+				if (child.mode === MovieClip.INDEPENDENT && child.autoReset && (!this._managed[child.id])) { child._reset(); }
 			}
 			this._managed[child.id] = 2;
 		};
@@ -14804,7 +19559,6 @@
 		p._getBounds = function(matrix, ignoreTransform) {
 			var bounds = this.DisplayObject_getBounds();
 			if (!bounds) {
-				this._updateTimeline();
 				if (this.frameBounds) { bounds = this._rectangle.copy(this.frameBounds[this.currentFrame]); }
 			}
 			if (bounds) { return this._transformBounds(bounds, matrix, ignoreTransform); }
@@ -14829,53 +19583,61 @@
 		}
 		
 		/**
-		 * @method priority
-		 * @private
+		 * @property priority
+		 * @type {Number}
+		 * @static
+		 * @readonly
 		 **/
 		MovieClipPlugin.priority = 100; // very high priority, should run first
+		
+		/**
+		 * @property ID
+		 * @type {String}
+		 * @static
+		 * @readonly
+		 **/
+		MovieClipPlugin.ID = "MovieClip";
 	
 		/**
 		 * @method install
-		 * @private
+		 * @static
 		 **/
 		MovieClipPlugin.install = function() {
-			createjs.Tween.installPlugin(MovieClipPlugin, ["startPosition"]);
+			createjs.Tween._installPlugin(MovieClipPlugin);
 		};
 		
 		/**
 		 * @method init
 		 * @param {Tween} tween
 		 * @param {String} prop
-		 * @param {String|Number|Boolean} value
-		 * @private
+		 * @param {*} value
+		 * @static
 		 **/
 		MovieClipPlugin.init = function(tween, prop, value) {
-			return value;
+			if (prop === "startPosition" && tween.target instanceof MovieClip) { tween._addPlugin(MovieClipPlugin); }
 		};
 		
 		/**
 		 * @method step
-		 * @private
+		 * @param {Tween} tween
+		 * @param {TweenStep} step
+		 * @param {Object} props
+		 * @static
 		 **/
-		MovieClipPlugin.step = function() {
-			// unused.
-		};
+		MovieClipPlugin.step = function(tween, step, props) {};
 	
 		/**
-		 * @method tween
+		 * @method change
 		 * @param {Tween} tween
-		 * @param {String} prop
-		 * @param {String | Number | Boolean} value
-		 * @param {Array} startValues
-		 * @param {Array} endValues
+		 * @param {TweenStep} step
+		 * @param {*} value
 		 * @param {Number} ratio
-		 * @param {Object} wait
 		 * @param {Object} end
 		 * @return {*}
+		 * @static
 		 */
-		MovieClipPlugin.tween = function(tween, prop, value, startValues, endValues, ratio, wait, end) {
-			if (!(tween.target instanceof MovieClip)) { return value; }
-			return (ratio == 1 ? endValues[prop] : startValues[prop]);
+		MovieClipPlugin.change = function(tween, step, prop, value, ratio, end) {
+			if (prop === "startPosition") { return (ratio === 1 ? step.props[prop] : step.prev.props[prop]); }
 		};
 	
 	}());
@@ -14927,36 +19689,6 @@
 	
 	// public static methods:
 		/**
-		 * <b>This is an experimental method, and may be buggy. Please report issues.</b><br/><br/>
-		 * Extends the existing sprite sheet by flipping the original frames horizontally, vertically, or both,
-		 * and adding appropriate animation & frame data. The flipped animations will have a suffix added to their names
-		 * (_h, _v, _hv as appropriate). Make sure the sprite sheet images are fully loaded before using this method.
-		 * <br/><br/>
-		 * For example:<br/>
-		 * SpriteSheetUtils.addFlippedFrames(mySpriteSheet, true, true);
-		 * The above would add frames that are flipped horizontally AND frames that are flipped vertically.
-		 * <br/><br/>
-		 * Note that you can also flip any display object by setting its scaleX or scaleY to a negative value. On some
-		 * browsers (especially those without hardware accelerated canvas) this can result in slightly degraded performance,
-		 * which is why addFlippedFrames is available.
-		 * @method addFlippedFrames
-		 * @static
-		 * @param {SpriteSheet} spriteSheet
-		 * @param {Boolean} horizontal If true, horizontally flipped frames will be added.
-		 * @param {Boolean} vertical If true, vertically flipped frames will be added.
-		 * @param {Boolean} both If true, frames that are flipped both horizontally and vertically will be added.
-		 * @deprecated Modern browsers perform better when flipping via a transform (ex. scaleX=-1) rendering this obsolete.
-		 **/
-		SpriteSheetUtils.addFlippedFrames = function(spriteSheet, horizontal, vertical, both) {
-			if (!horizontal && !vertical && !both) { return; }
-	
-			var count = 0;
-			if (horizontal) { SpriteSheetUtils._flip(spriteSheet,++count,true,false); }
-			if (vertical) { SpriteSheetUtils._flip(spriteSheet,++count,false,true); }
-			if (both) { SpriteSheetUtils._flip(spriteSheet,++count,true,true); }
-		};
-	
-		/**
 		 * Returns a single frame of the specified sprite sheet as a new PNG image. An example of when this may be useful is
 		 * to use a spritesheet frame as the source for a bitmap fill.
 		 *
@@ -14989,33 +19721,13 @@
 			return img;
 		};
 	
-		/**
-		 * Merges the rgb channels of one image with the alpha channel of another. This can be used to combine a compressed
-		 * JPEG image containing color data with a PNG32 monochromatic image containing alpha data. With certain types of
-		 * images (those with detail that lend itself to JPEG compression) this can provide significant file size savings
-		 * versus a single RGBA PNG32. This method is very fast (generally on the order of 1-2 ms to run).
-		 * @method mergeAlpha
-		 * @static
-		 * @param {HTMLImageElement} rbgImage The image (or canvas) containing the RGB channels to use.
-		 * @param {HTMLImageElement} alphaImage The image (or canvas) containing the alpha channel to use.
-		 * @param {HTMLCanvasElement} canvas Optional. If specified, this canvas will be used and returned. If not, a new canvas will be created.
-		 * @return {HTMLCanvasElement} A canvas with the combined image data. This can be used as a source for Bitmap or SpriteSheet.
-		 * @deprecated Tools such as ImageAlpha generally provide better results. This will be moved to sandbox in the future.
-		*/
-		SpriteSheetUtils.mergeAlpha = function(rgbImage, alphaImage, canvas) {
-			if (!canvas) { canvas = createjs.createCanvas?createjs.createCanvas():document.createElement("canvas"); }
-			canvas.width = Math.max(alphaImage.width, rgbImage.width);
-			canvas.height = Math.max(alphaImage.height, rgbImage.height);
-			var ctx = canvas.getContext("2d");
-			ctx.save();
-			ctx.drawImage(rgbImage,0,0);
-			ctx.globalCompositeOperation = "destination-in";
-			ctx.drawImage(alphaImage,0,0);
-			ctx.restore();
-			return canvas;
-		};
+		// SpriteSheetUtils.addFlippedFrames is @deprecated. Remove for 1.1+
+		SpriteSheetUtils.addFlippedFrames = createjs.deprecate(null, "SpriteSheetUtils.addFlippedFrames");
 	
+		// SpriteSheetUtils.addFlippedFrames is @deprecated. Remove for 1.1+
+		SpriteSheetUtils.mergeAlpha = createjs.deprecate(null, "SpriteSheetUtils.mergeAlpha");
 	
+		
 	// private static methods:
 		SpriteSheetUtils._flip = function(spriteSheet, count, h, v) {
 			var imgs = spriteSheet._images;
@@ -15034,8 +19746,8 @@
 				var img = document.createElement("img");
 				img.src = canvas.toDataURL("image/png");
 				// work around a strange bug in Safari:
-				img.width = src.width;
-				img.height = src.height;
+				img.width = (src.width||src.naturalWidth);
+				img.height = (src.height||src.naturalHeight);
 				imgs.push(img);
 			}
 	
@@ -15048,11 +19760,11 @@
 	
 				var frame = {image:img,rect:rect,regX:src.regX,regY:src.regY};
 				if (h) {
-					rect.x = img.width-rect.x-rect.width; // update rect
+					rect.x = (img.width||img.naturalWidth)-rect.x-rect.width; // update rect
 					frame.regX = rect.width-src.regX; // update registration point
 				}
 				if (v) {
-					rect.y = img.height-rect.y-rect.height;  // update rect
+					rect.y = (img.height||img.naturalHeight)-rect.y-rect.height;  // update rect
 					frame.regY = rect.height-src.regY; // update registration point
 				}
 				frames.push(frame);
@@ -15240,20 +19952,6 @@
 			this._scale = 1;
 		}
 		var p = createjs.extend(SpriteSheetBuilder, createjs.EventDispatcher);
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
 	
 	// constants:
 		SpriteSheetBuilder.ERR_DIMENSIONS = "frame dimensions exceed max spritesheet dimensions";
@@ -15644,6 +20342,10 @@
 		 *          console.log("clicked");
 		 *      }
 		 *
+		 * <strong>Important:</strong> This class needs to be notified it is about to be drawn, this will happen automatically
+		 * if you call stage.update, calling stage.draw or disabling tickEnabled will miss important steps and it will render
+		 * stale information.
+		 *
 		 * @class DOMElement
 		 * @extends DisplayObject
 		 * @constructor
@@ -15676,6 +20378,21 @@
 			 * @protected
 			 */
 			this._oldProps = null;
+	
+			/**
+			 * Used to track the object which this class attached listeners to, helps optimize listener attachment.
+			 * @property _oldStage
+			 * @type Stage
+			 * @protected
+			 */
+			this._oldStage = null;
+			/**
+			 * The event listener proxy triggered drawing draw for special circumstances.
+			 * @property _drawAction
+			 * @type function
+			 * @protected
+			 */
+			this._drawAction = null;
 		}
 		var p = createjs.extend(DOMElement, createjs.DisplayObject);
 	
@@ -15809,8 +20526,12 @@
 		 * @protected
 		 */
 		p._tick = function(evtObj) {
-			var stage = this.getStage();
-			stage&&stage.on("drawend", this._handleDrawEnd, this, true);
+			var stage = this.stage;
+			if(stage && stage !== this._oldStage) {
+				this._drawAction && stage.off("drawend", this._drawAction);
+				this._drawAction = stage.on("drawend", this._handleDrawEnd, this);
+				this._oldStage = stage;
+			}
 			this.DisplayObject__tick(evtObj);
 		};
 		
@@ -15837,7 +20558,7 @@
 				var str = "matrix(" + (mtx.a*n|0)/n +","+ (mtx.b*n|0)/n +","+ (mtx.c*n|0)/n +","+ (mtx.d*n|0)/n +","+ (mtx.tx+0.5|0);
 				style.transform = style.WebkitTransform = style.OTransform = style.msTransform = str +","+ (mtx.ty+0.5|0) +")";
 				style.MozTransform = str +"px,"+ (mtx.ty+0.5|0) +"px)";
-				if (!oldProps) { oldProps = this._oldProps = new createjs.DisplayProps(true, NaN); }
+				if (!oldProps) { oldProps = this._oldProps = new createjs.DisplayProps(true, null); }
 				oldProps.matrix.copy(mtx);
 			}
 			
@@ -15891,22 +20612,36 @@
 		 * @class Filter
 		 * @constructor
 		 **/
-		function Filter() {}
+		function Filter() {
+			/**
+			 * A flag stating that this filter uses a context draw mode and cannot be batched into imageData processing.
+			 * @property usesContext
+			 * @type {boolean}
+			 * @default false
+			 */
+			this.usesContext = false;
+	
+			/**
+			 * Pre-processed template shader code. It will be parsed before being fed in into the shader compiler.
+			 * This should be based upon StageGL.SHADER_VERTEX_BODY_REGULAR
+			 * @property VTX_SHADER
+			 * @virtual
+			 * @type {String}
+			 * @readonly
+			 */
+			this.VTX_SHADER_BODY = null;
+	
+			/**
+			 * Pre-processed template shader code. It will be parsed before being fed in into the shader compiler.
+			 * This should be based upon StageGL.SHADER_FRAGMENT_BODY_REGULAR
+			 * @property FRAG_SHADER
+			 * @virtual
+			 * @type {String}
+			 * @readonly
+			 */
+			this.FRAG_SHADER_BODY = null;
+		}
 		var p = Filter.prototype;
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
 	
 	// public methods:
 		/**
@@ -15918,6 +20653,16 @@
 		p.getBounds = function(rect) {
 			return rect;
 		};
+	
+		/**
+		 * Assign any unique uniforms or other setup functionality here.
+		 * @method shaderParamSetup
+		 * @virtual
+		 * @param {WebGLContext} gl The context associated with the stage performing the render.
+		 * @param {StageGL} stage The stage instance that will be rendering.
+		 * @param {ShaderProgram} shaderProgram The compiled shader that is going to be used to perform the render.
+		 */
+		p.shaderParamSetup = function(gl, stage, shaderProgram) {};
 	
 		/**
 		 * Applies the filter to the specified context.
@@ -15980,6 +20725,531 @@
 	}());
 	
 	//##############################################################################
+	// BitmapCache.js
+	//##############################################################################
+	
+	this.createjs = this.createjs||{};
+	
+	(function() {
+		"use strict";
+	
+	
+	// constructor:
+		/**
+		 * The BitmapCache is an internal representation of all the cache properties and logic required in order to "cache"
+		 * an object. This information and functionality used to be located on a {{#crossLink "DisplayObject/cache"}}{{/crossLink}}
+		 * method in {{#crossLink "DisplayObject"}}{{/crossLink}}, but was moved to its own class.
+		 *
+		 * Caching in this context is purely visual, and will render the DisplayObject out into an image to be used instead
+		 * of the object. The actual cache itself is still stored on the target with the {{#crossLink "DisplayObject/cacheCanvas:property"}}{{/crossLink}}.
+		 * Working with a singular image like a {{#crossLink "Bitmap"}}{{/crossLink}} there is little benefit to performing 
+		 * a cache as it is already a single image. Caching is best done on containers containing multiple complex parts that 
+		 * do not move often, so that rendering the image instead will improve overall rendering speed. A cached object will 
+		 * not visually update until explicitly told to do so with a call to update, much like a Stage. If a cache is being 
+		 * updated every frame it is likely not improving rendering performance. Cache are best used when updates will be sparse.
+		 *
+		 * Caching is also a co-requisite for applying filters to prevent expensive filters running constantly without need, 
+		 * and to physically enable some effects. The BitmapCache is also responsible for applying filters to objects and 
+		 * reads each {{#crossLink "Filter"}}{{/crossLink}} due to this relationship. Real-time Filters are not recommended 
+		 * performance wise when dealing with a Context2D canvas. For best performance and to still allow for some visual 
+		 * effects use a compositeOperation when possible.
+		 * @class BitmapCache
+		 * @constructor
+		 **/
+		function BitmapCache() {
+	
+			// public:
+			/**
+			 * Width of the cache relative to the target object.
+			 * @property width
+			 * @protected
+			 * @type {Number}
+			 * @default undefined
+			 **/
+			this.width = undefined;
+	
+			/**
+			 * Height of the cache relative to the target object.
+			 * @property height
+			 * @protected
+			 * @type {Number}
+			 * @default undefined
+			 * @todo Should the width and height be protected?
+			 **/
+			this.height = undefined;
+	
+			/**
+			 * Horizontal position of the cache relative to the target's origin.
+			 * @property x
+			 * @protected
+			 * @type {Number}
+			 * @default undefined
+			 **/
+			this.x = undefined;
+	
+			/**
+			 * Vertical position of the cache relative to target's origin.
+			 * @property y
+			 * @protected
+			 * @type {Number}
+			 * @default undefined
+			 **/
+			this.y = undefined;
+	
+			/**
+			 * The internal scale of the cache image, does not affects display size. This is useful to both increase and
+			 * decrease render quality. Objects with increased scales are more likely to look good when scaled up or rotated.
+			 * Objects with decreased scales can save on rendering performance.
+			 * @property scale
+			 * @protected
+			 * @type {Number}
+			 * @default 1
+			 **/
+			this.scale = 1;
+	
+			/**
+			 * The x offset used for drawing into the cache itself, accounts for both transforms applied.
+			 * @property offX
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this.offX = 0;
+	
+			/**
+			 * The y offset used for drawing into the cache itself, accounts for both transforms applied.
+			 * @property offY
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this.offY = 0;
+	
+			/**
+			 * Track how many times the cache has been updated, mostly used for preventing duplicate cacheURLs.
+			 * This can be useful to see if a cache has been updated.
+			 * @property cacheID
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this.cacheID = 0;
+	
+			// protected:
+			/**
+			 * The relative offset of the filter's x position, used for drawing the cache onto its container.
+			 * Re-calculated every update call before drawing.
+			 * @property _filterOffY
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this._filterOffX = 0;
+	
+			/**
+			 * The relative offset of the filter's y position, used for drawing the cache onto its container.
+			 * Re-calculated every update call before drawing.
+			 * @property _filterOffY
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this._filterOffY = 0;
+	
+			/**
+			 * The cacheID when a DataURL was requested.
+			 * @property _cacheDataURLID
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this._cacheDataURLID = 0;
+	
+			/**
+			 * The cache's DataURL, generated on-demand using the getter.
+			 * @property _cacheDataURL
+			 * @protected
+			 * @type {String}
+			 * @default null
+			 **/
+			this._cacheDataURL = null;
+	
+			/**
+			 * Internal tracking of final bounding width, approximately width*scale; however, filters can complicate the actual value.
+			 * @property _drawWidth
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this._drawWidth = 0;
+	
+			/**
+			 * Internal tracking of final bounding height, approximately height*scale; however, filters can complicate the actual value.
+			 * @property _drawHeight
+			 * @protected
+			 * @type {Number}
+			 * @default 0
+			 **/
+			this._drawHeight = 0;
+		}
+		var p = BitmapCache.prototype;
+	
+		/**
+		 * Returns the bounds that surround all applied filters, relies on each filter to describe how it changes bounds.
+		 * @method getFilterBounds
+		 * @param {DisplayObject} target The object to check the filter bounds for.
+		 * @param {Rectangle} [output=null] Optional parameter, if provided then calculated bounds will be applied to that object.
+		 * @return {Rectangle} bounds object representing the bounds with filters.
+		 * @static
+		 **/
+		BitmapCache.getFilterBounds = function(target, output) {
+			if(!output){ output = new createjs.Rectangle(); }
+			var filters = target.filters;
+			var filterCount = filters && filters.length;
+			if (!!filterCount <= 0) { return output; }
+	
+			for(var i=0; i<filterCount; i++) {
+				var f = filters[i];
+				if(!f || !f.getBounds){ continue; }
+				var test = f.getBounds();
+				if(!test){ continue; }
+				if(i==0) {
+					output.setValues(test.x, test.y, test.width, test.height);
+				} else {
+					output.extend(test.x, test.y, test.width, test.height);
+				}
+			}
+	
+			return output;
+		};
+	
+	// public methods:
+		/**
+		 * Returns a string representation of this object.
+		 * @method toString
+		 * @return {String} a string representation of the instance.
+		 **/
+		p.toString = function() {
+			return "[BitmapCache]";
+		};
+	
+		/**
+		 * Actually create the correct cache surface and properties associated with it. Caching and it's benefits are discussed
+		 * by the {{#crossLink "DisplayObject/cache"}}{{/crossLink}} function and this class description. Here are the detailed
+		 * specifics of how to use the options object.
+		 *
+		 * - If options.useGL is set to "new" a StageGL is created and contained on this for use when rendering the cache.
+		 * - If options.useGL is set to "stage" if the current stage is a StageGL it will be used. If not then it will default to "new".
+		 * - If options.useGL is a StageGL instance it will not create one but use the one provided.
+		 * - If options.useGL is undefined a Context 2D cache will be performed.
+		 *
+		 * This means you can use any combination of StageGL and 2D with either, neither, or both the stage and cache being
+		 * WebGL. Using "new" with a StageGL display list is highly unrecommended, but still an option. It should be avoided
+		 * due to negative performance reasons and the Image loading limitation noted in the class complications above.
+		 *
+		 * When "options.useGL" is set to the parent stage of the target and WebGL, performance is increased by using
+		 * "RenderTextures" instead of canvas elements. These are internal Textures on the graphics card stored in the GPU.
+		 * Because they are no longer canvases you cannot perform operations you could with a regular canvas. The benefit
+		 * is that this avoids the slowdown of copying the texture back and forth from the GPU to a Canvas element.
+		 * This means "stage" is the recommended option when available.
+		 *
+		 * A StageGL cache does not infer the ability to draw objects a StageGL cannot currently draw, i.e. do not use a
+		 * WebGL context cache when caching a Shape, Text, etc.
+		 * <h4>WebGL cache with a 2D context</h4>
+		 *
+		 *     var stage = new createjs.Stage();
+		 *     var bmp = new createjs.Bitmap(src);
+		 *     bmp.cache(0, 0, bmp.width, bmp.height, 1, {gl: "new"});          // no StageGL to use, so make one
+		 *
+		 *     var shape = new createjs.Shape();
+		 *     shape.graphics.clear().fill("red").drawRect(0,0,20,20);
+		 *     shape.cache(0, 0, 20, 20, 1);                             // cannot use WebGL cache
+		 *
+		 * <h4>WebGL cache with a WebGL context</h4>
+		 *
+		 *     var stageGL = new createjs.StageGL();
+		 *     var bmp = new createjs.Bitmap(src);
+		 *     bmp.cache(0, 0, bmp.width, bmp.height, 1, {gl: "stage"});       // use our StageGL to cache
+		 *
+		 *     var shape = new createjs.Shape();
+		 *     shape.graphics.clear().fill("red").drawRect(0,0,20,20);
+		 *     shape.cache(0, 0, 20, 20, 1);                             // cannot use WebGL cache
+		 *
+		 * You may wish to create your own StageGL instance to control factors like clear color, transparency, AA, and
+		 * others. If you do, pass a new instance in instead of "true", the library will automatically set the
+		 * {{#crossLink "StageGL/isCacheControlled"}}{{/crossLink}} to true on your instance. This will trigger it to behave
+		 * correctly, and not assume your main context is WebGL.
+		 *
+		 * @public
+		 * @method BitmapCache.cache
+		 * @param {Number} x The x coordinate origin for the cache region.
+		 * @param {Number} y The y coordinate origin for the cache region.
+		 * @param {Number} width The width of the cache region.
+		 * @param {Number} height The height of the cache region.
+		 * @param {Number} [scale=1] The scale at which the cache will be created. For example, if you cache a vector shape
+		 * using myShape.cache(0,0,100,100,2) then the resulting cacheCanvas will be 200x200 px. This lets you scale and
+		 * rotate cached elements with greater fidelity. Default is 1.
+		 * @param {Object} [options=undefined] Specify additional parameters for the cache logic
+		 * @param {undefined|"new"|"stage"|StageGL} [options.useGL=undefined] Select whether to use context 2D, or WebGL rendering, and
+		 * whether to make a new stage instance or use an existing one. See above for extensive details on use.
+		 * @for BitmapCache
+		 */
+		 p.define = function(target, x, y, width, height, scale, options) {
+			if(!target){ throw "No symbol to cache"; }
+			this._options = options;
+			this.target = target;
+	
+			this.width =		width >= 1 ? width : 1;
+			this.height =		height >= 1 ? height : 1;
+			this.x =			x || 0;
+			this.y =			y || 0;
+			this.scale =		scale || 1;
+	
+			this.update();
+		};
+	
+		/**
+		 * Directly called via {{#crossLink "DisplayObject/updateCache:method"}}{{/crossLink}}, but also internally. This
+		 * has the dual responsibility of making sure the surface is ready to be drawn to, and performing the draw. For
+		 * full details of each behaviour, check the protected functions {{#crossLink "BitmapCache/_updateSurface"}}{{/crossLink}}
+		 * and {{#crossLink "BitmapCache/_drawToCache"}}{{/crossLink}} respectively.
+		 * @method update
+		 * @param {String} [compositeOperation=null] The DisplayObject this cache is linked to.
+		 **/
+		p.update = function(compositeOperation) {
+			if(!this.target) { throw "define() must be called before update()"; }
+	
+			var filterBounds = BitmapCache.getFilterBounds(this.target);
+			var surface = this.target.cacheCanvas;
+	
+			this._drawWidth = Math.ceil(this.width*this.scale) + filterBounds.width;
+			this._drawHeight = Math.ceil(this.height*this.scale) + filterBounds.height;
+	
+			if(!surface || this._drawWidth != surface.width || this._drawHeight != surface.height) {
+				this._updateSurface();
+			}
+	
+			this._filterOffX = filterBounds.x;
+			this._filterOffY = filterBounds.y;
+			this.offX = this.x*this.scale + this._filterOffX;
+			this.offY = this.y*this.scale + this._filterOffY;
+	
+			this._drawToCache(compositeOperation);
+	
+			this.cacheID = this.cacheID?this.cacheID+1:1;
+		};
+	
+		/**
+		 * Reset and release all the properties and memory associated with this cache.
+		 * @method release
+		 **/
+		p.release = function() {
+			if (this._webGLCache) {
+				// if it isn't cache controlled clean up after yourself
+				if (!this._webGLCache.isCacheControlled) {
+					if (this.__lastRT){ this.__lastRT = undefined; }
+					if (this.__rtA){ this._webGLCache._killTextureObject(this.__rtA); }
+					if (this.__rtB){ this._webGLCache._killTextureObject(this.__rtB); }
+					if (this.target && this.target.cacheCanvas){ this._webGLCache._killTextureObject(this.target.cacheCanvas); }
+				}
+				// set the context to none and let the garbage collector get the rest when the canvas itself gets removed
+				this._webGLCache = false;
+			} else {
+				var stage = this.target.stage;
+				if (stage instanceof createjs.StageGL){
+					stage.releaseTexture(this.target.cacheCanvas);
+				}
+			}
+	
+			this.target = this.target.cacheCanvas = null;
+			this.cacheID = this._cacheDataURLID = this._cacheDataURL = undefined;
+			this.width = this.height = this.x = this.y = this.offX = this.offY = 0;
+			this.scale = 1;
+		};
+	
+		/**
+		 * Returns a data URL for the cache, or `null` if this display object is not cached.
+		 * Uses {{#crossLink "BitmapCache/cacheID:property"}}{{/crossLink}} to ensure a new data URL is not generated if the
+		 * cache has not changed.
+		 * @method getCacheDataURL
+		 * @return {String} The image data url for the cache.
+		 **/
+		p.getCacheDataURL = function() {
+			var cacheCanvas = this.target && this.target.cacheCanvas;
+			if (!cacheCanvas) { return null; }
+			if (this.cacheID != this._cacheDataURLID) {
+				this._cacheDataURLID = this.cacheID;
+				this._cacheDataURL = cacheCanvas.toDataURL?cacheCanvas.toDataURL():null;	// incase function is
+			}
+			return this._cacheDataURL;
+		};
+	
+		/**
+		 * Use context2D drawing commands to display the cache canvas being used.
+		 * @method draw
+		 * @param {CanvasRenderingContext2D} ctx The context to draw into.
+		 * @return {Boolean} Whether the draw was handled successfully.
+		 **/
+		p.draw = function(ctx) {
+			if(!this.target) { return false; }
+			ctx.drawImage(this.target.cacheCanvas,
+				this.x + (this._filterOffX/this.scale),		this.y + (this._filterOffY/this.scale),
+				this._drawWidth/this.scale,					this._drawHeight/this.scale
+			);
+			return true;
+		};
+	
+	// private methods:
+		/**
+		 * Create or resize the invisible canvas/surface that is needed for the display object(s) to draw to,
+		 * and in turn be used in their stead when drawing. The surface is resized to the size defined
+		 * by the width and height, factoring in scaling and filters. Adjust them to adjust the output size.
+		 * @method _updateSurface
+		 * @protected
+		 **/
+		p._updateSurface = function() {
+			if (!this._options || !this._options.useGL) {
+				var surface = this.target.cacheCanvas;
+	
+				// create it if it's missing
+				if(!surface) {
+					surface = this.target.cacheCanvas = createjs.createCanvas?createjs.createCanvas():document.createElement("canvas");
+				}
+	
+				// now size it
+				surface.width = this._drawWidth;
+				surface.height = this._drawHeight;
+				return;
+			}
+	
+			// create it if it's missing
+			if (!this._webGLCache) {
+				if (this._options.useGL === "stage") {
+					if(!(this.target.stage && this.target.stage.isWebGL)){
+						var error = "Cannot use 'stage' for cache because the object's parent stage is ";
+						error += this.target.stage ? "non WebGL." : "not set, please addChild to the correct stage.";
+						throw error;
+					}
+					this.target.cacheCanvas = true; // will be replaced with RenderTexture, temporary positive value for old "isCached" checks
+					this._webGLCache = this.target.stage;
+	
+				} else if(this._options.useGL === "new") {
+					this.target.cacheCanvas = document.createElement("canvas"); // we can turn off autopurge because we wont be making textures here
+					this._webGLCache = new createjs.StageGL(this.target.cacheCanvas, {antialias: true, transparent: true, autoPurge: -1});
+					this._webGLCache.isCacheControlled = true;	// use this flag to control stage sizing and final output
+	
+				} else if(this._options.useGL instanceof createjs.StageGL) {
+					this.target.cacheCanvas = true; // will be replaced with RenderTexture, temporary positive value for old "isCached" checks
+					this._webGLCache = this._options.useGL;
+					this._webGLCache.isCacheControlled = true;	// use this flag to control stage sizing and final output
+	
+				} else {
+					throw "Invalid option provided to useGL, expected ['stage', 'new', StageGL, undefined], got "+ this._options.useGL;
+				}
+			}
+	
+			// now size render surfaces
+			var surface = this.target.cacheCanvas;
+			var stageGL = this._webGLCache;
+	
+			// if we have a dedicated stage we've gotta size it
+			if (stageGL.isCacheControlled) {
+				surface.width = this._drawWidth;
+				surface.height = this._drawHeight;
+				stageGL.updateViewport(this._drawWidth, this._drawHeight);
+			}
+			if (this.target.filters) {
+				// with filters we can't tell how many we'll need but the most we'll ever need is two, so make them now
+				stageGL.getTargetRenderTexture(this.target, this._drawWidth,this._drawHeight);
+				stageGL.getTargetRenderTexture(this.target, this._drawWidth,this._drawHeight);
+			} else {
+				// without filters then we only need one RenderTexture, and that's only if its not a dedicated stage
+				if (!stageGL.isCacheControlled) {
+					stageGL.getTargetRenderTexture(this.target, this._drawWidth,this._drawHeight);
+				}
+			}
+		};
+	
+		/**
+		 * Perform the cache draw out for context 2D now that the setup properties have been performed.
+		 * @method _drawToCache
+		 * @protected
+		 **/
+		p._drawToCache = function(compositeOperation) {
+			var surface = this.target.cacheCanvas;
+			var target = this.target;
+			var webGL = this._webGLCache;
+	
+			if (webGL){
+				//TODO: auto split blur into an x/y pass
+				webGL.cacheDraw(target, target.filters, this);
+	
+				// we may of swapped around which element the surface is, so we re-fetch it
+				surface = this.target.cacheCanvas;
+	
+				surface.width = this._drawWidth;
+				surface.height = this._drawHeight;
+			} else {
+				var ctx = surface.getContext("2d");
+	
+				if (!compositeOperation) {
+					ctx.clearRect(0, 0, this._drawWidth+1, this._drawHeight+1);
+				}
+	
+				ctx.save();
+				ctx.globalCompositeOperation = compositeOperation;
+				ctx.setTransform(this.scale,0,0,this.scale, -this._filterOffX,-this._filterOffY);
+				ctx.translate(-this.x, -this.y);
+				target.draw(ctx, true);
+				ctx.restore();
+	
+	
+				if (target.filters && target.filters.length) {
+					this._applyFilters(ctx);
+				}
+			}
+			surface._invalid = true;
+		};
+	
+		/**
+		 * Work through every filter and apply its individual visual transformation.
+		 * @method _applyFilters
+		 * @protected
+		 **/
+		p._applyFilters = function(ctx) {
+			var filters = this.target.filters;
+	
+			var w = this._drawWidth;
+			var h = this._drawHeight;
+	
+			var data;
+	
+			var l = filters.length;
+			for (var i=0; i<l; i++) {
+				var filter = filters[i];
+				if(filter.usesContext){
+					if(data) {
+						ctx.putImageData(data, 0,0);
+						data = null;
+					}
+					filter.applyFilter(ctx, 0,0, w,h);
+				} else {
+					if(!data) {
+						data = ctx.getImageData(0,0, w,h);
+					}
+					filter._applyFilter(data);
+				}
+			}
+	
+			//done
+			if(data) {
+				ctx.putImageData(data, 0,0);
+			}
+		};
+	
+		createjs.BitmapCache = BitmapCache;
+	}());
+	
+	//##############################################################################
 	// BlurFilter.js
 	//##############################################################################
 	
@@ -15991,8 +21261,8 @@
 	
 	// constructor:
 		/**
-		 * Applies a box blur to DisplayObjects. Note that this filter is fairly CPU intensive, particularly if the quality is
-		 * set higher than 1.
+		 * Applies a box blur to DisplayObjects in context 2D and a Gaussian blur in webgl. Note that this filter is fairly
+		 * intensive, particularly if the quality is set higher than 1.
 		 *
 		 * <h4>Example</h4>
 		 * This example creates a red circle, and then applies a 5 pixel blur to it. It uses the {{#crossLink "Filter/getBounds"}}{{/crossLink}}
@@ -16016,10 +21286,7 @@
 		 * @param {Number} [quality=1] The number of blur iterations.
 		 **/
 		function BlurFilter( blurX, blurY, quality) {
-			if ( isNaN(blurX) || blurX < 0 ) blurX = 0;
-			if ( isNaN(blurY) || blurY < 0 ) blurY = 0;
-			if ( isNaN(quality) || quality < 1  ) quality = 1;
-	
+			this.Filter_constructor();
 	
 			// public properties:
 			/**
@@ -16028,7 +21295,9 @@
 			 * @default 0
 			 * @type Number
 			 **/
-			this.blurX = blurX | 0;
+			this._blurX = blurX;
+			this._blurXTable = [];
+			this._lastBlurX = null;
 	
 			/**
 			 * Vertical blur radius in pixels
@@ -16036,7 +21305,9 @@
 			 * @default 0
 			 * @type Number
 			 **/
-			this.blurY = blurY | 0;
+			this._blurY = blurY;
+			this._blurYTable = [];
+			this._lastBlurY = null;
 	
 			/**
 			 * Number of blur iterations. For example, a value of 1 will produce a rough blur. A value of 2 will produce a
@@ -16045,13 +21316,136 @@
 			 * @default 1
 			 * @type Number
 			 **/
-			this.quality = quality | 0;
+			this._quality;
+			this._lastQuality = null;
+	
+			/**
+			 * This is a template to generate the shader for {{#crossLink FRAG_SHADER_BODY}}{{/crossLink}}
+			 */
+			this.FRAG_SHADER_TEMPLATE = (
+				"uniform float xWeight[{{blurX}}];" +
+				"uniform float yWeight[{{blurY}}];" +
+				"uniform vec2 textureOffset;" +
+				"void main(void) {" +
+					"vec4 color = vec4(0.0);" +
+	
+					"float xAdj = ({{blurX}}.0-1.0)/2.0;" +
+					"float yAdj = ({{blurY}}.0-1.0)/2.0;" +
+					"vec2 sampleOffset;" +
+	
+					"for(int i=0; i<{{blurX}}; i++) {" +
+						"for(int j=0; j<{{blurY}}; j++) {" +
+							"sampleOffset = vRenderCoord + (textureOffset * vec2(float(i)-xAdj, float(j)-yAdj));" +
+							"color += texture2D(uSampler, sampleOffset) * (xWeight[i] * yWeight[j]);" +
+						"}" +
+					"}" +
+	
+					"gl_FragColor = color.rgba;" +
+				"}"
+			);
+	
+			// update the filter using the setters
+			if(isNaN(quality) || quality < 1){ quality = 1; }
+			this.setQuality(quality|0);
 		}
 		var p = createjs.extend(BlurFilter, createjs.Filter);
 	
 		// TODO: deprecated
 		// p.initialize = function() {}; // searchable for devs wondering where it is. REMOVED. See docs for details.
 	
+		p.getBlurX = function() { return this._blurX; };
+		p.getBlurY = function() { return this._blurY; };
+		p.setBlurX = function(value) {
+			if(isNaN(value) || value < 0){ value = 0; }
+			this._blurX = value;
+		};
+		p.setBlurY = function(value) {
+			if(isNaN(value) || value < 0){ value = 0; }
+			this._blurY = value;
+		};
+		p.getQuality = function() { return this._quality; };
+		p.setQuality = function(value) {
+			if(isNaN(value) || value < 0){ value = 0; }
+			this._quality = value | 0;
+		};
+		p._getShader = function() {
+			var xChange = this._lastBlurX !== this._blurX;
+			var yChange = this._lastBlurY !== this._blurY;
+			var qChange = this._lastQuality !== this._quality;
+			if(xChange || yChange || qChange) {
+				if(xChange || qChange) { this._blurXTable = this._getTable(this._blurX * this._quality); }
+				if(yChange || qChange) { this._blurYTable = this._getTable(this._blurY * this._quality); }
+				this._updateShader();
+				this._lastBlurX = this._blurX;
+				this._lastBlurY = this._blurY;
+				this._lastQuality = this._quality;
+				return undefined; // force a rebuild
+			}
+			return this._compiledShader;
+		};
+		p._setShader = function() { this._compiledShader; };
+	
+		try {
+			Object.defineProperties(p, {
+				blurX: { get: p.getBlurX, set: p.setBlurX },
+				blurY: { get: p.getBlurY, set: p.setBlurY },
+				quality: { get: p.getQuality, set: p.setQuality },
+				_builtShader: { get: p._getShader, set: p._setShader}
+			});
+		} catch (e) { console.log(e); }
+	
+		/**
+		 * Internal lookup function to create gaussian distribution.
+		 * @method _getTable
+		 * @param {Number} spread How many steps in the curve.
+		 * @return {Array<Number>} An array with Math.ceil(spread*2) entries with appropriately distributed weights.
+		 */
+		p._getTable = function(spread) {
+			var EDGE = 4.2;
+			if(spread<=1) { return [1]; }
+	
+			var result = [];
+			var count = Math.ceil(spread*2);
+			count += (count%2)?0:1;
+			var adjust = (count/2)|0;
+			for(var i = -adjust; i<=adjust; i++) {
+				var x = (i/adjust)*EDGE;
+				result.push(1/Math.sqrt(2*Math.PI) * Math.pow(Math.E, -(Math.pow(x,2)/4)));
+			}
+			var factor = result.reduce(function(a, b) { return a + b; });
+			return result.map(function(currentValue, index, array) { return currentValue/factor; });
+		};
+	
+		/**
+		 * Internal update function to create shader properties.
+		 * @method _updateShader
+		 */
+		p._updateShader = function() {
+			if(this._blurX === undefined || this._blurY === undefined){ return; }
+			var result = this.FRAG_SHADER_TEMPLATE;
+			result = result.replace(/\{\{blurX\}\}/g, (this._blurXTable.length).toFixed(0));
+			result = result.replace(/\{\{blurY\}\}/g, (this._blurYTable.length).toFixed(0));
+			this.FRAG_SHADER_BODY = result;
+		};
+	
+		/** docced in super class **/
+		p.shaderParamSetup = function(gl, stage, shaderProgram) {
+			// load the normalized gaussian weight tables
+			gl.uniform1fv(
+				gl.getUniformLocation(shaderProgram, "xWeight"),
+				this._blurXTable
+			);
+			gl.uniform1fv(
+				gl.getUniformLocation(shaderProgram, "yWeight"),
+				this._blurYTable
+			);
+	
+			// what is the size of a single pixel in -1, 1 (webGL) space
+			gl.uniform2f(
+				gl.getUniformLocation(shaderProgram, "textureOffset"),
+				2/(stage._viewportWidth*this._quality), 2/(stage._viewportHeight*this._quality)
+			);
+		};
 	
 	// constants:
 		/**
@@ -16076,9 +21470,9 @@
 		/** docced in super class **/
 		p.getBounds = function (rect) {
 			var x = this.blurX|0, y = this.blurY| 0;
-			if (x <= 0 && y <= 0) { return rect; }
+			if(x <= 0 && y <= 0) { return rect; }
 			var q = Math.pow(this.quality, 0.2);
-			return (rect || new createjs.Rectangle()).pad(x*q+1,y*q+1,x*q+1,y*q+1);
+			return (rect || new createjs.Rectangle()).pad(y*q+1,x*q+1,y*q+1,x*q+1);
 		};
 	
 		/** docced in super class **/
@@ -16096,10 +21490,9 @@
 	
 		/** docced in super class **/
 		p._applyFilter = function (imageData) {
-	
-			var radiusX = this.blurX >> 1;
+			var radiusX = this._blurX >> 1;
 			if (isNaN(radiusX) || radiusX < 0) return false;
-			var radiusY = this.blurY >> 1;
+			var radiusY = this._blurY >> 1;
 			if (isNaN(radiusY) || radiusY < 0) return false;
 			if (radiusX == 0 && radiusY == 0) return false;
 	
@@ -16344,7 +21737,7 @@
 		 * result. This should be exactly the same dimensions as the target.
 		 **/
 		function AlphaMapFilter(alphaMap) {
-		
+			this.Filter_constructor();
 		
 		// public properties:
 			/**
@@ -16370,12 +21763,40 @@
 			 * @type Uint8ClampedArray
 			 **/
 			this._mapData = null;
+			this._mapTexture = null;
+	
+			this.FRAG_SHADER_BODY = (
+				"uniform sampler2D uAlphaSampler;"+
+	
+				"void main(void) {" +
+					"vec4 color = texture2D(uSampler, vRenderCoord);" +
+					"vec4 alphaMap = texture2D(uAlphaSampler, vTextureCoord);" +
+	
+					// some image formats can have transparent white rgba(1,1,1, 0) when put on the GPU, this means we need a slight tweak
+					// using ceil ensure that the colour will be used so long as it exists but pure transparency will be treated black
+					"gl_FragColor = vec4(color.rgb, color.a * (alphaMap.r * ceil(alphaMap.a)));" +
+				"}"
+			);
 		}
 		var p = createjs.extend(AlphaMapFilter, createjs.Filter);
 	
 		// TODO: deprecated
 		// p.initialize = function() {}; // searchable for devs wondering where it is. REMOVED. See docs for details.
 	
+		/** docced in super class **/
+		p.shaderParamSetup = function(gl, stage, shaderProgram) {
+			if(!this._mapTexture) { this._mapTexture = gl.createTexture(); }
+	
+			gl.activeTexture(gl.TEXTURE1);
+			gl.bindTexture(gl.TEXTURE_2D, this._mapTexture);
+			stage.setTextureParams(gl);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.alphaMap);
+	
+			gl.uniform1i(
+				gl.getUniformLocation(shaderProgram, "uAlphaSampler"),
+				1
+			);
+		};
 	
 	// public methods:
 		/** docced in super class **/
@@ -16483,7 +21904,7 @@
 		 * @param {HTMLImageElement|HTMLCanvasElement} mask
 		 **/
 		function AlphaMaskFilter(mask) {
-		
+			this.Filter_constructor();
 		
 		// public properties:
 			/**
@@ -16492,12 +21913,40 @@
 			 * @type HTMLImageElement|HTMLCanvasElement
 			 **/
 			this.mask = mask;
+	
+			/** docced in super class **/
+			this.usesContext = true;
+	
+			this.FRAG_SHADER_BODY = (
+				"uniform sampler2D uAlphaSampler;"+
+	
+				"void main(void) {" +
+					"vec4 color = texture2D(uSampler, vRenderCoord);" +
+					"vec4 alphaMap = texture2D(uAlphaSampler, vTextureCoord);" +
+	
+					"gl_FragColor = vec4(color.rgb, color.a * alphaMap.a);" +
+				"}"
+			);
 		}
 		var p = createjs.extend(AlphaMaskFilter, createjs.Filter);
 	
 		// TODO: deprecated
 		// p.initialize = function() {}; // searchable for devs wondering where it is. REMOVED. See docs for details.
-		
+	
+		/** docced in super class **/
+		p.shaderParamSetup = function(gl, stage, shaderProgram) {
+			if(!this._mapTexture) { this._mapTexture = gl.createTexture(); }
+	
+			gl.activeTexture(gl.TEXTURE1);
+			gl.bindTexture(gl.TEXTURE_2D, this._mapTexture);
+			stage.setTextureParams(gl);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.mask);
+	
+			gl.uniform1i(
+				gl.getUniformLocation(shaderProgram, "uAlphaSampler"),
+				1
+			);
+		};
 	
 	// public methods:
 		/**
@@ -16593,8 +22042,8 @@
 		 * @extends Filter
 		 **/
 		function ColorFilter(redMultiplier, greenMultiplier, blueMultiplier, alphaMultiplier, redOffset, greenOffset, blueOffset, alphaOffset) {
-			
-		
+			this.Filter_constructor();
+	
 		// public properties:
 			/**
 			 * Red channel multiplier.
@@ -16651,6 +22100,18 @@
 			 * @type Number
 			 **/
 			this.alphaOffset = alphaOffset || 0;
+	
+			this.FRAG_SHADER_BODY = (
+				"uniform vec4 uColorMultiplier;" +
+				"uniform vec4 uColorOffset;" +
+	
+				"void main(void) {" +
+					"vec4 color = texture2D(uSampler, vRenderCoord);" +
+	
+					"gl_FragColor = (color * uColorMultiplier) + uColorOffset;" +
+				"}"
+			);
+	
 		}
 		var p = createjs.extend(ColorFilter, createjs.Filter);
 	
@@ -16660,15 +22121,30 @@
 	
 	// public methods:
 		/** docced in super class **/
+		p.shaderParamSetup = function(gl, stage, shaderProgram) {
+			gl.uniform4f(
+				gl.getUniformLocation(shaderProgram, "uColorMultiplier"),
+				this.redMultiplier, this.greenMultiplier, this.blueMultiplier, this.alphaMultiplier
+			);
+	
+			gl.uniform4f(
+				gl.getUniformLocation(shaderProgram, "uColorOffset"),
+				this.redOffset/255, this.greenOffset/255, this.blueOffset/255, this.alphaOffset/255
+			);
+		};
+	
+		/** docced in super class **/
 		p.toString = function() {
 			return "[ColorFilter]";
 		};
 	
 		/** docced in super class **/
 		p.clone = function() {
-			return new ColorFilter(this.redMultiplier, this.greenMultiplier, this.blueMultiplier, this.alphaMultiplier, this.redOffset, this.greenOffset, this.blueOffset, this.alphaOffset);
+			return new ColorFilter(
+				this.redMultiplier, this.greenMultiplier, this.blueMultiplier, this.alphaMultiplier,
+				this.redOffset, this.greenOffset, this.blueOffset, this.alphaOffset
+			);
 		};
-		
 	
 	// private methods:
 		/** docced in super class **/
@@ -16720,20 +22196,6 @@
 			this.setColor(brightness, contrast, saturation, hue);
 		}
 		var p = ColorMatrix.prototype;
-	
-		/**
-		 * <strong>REMOVED</strong>. Removed in favor of using `MySuperClass_constructor`.
-		 * See {{#crossLink "Utility Methods/extend"}}{{/crossLink}} and {{#crossLink "Utility Methods/promote"}}{{/crossLink}}
-		 * for details.
-		 *
-		 * There is an inheritance tutorial distributed with EaselJS in /tutorials/Inheritance.
-		 *
-		 * @method initialize
-		 * @protected
-		 * @deprecated
-		 */
-		// p.initialize = function() {}; // searchable for devs wondering where it is.
-	
 	
 	// constants:
 		/**
@@ -17083,8 +22545,8 @@
 		 * class.
 		 **/
 		function ColorMatrixFilter(matrix) {
-		
-			
+			this.Filter_constructor();
+	
 		// public properties:
 			/**
 			 * A 4x5 matrix describing the color operation to perform. See also the {{#crossLink "ColorMatrix"}}{{/crossLink}}
@@ -17092,12 +22554,49 @@
 			 * @type Array | ColorMatrix
 			 **/
 			this.matrix = matrix;
+	
+			this.FRAG_SHADER_BODY = (
+				"uniform mat4 uColorMatrix;" +
+				"uniform vec4 uColorMatrixOffset;" +
+	
+				"void main(void) {" +
+					"vec4 color = texture2D(uSampler, vRenderCoord);" +
+	
+					"mat4 m = uColorMatrix;" +
+					"vec4 newColor = vec4(0,0,0,0);" +
+					"newColor.r = color.r*m[0][0] + color.g*m[0][1] + color.b*m[0][2] + color.a*m[0][3];" +
+					"newColor.g = color.r*m[1][0] + color.g*m[1][1] + color.b*m[1][2] + color.a*m[1][3];" +
+					"newColor.b = color.r*m[2][0] + color.g*m[2][1] + color.b*m[2][2] + color.a*m[2][3];" +
+					"newColor.a = color.r*m[3][0] + color.g*m[3][1] + color.b*m[3][2] + color.a*m[3][3];" +
+	
+					"gl_FragColor = newColor + uColorMatrixOffset;" +
+				"}"
+			);
 		}
 		var p = createjs.extend(ColorMatrixFilter, createjs.Filter);
 	
 		// TODO: deprecated
 		// p.initialize = function() {}; // searchable for devs wondering where it is. REMOVED. See docs for details.
-		
+	
+		/** docced in super class **/
+		p.shaderParamSetup = function(gl, stage, shaderProgram) {
+			var mat = this.matrix;
+			var colorMatrix = new Float32Array([
+				mat[0],mat[1],mat[2],mat[3],
+				mat[5],mat[6],mat[7],mat[8],
+				mat[10],mat[11],mat[12],mat[13],
+				mat[15],mat[16],mat[17],mat[18]
+			]);
+	
+			gl.uniformMatrix4fv(
+				gl.getUniformLocation(shaderProgram, "uColorMatrix"),
+				false, colorMatrix
+			);
+			gl.uniform4f(
+				gl.getUniformLocation(shaderProgram, "uColorMatrixOffset"),
+				mat[4]/255, mat[9]/255, mat[14]/255, mat[19]/255
+			);
+		};
 	
 	// public methods:
 		/** docced in super class **/
@@ -17134,7 +22633,6 @@
 			}
 			return true;
 		};
-	
 	
 		createjs.ColorMatrixFilter = createjs.promote(ColorMatrixFilter, "Filter");
 	}());
@@ -17447,7 +22945,7 @@
 		 * @type String
 		 * @static
 		 **/
-		s.version = /*=version*/"0.8.2"; // injected by build process
+		s.version = /*=version*/"NEXT"; // injected by build process
 	
 		/**
 		 * The build date for this release in UTC format.
@@ -17455,2289 +22953,11 @@
 		 * @type String
 		 * @static
 		 **/
-		s.buildDate = /*=date*/"Thu, 26 Nov 2015 20:44:34 GMT"; // injected by build process
+		s.buildDate = /*=date*/"Tue, 04 Jul 2017 15:42:51 GMT"; // injected by build process
 	
 	})();
 	
 	module.exports = createjs;
-
-/***/ },
-/* 36 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @typechecks
-	 * 
-	 */
-	
-	/*eslint-disable no-self-compare */
-	
-	'use strict';
-	
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	
-	/**
-	 * inlined Object.is polyfill to avoid requiring consumers ship their own
-	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-	 */
-	function is(x, y) {
-	  // SameValue algorithm
-	  if (x === y) {
-	    // Steps 1-5, 7-10
-	    // Steps 6.b-6.e: +0 != -0
-	    // Added the nonzero y check to make Flow happy, but it is redundant
-	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-	  } else {
-	    // Step 6.a: NaN == NaN
-	    return x !== x && y !== y;
-	  }
-	}
-	
-	/**
-	 * Performs equality by iterating through keys on an object and returning false
-	 * when any key has values which are not strictly equal between the arguments.
-	 * Returns true when the values of all keys are strictly equal.
-	 */
-	function shallowEqual(objA, objB) {
-	  if (is(objA, objB)) {
-	    return true;
-	  }
-	
-	  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-	    return false;
-	  }
-	
-	  var keysA = Object.keys(objA);
-	  var keysB = Object.keys(objB);
-	
-	  if (keysA.length !== keysB.length) {
-	    return false;
-	  }
-	
-	  // Test for A's keys different from B.
-	  for (var i = 0; i < keysA.length; i++) {
-	    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-	      return false;
-	    }
-	  }
-	
-	  return true;
-	}
-	
-	module.exports = shallowEqual;
-
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var DOMLazyTree = __webpack_require__(15);
-	var Danger = __webpack_require__(156);
-	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactInstrumentation = __webpack_require__(8);
-	
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(46);
-	var setInnerHTML = __webpack_require__(34);
-	var setTextContent = __webpack_require__(82);
-	
-	function getNodeAfter(parentNode, node) {
-	  // Special case for text components, which return [open, close] comments
-	  // from getHostNode.
-	  if (Array.isArray(node)) {
-	    node = node[1];
-	  }
-	  return node ? node.nextSibling : parentNode.firstChild;
-	}
-	
-	/**
-	 * Inserts `childNode` as a child of `parentNode` at the `index`.
-	 *
-	 * @param {DOMElement} parentNode Parent node in which to insert.
-	 * @param {DOMElement} childNode Child node to insert.
-	 * @param {number} index Index at which to insert the child.
-	 * @internal
-	 */
-	var insertChildAt = createMicrosoftUnsafeLocalFunction(function (parentNode, childNode, referenceNode) {
-	  // We rely exclusively on `insertBefore(node, null)` instead of also using
-	  // `appendChild(node)`. (Using `undefined` is not allowed by all browsers so
-	  // we are careful to use `null`.)
-	  parentNode.insertBefore(childNode, referenceNode);
-	});
-	
-	function insertLazyTreeChildAt(parentNode, childTree, referenceNode) {
-	  DOMLazyTree.insertTreeBefore(parentNode, childTree, referenceNode);
-	}
-	
-	function moveChild(parentNode, childNode, referenceNode) {
-	  if (Array.isArray(childNode)) {
-	    moveDelimitedText(parentNode, childNode[0], childNode[1], referenceNode);
-	  } else {
-	    insertChildAt(parentNode, childNode, referenceNode);
-	  }
-	}
-	
-	function removeChild(parentNode, childNode) {
-	  if (Array.isArray(childNode)) {
-	    var closingComment = childNode[1];
-	    childNode = childNode[0];
-	    removeDelimitedText(parentNode, childNode, closingComment);
-	    parentNode.removeChild(closingComment);
-	  }
-	  parentNode.removeChild(childNode);
-	}
-	
-	function moveDelimitedText(parentNode, openingComment, closingComment, referenceNode) {
-	  var node = openingComment;
-	  while (true) {
-	    var nextNode = node.nextSibling;
-	    insertChildAt(parentNode, node, referenceNode);
-	    if (node === closingComment) {
-	      break;
-	    }
-	    node = nextNode;
-	  }
-	}
-	
-	function removeDelimitedText(parentNode, startNode, closingComment) {
-	  while (true) {
-	    var node = startNode.nextSibling;
-	    if (node === closingComment) {
-	      // The closing comment is removed by ReactMultiChild.
-	      break;
-	    } else {
-	      parentNode.removeChild(node);
-	    }
-	  }
-	}
-	
-	function replaceDelimitedText(openingComment, closingComment, stringText) {
-	  var parentNode = openingComment.parentNode;
-	  var nodeAfterComment = openingComment.nextSibling;
-	  if (nodeAfterComment === closingComment) {
-	    // There are no text nodes between the opening and closing comments; insert
-	    // a new one if stringText isn't empty.
-	    if (stringText) {
-	      insertChildAt(parentNode, document.createTextNode(stringText), nodeAfterComment);
-	    }
-	  } else {
-	    if (stringText) {
-	      // Set the text content of the first node after the opening comment, and
-	      // remove all following nodes up until the closing comment.
-	      setTextContent(nodeAfterComment, stringText);
-	      removeDelimitedText(parentNode, nodeAfterComment, closingComment);
-	    } else {
-	      removeDelimitedText(parentNode, openingComment, closingComment);
-	    }
-	  }
-	
-	  if (false) {
-	    ReactInstrumentation.debugTool.onHostOperation({
-	      instanceID: ReactDOMComponentTree.getInstanceFromNode(openingComment)._debugID,
-	      type: 'replace text',
-	      payload: stringText
-	    });
-	  }
-	}
-	
-	var dangerouslyReplaceNodeWithMarkup = Danger.dangerouslyReplaceNodeWithMarkup;
-	if (false) {
-	  dangerouslyReplaceNodeWithMarkup = function (oldChild, markup, prevInstance) {
-	    Danger.dangerouslyReplaceNodeWithMarkup(oldChild, markup);
-	    if (prevInstance._debugID !== 0) {
-	      ReactInstrumentation.debugTool.onHostOperation({
-	        instanceID: prevInstance._debugID,
-	        type: 'replace with',
-	        payload: markup.toString()
-	      });
-	    } else {
-	      var nextInstance = ReactDOMComponentTree.getInstanceFromNode(markup.node);
-	      if (nextInstance._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onHostOperation({
-	          instanceID: nextInstance._debugID,
-	          type: 'mount',
-	          payload: markup.toString()
-	        });
-	      }
-	    }
-	  };
-	}
-	
-	/**
-	 * Operations for updating with DOM children.
-	 */
-	var DOMChildrenOperations = {
-	
-	  dangerouslyReplaceNodeWithMarkup: dangerouslyReplaceNodeWithMarkup,
-	
-	  replaceDelimitedText: replaceDelimitedText,
-	
-	  /**
-	   * Updates a component's children by processing a series of updates. The
-	   * update configurations are each expected to have a `parentNode` property.
-	   *
-	   * @param {array<object>} updates List of update configurations.
-	   * @internal
-	   */
-	  processUpdates: function (parentNode, updates) {
-	    if (false) {
-	      var parentNodeDebugID = ReactDOMComponentTree.getInstanceFromNode(parentNode)._debugID;
-	    }
-	
-	    for (var k = 0; k < updates.length; k++) {
-	      var update = updates[k];
-	      switch (update.type) {
-	        case 'INSERT_MARKUP':
-	          insertLazyTreeChildAt(parentNode, update.content, getNodeAfter(parentNode, update.afterNode));
-	          if (false) {
-	            ReactInstrumentation.debugTool.onHostOperation({
-	              instanceID: parentNodeDebugID,
-	              type: 'insert child',
-	              payload: { toIndex: update.toIndex, content: update.content.toString() }
-	            });
-	          }
-	          break;
-	        case 'MOVE_EXISTING':
-	          moveChild(parentNode, update.fromNode, getNodeAfter(parentNode, update.afterNode));
-	          if (false) {
-	            ReactInstrumentation.debugTool.onHostOperation({
-	              instanceID: parentNodeDebugID,
-	              type: 'move child',
-	              payload: { fromIndex: update.fromIndex, toIndex: update.toIndex }
-	            });
-	          }
-	          break;
-	        case 'SET_MARKUP':
-	          setInnerHTML(parentNode, update.content);
-	          if (false) {
-	            ReactInstrumentation.debugTool.onHostOperation({
-	              instanceID: parentNodeDebugID,
-	              type: 'replace children',
-	              payload: update.content.toString()
-	            });
-	          }
-	          break;
-	        case 'TEXT_CONTENT':
-	          setTextContent(parentNode, update.content);
-	          if (false) {
-	            ReactInstrumentation.debugTool.onHostOperation({
-	              instanceID: parentNodeDebugID,
-	              type: 'replace text',
-	              payload: update.content.toString()
-	            });
-	          }
-	          break;
-	        case 'REMOVE_NODE':
-	          removeChild(parentNode, update.fromNode);
-	          if (false) {
-	            ReactInstrumentation.debugTool.onHostOperation({
-	              instanceID: parentNodeDebugID,
-	              type: 'remove child',
-	              payload: { fromIndex: update.fromIndex }
-	            });
-	          }
-	          break;
-	      }
-	    }
-	  }
-	
-	};
-	
-	module.exports = DOMChildrenOperations;
-
-/***/ },
-/* 38 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var DOMNamespaces = {
-	  html: 'http://www.w3.org/1999/xhtml',
-	  mathml: 'http://www.w3.org/1998/Math/MathML',
-	  svg: 'http://www.w3.org/2000/svg'
-	};
-	
-	module.exports = DOMNamespaces;
-
-/***/ },
-/* 39 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-	
-	'use strict';
-	
-	var _prodInvariant = __webpack_require__(3);
-	
-	var invariant = __webpack_require__(1);
-	
-	/**
-	 * Injectable ordering of event plugins.
-	 */
-	var eventPluginOrder = null;
-	
-	/**
-	 * Injectable mapping from names to event plugin modules.
-	 */
-	var namesToPlugins = {};
-	
-	/**
-	 * Recomputes the plugin list using the injected plugins and plugin ordering.
-	 *
-	 * @private
-	 */
-	function recomputePluginOrdering() {
-	  if (!eventPluginOrder) {
-	    // Wait until an `eventPluginOrder` is injected.
-	    return;
-	  }
-	  for (var pluginName in namesToPlugins) {
-	    var pluginModule = namesToPlugins[pluginName];
-	    var pluginIndex = eventPluginOrder.indexOf(pluginName);
-	    !(pluginIndex > -1) ?  false ? invariant(false, 'EventPluginRegistry: Cannot inject event plugins that do not exist in the plugin ordering, `%s`.', pluginName) : _prodInvariant('96', pluginName) : void 0;
-	    if (EventPluginRegistry.plugins[pluginIndex]) {
-	      continue;
-	    }
-	    !pluginModule.extractEvents ?  false ? invariant(false, 'EventPluginRegistry: Event plugins must implement an `extractEvents` method, but `%s` does not.', pluginName) : _prodInvariant('97', pluginName) : void 0;
-	    EventPluginRegistry.plugins[pluginIndex] = pluginModule;
-	    var publishedEvents = pluginModule.eventTypes;
-	    for (var eventName in publishedEvents) {
-	      !publishEventForPlugin(publishedEvents[eventName], pluginModule, eventName) ?  false ? invariant(false, 'EventPluginRegistry: Failed to publish event `%s` for plugin `%s`.', eventName, pluginName) : _prodInvariant('98', eventName, pluginName) : void 0;
-	    }
-	  }
-	}
-	
-	/**
-	 * Publishes an event so that it can be dispatched by the supplied plugin.
-	 *
-	 * @param {object} dispatchConfig Dispatch configuration for the event.
-	 * @param {object} PluginModule Plugin publishing the event.
-	 * @return {boolean} True if the event was successfully published.
-	 * @private
-	 */
-	function publishEventForPlugin(dispatchConfig, pluginModule, eventName) {
-	  !!EventPluginRegistry.eventNameDispatchConfigs.hasOwnProperty(eventName) ?  false ? invariant(false, 'EventPluginHub: More than one plugin attempted to publish the same event name, `%s`.', eventName) : _prodInvariant('99', eventName) : void 0;
-	  EventPluginRegistry.eventNameDispatchConfigs[eventName] = dispatchConfig;
-	
-	  var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
-	  if (phasedRegistrationNames) {
-	    for (var phaseName in phasedRegistrationNames) {
-	      if (phasedRegistrationNames.hasOwnProperty(phaseName)) {
-	        var phasedRegistrationName = phasedRegistrationNames[phaseName];
-	        publishRegistrationName(phasedRegistrationName, pluginModule, eventName);
-	      }
-	    }
-	    return true;
-	  } else if (dispatchConfig.registrationName) {
-	    publishRegistrationName(dispatchConfig.registrationName, pluginModule, eventName);
-	    return true;
-	  }
-	  return false;
-	}
-	
-	/**
-	 * Publishes a registration name that is used to identify dispatched events and
-	 * can be used with `EventPluginHub.putListener` to register listeners.
-	 *
-	 * @param {string} registrationName Registration name to add.
-	 * @param {object} PluginModule Plugin publishing the event.
-	 * @private
-	 */
-	function publishRegistrationName(registrationName, pluginModule, eventName) {
-	  !!EventPluginRegistry.registrationNameModules[registrationName] ?  false ? invariant(false, 'EventPluginHub: More than one plugin attempted to publish the same registration name, `%s`.', registrationName) : _prodInvariant('100', registrationName) : void 0;
-	  EventPluginRegistry.registrationNameModules[registrationName] = pluginModule;
-	  EventPluginRegistry.registrationNameDependencies[registrationName] = pluginModule.eventTypes[eventName].dependencies;
-	
-	  if (false) {
-	    var lowerCasedName = registrationName.toLowerCase();
-	    EventPluginRegistry.possibleRegistrationNames[lowerCasedName] = registrationName;
-	
-	    if (registrationName === 'onDoubleClick') {
-	      EventPluginRegistry.possibleRegistrationNames.ondblclick = registrationName;
-	    }
-	  }
-	}
-	
-	/**
-	 * Registers plugins so that they can extract and dispatch events.
-	 *
-	 * @see {EventPluginHub}
-	 */
-	var EventPluginRegistry = {
-	
-	  /**
-	   * Ordered list of injected plugins.
-	   */
-	  plugins: [],
-	
-	  /**
-	   * Mapping from event name to dispatch config
-	   */
-	  eventNameDispatchConfigs: {},
-	
-	  /**
-	   * Mapping from registration name to plugin module
-	   */
-	  registrationNameModules: {},
-	
-	  /**
-	   * Mapping from registration name to event name
-	   */
-	  registrationNameDependencies: {},
-	
-	  /**
-	   * Mapping from lowercase registration names to the properly cased version,
-	   * used to warn in the case of missing event handlers. Available
-	   * only in __DEV__.
-	   * @type {Object}
-	   */
-	  possibleRegistrationNames:  false ? {} : null,
-	  // Trust the developer to only use possibleRegistrationNames in __DEV__
-	
-	  /**
-	   * Injects an ordering of plugins (by plugin name). This allows the ordering
-	   * to be decoupled from injection of the actual plugins so that ordering is
-	   * always deterministic regardless of packaging, on-the-fly injection, etc.
-	   *
-	   * @param {array} InjectedEventPluginOrder
-	   * @internal
-	   * @see {EventPluginHub.injection.injectEventPluginOrder}
-	   */
-	  injectEventPluginOrder: function (injectedEventPluginOrder) {
-	    !!eventPluginOrder ?  false ? invariant(false, 'EventPluginRegistry: Cannot inject event plugin ordering more than once. You are likely trying to load more than one copy of React.') : _prodInvariant('101') : void 0;
-	    // Clone the ordering so it cannot be dynamically mutated.
-	    eventPluginOrder = Array.prototype.slice.call(injectedEventPluginOrder);
-	    recomputePluginOrdering();
-	  },
-	
-	  /**
-	   * Injects plugins to be used by `EventPluginHub`. The plugin names must be
-	   * in the ordering injected by `injectEventPluginOrder`.
-	   *
-	   * Plugins can be injected as part of page initialization or on-the-fly.
-	   *
-	   * @param {object} injectedNamesToPlugins Map from names to plugin modules.
-	   * @internal
-	   * @see {EventPluginHub.injection.injectEventPluginsByName}
-	   */
-	  injectEventPluginsByName: function (injectedNamesToPlugins) {
-	    var isOrderingDirty = false;
-	    for (var pluginName in injectedNamesToPlugins) {
-	      if (!injectedNamesToPlugins.hasOwnProperty(pluginName)) {
-	        continue;
-	      }
-	      var pluginModule = injectedNamesToPlugins[pluginName];
-	      if (!namesToPlugins.hasOwnProperty(pluginName) || namesToPlugins[pluginName] !== pluginModule) {
-	        !!namesToPlugins[pluginName] ?  false ? invariant(false, 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `%s`.', pluginName) : _prodInvariant('102', pluginName) : void 0;
-	        namesToPlugins[pluginName] = pluginModule;
-	        isOrderingDirty = true;
-	      }
-	    }
-	    if (isOrderingDirty) {
-	      recomputePluginOrdering();
-	    }
-	  },
-	
-	  /**
-	   * Looks up the plugin for the supplied event.
-	   *
-	   * @param {object} event A synthetic event.
-	   * @return {?object} The plugin that created the supplied event.
-	   * @internal
-	   */
-	  getPluginModuleForEvent: function (event) {
-	    var dispatchConfig = event.dispatchConfig;
-	    if (dispatchConfig.registrationName) {
-	      return EventPluginRegistry.registrationNameModules[dispatchConfig.registrationName] || null;
-	    }
-	    if (dispatchConfig.phasedRegistrationNames !== undefined) {
-	      // pulling phasedRegistrationNames out of dispatchConfig helps Flow see
-	      // that it is not undefined.
-	      var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
-	
-	      for (var phase in phasedRegistrationNames) {
-	        if (!phasedRegistrationNames.hasOwnProperty(phase)) {
-	          continue;
-	        }
-	        var pluginModule = EventPluginRegistry.registrationNameModules[phasedRegistrationNames[phase]];
-	        if (pluginModule) {
-	          return pluginModule;
-	        }
-	      }
-	    }
-	    return null;
-	  },
-	
-	  /**
-	   * Exposed for unit testing.
-	   * @private
-	   */
-	  _resetEventPlugins: function () {
-	    eventPluginOrder = null;
-	    for (var pluginName in namesToPlugins) {
-	      if (namesToPlugins.hasOwnProperty(pluginName)) {
-	        delete namesToPlugins[pluginName];
-	      }
-	    }
-	    EventPluginRegistry.plugins.length = 0;
-	
-	    var eventNameDispatchConfigs = EventPluginRegistry.eventNameDispatchConfigs;
-	    for (var eventName in eventNameDispatchConfigs) {
-	      if (eventNameDispatchConfigs.hasOwnProperty(eventName)) {
-	        delete eventNameDispatchConfigs[eventName];
-	      }
-	    }
-	
-	    var registrationNameModules = EventPluginRegistry.registrationNameModules;
-	    for (var registrationName in registrationNameModules) {
-	      if (registrationNameModules.hasOwnProperty(registrationName)) {
-	        delete registrationNameModules[registrationName];
-	      }
-	    }
-	
-	    if (false) {
-	      var possibleRegistrationNames = EventPluginRegistry.possibleRegistrationNames;
-	      for (var lowerCasedName in possibleRegistrationNames) {
-	        if (possibleRegistrationNames.hasOwnProperty(lowerCasedName)) {
-	          delete possibleRegistrationNames[lowerCasedName];
-	        }
-	      }
-	    }
-	  }
-	
-	};
-	
-	module.exports = EventPluginRegistry;
-
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var _prodInvariant = __webpack_require__(3);
-	
-	var ReactErrorUtils = __webpack_require__(44);
-	
-	var invariant = __webpack_require__(1);
-	var warning = __webpack_require__(2);
-	
-	/**
-	 * Injected dependencies:
-	 */
-	
-	/**
-	 * - `ComponentTree`: [required] Module that can convert between React instances
-	 *   and actual node references.
-	 */
-	var ComponentTree;
-	var TreeTraversal;
-	var injection = {
-	  injectComponentTree: function (Injected) {
-	    ComponentTree = Injected;
-	    if (false) {
-	      process.env.NODE_ENV !== 'production' ? warning(Injected && Injected.getNodeFromInstance && Injected.getInstanceFromNode, 'EventPluginUtils.injection.injectComponentTree(...): Injected ' + 'module is missing getNodeFromInstance or getInstanceFromNode.') : void 0;
-	    }
-	  },
-	  injectTreeTraversal: function (Injected) {
-	    TreeTraversal = Injected;
-	    if (false) {
-	      process.env.NODE_ENV !== 'production' ? warning(Injected && Injected.isAncestor && Injected.getLowestCommonAncestor, 'EventPluginUtils.injection.injectTreeTraversal(...): Injected ' + 'module is missing isAncestor or getLowestCommonAncestor.') : void 0;
-	    }
-	  }
-	};
-	
-	function isEndish(topLevelType) {
-	  return topLevelType === 'topMouseUp' || topLevelType === 'topTouchEnd' || topLevelType === 'topTouchCancel';
-	}
-	
-	function isMoveish(topLevelType) {
-	  return topLevelType === 'topMouseMove' || topLevelType === 'topTouchMove';
-	}
-	function isStartish(topLevelType) {
-	  return topLevelType === 'topMouseDown' || topLevelType === 'topTouchStart';
-	}
-	
-	var validateEventDispatches;
-	if (false) {
-	  validateEventDispatches = function (event) {
-	    var dispatchListeners = event._dispatchListeners;
-	    var dispatchInstances = event._dispatchInstances;
-	
-	    var listenersIsArr = Array.isArray(dispatchListeners);
-	    var listenersLen = listenersIsArr ? dispatchListeners.length : dispatchListeners ? 1 : 0;
-	
-	    var instancesIsArr = Array.isArray(dispatchInstances);
-	    var instancesLen = instancesIsArr ? dispatchInstances.length : dispatchInstances ? 1 : 0;
-	
-	    process.env.NODE_ENV !== 'production' ? warning(instancesIsArr === listenersIsArr && instancesLen === listenersLen, 'EventPluginUtils: Invalid `event`.') : void 0;
-	  };
-	}
-	
-	/**
-	 * Dispatch the event to the listener.
-	 * @param {SyntheticEvent} event SyntheticEvent to handle
-	 * @param {boolean} simulated If the event is simulated (changes exn behavior)
-	 * @param {function} listener Application-level callback
-	 * @param {*} inst Internal component instance
-	 */
-	function executeDispatch(event, simulated, listener, inst) {
-	  var type = event.type || 'unknown-event';
-	  event.currentTarget = EventPluginUtils.getNodeFromInstance(inst);
-	  if (simulated) {
-	    ReactErrorUtils.invokeGuardedCallbackWithCatch(type, listener, event);
-	  } else {
-	    ReactErrorUtils.invokeGuardedCallback(type, listener, event);
-	  }
-	  event.currentTarget = null;
-	}
-	
-	/**
-	 * Standard/simple iteration through an event's collected dispatches.
-	 */
-	function executeDispatchesInOrder(event, simulated) {
-	  var dispatchListeners = event._dispatchListeners;
-	  var dispatchInstances = event._dispatchInstances;
-	  if (false) {
-	    validateEventDispatches(event);
-	  }
-	  if (Array.isArray(dispatchListeners)) {
-	    for (var i = 0; i < dispatchListeners.length; i++) {
-	      if (event.isPropagationStopped()) {
-	        break;
-	      }
-	      // Listeners and Instances are two parallel arrays that are always in sync.
-	      executeDispatch(event, simulated, dispatchListeners[i], dispatchInstances[i]);
-	    }
-	  } else if (dispatchListeners) {
-	    executeDispatch(event, simulated, dispatchListeners, dispatchInstances);
-	  }
-	  event._dispatchListeners = null;
-	  event._dispatchInstances = null;
-	}
-	
-	/**
-	 * Standard/simple iteration through an event's collected dispatches, but stops
-	 * at the first dispatch execution returning true, and returns that id.
-	 *
-	 * @return {?string} id of the first dispatch execution who's listener returns
-	 * true, or null if no listener returned true.
-	 */
-	function executeDispatchesInOrderStopAtTrueImpl(event) {
-	  var dispatchListeners = event._dispatchListeners;
-	  var dispatchInstances = event._dispatchInstances;
-	  if (false) {
-	    validateEventDispatches(event);
-	  }
-	  if (Array.isArray(dispatchListeners)) {
-	    for (var i = 0; i < dispatchListeners.length; i++) {
-	      if (event.isPropagationStopped()) {
-	        break;
-	      }
-	      // Listeners and Instances are two parallel arrays that are always in sync.
-	      if (dispatchListeners[i](event, dispatchInstances[i])) {
-	        return dispatchInstances[i];
-	      }
-	    }
-	  } else if (dispatchListeners) {
-	    if (dispatchListeners(event, dispatchInstances)) {
-	      return dispatchInstances;
-	    }
-	  }
-	  return null;
-	}
-	
-	/**
-	 * @see executeDispatchesInOrderStopAtTrueImpl
-	 */
-	function executeDispatchesInOrderStopAtTrue(event) {
-	  var ret = executeDispatchesInOrderStopAtTrueImpl(event);
-	  event._dispatchInstances = null;
-	  event._dispatchListeners = null;
-	  return ret;
-	}
-	
-	/**
-	 * Execution of a "direct" dispatch - there must be at most one dispatch
-	 * accumulated on the event or it is considered an error. It doesn't really make
-	 * sense for an event with multiple dispatches (bubbled) to keep track of the
-	 * return values at each dispatch execution, but it does tend to make sense when
-	 * dealing with "direct" dispatches.
-	 *
-	 * @return {*} The return value of executing the single dispatch.
-	 */
-	function executeDirectDispatch(event) {
-	  if (false) {
-	    validateEventDispatches(event);
-	  }
-	  var dispatchListener = event._dispatchListeners;
-	  var dispatchInstance = event._dispatchInstances;
-	  !!Array.isArray(dispatchListener) ?  false ? invariant(false, 'executeDirectDispatch(...): Invalid `event`.') : _prodInvariant('103') : void 0;
-	  event.currentTarget = dispatchListener ? EventPluginUtils.getNodeFromInstance(dispatchInstance) : null;
-	  var res = dispatchListener ? dispatchListener(event) : null;
-	  event.currentTarget = null;
-	  event._dispatchListeners = null;
-	  event._dispatchInstances = null;
-	  return res;
-	}
-	
-	/**
-	 * @param {SyntheticEvent} event
-	 * @return {boolean} True iff number of dispatches accumulated is greater than 0.
-	 */
-	function hasDispatches(event) {
-	  return !!event._dispatchListeners;
-	}
-	
-	/**
-	 * General utilities that are useful in creating custom Event Plugins.
-	 */
-	var EventPluginUtils = {
-	  isEndish: isEndish,
-	  isMoveish: isMoveish,
-	  isStartish: isStartish,
-	
-	  executeDirectDispatch: executeDirectDispatch,
-	  executeDispatchesInOrder: executeDispatchesInOrder,
-	  executeDispatchesInOrderStopAtTrue: executeDispatchesInOrderStopAtTrue,
-	  hasDispatches: hasDispatches,
-	
-	  getInstanceFromNode: function (node) {
-	    return ComponentTree.getInstanceFromNode(node);
-	  },
-	  getNodeFromInstance: function (node) {
-	    return ComponentTree.getNodeFromInstance(node);
-	  },
-	  isAncestor: function (a, b) {
-	    return TreeTraversal.isAncestor(a, b);
-	  },
-	  getLowestCommonAncestor: function (a, b) {
-	    return TreeTraversal.getLowestCommonAncestor(a, b);
-	  },
-	  getParentInstance: function (inst) {
-	    return TreeTraversal.getParentInstance(inst);
-	  },
-	  traverseTwoPhase: function (target, fn, arg) {
-	    return TreeTraversal.traverseTwoPhase(target, fn, arg);
-	  },
-	  traverseEnterLeave: function (from, to, fn, argFrom, argTo) {
-	    return TreeTraversal.traverseEnterLeave(from, to, fn, argFrom, argTo);
-	  },
-	
-	  injection: injection
-	};
-	
-	module.exports = EventPluginUtils;
-
-/***/ },
-/* 41 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-	
-	'use strict';
-	
-	/**
-	 * Escape and wrap key so it is safe to use as a reactid
-	 *
-	 * @param {string} key to be escaped.
-	 * @return {string} the escaped key.
-	 */
-	
-	function escape(key) {
-	  var escapeRegex = /[=:]/g;
-	  var escaperLookup = {
-	    '=': '=0',
-	    ':': '=2'
-	  };
-	  var escapedString = ('' + key).replace(escapeRegex, function (match) {
-	    return escaperLookup[match];
-	  });
-	
-	  return '$' + escapedString;
-	}
-	
-	/**
-	 * Unescape and unwrap key for human-readable display
-	 *
-	 * @param {string} key to unescape.
-	 * @return {string} the unescaped key.
-	 */
-	function unescape(key) {
-	  var unescapeRegex = /(=0|=2)/g;
-	  var unescaperLookup = {
-	    '=0': '=',
-	    '=2': ':'
-	  };
-	  var keySubstring = key[0] === '.' && key[1] === '$' ? key.substring(2) : key.substring(1);
-	
-	  return ('' + keySubstring).replace(unescapeRegex, function (match) {
-	    return unescaperLookup[match];
-	  });
-	}
-	
-	var KeyEscapeUtils = {
-	  escape: escape,
-	  unescape: unescape
-	};
-	
-	module.exports = KeyEscapeUtils;
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var _prodInvariant = __webpack_require__(3);
-	
-	var ReactPropTypesSecret = __webpack_require__(185);
-	var propTypesFactory = __webpack_require__(63);
-	
-	var React = __webpack_require__(18);
-	var PropTypes = propTypesFactory(React.isValidElement);
-	
-	var invariant = __webpack_require__(1);
-	var warning = __webpack_require__(2);
-	
-	var hasReadOnlyValue = {
-	  'button': true,
-	  'checkbox': true,
-	  'image': true,
-	  'hidden': true,
-	  'radio': true,
-	  'reset': true,
-	  'submit': true
-	};
-	
-	function _assertSingleLink(inputProps) {
-	  !(inputProps.checkedLink == null || inputProps.valueLink == null) ?  false ? invariant(false, 'Cannot provide a checkedLink and a valueLink. If you want to use checkedLink, you probably don\'t want to use valueLink and vice versa.') : _prodInvariant('87') : void 0;
-	}
-	function _assertValueLink(inputProps) {
-	  _assertSingleLink(inputProps);
-	  !(inputProps.value == null && inputProps.onChange == null) ?  false ? invariant(false, 'Cannot provide a valueLink and a value or onChange event. If you want to use value or onChange, you probably don\'t want to use valueLink.') : _prodInvariant('88') : void 0;
-	}
-	
-	function _assertCheckedLink(inputProps) {
-	  _assertSingleLink(inputProps);
-	  !(inputProps.checked == null && inputProps.onChange == null) ?  false ? invariant(false, 'Cannot provide a checkedLink and a checked property or onChange event. If you want to use checked or onChange, you probably don\'t want to use checkedLink') : _prodInvariant('89') : void 0;
-	}
-	
-	var propTypes = {
-	  value: function (props, propName, componentName) {
-	    if (!props[propName] || hasReadOnlyValue[props.type] || props.onChange || props.readOnly || props.disabled) {
-	      return null;
-	    }
-	    return new Error('You provided a `value` prop to a form field without an ' + '`onChange` handler. This will render a read-only field. If ' + 'the field should be mutable use `defaultValue`. Otherwise, ' + 'set either `onChange` or `readOnly`.');
-	  },
-	  checked: function (props, propName, componentName) {
-	    if (!props[propName] || props.onChange || props.readOnly || props.disabled) {
-	      return null;
-	    }
-	    return new Error('You provided a `checked` prop to a form field without an ' + '`onChange` handler. This will render a read-only field. If ' + 'the field should be mutable use `defaultChecked`. Otherwise, ' + 'set either `onChange` or `readOnly`.');
-	  },
-	  onChange: PropTypes.func
-	};
-	
-	var loggedTypeFailures = {};
-	function getDeclarationErrorAddendum(owner) {
-	  if (owner) {
-	    var name = owner.getName();
-	    if (name) {
-	      return ' Check the render method of `' + name + '`.';
-	    }
-	  }
-	  return '';
-	}
-	
-	/**
-	 * Provide a linked `value` attribute for controlled forms. You should not use
-	 * this outside of the ReactDOM controlled form components.
-	 */
-	var LinkedValueUtils = {
-	  checkPropTypes: function (tagName, props, owner) {
-	    for (var propName in propTypes) {
-	      if (propTypes.hasOwnProperty(propName)) {
-	        var error = propTypes[propName](props, propName, tagName, 'prop', null, ReactPropTypesSecret);
-	      }
-	      if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-	        // Only monitor this failure once because there tends to be a lot of the
-	        // same error.
-	        loggedTypeFailures[error.message] = true;
-	
-	        var addendum = getDeclarationErrorAddendum(owner);
-	         false ? warning(false, 'Failed form propType: %s%s', error.message, addendum) : void 0;
-	      }
-	    }
-	  },
-	
-	  /**
-	   * @param {object} inputProps Props for form component
-	   * @return {*} current value of the input either from value prop or link.
-	   */
-	  getValue: function (inputProps) {
-	    if (inputProps.valueLink) {
-	      _assertValueLink(inputProps);
-	      return inputProps.valueLink.value;
-	    }
-	    return inputProps.value;
-	  },
-	
-	  /**
-	   * @param {object} inputProps Props for form component
-	   * @return {*} current checked status of the input either from checked prop
-	   *             or link.
-	   */
-	  getChecked: function (inputProps) {
-	    if (inputProps.checkedLink) {
-	      _assertCheckedLink(inputProps);
-	      return inputProps.checkedLink.value;
-	    }
-	    return inputProps.checked;
-	  },
-	
-	  /**
-	   * @param {object} inputProps Props for form component
-	   * @param {SyntheticEvent} event change event to handle
-	   */
-	  executeOnChange: function (inputProps, event) {
-	    if (inputProps.valueLink) {
-	      _assertValueLink(inputProps);
-	      return inputProps.valueLink.requestChange(event.target.value);
-	    } else if (inputProps.checkedLink) {
-	      _assertCheckedLink(inputProps);
-	      return inputProps.checkedLink.requestChange(event.target.checked);
-	    } else if (inputProps.onChange) {
-	      return inputProps.onChange.call(undefined, event);
-	    }
-	  }
-	};
-	
-	module.exports = LinkedValueUtils;
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2014-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-	
-	'use strict';
-	
-	var _prodInvariant = __webpack_require__(3);
-	
-	var invariant = __webpack_require__(1);
-	
-	var injected = false;
-	
-	var ReactComponentEnvironment = {
-	
-	  /**
-	   * Optionally injectable hook for swapping out mount images in the middle of
-	   * the tree.
-	   */
-	  replaceNodeWithMarkup: null,
-	
-	  /**
-	   * Optionally injectable hook for processing a queue of child updates. Will
-	   * later move into MultiChildComponents.
-	   */
-	  processChildrenUpdates: null,
-	
-	  injection: {
-	    injectEnvironment: function (environment) {
-	      !!injected ?  false ? invariant(false, 'ReactCompositeComponent: injectEnvironment() can only be called once.') : _prodInvariant('104') : void 0;
-	      ReactComponentEnvironment.replaceNodeWithMarkup = environment.replaceNodeWithMarkup;
-	      ReactComponentEnvironment.processChildrenUpdates = environment.processChildrenUpdates;
-	      injected = true;
-	    }
-	  }
-	
-	};
-	
-	module.exports = ReactComponentEnvironment;
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-	
-	'use strict';
-	
-	var caughtError = null;
-	
-	/**
-	 * Call a function while guarding against errors that happens within it.
-	 *
-	 * @param {String} name of the guard to use for logging or debugging
-	 * @param {Function} func The function to invoke
-	 * @param {*} a First argument
-	 * @param {*} b Second argument
-	 */
-	function invokeGuardedCallback(name, func, a) {
-	  try {
-	    func(a);
-	  } catch (x) {
-	    if (caughtError === null) {
-	      caughtError = x;
-	    }
-	  }
-	}
-	
-	var ReactErrorUtils = {
-	  invokeGuardedCallback: invokeGuardedCallback,
-	
-	  /**
-	   * Invoked by ReactTestUtils.Simulate so that any errors thrown by the event
-	   * handler are sure to be rethrown by rethrowCaughtError.
-	   */
-	  invokeGuardedCallbackWithCatch: invokeGuardedCallback,
-	
-	  /**
-	   * During execution of guarded functions we will capture the first error which
-	   * we will rethrow to be handled by the top level error handler.
-	   */
-	  rethrowCaughtError: function () {
-	    if (caughtError) {
-	      var error = caughtError;
-	      caughtError = null;
-	      throw error;
-	    }
-	  }
-	};
-	
-	if (false) {
-	  /**
-	   * To help development we can get better devtools integration by simulating a
-	   * real browser event.
-	   */
-	  if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof document !== 'undefined' && typeof document.createEvent === 'function') {
-	    var fakeNode = document.createElement('react');
-	    ReactErrorUtils.invokeGuardedCallback = function (name, func, a) {
-	      var boundFunc = func.bind(null, a);
-	      var evtType = 'react-' + name;
-	      fakeNode.addEventListener(evtType, boundFunc, false);
-	      var evt = document.createEvent('Event');
-	      evt.initEvent(evtType, false, false);
-	      fakeNode.dispatchEvent(evt);
-	      fakeNode.removeEventListener(evtType, boundFunc, false);
-	    };
-	  }
-	}
-	
-	module.exports = ReactErrorUtils;
-
-/***/ },
-/* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2015-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var _prodInvariant = __webpack_require__(3);
-	
-	var ReactCurrentOwner = __webpack_require__(13);
-	var ReactInstanceMap = __webpack_require__(26);
-	var ReactInstrumentation = __webpack_require__(8);
-	var ReactUpdates = __webpack_require__(10);
-	
-	var invariant = __webpack_require__(1);
-	var warning = __webpack_require__(2);
-	
-	function enqueueUpdate(internalInstance) {
-	  ReactUpdates.enqueueUpdate(internalInstance);
-	}
-	
-	function formatUnexpectedArgument(arg) {
-	  var type = typeof arg;
-	  if (type !== 'object') {
-	    return type;
-	  }
-	  var displayName = arg.constructor && arg.constructor.name || type;
-	  var keys = Object.keys(arg);
-	  if (keys.length > 0 && keys.length < 20) {
-	    return displayName + ' (keys: ' + keys.join(', ') + ')';
-	  }
-	  return displayName;
-	}
-	
-	function getInternalInstanceReadyForUpdate(publicInstance, callerName) {
-	  var internalInstance = ReactInstanceMap.get(publicInstance);
-	  if (!internalInstance) {
-	    if (false) {
-	      var ctor = publicInstance.constructor;
-	      // Only warn when we have a callerName. Otherwise we should be silent.
-	      // We're probably calling from enqueueCallback. We don't want to warn
-	      // there because we already warned for the corresponding lifecycle method.
-	      process.env.NODE_ENV !== 'production' ? warning(!callerName, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, ctor && (ctor.displayName || ctor.name) || 'ReactClass') : void 0;
-	    }
-	    return null;
-	  }
-	
-	  if (false) {
-	    process.env.NODE_ENV !== 'production' ? warning(ReactCurrentOwner.current == null, '%s(...): Cannot update during an existing state transition (such as ' + 'within `render` or another component\'s constructor). Render methods ' + 'should be a pure function of props and state; constructor ' + 'side-effects are an anti-pattern, but can be moved to ' + '`componentWillMount`.', callerName) : void 0;
-	  }
-	
-	  return internalInstance;
-	}
-	
-	/**
-	 * ReactUpdateQueue allows for state updates to be scheduled into a later
-	 * reconciliation step.
-	 */
-	var ReactUpdateQueue = {
-	
-	  /**
-	   * Checks whether or not this composite component is mounted.
-	   * @param {ReactClass} publicInstance The instance we want to test.
-	   * @return {boolean} True if mounted, false otherwise.
-	   * @protected
-	   * @final
-	   */
-	  isMounted: function (publicInstance) {
-	    if (false) {
-	      var owner = ReactCurrentOwner.current;
-	      if (owner !== null) {
-	        process.env.NODE_ENV !== 'production' ? warning(owner._warnedAboutRefsInRender, '%s is accessing isMounted inside its render() function. ' + 'render() should be a pure function of props and state. It should ' + 'never access something that requires stale data from the previous ' + 'render, such as refs. Move this logic to componentDidMount and ' + 'componentDidUpdate instead.', owner.getName() || 'A component') : void 0;
-	        owner._warnedAboutRefsInRender = true;
-	      }
-	    }
-	    var internalInstance = ReactInstanceMap.get(publicInstance);
-	    if (internalInstance) {
-	      // During componentWillMount and render this will still be null but after
-	      // that will always render to something. At least for now. So we can use
-	      // this hack.
-	      return !!internalInstance._renderedComponent;
-	    } else {
-	      return false;
-	    }
-	  },
-	
-	  /**
-	   * Enqueue a callback that will be executed after all the pending updates
-	   * have processed.
-	   *
-	   * @param {ReactClass} publicInstance The instance to use as `this` context.
-	   * @param {?function} callback Called after state is updated.
-	   * @param {string} callerName Name of the calling function in the public API.
-	   * @internal
-	   */
-	  enqueueCallback: function (publicInstance, callback, callerName) {
-	    ReactUpdateQueue.validateCallback(callback, callerName);
-	    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance);
-	
-	    // Previously we would throw an error if we didn't have an internal
-	    // instance. Since we want to make it a no-op instead, we mirror the same
-	    // behavior we have in other enqueue* methods.
-	    // We also need to ignore callbacks in componentWillMount. See
-	    // enqueueUpdates.
-	    if (!internalInstance) {
-	      return null;
-	    }
-	
-	    if (internalInstance._pendingCallbacks) {
-	      internalInstance._pendingCallbacks.push(callback);
-	    } else {
-	      internalInstance._pendingCallbacks = [callback];
-	    }
-	    // TODO: The callback here is ignored when setState is called from
-	    // componentWillMount. Either fix it or disallow doing so completely in
-	    // favor of getInitialState. Alternatively, we can disallow
-	    // componentWillMount during server-side rendering.
-	    enqueueUpdate(internalInstance);
-	  },
-	
-	  enqueueCallbackInternal: function (internalInstance, callback) {
-	    if (internalInstance._pendingCallbacks) {
-	      internalInstance._pendingCallbacks.push(callback);
-	    } else {
-	      internalInstance._pendingCallbacks = [callback];
-	    }
-	    enqueueUpdate(internalInstance);
-	  },
-	
-	  /**
-	   * Forces an update. This should only be invoked when it is known with
-	   * certainty that we are **not** in a DOM transaction.
-	   *
-	   * You may want to call this when you know that some deeper aspect of the
-	   * component's state has changed but `setState` was not called.
-	   *
-	   * This will not invoke `shouldComponentUpdate`, but it will invoke
-	   * `componentWillUpdate` and `componentDidUpdate`.
-	   *
-	   * @param {ReactClass} publicInstance The instance that should rerender.
-	   * @internal
-	   */
-	  enqueueForceUpdate: function (publicInstance) {
-	    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'forceUpdate');
-	
-	    if (!internalInstance) {
-	      return;
-	    }
-	
-	    internalInstance._pendingForceUpdate = true;
-	
-	    enqueueUpdate(internalInstance);
-	  },
-	
-	  /**
-	   * Replaces all of the state. Always use this or `setState` to mutate state.
-	   * You should treat `this.state` as immutable.
-	   *
-	   * There is no guarantee that `this.state` will be immediately updated, so
-	   * accessing `this.state` after calling this method may return the old value.
-	   *
-	   * @param {ReactClass} publicInstance The instance that should rerender.
-	   * @param {object} completeState Next state.
-	   * @internal
-	   */
-	  enqueueReplaceState: function (publicInstance, completeState, callback) {
-	    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'replaceState');
-	
-	    if (!internalInstance) {
-	      return;
-	    }
-	
-	    internalInstance._pendingStateQueue = [completeState];
-	    internalInstance._pendingReplaceState = true;
-	
-	    // Future-proof 15.5
-	    if (callback !== undefined && callback !== null) {
-	      ReactUpdateQueue.validateCallback(callback, 'replaceState');
-	      if (internalInstance._pendingCallbacks) {
-	        internalInstance._pendingCallbacks.push(callback);
-	      } else {
-	        internalInstance._pendingCallbacks = [callback];
-	      }
-	    }
-	
-	    enqueueUpdate(internalInstance);
-	  },
-	
-	  /**
-	   * Sets a subset of the state. This only exists because _pendingState is
-	   * internal. This provides a merging strategy that is not available to deep
-	   * properties which is confusing. TODO: Expose pendingState or don't use it
-	   * during the merge.
-	   *
-	   * @param {ReactClass} publicInstance The instance that should rerender.
-	   * @param {object} partialState Next partial state to be merged with state.
-	   * @internal
-	   */
-	  enqueueSetState: function (publicInstance, partialState) {
-	    if (false) {
-	      ReactInstrumentation.debugTool.onSetState();
-	      process.env.NODE_ENV !== 'production' ? warning(partialState != null, 'setState(...): You passed an undefined or null state object; ' + 'instead, use forceUpdate().') : void 0;
-	    }
-	
-	    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'setState');
-	
-	    if (!internalInstance) {
-	      return;
-	    }
-	
-	    var queue = internalInstance._pendingStateQueue || (internalInstance._pendingStateQueue = []);
-	    queue.push(partialState);
-	
-	    enqueueUpdate(internalInstance);
-	  },
-	
-	  enqueueElementInternal: function (internalInstance, nextElement, nextContext) {
-	    internalInstance._pendingElement = nextElement;
-	    // TODO: introduce _pendingContext instead of setting it directly.
-	    internalInstance._context = nextContext;
-	    enqueueUpdate(internalInstance);
-	  },
-	
-	  validateCallback: function (callback, callerName) {
-	    !(!callback || typeof callback === 'function') ?  false ? invariant(false, '%s(...): Expected the last optional `callback` argument to be a function. Instead received: %s.', callerName, formatUnexpectedArgument(callback)) : _prodInvariant('122', callerName, formatUnexpectedArgument(callback)) : void 0;
-	  }
-	
-	};
-	
-	module.exports = ReactUpdateQueue;
-
-/***/ },
-/* 46 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	/* globals MSApp */
-	
-	'use strict';
-	
-	/**
-	 * Create a function which has 'unsafe' privileges (required by windows8 apps)
-	 */
-	
-	var createMicrosoftUnsafeLocalFunction = function (func) {
-	  if (typeof MSApp !== 'undefined' && MSApp.execUnsafeLocalFunction) {
-	    return function (arg0, arg1, arg2, arg3) {
-	      MSApp.execUnsafeLocalFunction(function () {
-	        return func(arg0, arg1, arg2, arg3);
-	      });
-	    };
-	  } else {
-	    return func;
-	  }
-	};
-	
-	module.exports = createMicrosoftUnsafeLocalFunction;
-
-/***/ },
-/* 47 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	/**
-	 * `charCode` represents the actual "character code" and is safe to use with
-	 * `String.fromCharCode`. As such, only keys that correspond to printable
-	 * characters produce a valid `charCode`, the only exception to this is Enter.
-	 * The Tab-key is considered non-printable and does not have a `charCode`,
-	 * presumably because it does not produce a tab-character in browsers.
-	 *
-	 * @param {object} nativeEvent Native browser event.
-	 * @return {number} Normalized `charCode` property.
-	 */
-	
-	function getEventCharCode(nativeEvent) {
-	  var charCode;
-	  var keyCode = nativeEvent.keyCode;
-	
-	  if ('charCode' in nativeEvent) {
-	    charCode = nativeEvent.charCode;
-	
-	    // FF does not set `charCode` for the Enter-key, check against `keyCode`.
-	    if (charCode === 0 && keyCode === 13) {
-	      charCode = 13;
-	    }
-	  } else {
-	    // IE8 does not implement `charCode`, but `keyCode` has the correct value.
-	    charCode = keyCode;
-	  }
-	
-	  // Some non-printable keys are reported in `charCode`/`keyCode`, discard them.
-	  // Must not discard the (non-)printable Enter-key.
-	  if (charCode >= 32 || charCode === 13) {
-	    return charCode;
-	  }
-	
-	  return 0;
-	}
-	
-	module.exports = getEventCharCode;
-
-/***/ },
-/* 48 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	/**
-	 * Translation from modifier key to the associated property in the event.
-	 * @see http://www.w3.org/TR/DOM-Level-3-Events/#keys-Modifiers
-	 */
-	
-	var modifierKeyToProp = {
-	  'Alt': 'altKey',
-	  'Control': 'ctrlKey',
-	  'Meta': 'metaKey',
-	  'Shift': 'shiftKey'
-	};
-	
-	// IE8 does not implement getModifierState so we simply map it to the only
-	// modifier keys exposed by the event itself, does not support Lock-keys.
-	// Currently, all major browsers except Chrome seems to support Lock-keys.
-	function modifierStateGetter(keyArg) {
-	  var syntheticEvent = this;
-	  var nativeEvent = syntheticEvent.nativeEvent;
-	  if (nativeEvent.getModifierState) {
-	    return nativeEvent.getModifierState(keyArg);
-	  }
-	  var keyProp = modifierKeyToProp[keyArg];
-	  return keyProp ? !!nativeEvent[keyProp] : false;
-	}
-	
-	function getEventModifierState(nativeEvent) {
-	  return modifierStateGetter;
-	}
-	
-	module.exports = getEventModifierState;
-
-/***/ },
-/* 49 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	/**
-	 * Gets the target node from a native browser event by accounting for
-	 * inconsistencies in browser DOM APIs.
-	 *
-	 * @param {object} nativeEvent Native browser event.
-	 * @return {DOMEventTarget} Target node.
-	 */
-	
-	function getEventTarget(nativeEvent) {
-	  var target = nativeEvent.target || nativeEvent.srcElement || window;
-	
-	  // Normalize SVG <use> element events #4963
-	  if (target.correspondingUseElement) {
-	    target = target.correspondingUseElement;
-	  }
-	
-	  // Safari may fire events on text nodes (Node.TEXT_NODE is 3).
-	  // @see http://www.quirksmode.org/js/events_properties.html
-	  return target.nodeType === 3 ? target.parentNode : target;
-	}
-	
-	module.exports = getEventTarget;
-
-/***/ },
-/* 50 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var ExecutionEnvironment = __webpack_require__(6);
-	
-	var useHasFeature;
-	if (ExecutionEnvironment.canUseDOM) {
-	  useHasFeature = document.implementation && document.implementation.hasFeature &&
-	  // always returns true in newer browsers as per the standard.
-	  // @see http://dom.spec.whatwg.org/#dom-domimplementation-hasfeature
-	  document.implementation.hasFeature('', '') !== true;
-	}
-	
-	/**
-	 * Checks if an event is supported in the current execution environment.
-	 *
-	 * NOTE: This will not work correctly for non-generic events such as `change`,
-	 * `reset`, `load`, `error`, and `select`.
-	 *
-	 * Borrows from Modernizr.
-	 *
-	 * @param {string} eventNameSuffix Event name, e.g. "click".
-	 * @param {?boolean} capture Check if the capture phase is supported.
-	 * @return {boolean} True if the event is supported.
-	 * @internal
-	 * @license Modernizr 3.0.0pre (Custom Build) | MIT
-	 */
-	function isEventSupported(eventNameSuffix, capture) {
-	  if (!ExecutionEnvironment.canUseDOM || capture && !('addEventListener' in document)) {
-	    return false;
-	  }
-	
-	  var eventName = 'on' + eventNameSuffix;
-	  var isSupported = eventName in document;
-	
-	  if (!isSupported) {
-	    var element = document.createElement('div');
-	    element.setAttribute(eventName, 'return;');
-	    isSupported = typeof element[eventName] === 'function';
-	  }
-	
-	  if (!isSupported && useHasFeature && eventNameSuffix === 'wheel') {
-	    // This is the only way to test support for the `wheel` event in IE9+.
-	    isSupported = document.implementation.hasFeature('Events.wheel', '3.0');
-	  }
-	
-	  return isSupported;
-	}
-	
-	module.exports = isEventSupported;
-
-/***/ },
-/* 51 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	/**
-	 * Given a `prevElement` and `nextElement`, determines if the existing
-	 * instance should be updated as opposed to being destroyed or replaced by a new
-	 * instance. Both arguments are elements. This ensures that this logic can
-	 * operate on stateless trees without any backing instance.
-	 *
-	 * @param {?object} prevElement
-	 * @param {?object} nextElement
-	 * @return {boolean} True if the existing instance should be updated.
-	 * @protected
-	 */
-	
-	function shouldUpdateReactComponent(prevElement, nextElement) {
-	  var prevEmpty = prevElement === null || prevElement === false;
-	  var nextEmpty = nextElement === null || nextElement === false;
-	  if (prevEmpty || nextEmpty) {
-	    return prevEmpty === nextEmpty;
-	  }
-	
-	  var prevType = typeof prevElement;
-	  var nextType = typeof nextElement;
-	  if (prevType === 'string' || prevType === 'number') {
-	    return nextType === 'string' || nextType === 'number';
-	  } else {
-	    return nextType === 'object' && prevElement.type === nextElement.type && prevElement.key === nextElement.key;
-	  }
-	}
-	
-	module.exports = shouldUpdateReactComponent;
-
-/***/ },
-/* 52 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2015-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var _assign = __webpack_require__(4);
-	
-	var emptyFunction = __webpack_require__(7);
-	var warning = __webpack_require__(2);
-	
-	var validateDOMNesting = emptyFunction;
-	
-	if (false) {
-	  // This validation code was written based on the HTML5 parsing spec:
-	  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-scope
-	  //
-	  // Note: this does not catch all invalid nesting, nor does it try to (as it's
-	  // not clear what practical benefit doing so provides); instead, we warn only
-	  // for cases where the parser will give a parse tree differing from what React
-	  // intended. For example, <b><div></div></b> is invalid but we don't warn
-	  // because it still parses correctly; we do warn for other cases like nested
-	  // <p> tags where the beginning of the second element implicitly closes the
-	  // first, causing a confusing mess.
-	
-	  // https://html.spec.whatwg.org/multipage/syntax.html#special
-	  var specialTags = ['address', 'applet', 'area', 'article', 'aside', 'base', 'basefont', 'bgsound', 'blockquote', 'body', 'br', 'button', 'caption', 'center', 'col', 'colgroup', 'dd', 'details', 'dir', 'div', 'dl', 'dt', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'iframe', 'img', 'input', 'isindex', 'li', 'link', 'listing', 'main', 'marquee', 'menu', 'menuitem', 'meta', 'nav', 'noembed', 'noframes', 'noscript', 'object', 'ol', 'p', 'param', 'plaintext', 'pre', 'script', 'section', 'select', 'source', 'style', 'summary', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'title', 'tr', 'track', 'ul', 'wbr', 'xmp'];
-	
-	  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-scope
-	  var inScopeTags = ['applet', 'caption', 'html', 'table', 'td', 'th', 'marquee', 'object', 'template',
-	
-	  // https://html.spec.whatwg.org/multipage/syntax.html#html-integration-point
-	  // TODO: Distinguish by namespace here -- for <title>, including it here
-	  // errs on the side of fewer warnings
-	  'foreignObject', 'desc', 'title'];
-	
-	  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-button-scope
-	  var buttonScopeTags = inScopeTags.concat(['button']);
-	
-	  // https://html.spec.whatwg.org/multipage/syntax.html#generate-implied-end-tags
-	  var impliedEndTags = ['dd', 'dt', 'li', 'option', 'optgroup', 'p', 'rp', 'rt'];
-	
-	  var emptyAncestorInfo = {
-	    current: null,
-	
-	    formTag: null,
-	    aTagInScope: null,
-	    buttonTagInScope: null,
-	    nobrTagInScope: null,
-	    pTagInButtonScope: null,
-	
-	    listItemTagAutoclosing: null,
-	    dlItemTagAutoclosing: null
-	  };
-	
-	  var updatedAncestorInfo = function (oldInfo, tag, instance) {
-	    var ancestorInfo = _assign({}, oldInfo || emptyAncestorInfo);
-	    var info = { tag: tag, instance: instance };
-	
-	    if (inScopeTags.indexOf(tag) !== -1) {
-	      ancestorInfo.aTagInScope = null;
-	      ancestorInfo.buttonTagInScope = null;
-	      ancestorInfo.nobrTagInScope = null;
-	    }
-	    if (buttonScopeTags.indexOf(tag) !== -1) {
-	      ancestorInfo.pTagInButtonScope = null;
-	    }
-	
-	    // See rules for 'li', 'dd', 'dt' start tags in
-	    // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inbody
-	    if (specialTags.indexOf(tag) !== -1 && tag !== 'address' && tag !== 'div' && tag !== 'p') {
-	      ancestorInfo.listItemTagAutoclosing = null;
-	      ancestorInfo.dlItemTagAutoclosing = null;
-	    }
-	
-	    ancestorInfo.current = info;
-	
-	    if (tag === 'form') {
-	      ancestorInfo.formTag = info;
-	    }
-	    if (tag === 'a') {
-	      ancestorInfo.aTagInScope = info;
-	    }
-	    if (tag === 'button') {
-	      ancestorInfo.buttonTagInScope = info;
-	    }
-	    if (tag === 'nobr') {
-	      ancestorInfo.nobrTagInScope = info;
-	    }
-	    if (tag === 'p') {
-	      ancestorInfo.pTagInButtonScope = info;
-	    }
-	    if (tag === 'li') {
-	      ancestorInfo.listItemTagAutoclosing = info;
-	    }
-	    if (tag === 'dd' || tag === 'dt') {
-	      ancestorInfo.dlItemTagAutoclosing = info;
-	    }
-	
-	    return ancestorInfo;
-	  };
-	
-	  /**
-	   * Returns whether
-	   */
-	  var isTagValidWithParent = function (tag, parentTag) {
-	    // First, let's check if we're in an unusual parsing mode...
-	    switch (parentTag) {
-	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inselect
-	      case 'select':
-	        return tag === 'option' || tag === 'optgroup' || tag === '#text';
-	      case 'optgroup':
-	        return tag === 'option' || tag === '#text';
-	      // Strictly speaking, seeing an <option> doesn't mean we're in a <select>
-	      // but
-	      case 'option':
-	        return tag === '#text';
-	
-	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intd
-	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incaption
-	      // No special behavior since these rules fall back to "in body" mode for
-	      // all except special table nodes which cause bad parsing behavior anyway.
-	
-	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intr
-	      case 'tr':
-	        return tag === 'th' || tag === 'td' || tag === 'style' || tag === 'script' || tag === 'template';
-	
-	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intbody
-	      case 'tbody':
-	      case 'thead':
-	      case 'tfoot':
-	        return tag === 'tr' || tag === 'style' || tag === 'script' || tag === 'template';
-	
-	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incolgroup
-	      case 'colgroup':
-	        return tag === 'col' || tag === 'template';
-	
-	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intable
-	      case 'table':
-	        return tag === 'caption' || tag === 'colgroup' || tag === 'tbody' || tag === 'tfoot' || tag === 'thead' || tag === 'style' || tag === 'script' || tag === 'template';
-	
-	      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inhead
-	      case 'head':
-	        return tag === 'base' || tag === 'basefont' || tag === 'bgsound' || tag === 'link' || tag === 'meta' || tag === 'title' || tag === 'noscript' || tag === 'noframes' || tag === 'style' || tag === 'script' || tag === 'template';
-	
-	      // https://html.spec.whatwg.org/multipage/semantics.html#the-html-element
-	      case 'html':
-	        return tag === 'head' || tag === 'body';
-	      case '#document':
-	        return tag === 'html';
-	    }
-	
-	    // Probably in the "in body" parsing mode, so we outlaw only tag combos
-	    // where the parsing rules cause implicit opens or closes to be added.
-	    // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inbody
-	    switch (tag) {
-	      case 'h1':
-	      case 'h2':
-	      case 'h3':
-	      case 'h4':
-	      case 'h5':
-	      case 'h6':
-	        return parentTag !== 'h1' && parentTag !== 'h2' && parentTag !== 'h3' && parentTag !== 'h4' && parentTag !== 'h5' && parentTag !== 'h6';
-	
-	      case 'rp':
-	      case 'rt':
-	        return impliedEndTags.indexOf(parentTag) === -1;
-	
-	      case 'body':
-	      case 'caption':
-	      case 'col':
-	      case 'colgroup':
-	      case 'frame':
-	      case 'head':
-	      case 'html':
-	      case 'tbody':
-	      case 'td':
-	      case 'tfoot':
-	      case 'th':
-	      case 'thead':
-	      case 'tr':
-	        // These tags are only valid with a few parents that have special child
-	        // parsing rules -- if we're down here, then none of those matched and
-	        // so we allow it only if we don't know what the parent is, as all other
-	        // cases are invalid.
-	        return parentTag == null;
-	    }
-	
-	    return true;
-	  };
-	
-	  /**
-	   * Returns whether
-	   */
-	  var findInvalidAncestorForTag = function (tag, ancestorInfo) {
-	    switch (tag) {
-	      case 'address':
-	      case 'article':
-	      case 'aside':
-	      case 'blockquote':
-	      case 'center':
-	      case 'details':
-	      case 'dialog':
-	      case 'dir':
-	      case 'div':
-	      case 'dl':
-	      case 'fieldset':
-	      case 'figcaption':
-	      case 'figure':
-	      case 'footer':
-	      case 'header':
-	      case 'hgroup':
-	      case 'main':
-	      case 'menu':
-	      case 'nav':
-	      case 'ol':
-	      case 'p':
-	      case 'section':
-	      case 'summary':
-	      case 'ul':
-	      case 'pre':
-	      case 'listing':
-	      case 'table':
-	      case 'hr':
-	      case 'xmp':
-	      case 'h1':
-	      case 'h2':
-	      case 'h3':
-	      case 'h4':
-	      case 'h5':
-	      case 'h6':
-	        return ancestorInfo.pTagInButtonScope;
-	
-	      case 'form':
-	        return ancestorInfo.formTag || ancestorInfo.pTagInButtonScope;
-	
-	      case 'li':
-	        return ancestorInfo.listItemTagAutoclosing;
-	
-	      case 'dd':
-	      case 'dt':
-	        return ancestorInfo.dlItemTagAutoclosing;
-	
-	      case 'button':
-	        return ancestorInfo.buttonTagInScope;
-	
-	      case 'a':
-	        // Spec says something about storing a list of markers, but it sounds
-	        // equivalent to this check.
-	        return ancestorInfo.aTagInScope;
-	
-	      case 'nobr':
-	        return ancestorInfo.nobrTagInScope;
-	    }
-	
-	    return null;
-	  };
-	
-	  /**
-	   * Given a ReactCompositeComponent instance, return a list of its recursive
-	   * owners, starting at the root and ending with the instance itself.
-	   */
-	  var findOwnerStack = function (instance) {
-	    if (!instance) {
-	      return [];
-	    }
-	
-	    var stack = [];
-	    do {
-	      stack.push(instance);
-	    } while (instance = instance._currentElement._owner);
-	    stack.reverse();
-	    return stack;
-	  };
-	
-	  var didWarn = {};
-	
-	  validateDOMNesting = function (childTag, childText, childInstance, ancestorInfo) {
-	    ancestorInfo = ancestorInfo || emptyAncestorInfo;
-	    var parentInfo = ancestorInfo.current;
-	    var parentTag = parentInfo && parentInfo.tag;
-	
-	    if (childText != null) {
-	      process.env.NODE_ENV !== 'production' ? warning(childTag == null, 'validateDOMNesting: when childText is passed, childTag should be null') : void 0;
-	      childTag = '#text';
-	    }
-	
-	    var invalidParent = isTagValidWithParent(childTag, parentTag) ? null : parentInfo;
-	    var invalidAncestor = invalidParent ? null : findInvalidAncestorForTag(childTag, ancestorInfo);
-	    var problematic = invalidParent || invalidAncestor;
-	
-	    if (problematic) {
-	      var ancestorTag = problematic.tag;
-	      var ancestorInstance = problematic.instance;
-	
-	      var childOwner = childInstance && childInstance._currentElement._owner;
-	      var ancestorOwner = ancestorInstance && ancestorInstance._currentElement._owner;
-	
-	      var childOwners = findOwnerStack(childOwner);
-	      var ancestorOwners = findOwnerStack(ancestorOwner);
-	
-	      var minStackLen = Math.min(childOwners.length, ancestorOwners.length);
-	      var i;
-	
-	      var deepestCommon = -1;
-	      for (i = 0; i < minStackLen; i++) {
-	        if (childOwners[i] === ancestorOwners[i]) {
-	          deepestCommon = i;
-	        } else {
-	          break;
-	        }
-	      }
-	
-	      var UNKNOWN = '(unknown)';
-	      var childOwnerNames = childOwners.slice(deepestCommon + 1).map(function (inst) {
-	        return inst.getName() || UNKNOWN;
-	      });
-	      var ancestorOwnerNames = ancestorOwners.slice(deepestCommon + 1).map(function (inst) {
-	        return inst.getName() || UNKNOWN;
-	      });
-	      var ownerInfo = [].concat(
-	      // If the parent and child instances have a common owner ancestor, start
-	      // with that -- otherwise we just start with the parent's owners.
-	      deepestCommon !== -1 ? childOwners[deepestCommon].getName() || UNKNOWN : [], ancestorOwnerNames, ancestorTag,
-	      // If we're warning about an invalid (non-parent) ancestry, add '...'
-	      invalidAncestor ? ['...'] : [], childOwnerNames, childTag).join(' > ');
-	
-	      var warnKey = !!invalidParent + '|' + childTag + '|' + ancestorTag + '|' + ownerInfo;
-	      if (didWarn[warnKey]) {
-	        return;
-	      }
-	      didWarn[warnKey] = true;
-	
-	      var tagDisplayName = childTag;
-	      var whitespaceInfo = '';
-	      if (childTag === '#text') {
-	        if (/\S/.test(childText)) {
-	          tagDisplayName = 'Text nodes';
-	        } else {
-	          tagDisplayName = 'Whitespace text nodes';
-	          whitespaceInfo = ' Make sure you don\'t have any extra whitespace between tags on ' + 'each line of your source code.';
-	        }
-	      } else {
-	        tagDisplayName = '<' + childTag + '>';
-	      }
-	
-	      if (invalidParent) {
-	        var info = '';
-	        if (ancestorTag === 'table' && childTag === 'tr') {
-	          info += ' Add a <tbody> to your code to match the DOM tree generated by ' + 'the browser.';
-	        }
-	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>.%s ' + 'See %s.%s', tagDisplayName, ancestorTag, whitespaceInfo, ownerInfo, info) : void 0;
-	      } else {
-	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a descendant of ' + '<%s>. See %s.', tagDisplayName, ancestorTag, ownerInfo) : void 0;
-	      }
-	    }
-	  };
-	
-	  validateDOMNesting.updatedAncestorInfo = updatedAncestorInfo;
-	
-	  // For testing
-	  validateDOMNesting.isTagValidInContext = function (tag, ancestorInfo) {
-	    ancestorInfo = ancestorInfo || emptyAncestorInfo;
-	    var parentInfo = ancestorInfo.current;
-	    var parentTag = parentInfo && parentInfo.tag;
-	    return isTagValidWithParent(tag, parentTag) && !findInvalidAncestorForTag(tag, ancestorInfo);
-	  };
-	}
-	
-	module.exports = validateDOMNesting;
-
-/***/ },
-/* 53 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var _prodInvariant = __webpack_require__(20);
-	
-	var ReactNoopUpdateQueue = __webpack_require__(54);
-	
-	var canDefineProperty = __webpack_require__(86);
-	var emptyObject = __webpack_require__(23);
-	var invariant = __webpack_require__(1);
-	var warning = __webpack_require__(2);
-	
-	/**
-	 * Base class helpers for the updating state of a component.
-	 */
-	function ReactComponent(props, context, updater) {
-	  this.props = props;
-	  this.context = context;
-	  this.refs = emptyObject;
-	  // We initialize the default updater but the real one gets injected by the
-	  // renderer.
-	  this.updater = updater || ReactNoopUpdateQueue;
-	}
-	
-	ReactComponent.prototype.isReactComponent = {};
-	
-	/**
-	 * Sets a subset of the state. Always use this to mutate
-	 * state. You should treat `this.state` as immutable.
-	 *
-	 * There is no guarantee that `this.state` will be immediately updated, so
-	 * accessing `this.state` after calling this method may return the old value.
-	 *
-	 * There is no guarantee that calls to `setState` will run synchronously,
-	 * as they may eventually be batched together.  You can provide an optional
-	 * callback that will be executed when the call to setState is actually
-	 * completed.
-	 *
-	 * When a function is provided to setState, it will be called at some point in
-	 * the future (not synchronously). It will be called with the up to date
-	 * component arguments (state, props, context). These values can be different
-	 * from this.* because your function may be called after receiveProps but before
-	 * shouldComponentUpdate, and this new state, props, and context will not yet be
-	 * assigned to this.
-	 *
-	 * @param {object|function} partialState Next partial state or function to
-	 *        produce next partial state to be merged with current state.
-	 * @param {?function} callback Called after state is updated.
-	 * @final
-	 * @protected
-	 */
-	ReactComponent.prototype.setState = function (partialState, callback) {
-	  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ?  false ? invariant(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : _prodInvariant('85') : void 0;
-	  this.updater.enqueueSetState(this, partialState);
-	  if (callback) {
-	    this.updater.enqueueCallback(this, callback, 'setState');
-	  }
-	};
-	
-	/**
-	 * Forces an update. This should only be invoked when it is known with
-	 * certainty that we are **not** in a DOM transaction.
-	 *
-	 * You may want to call this when you know that some deeper aspect of the
-	 * component's state has changed but `setState` was not called.
-	 *
-	 * This will not invoke `shouldComponentUpdate`, but it will invoke
-	 * `componentWillUpdate` and `componentDidUpdate`.
-	 *
-	 * @param {?function} callback Called after update is complete.
-	 * @final
-	 * @protected
-	 */
-	ReactComponent.prototype.forceUpdate = function (callback) {
-	  this.updater.enqueueForceUpdate(this);
-	  if (callback) {
-	    this.updater.enqueueCallback(this, callback, 'forceUpdate');
-	  }
-	};
-	
-	/**
-	 * Deprecated APIs. These APIs used to exist on classic React classes but since
-	 * we would like to deprecate them, we're not going to move them over to this
-	 * modern base class. Instead, we define a getter that warns if it's accessed.
-	 */
-	if (false) {
-	  var deprecatedAPIs = {
-	    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
-	    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
-	  };
-	  var defineDeprecationWarning = function (methodName, info) {
-	    if (canDefineProperty) {
-	      Object.defineProperty(ReactComponent.prototype, methodName, {
-	        get: function () {
-	          process.env.NODE_ENV !== 'production' ? warning(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]) : void 0;
-	          return undefined;
-	        }
-	      });
-	    }
-	  };
-	  for (var fnName in deprecatedAPIs) {
-	    if (deprecatedAPIs.hasOwnProperty(fnName)) {
-	      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
-	    }
-	  }
-	}
-	
-	module.exports = ReactComponent;
-
-/***/ },
-/* 54 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2015-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	var warning = __webpack_require__(2);
-	
-	function warnNoop(publicInstance, callerName) {
-	  if (false) {
-	    var constructor = publicInstance.constructor;
-	    process.env.NODE_ENV !== 'production' ? warning(false, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, constructor && (constructor.displayName || constructor.name) || 'ReactClass') : void 0;
-	  }
-	}
-	
-	/**
-	 * This is the abstract API for an update queue.
-	 */
-	var ReactNoopUpdateQueue = {
-	
-	  /**
-	   * Checks whether or not this composite component is mounted.
-	   * @param {ReactClass} publicInstance The instance we want to test.
-	   * @return {boolean} True if mounted, false otherwise.
-	   * @protected
-	   * @final
-	   */
-	  isMounted: function (publicInstance) {
-	    return false;
-	  },
-	
-	  /**
-	   * Enqueue a callback that will be executed after all the pending updates
-	   * have processed.
-	   *
-	   * @param {ReactClass} publicInstance The instance to use as `this` context.
-	   * @param {?function} callback Called after state is updated.
-	   * @internal
-	   */
-	  enqueueCallback: function (publicInstance, callback) {},
-	
-	  /**
-	   * Forces an update. This should only be invoked when it is known with
-	   * certainty that we are **not** in a DOM transaction.
-	   *
-	   * You may want to call this when you know that some deeper aspect of the
-	   * component's state has changed but `setState` was not called.
-	   *
-	   * This will not invoke `shouldComponentUpdate`, but it will invoke
-	   * `componentWillUpdate` and `componentDidUpdate`.
-	   *
-	   * @param {ReactClass} publicInstance The instance that should rerender.
-	   * @internal
-	   */
-	  enqueueForceUpdate: function (publicInstance) {
-	    warnNoop(publicInstance, 'forceUpdate');
-	  },
-	
-	  /**
-	   * Replaces all of the state. Always use this or `setState` to mutate state.
-	   * You should treat `this.state` as immutable.
-	   *
-	   * There is no guarantee that `this.state` will be immediately updated, so
-	   * accessing `this.state` after calling this method may return the old value.
-	   *
-	   * @param {ReactClass} publicInstance The instance that should rerender.
-	   * @param {object} completeState Next state.
-	   * @internal
-	   */
-	  enqueueReplaceState: function (publicInstance, completeState) {
-	    warnNoop(publicInstance, 'replaceState');
-	  },
-	
-	  /**
-	   * Sets a subset of the state. This only exists because _pendingState is
-	   * internal. This provides a merging strategy that is not available to deep
-	   * properties which is confusing. TODO: Expose pendingState or don't use it
-	   * during the merge.
-	   *
-	   * @param {ReactClass} publicInstance The instance that should rerender.
-	   * @param {object} partialState Next partial state to be merged with state.
-	   * @internal
-	   */
-	  enqueueSetState: function (publicInstance, partialState) {
-	    warnNoop(publicInstance, 'setState');
-	  }
-	};
-	
-	module.exports = ReactNoopUpdateQueue;
 
 /***/ },
 /* 55 */
@@ -20984,7 +24204,7 @@
 	
 	var _assign = __webpack_require__(4);
 	
-	var LinkedValueUtils = __webpack_require__(42);
+	var LinkedValueUtils = __webpack_require__(41);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactUpdates = __webpack_require__(10);
 	
@@ -21452,23 +24672,23 @@
 	var DOMProperty = __webpack_require__(16);
 	var React = __webpack_require__(18);
 	var ReactBrowserEventEmitter = __webpack_require__(30);
-	var ReactCurrentOwner = __webpack_require__(13);
+	var ReactCurrentOwner = __webpack_require__(12);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactDOMContainerInfo = __webpack_require__(166);
 	var ReactDOMFeatureFlags = __webpack_require__(168);
 	var ReactFeatureFlags = __webpack_require__(70);
-	var ReactInstanceMap = __webpack_require__(26);
+	var ReactInstanceMap = __webpack_require__(27);
 	var ReactInstrumentation = __webpack_require__(8);
 	var ReactMarkupChecksum = __webpack_require__(182);
 	var ReactReconciler = __webpack_require__(17);
-	var ReactUpdateQueue = __webpack_require__(45);
+	var ReactUpdateQueue = __webpack_require__(44);
 	var ReactUpdates = __webpack_require__(10);
 	
 	var emptyObject = __webpack_require__(23);
 	var instantiateReactComponent = __webpack_require__(80);
 	var invariant = __webpack_require__(1);
 	var setInnerHTML = __webpack_require__(34);
-	var shouldUpdateReactComponent = __webpack_require__(51);
+	var shouldUpdateReactComponent = __webpack_require__(50);
 	var warning = __webpack_require__(2);
 	
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
@@ -22477,12 +25697,12 @@
 	
 	var _prodInvariant = __webpack_require__(3);
 	
-	var ReactCurrentOwner = __webpack_require__(13);
+	var ReactCurrentOwner = __webpack_require__(12);
 	var REACT_ELEMENT_TYPE = __webpack_require__(178);
 	
 	var getIteratorFn = __webpack_require__(209);
 	var invariant = __webpack_require__(1);
-	var KeyEscapeUtils = __webpack_require__(41);
+	var KeyEscapeUtils = __webpack_require__(40);
 	var warning = __webpack_require__(2);
 	
 	var SEPARATOR = '.';
@@ -22658,7 +25878,7 @@
 	
 	var _prodInvariant = __webpack_require__(20);
 	
-	var ReactCurrentOwner = __webpack_require__(13);
+	var ReactCurrentOwner = __webpack_require__(12);
 	
 	var invariant = __webpack_require__(1);
 	var warning = __webpack_require__(2);
@@ -23667,7 +26887,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(13);
 	
 	var _headerComponent = __webpack_require__(94);
 	
@@ -23865,7 +27085,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(13);
 	
 	var _actionTypes = __webpack_require__(21);
 	
@@ -23873,7 +27093,7 @@
 	
 	var _sample = __webpack_require__(106);
 	
-	var _layers = __webpack_require__(28);
+	var _layers = __webpack_require__(29);
 	
 	var _shape = __webpack_require__(22);
 	
@@ -23978,6 +27198,7 @@
 	        _this3.onToggleWatchExpandButtonClicked = _this3.onToggleWatchExpandButtonClicked.bind(_this3);
 	        _this3.onSelectShapeClicked = _this3.onSelectShapeClicked.bind(_this3);
 	        _this3.addSamplePolygon = _this3.addSamplePolygon.bind(_this3);
+	        _this3.handleFileSelect = _this3.handleFileSelect.bind(_this3);
 	        _this3.height = 0;
 	        return _this3;
 	    }
@@ -24020,6 +27241,76 @@
 	            });
 	        }
 	    }, {
+	        key: 'readFile',
+	        value: function readFile(file) {
+	            if (!file.type.match('text.*')) return; // validate type is text
+	
+	            var reader = new FileReader();
+	
+	            var self = this;
+	            // Closure to capture file information and "this" component
+	            reader.onload = function (theFile, thisComponent) {
+	                return function (event) {
+	                    var string = event.target.result;
+	                    // let name = theFile.name;
+	
+	                    var parser = thisComponent.state.app.parser;
+	                    var stage = thisComponent.state.stage;
+	                    var poly = parser.parseToPolygon(string);
+	                    // TODO: add something like poly.valid()
+	                    if (poly.edges.size > 0 && poly.faces.size > 0) {
+	                        var watch = parser.parseToWatchArray(string);
+	
+	                        var shape = new _shape.Shape(poly, stage, {}, watch);
+	
+	                        thisComponent.dispatch({
+	                            type: ActionTypes.NEW_SHAPE_PASTED,
+	                            shape: shape
+	                        });
+	
+	                        thisComponent.dispatch({
+	                            type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                            shape: shape
+	                        });
+	                    }
+	                };
+	            }(file, self);
+	
+	            reader.readAsText(file);
+	        }
+	    }, {
+	        key: 'handleFileSelect',
+	        value: function handleFileSelect(event) {
+	            if (!(File && FileReader && FileList)) return;
+	
+	            var files = event.target.files; // FileList object
+	
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var file = _step.value;
+	
+	                    this.readFile(file);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	        }
+	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.dispatch = this.props.store.dispatch;
@@ -24049,10 +27340,14 @@
 	            return _react2.default.createElement(
 	                'aside',
 	                { className: 'App-aside', ref: 'aside' },
+	                _react2.default.createElement('input', { style: { fontSize: 16, marginTop: 5, marginBottom: 5 },
+	                    type: 'file', id: 'files', name: 'files[]', multiple: true,
+	                    onChange: this.handleFileSelect
+	                }),
 	                _react2.default.createElement(
 	                    'h3',
 	                    null,
-	                    'Paste data here...'
+	                    '... or paste data here'
 	                ),
 	                _react2.default.createElement(
 	                    'div',
@@ -24098,7 +27393,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(13);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24137,7 +27432,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(13);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24224,7 +27519,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(13);
 	
 	var _layerListElement = __webpack_require__(95);
 	
@@ -24232,7 +27527,7 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _layers = __webpack_require__(28);
+	var _layers = __webpack_require__(29);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -24370,7 +27665,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(13);
 	
 	var _toolbarComponent = __webpack_require__(100);
 	
@@ -24382,7 +27677,7 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _layers = __webpack_require__(28);
+	var _layers = __webpack_require__(29);
 	
 	var _polygonTool = __webpack_require__(107);
 	
@@ -24601,6 +27896,12 @@
 	                    onToggleWidthModePressed: this.toggleWidthMode
 	                }),
 	                this.state.layers.map(function (layer) {
+	                    /*
+	                    let initialScale = this.state.stage.scalingFactor();
+	                    let scale = this.state.stage.scalingFactor() / this.state.stage.initialScalingFactor;
+	                    let origin = this.state.stage.origin;
+	                    let tx = this.state.stage.tx;
+	                    let ty = this.state.stage.ty;*/
 	                    return [].concat(_toConsumableArray(layer.shapes)).map(function (shape, index) {
 	                        return _react2.default.createElement(_polygonTool.PolygonTool, {
 	                            key: index,
@@ -24645,7 +27946,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(13);
 	
 	var _stage = __webpack_require__(104);
 	
@@ -24660,6 +27961,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 	
 	// import createjs from 'easel-js';
+	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
 	
 	// import { LayerComponent } from '../components/layerComponent';
 	
@@ -24774,6 +28076,8 @@
 	        value: function componentDidMount() {
 	            var stage = new _stage.Stage(this.refs.canvas);
 	
+	            // stage.setClearColor("#F1F1F1");
+	
 	            stage.on("stagemousemove", this.handleMouseMove);
 	            stage.on("stagemousedown", this.handleMouseDown);
 	            stage.on("stagemouseup", this.handleMouseUp);
@@ -24787,6 +28091,23 @@
 	            // var _keyup = _.throttle(this.keyup, 500);
 	            document.addEventListener('keyup', this.handleKeyUp);
 	
+	            // var r = 50;
+	            // var graphics = new createjs.Graphics();
+	            // graphics.beginFill("red")
+	            //     .drawCircle(200,50, r)
+	            //     .endFill();
+	            //
+	            // var cached = new createjs.Shape(graphics);
+	            //
+	            // stage.addChild(cached);
+	            //
+	            // cached.x = 0;
+	            // cached.y = 0;
+	            //
+	            // cached.cache(200-r,50-r, r*2,r*2);
+	            //
+	            // stage.update();
+	
 	            this.props.onStageCreated(stage);
 	        }
 	    }, {
@@ -24797,9 +28118,9 @@
 	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
-	            if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
-	                this.props.stage.update();
-	            }
+	            // if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
+	            this.props.stage.update();
+	            // }
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
@@ -24914,7 +28235,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(13);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -25019,7 +28340,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 17/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _flattenJs = __webpack_require__(29);
+	var _flattenJs = __webpack_require__(24);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -25196,7 +28517,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 01/05/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _flattenJs = __webpack_require__(29);
+	var _flattenJs = __webpack_require__(24);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -25327,17 +28648,19 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _easelJs = __webpack_require__(35);
+	var _easeljsNEXTCombined = __webpack_require__(54);
 	
-	var _easelJs2 = _interopRequireDefault(_easelJs);
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	var _flattenJs = __webpack_require__(29);
+	var _flattenJs = __webpack_require__(24);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
 	var _shape = __webpack_require__(22);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -25346,7 +28669,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	// import * as d3 from 'd3';
+	// import createjs from 'easel-js';
 	
 	
 	var Stage = exports.Stage = function (_createjs$Stage) {
@@ -25357,7 +28680,7 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Stage.__proto__ || Object.getPrototypeOf(Stage)).call(this, canvas));
 	
-	        _easelJs2.default.Touch.enable(_this);
+	        createjs.Touch.enable(_this);
 	        _this.mouseMoveOutside = false; // true;
 	        _this.enableMouseOver(20);
 	
@@ -25375,6 +28698,12 @@
 	    }
 	
 	    _createClass(Stage, [{
+	        key: 'clone',
+	        value: function clone() {
+	            var stage = new Stage(this.canvas);
+	            return Object.assign(stage, this);
+	        }
+	    }, {
 	        key: 'add',
 	        value: function add(shape) {
 	            this.addChild(shape);
@@ -25423,14 +28752,15 @@
 	    }, {
 	        key: 'panTo',
 	        value: function panTo(newOrigin) {
-	            this.origin.x = newOrigin.x;
-	            this.origin.y = newOrigin.y;
+	            this.origin = { x: newOrigin.x, y: newOrigin.y };
 	        }
 	    }, {
 	        key: 'panBy',
 	        value: function panBy(deltaX, deltaY) {
-	            this.origin.x += deltaX;
-	            this.origin.y += deltaY;
+	            this.origin = {
+	                x: this.origin.x + deltaX,
+	                y: this.origin.y + deltaY
+	            };
 	        }
 	
 	        // zoom by 10% each time
@@ -25462,6 +28792,13 @@
 	            var newFocusY = this.W2C_Y(worldY);
 	
 	            this.panBy(focusX - newFocusX, focusY - newFocusY);
+	
+	            return [newFocusX, newFocusY];
+	        }
+	    }, {
+	        key: 'zoomByMouse',
+	        value: function zoomByMouse(focusX, focusY, bIn, ratio) {
+	            this.zoom(focusX, focusY, bIn, ratio);
 	        }
 	    }, {
 	        key: 'zoomToLimits',
@@ -25503,8 +28840,10 @@
 	        key: 'panByMouseMove',
 	        value: function panByMouseMove(dx, dy) {
 	            if (dx !== undefined && dy !== undefined && this.oldOrigin.x !== undefined && this.oldOrigin.y !== undefined) {
-	                this.origin.x = this.oldOrigin.x + dx;
-	                this.origin.y = this.oldOrigin.y + dy;
+	                this.origin = {
+	                    x: this.oldOrigin.x + dx,
+	                    y: this.oldOrigin.y + dy
+	                };
 	            }
 	        }
 	    }, {
@@ -25512,6 +28851,8 @@
 	        value: function panByMouseStop() {
 	            this.oldOrigin.x = undefined;
 	            this.oldOrigin.y = undefined;
+	            this.tx = undefined;
+	            this.ty = undefined;
 	        }
 	    }, {
 	        key: 'panToCoordinate',
@@ -25521,7 +28862,6 @@
 	
 	            var dx = this.canvas.width / 2 - canvasX;
 	            var dy = this.canvas.height / 2 - canvasY;
-	
 	            this.panBy(dx, dy);
 	        }
 	    }, {
@@ -25537,7 +28877,7 @@
 	    }]);
 	
 	    return Stage;
-	}(_easelJs2.default.Stage);
+	}(createjs.Stage);
 
 /***/ },
 /* 105 */
@@ -25556,7 +28896,7 @@
 	
 	var _redux = __webpack_require__(89);
 	
-	var _layers = __webpack_require__(28);
+	var _layers = __webpack_require__(29);
 	
 	var _parser = __webpack_require__(103);
 	
@@ -25718,6 +29058,7 @@
 	            return state;
 	
 	        case ActionTypes.ADD_SHAPE_TO_STAGE:
+	            state.needToBeUpdated = true;
 	            return state;
 	
 	        // return state.add(action.shape);   // stage already mutated !!!
@@ -25753,7 +29094,7 @@
 	
 	        case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
 	            var bIn = action.delta > 0;
-	            state.zoom(action.x, action.y, bIn, 1.05);
+	            state.zoomByMouse(action.x, action.y, bIn, 1.05);
 	            state.needToBeUpdated = true;
 	            return state;
 	
@@ -25831,15 +29172,21 @@
 	
 	var _react = __webpack_require__(9);
 	
-	var _easelJs = __webpack_require__(35);
+	var _easeljsNEXTCombined = __webpack_require__(54);
 	
-	var _easelJs2 = _interopRequireDefault(_easelJs);
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	__webpack_require__(11);
+	var _flattenJs = __webpack_require__(24);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
 	var _shape = __webpack_require__(22);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -25849,11 +29196,8 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 19/06/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 	
-	// import { Stage } from '../models/stage';
-	// import {Layer} from '../models/layer';
-	// import {Layers} from '../models/layers';
+	// import createjs from 'easel-js';
 	
-	// import * as ActionTypes from '../actions/action-types';
 	
 	var PolygonTool = exports.PolygonTool = function (_Component) {
 	    _inherits(PolygonTool, _Component);
@@ -25920,31 +29264,25 @@
 	            return vertices;
 	        }
 	    }, {
-	        key: 'redraw',
-	        value: function redraw(polygon) {
-	            // Draw polygon
-	            polygon.redraw({
-	                stroke: this.props.color,
-	                fill: this.props.widthOn && !this.props.displayVertices ? this.props.color : "white",
-	                alpha: this.props.displayed ? 0.6 : 0.0
-	            });
+	        key: 'createGraphics',
+	        value: function createGraphics(geom, style) {
+	            var graphics = new createjs.Graphics();
+	            var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
+	            var stroke = style && style.stroke ? style.stroke : "#FF0303";
+	            var fill = style && style.fill ? style.fill : "#FF0303";
+	            graphics.setStrokeStyle(strokeStyle);
+	            graphics.beginStroke(stroke);
+	            graphics.beginFill(fill);
 	
-	            if (!this.props.displayed) return;
-	
-	            /* Update  vertices */
 	            var _iteratorNormalCompletion2 = true;
 	            var _didIteratorError2 = false;
 	            var _iteratorError2 = undefined;
 	
 	            try {
-	                for (var _iterator2 = this.vertices[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var vertex = _step2.value;
+	                for (var _iterator2 = geom.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var face = _step2.value;
 	
-	                    vertex.redraw({
-	                        stroke: this.props.color,
-	                        fill: this.props.color,
-	                        alpha: this.props.displayVertices ? 1.0 : 0.0
-	                    });
+	                    this.setGraphicsFace(graphics, face);
 	                }
 	            } catch (err) {
 	                _didIteratorError2 = true;
@@ -25960,6 +29298,259 @@
 	                    }
 	                }
 	            }
+	
+	            graphics.endStroke();
+	            return graphics;
+	        }
+	    }, {
+	        key: 'setGraphicsFace',
+	        value: function setGraphicsFace(graphics, face) {
+	            var ps = face.first.start;
+	            graphics.moveTo(ps.x, ps.y);
+	
+	            var edge = face.first;
+	            do {
+	                this.setGraphicsEdge(graphics, edge);
+	                edge = edge.next;
+	            } while (edge !== face.first);
+	        }
+	    }, {
+	        key: 'setGraphicsEdge',
+	        value: function setGraphicsEdge(graphics, edge) {
+	            if (edge.shape instanceof _flattenJs2.default.Segment) {
+	                this.setGraphicsEdgeSegment(graphics, edge.shape);
+	            } else if (edge.shape instanceof _flattenJs2.default.Arc) {
+	                this.setGraphicsEdgeArc(graphics, edge.shape);
+	            }
+	        }
+	    }, {
+	        key: 'setGraphicsEdgeSegment',
+	        value: function setGraphicsEdgeSegment(graphics, segment) {
+	            graphics.lineTo(segment.pe.x, segment.pe.y);
+	        }
+	    }, {
+	        key: 'setGraphicsEdgeArc',
+	        value: function setGraphicsEdgeArc(graphics, arc) {
+	            var startAngle = 2 * Math.PI - arc.startAngle;
+	            var endAngle = 2 * Math.PI - arc.endAngle;
+	            graphics.arc(arc.pc.x, arc.pc.y, arc.r, startAngle, endAngle, arc.counterClockwise);
+	        }
+	    }, {
+	        key: 'transformPoint',
+	        value: function transformPoint(pt, a, d, tx, ty) {
+	            return new _flattenJs2.default.Point(pt.x * a + tx, pt.y * d + ty);
+	        }
+	    }, {
+	        key: 'transformSegment',
+	        value: function transformSegment(segment, a, d, tx, ty) {
+	            return new _flattenJs2.default.Segment(this.transformPoint(segment.ps, a, d, tx, ty), this.transformPoint(segment.pe, a, d, tx, ty));
+	        }
+	    }, {
+	        key: 'transformArc',
+	        value: function transformArc(arc, a, d, tx, ty) {
+	            return new _flattenJs2.default.Arc(this.transformPoint(arc.pc, a, d, tx, ty), arc.r * a, arc.startAngle, arc.endAngle, arc.counterClockwise);
+	        }
+	    }, {
+	        key: 'transformEdge',
+	        value: function transformEdge(edge, a, d, tx, ty) {
+	            if (edge instanceof _flattenJs2.default.Segment) {
+	                return this.transformSegment(edge, a, d, tx, ty);
+	            } else if (edge instanceof _flattenJs2.default.Arc) {
+	                return this.transformArc(edge, a, d, tx, ty);
+	            }
+	        }
+	    }, {
+	        key: 'transformFace',
+	        value: function transformFace(face, a, d, tx, ty) {
+	            var _this2 = this;
+	
+	            // Get edges of face as array
+	            var edges = [];
+	            var edge = face.first;
+	            do {
+	                edges.push(edge.shape);
+	                edge = edge.next;
+	            } while (edge !== face.first);
+	
+	            // Transform array of edges
+	            return edges.map(function (edge) {
+	                return _this2.transformEdge(edge, a, d, tx, ty);
+	            });
+	        }
+	    }, {
+	        key: 'transformPolygon',
+	        value: function transformPolygon(polygon, a, d, tx, ty) {
+	            var newPolygon = new _flattenJs2.default.Polygon();
+	            var edges = [];
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = polygon.faces[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var face = _step3.value;
+	
+	                    edges = this.transformFace(face, a, d, tx, ty);
+	                    newPolygon.addFace(edges);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            return newPolygon;
+	        }
+	    }, {
+	        key: 'redraw3',
+	        value: function redraw3(polygon) {
+	            var scale = this.props.scale; // stage.scalingFactor();
+	            var tx = this.props.origin.x;
+	            var ty = this.props.origin.y;
+	
+	            var style = {
+	                stroke: this.props.color,
+	                fill: this.props.widthOn && !this.props.displayVertices ? this.props.color : "white",
+	                alpha: this.props.displayed ? 0.6 : 0.0
+	            };
+	
+	            polygon.graphics.clear();
+	            polygon.graphics = this.createGraphics(polygon.geom, style);
+	
+	            polygon.transformMatrix = new createjs.Matrix2D(
+	            /* a   b  c     d    tx  ty*/
+	            scale, 0, 0, -scale, tx, ty);
+	        }
+	    }, {
+	        key: 'redraw2',
+	        value: function redraw2(polygon) {
+	            var stage = polygon.parent;
+	
+	            var scale = stage.scalingFactor();
+	            var tx = this.props.origin.x;
+	            var ty = this.props.origin.y;
+	
+	            var trGeom = this.transformPolygon(polygon.geom, scale, -scale, tx, ty);
+	            var box = [].concat(_toConsumableArray(trGeom.faces))[0].box;
+	
+	            var style = {
+	                stroke: this.props.color,
+	                fill: this.props.widthOn && !this.props.displayVertices ? this.props.color : "white",
+	                alpha: this.props.displayed ? 0.6 : 0.0
+	            };
+	
+	            polygon.graphics.clear();
+	            polygon.graphics = this.createGraphics(trGeom, style);
+	
+	            var width = box.xmax - box.xmin;
+	            var height = box.ymax - box.ymin;
+	            polygon.cache(box.xmin, box.ymin, width, height);
+	        }
+	    }, {
+	        key: 'redraw',
+	        value: function redraw(polygon) {
+	            // Draw polygon
+	            polygon.redraw({
+	                stroke: this.props.color,
+	                fill: this.props.widthOn && !this.props.displayVertices ? this.props.color : "white",
+	                alpha: this.props.displayed ? 0.6 : 0.0
+	            });
+	
+	            if (!this.props.displayed) return;
+	
+	            /* Update  vertices */
+	            var _iteratorNormalCompletion4 = true;
+	            var _didIteratorError4 = false;
+	            var _iteratorError4 = undefined;
+	
+	            try {
+	                for (var _iterator4 = this.vertices[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	                    var vertex = _step4.value;
+	
+	                    vertex.redraw({
+	                        stroke: this.props.color,
+	                        fill: this.props.color,
+	                        alpha: this.props.displayVertices ? 1.0 : 0.0
+	                    });
+	                }
+	            } catch (err) {
+	                _didIteratorError4 = true;
+	                _iteratorError4 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                        _iterator4.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError4) {
+	                        throw _iteratorError4;
+	                    }
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'redraw4',
+	        value: function redraw4(polygon) {
+	            // let scale = 1.0; // this.props.scale;   // stage.scalingFactor();
+	
+	            if (this.props.tx !== undefined && this.props.ty !== undefined && polygon.oldX !== undefined && polygon.oldY !== undefined) {
+	                // polygon.transformMatrix = polygon.oldMatrix
+	                //     .append(1, 0, 0, 1, this.props.tx, this.props.ty);
+	                polygon.x = polygon.oldX + this.props.tx;
+	                polygon.y = polygon.oldY + this.props.ty;
+	            } else {
+	                polygon.oldX = polygon.x;
+	                polygon.oldY = polygon.y;
+	            }
+	
+	            polygon.scaleX = this.props.scale;
+	            polygon.scaleY = this.props.scale;
+	
+	            // let matrix = polygon.getMatrix();
+	            // if (matrix === null) {
+	            //     polygon.transformMatrix = new createjs.Matrix2D(
+	            //         /* a   b  c     d    tx  ty*/
+	            //         1, 0, 0, 1, this.props.tx, this.props.ty
+	            //     );
+	            // }
+	            // else {
+	            //     matrix.append(1, 0, 0, 1, this.props.tx, this.props.ty);
+	            // }
+	
+	        }
+	    }, {
+	        key: 'draw',
+	        value: function draw(polygon) {
+	            var scale = this.props.initialScale;
+	            var tx = this.props.origin.x;
+	            var ty = this.props.origin.y;
+	
+	            // let geom = polygon.geom;
+	            var transGeom = this.transformPolygon(polygon.geom, scale, -scale, tx, ty);
+	            var box = [].concat(_toConsumableArray(transGeom.faces))[0].box;
+	
+	            var style = {
+	                stroke: this.props.color,
+	                fill: this.props.widthOn && !this.props.displayVertices ? this.props.color : "white",
+	                alpha: this.props.displayed ? 0.6 : 0.0
+	            };
+	
+	            polygon.graphics.clear();
+	            polygon.graphics = this.createGraphics(transGeom, style);
+	
+	            var width = box.xmax - box.xmin;
+	            var height = box.ymax - box.ymin;
+	
+	            polygon.cache(box.xmin, box.ymin, width, height);
 	        }
 	    }, {
 	        key: 'componentWillMount',
@@ -25978,13 +29569,26 @@
 	    }, {
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            // while parent == stage, we can use needToBeUpdated flag
+	            // no changed
+	            // if (nextProps.origin.x === this.state.origin.x &&
+	            //     nextProps.origin.y === this.state.origin.y &&
+	            //     nextProps.scale === this.state.scale) {
+	            //     return true;
+	            // }
 	            return true; // nextProps.polygon.parent.needToBeUpdated;
 	        }
 	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
+	            // this.redraw4(this.props.polygon);
+	
 	            this.redraw(this.props.polygon);
+	
+	            // this.redraw2(this.props.polygon);
+	
+	            // this.props.polygon.cache(0,0,
+	            //     this.props.polygon.parent.canvas.width,
+	            //     this.props.polygon.parent.canvas.width);
 	
 	            // let vertices = this.props.polygon.vertices;
 	
@@ -26018,7 +29622,7 @@
 
 /***/ },
 /* 108 */
-11,
+13,
 /* 109 */
 /***/ function(module, exports) {
 
@@ -30753,7 +34357,7 @@
 	
 	'use strict';
 	
-	var EventPropagators = __webpack_require__(25);
+	var EventPropagators = __webpack_require__(26);
 	var ExecutionEnvironment = __webpack_require__(6);
 	var FallbackCompositionState = __webpack_require__(159);
 	var SyntheticCompositionEvent = __webpack_require__(196);
@@ -31355,15 +34959,15 @@
 	
 	'use strict';
 	
-	var EventPluginHub = __webpack_require__(24);
-	var EventPropagators = __webpack_require__(25);
+	var EventPluginHub = __webpack_require__(25);
+	var EventPropagators = __webpack_require__(26);
 	var ExecutionEnvironment = __webpack_require__(6);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactUpdates = __webpack_require__(10);
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	
-	var getEventTarget = __webpack_require__(49);
-	var isEventSupported = __webpack_require__(50);
+	var getEventTarget = __webpack_require__(48);
+	var isEventSupported = __webpack_require__(49);
 	var isTextInputElement = __webpack_require__(81);
 	
 	var eventTypes = {
@@ -31787,7 +35391,7 @@
 	
 	'use strict';
 	
-	var EventPropagators = __webpack_require__(25);
+	var EventPropagators = __webpack_require__(26);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var SyntheticMouseEvent = __webpack_require__(31);
 	
@@ -32233,8 +35837,8 @@
 	var ReactReconciler = __webpack_require__(17);
 	
 	var instantiateReactComponent = __webpack_require__(80);
-	var KeyEscapeUtils = __webpack_require__(41);
-	var shouldUpdateReactComponent = __webpack_require__(51);
+	var KeyEscapeUtils = __webpack_require__(40);
+	var shouldUpdateReactComponent = __webpack_require__(50);
 	var traverseAllChildren = __webpack_require__(83);
 	var warning = __webpack_require__(2);
 	
@@ -32389,7 +35993,7 @@
 	
 	'use strict';
 	
-	var DOMChildrenOperations = __webpack_require__(37);
+	var DOMChildrenOperations = __webpack_require__(36);
 	var ReactDOMIDOperations = __webpack_require__(169);
 	
 	/**
@@ -32427,10 +36031,10 @@
 	    _assign = __webpack_require__(4);
 	
 	var React = __webpack_require__(18);
-	var ReactComponentEnvironment = __webpack_require__(43);
-	var ReactCurrentOwner = __webpack_require__(13);
-	var ReactErrorUtils = __webpack_require__(44);
-	var ReactInstanceMap = __webpack_require__(26);
+	var ReactComponentEnvironment = __webpack_require__(42);
+	var ReactCurrentOwner = __webpack_require__(12);
+	var ReactErrorUtils = __webpack_require__(43);
+	var ReactInstanceMap = __webpack_require__(27);
 	var ReactInstrumentation = __webpack_require__(8);
 	var ReactNodeTypes = __webpack_require__(74);
 	var ReactReconciler = __webpack_require__(17);
@@ -32441,8 +36045,8 @@
 	
 	var emptyObject = __webpack_require__(23);
 	var invariant = __webpack_require__(1);
-	var shallowEqual = __webpack_require__(36);
-	var shouldUpdateReactComponent = __webpack_require__(51);
+	var shallowEqual = __webpack_require__(35);
+	var shouldUpdateReactComponent = __webpack_require__(50);
 	var warning = __webpack_require__(2);
 	
 	var CompositeTypes = {
@@ -33452,11 +37056,11 @@
 	var AutoFocusUtils = __webpack_require__(152);
 	var CSSPropertyOperations = __webpack_require__(154);
 	var DOMLazyTree = __webpack_require__(15);
-	var DOMNamespaces = __webpack_require__(38);
+	var DOMNamespaces = __webpack_require__(37);
 	var DOMProperty = __webpack_require__(16);
 	var DOMPropertyOperations = __webpack_require__(66);
-	var EventPluginHub = __webpack_require__(24);
-	var EventPluginRegistry = __webpack_require__(39);
+	var EventPluginHub = __webpack_require__(25);
+	var EventPluginRegistry = __webpack_require__(38);
 	var ReactBrowserEventEmitter = __webpack_require__(30);
 	var ReactDOMComponentFlags = __webpack_require__(67);
 	var ReactDOMComponentTree = __webpack_require__(5);
@@ -33471,9 +37075,9 @@
 	var emptyFunction = __webpack_require__(7);
 	var escapeTextContentForBrowser = __webpack_require__(33);
 	var invariant = __webpack_require__(1);
-	var isEventSupported = __webpack_require__(50);
-	var shallowEqual = __webpack_require__(36);
-	var validateDOMNesting = __webpack_require__(52);
+	var isEventSupported = __webpack_require__(49);
+	var shallowEqual = __webpack_require__(35);
+	var validateDOMNesting = __webpack_require__(51);
 	var warning = __webpack_require__(2);
 	
 	var Flags = ReactDOMComponentFlags;
@@ -34449,7 +38053,7 @@
 	
 	'use strict';
 	
-	var validateDOMNesting = __webpack_require__(52);
+	var validateDOMNesting = __webpack_require__(51);
 	
 	var DOC_NODE_TYPE = 9;
 	
@@ -34573,7 +38177,7 @@
 	
 	'use strict';
 	
-	var DOMChildrenOperations = __webpack_require__(37);
+	var DOMChildrenOperations = __webpack_require__(36);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	
 	/**
@@ -34615,7 +38219,7 @@
 	    _assign = __webpack_require__(4);
 	
 	var DOMPropertyOperations = __webpack_require__(66);
-	var LinkedValueUtils = __webpack_require__(42);
+	var LinkedValueUtils = __webpack_require__(41);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactUpdates = __webpack_require__(10);
 	
@@ -35246,13 +38850,13 @@
 	var _prodInvariant = __webpack_require__(3),
 	    _assign = __webpack_require__(4);
 	
-	var DOMChildrenOperations = __webpack_require__(37);
+	var DOMChildrenOperations = __webpack_require__(36);
 	var DOMLazyTree = __webpack_require__(15);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	
 	var escapeTextContentForBrowser = __webpack_require__(33);
 	var invariant = __webpack_require__(1);
-	var validateDOMNesting = __webpack_require__(52);
+	var validateDOMNesting = __webpack_require__(51);
 	
 	/**
 	 * Text nodes violate a couple assumptions that React makes about components:
@@ -35414,7 +39018,7 @@
 	var _prodInvariant = __webpack_require__(3),
 	    _assign = __webpack_require__(4);
 	
-	var LinkedValueUtils = __webpack_require__(42);
+	var LinkedValueUtils = __webpack_require__(41);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactUpdates = __webpack_require__(10);
 	
@@ -35879,7 +39483,7 @@
 	
 	'use strict';
 	
-	var EventPluginHub = __webpack_require__(24);
+	var EventPluginHub = __webpack_require__(25);
 	
 	function runEventQueueInBatch(events) {
 	  EventPluginHub.enqueueEvents(events);
@@ -35924,7 +39528,7 @@
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactUpdates = __webpack_require__(10);
 	
-	var getEventTarget = __webpack_require__(49);
+	var getEventTarget = __webpack_require__(48);
 	var getUnboundedScrollPosition = __webpack_require__(115);
 	
 	/**
@@ -36076,9 +39680,9 @@
 	'use strict';
 	
 	var DOMProperty = __webpack_require__(16);
-	var EventPluginHub = __webpack_require__(24);
-	var EventPluginUtils = __webpack_require__(40);
-	var ReactComponentEnvironment = __webpack_require__(43);
+	var EventPluginHub = __webpack_require__(25);
+	var EventPluginUtils = __webpack_require__(39);
+	var ReactComponentEnvironment = __webpack_require__(42);
 	var ReactEmptyComponent = __webpack_require__(69);
 	var ReactBrowserEventEmitter = __webpack_require__(30);
 	var ReactHostComponent = __webpack_require__(71);
@@ -36169,11 +39773,11 @@
 	
 	var _prodInvariant = __webpack_require__(3);
 	
-	var ReactComponentEnvironment = __webpack_require__(43);
-	var ReactInstanceMap = __webpack_require__(26);
+	var ReactComponentEnvironment = __webpack_require__(42);
+	var ReactInstanceMap = __webpack_require__(27);
 	var ReactInstrumentation = __webpack_require__(8);
 	
-	var ReactCurrentOwner = __webpack_require__(13);
+	var ReactCurrentOwner = __webpack_require__(12);
 	var ReactReconciler = __webpack_require__(17);
 	var ReactChildReconciler = __webpack_require__(161);
 	
@@ -36748,7 +40352,7 @@
 	var ReactInputSelection = __webpack_require__(72);
 	var ReactInstrumentation = __webpack_require__(8);
 	var Transaction = __webpack_require__(32);
-	var ReactUpdateQueue = __webpack_require__(45);
+	var ReactUpdateQueue = __webpack_require__(44);
 	
 	/**
 	 * Ensures that, when possible, the selection range (currently selected text
@@ -37112,7 +40716,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var ReactUpdateQueue = __webpack_require__(45);
+	var ReactUpdateQueue = __webpack_require__(44);
 	
 	var warning = __webpack_require__(2);
 	
@@ -37576,15 +41180,15 @@
 	
 	'use strict';
 	
-	var EventPropagators = __webpack_require__(25);
+	var EventPropagators = __webpack_require__(26);
 	var ExecutionEnvironment = __webpack_require__(6);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactInputSelection = __webpack_require__(72);
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	
 	var getActiveElement = __webpack_require__(57);
 	var isTextInputElement = __webpack_require__(81);
-	var shallowEqual = __webpack_require__(36);
+	var shallowEqual = __webpack_require__(35);
 	
 	var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
 	
@@ -37775,22 +41379,22 @@
 	var _prodInvariant = __webpack_require__(3);
 	
 	var EventListener = __webpack_require__(55);
-	var EventPropagators = __webpack_require__(25);
+	var EventPropagators = __webpack_require__(26);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var SyntheticAnimationEvent = __webpack_require__(194);
 	var SyntheticClipboardEvent = __webpack_require__(195);
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	var SyntheticFocusEvent = __webpack_require__(198);
 	var SyntheticKeyboardEvent = __webpack_require__(200);
 	var SyntheticMouseEvent = __webpack_require__(31);
 	var SyntheticDragEvent = __webpack_require__(197);
 	var SyntheticTouchEvent = __webpack_require__(201);
 	var SyntheticTransitionEvent = __webpack_require__(202);
-	var SyntheticUIEvent = __webpack_require__(27);
+	var SyntheticUIEvent = __webpack_require__(28);
 	var SyntheticWheelEvent = __webpack_require__(203);
 	
 	var emptyFunction = __webpack_require__(7);
-	var getEventCharCode = __webpack_require__(47);
+	var getEventCharCode = __webpack_require__(46);
 	var invariant = __webpack_require__(1);
 	
 	/**
@@ -38003,7 +41607,7 @@
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	
 	/**
 	 * @interface Event
@@ -38046,7 +41650,7 @@
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	
 	/**
 	 * @interface Event
@@ -38088,7 +41692,7 @@
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	
 	/**
 	 * @interface Event
@@ -38168,7 +41772,7 @@
 	
 	'use strict';
 	
-	var SyntheticUIEvent = __webpack_require__(27);
+	var SyntheticUIEvent = __webpack_require__(28);
 	
 	/**
 	 * @interface FocusEvent
@@ -38208,7 +41812,7 @@
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	
 	/**
 	 * @interface Event
@@ -38249,11 +41853,11 @@
 	
 	'use strict';
 	
-	var SyntheticUIEvent = __webpack_require__(27);
+	var SyntheticUIEvent = __webpack_require__(28);
 	
-	var getEventCharCode = __webpack_require__(47);
+	var getEventCharCode = __webpack_require__(46);
 	var getEventKey = __webpack_require__(208);
-	var getEventModifierState = __webpack_require__(48);
+	var getEventModifierState = __webpack_require__(47);
 	
 	/**
 	 * @interface KeyboardEvent
@@ -38337,9 +41941,9 @@
 	
 	'use strict';
 	
-	var SyntheticUIEvent = __webpack_require__(27);
+	var SyntheticUIEvent = __webpack_require__(28);
 	
-	var getEventModifierState = __webpack_require__(48);
+	var getEventModifierState = __webpack_require__(47);
 	
 	/**
 	 * @interface TouchEvent
@@ -38386,7 +41990,7 @@
 	
 	'use strict';
 	
-	var SyntheticEvent = __webpack_require__(12);
+	var SyntheticEvent = __webpack_require__(11);
 	
 	/**
 	 * @interface Event
@@ -38620,9 +42224,9 @@
 	
 	var _prodInvariant = __webpack_require__(3);
 	
-	var ReactCurrentOwner = __webpack_require__(13);
+	var ReactCurrentOwner = __webpack_require__(12);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactInstanceMap = __webpack_require__(26);
+	var ReactInstanceMap = __webpack_require__(27);
 	
 	var getHostComponentFromComposite = __webpack_require__(78);
 	var invariant = __webpack_require__(1);
@@ -38683,7 +42287,7 @@
 	
 	'use strict';
 	
-	var KeyEscapeUtils = __webpack_require__(41);
+	var KeyEscapeUtils = __webpack_require__(40);
 	var traverseAllChildren = __webpack_require__(83);
 	var warning = __webpack_require__(2);
 	
@@ -38763,7 +42367,7 @@
 	
 	'use strict';
 	
-	var getEventCharCode = __webpack_require__(47);
+	var getEventCharCode = __webpack_require__(46);
 	
 	/**
 	 * Normalization of deprecated HTML5 `key` values
@@ -39629,7 +43233,7 @@
 
 /***/ },
 /* 216 */
-41,
+40,
 /* 217 */
 [236, 20],
 /* 218 */
@@ -39845,10 +43449,10 @@
 	var _prodInvariant = __webpack_require__(20),
 	    _assign = __webpack_require__(4);
 	
-	var ReactComponent = __webpack_require__(53);
+	var ReactComponent = __webpack_require__(52);
 	var ReactElement = __webpack_require__(19);
 	var ReactPropTypeLocationNames = __webpack_require__(221);
-	var ReactNoopUpdateQueue = __webpack_require__(54);
+	var ReactNoopUpdateQueue = __webpack_require__(53);
 	
 	var emptyObject = __webpack_require__(23);
 	var invariant = __webpack_require__(1);
@@ -40797,8 +44401,8 @@
 	
 	var _assign = __webpack_require__(4);
 	
-	var ReactComponent = __webpack_require__(53);
-	var ReactNoopUpdateQueue = __webpack_require__(54);
+	var ReactComponent = __webpack_require__(52);
+	var ReactNoopUpdateQueue = __webpack_require__(53);
 	
 	var emptyObject = __webpack_require__(23);
 	
@@ -40914,7 +44518,7 @@
 	
 	var _prodInvariant = __webpack_require__(20);
 	
-	var ReactCurrentOwner = __webpack_require__(13);
+	var ReactCurrentOwner = __webpack_require__(12);
 	var REACT_ELEMENT_TYPE = __webpack_require__(85);
 	
 	var getIteratorFn = __webpack_require__(225);
@@ -41546,4 +45150,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.df3787d1.js.map
+//# sourceMappingURL=main.33b61d0d.js.map
