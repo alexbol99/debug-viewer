@@ -35,7 +35,7 @@ const defaultAppState = {
     bg: "#F1F1F1",
     hoveredShape: null,
     parser: new Parser(),
-    widthOn: true
+    widthOn: true,
 };
 
 const defaultMouseState = {
@@ -154,6 +154,7 @@ function stage(state = null, action) {
             return state;
 
         case ActionTypes.ADD_SHAPE_TO_STAGE:
+            state.needToBeUpdated = true;
             return state;
 
         // return state.add(action.shape);   // stage already mutated !!!
@@ -189,7 +190,7 @@ function stage(state = null, action) {
 
         case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
             let bIn = action.delta > 0;
-            state.zoom(action.x, action.y, bIn, 1.05);
+            state.zoomByMouse(action.x, action.y, bIn, 1.05);
             state.needToBeUpdated = true;
             return state;
 

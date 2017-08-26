@@ -187,6 +187,12 @@ export class MainComponent extends Component {
 
                 {
                     this.state.layers.map((layer) => {
+                        /*
+                        let initialScale = this.state.stage.scalingFactor();
+                        let scale = this.state.stage.scalingFactor() / this.state.stage.initialScalingFactor;
+                        let origin = this.state.stage.origin;
+                        let tx = this.state.stage.tx;
+                        let ty = this.state.stage.ty;*/
                         return (
                             [...layer.shapes].map((shape, index) =>
                                 <PolygonTool

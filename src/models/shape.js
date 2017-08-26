@@ -4,7 +4,8 @@
 
 import Flatten from 'flatten-js';
 
-import createjs from 'easel-js';
+// import createjs from 'easel-js';
+import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
 let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
 

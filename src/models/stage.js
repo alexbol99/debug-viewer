@@ -1,8 +1,9 @@
 /**
  * Created by alexanderbol on 21/04/2017.
  */
-// import * as d3 from 'd3';
-import createjs from 'easel-js';
+// import createjs from 'easel-js';
+import * as createjs from '../../public/easeljs-NEXT.combined.js';
+
 import Flatten from 'flatten-js';
 
 import { Shape } from '../models/shape';
@@ -25,6 +26,20 @@ export class Stage extends createjs.Stage {
         this.zoomFactor = 1.0;
 
         this.needToBeUpdated = false;
+    }
+
+    get box() {
+        let minX = this.C2W_X(0);
+        let minY = this.C2W_Y(this.canvas.height);
+        let maxX = this.C2W_X(this.canvas.width);
+        let maxY = this.C2W_Y(0);
+
+        return ( new Flatten.Box(minX, minY, maxX, maxY) );
+    }
+
+    clone() {
+        let stage = new Stage(this.canvas);
+        return Object.assign(stage, this);
     }
 
     add(shape) {
@@ -64,23 +79,15 @@ export class Stage extends createjs.Stage {
         return {x: this.W2C_X(point.x), y: this.W2C_Y(point.y)}
     }
 
-    get box() {
-        let minX = this.C2W_X(0);
-        let minY = this.C2W_Y(this.canvas.height);
-        let maxX = this.C2W_X(this.canvas.width);
-        let maxY = this.C2W_Y(0);
-
-        return ( new Flatten.Box(minX, minY, maxX, maxY) );
-    }
-
     panTo(newOrigin) {
-        this.origin.x = newOrigin.x;
-        this.origin.y = newOrigin.y;
+        this.origin = {x: newOrigin.x, y: newOrigin.y}
     }
 
     panBy(deltaX, deltaY) {
-        this.origin.x += deltaX;
-        this.origin.y += deltaY;
+        this.origin = {
+            x: this.origin.x + deltaX,
+            y: this.origin.y + deltaY
+        }
     }
 
     // zoom by 10% each time
@@ -105,6 +112,12 @@ export class Stage extends createjs.Stage {
         let newFocusY = this.W2C_Y(worldY);
 
         this.panBy(focusX - newFocusX, focusY - newFocusY);
+
+        return [newFocusX, newFocusY];
+    }
+
+    zoomByMouse(focusX, focusY, bIn, ratio) {
+        this.zoom(focusX, focusY, bIn, ratio);
     }
 
     zoomToLimits(width, height) {
@@ -142,23 +155,26 @@ export class Stage extends createjs.Stage {
     panByMouseMove(dx, dy) {
         if (dx !== undefined && dy !== undefined &&
             this.oldOrigin.x !== undefined && this.oldOrigin.y !== undefined) {
-            this.origin.x = this.oldOrigin.x + dx;
-            this.origin.y = this.oldOrigin.y + dy;
+            this.origin = {
+                    x: this.oldOrigin.x + dx,
+                    y: this.oldOrigin.y + dy
+                };
         }
     }
 
     panByMouseStop() {
         this.oldOrigin.x = undefined;
         this.oldOrigin.y = undefined;
+        this.tx = undefined;
+        this.ty = undefined;
     }
 
     panToCoordinate(x, y) {
         let canvasX = this.W2C_X(x);
         let canvasY = this.W2C_Y(y);
 
-        let dx = this.canvas.width/2 - canvasX;
-        let dy = this.canvas.height/2 - canvasY;
-
+        let dx = this.canvas.width / 2 - canvasX;
+        let dy = this.canvas.height / 2 - canvasY;
         this.panBy(dx, dy);
     }
 }

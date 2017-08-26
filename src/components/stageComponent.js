@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react';
 // import createjs from 'easel-js';
+// import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
 import '../App.css';
 
@@ -104,6 +105,8 @@ export class StageComponent extends Component {
     componentDidMount() {
         let stage = new Stage(this.refs.canvas);
 
+        // stage.setClearColor("#F1F1F1");
+
         stage.on("stagemousemove", this.handleMouseMove);
         stage.on("stagemousedown", this.handleMouseDown);
         stage.on("stagemouseup", this.handleMouseUp);
@@ -117,6 +120,23 @@ export class StageComponent extends Component {
         // var _keyup = _.throttle(this.keyup, 500);
         document.addEventListener('keyup', this.handleKeyUp);
 
+        // var r = 50;
+        // var graphics = new createjs.Graphics();
+        // graphics.beginFill("red")
+        //     .drawCircle(200,50, r)
+        //     .endFill();
+        //
+        // var cached = new createjs.Shape(graphics);
+        //
+        // stage.addChild(cached);
+        //
+        // cached.x = 0;
+        // cached.y = 0;
+        //
+        // cached.cache(200-r,50-r, r*2,r*2);
+        //
+        // stage.update();
+
         this.props.onStageCreated(stage);
     }
 
@@ -125,9 +145,9 @@ export class StageComponent extends Component {
     }
 
     componentDidUpdate() {
-        if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
+        // if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
             this.props.stage.update();
-        }
+        // }
     }
 
     componentWillUnmount() {
