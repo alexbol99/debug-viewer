@@ -62,6 +62,7 @@ export class AsideComponent extends Component {
         this.onToggleWatchExpandButtonClicked = this.onToggleWatchExpandButtonClicked.bind(this);
         this.onSelectShapeClicked = this.onSelectShapeClicked.bind(this);
         this.addSamplePolygon = this.addSamplePolygon.bind(this);
+        this.handleFileSelect = this.handleFileSelect.bind(this);
         this.height = 0;
     }
 
@@ -99,6 +100,53 @@ export class AsideComponent extends Component {
         });
     }
 
+    readFile(file) {
+        if (!file.type.match('text.*')) return;   // validate type is text
+
+        let reader = new FileReader();
+
+        let self = this;
+        // Closure to capture file information and "this" component
+        reader.onload = (function(theFile, thisComponent) {
+            return (event) => {
+                let string = event.target.result;
+                // let name = theFile.name;
+
+                let parser = thisComponent.state.app.parser;
+                let stage = thisComponent.state.stage;
+                let poly = parser.parseToPolygon(string);
+                // TODO: add something like poly.valid()
+                if (poly.edges.size > 0 && poly.faces.size > 0) {
+                    let watch = parser.parseToWatchArray(string);
+
+                    let shape = new Shape(poly, stage, {}, watch);
+
+                    thisComponent.dispatch({
+                        type: ActionTypes.NEW_SHAPE_PASTED,
+                        shape: shape
+                    });
+
+                    thisComponent.dispatch({
+                        type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+                        shape: shape
+                    });
+                }
+            }
+        })(file, self);
+
+        reader.readAsText(file);
+    }
+
+    handleFileSelect(event) {
+        if (!(File && FileReader && FileList)) return;
+
+        let files = event.target.files; // FileList object
+
+        for (let file of files) {
+            this.readFile(file);
+        }
+    }
+
     componentWillMount() {
         this.dispatch = this.props.store.dispatch;
         this.setState(this.props.store.getState());
@@ -122,7 +170,11 @@ export class AsideComponent extends Component {
         return (
             <aside className="App-aside" ref="aside">
                 {/*<h4>Aside</h4>*/}
-                <h3>Paste data here...</h3>
+                <input style={{fontSize:16, marginTop:5, marginBottom:5}}
+                       type="file" id="files" name="files[]" multiple
+                       onChange={this.handleFileSelect}
+                />
+                <h3>... or paste data here</h3>
                 <div
                     className="Watch-container"
                     style={{maxHeight:watchContainerHeight}}

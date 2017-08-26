@@ -213,7 +213,7 @@ export class PolygonTool extends Component {
         // let scale = 1.0; // this.props.scale;   // stage.scalingFactor();
 
         if (this.props.tx !== undefined && this.props.ty !== undefined &&
-        polygon.oldX != undefined && polygon.oldY !== undefined) {
+        polygon.oldX !== undefined && polygon.oldY !== undefined) {
             // polygon.transformMatrix = polygon.oldMatrix
             //     .append(1, 0, 0, 1, this.props.tx, this.props.ty);
             polygon.x = polygon.oldX + this.props.tx;
