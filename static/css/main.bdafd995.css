@@ -61,6 +61,10 @@
 
 .App-layers {
   /* put the layer list on the left */
+  /*list-style-type:none;*/
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
   -webkit-box-ordinal-group: 0;
       -ms-flex-order: -1;
           order: -1;
@@ -256,4 +260,4 @@ html,body {
   height:100%;
 }
 
-/*# sourceMappingURL=main.c1f5eca7.css.map*/
+/*# sourceMappingURL=main.bdafd995.css.map*/
