@@ -40,6 +40,10 @@
 
 .App-layers {
   /* put the layer list on the left */
+  /*list-style-type:none;*/
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
   order: -1;
 }
 

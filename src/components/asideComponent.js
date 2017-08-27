@@ -8,6 +8,7 @@ import * as ActionTypes from '../actions/action-types';
 import { debug_str } from '../sample';
 import {Layers} from '../models/layers';
 import {Shape} from '../models/shape';
+import { parseXML } from '../models/parserXML';
 
 class WatchElement extends Component {
     render() {
@@ -112,12 +113,15 @@ export class AsideComponent extends Component {
                 let string = event.target.result;
                 // let name = theFile.name;
 
-                let parser = thisComponent.state.app.parser;
+                // let parser = thisComponent.state.app.parser;
                 let stage = thisComponent.state.stage;
-                let poly = parser.parseToPolygon(string);
+                // let poly = parser.parseToPolygon(string);
+
+                let poly = parseXML(string);
+
                 // TODO: add something like poly.valid()
                 if (poly.edges.size > 0 && poly.faces.size > 0) {
-                    let watch = parser.parseToWatchArray(string);
+                    let watch = undefined; //  parser.parseToWatchArray(string);
 
                     let shape = new Shape(poly, stage, {}, watch);
 

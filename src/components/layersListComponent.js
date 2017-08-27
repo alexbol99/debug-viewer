@@ -69,7 +69,7 @@ export class LayersListComponent extends Component {
             </div>)
 
         return (
-            <div className="App-layers">
+            <ul className="App-layers">
                 {/*<h4>Layers List</h4>*/}
                 { this.state.layers.map((layer) =>
                     <LayerListElement
@@ -81,7 +81,7 @@ export class LayersListComponent extends Component {
                     />)
                 }
                 { addLayer }
-            </div>
+            </ul>
         )
 
     }

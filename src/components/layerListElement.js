@@ -23,7 +23,7 @@ export class LayerListElement extends Component {
                 <input val={this.props.layer.name}/>
             </div>
         ) : (
-                <div
+                <li
                     className={`Layer ${displayed}`}
                     onClick={this.props.onLayerClicked}
                     onDoubleClick={this.props.onLayerDoubleClicked}>
@@ -41,7 +41,7 @@ export class LayerListElement extends Component {
                         {this.props.layer.name}
                     </h4>
 
-                </div>
+                </li>
             )
 
 
