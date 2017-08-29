@@ -3,12 +3,10 @@
  */
 
 import Flatten from 'flatten-js';
-
-// import createjs from 'easel-js';
-
 let {Point, Segment, Arc, Polygon} = Flatten;
 let { vector } = Flatten;
 
+/*
 let debug_str = `+		[0]	{nrec=27 nalloc=27 h_ind_id=-1 ...} mat_cont_hdr_struc	mat_cont_struc
     +		[1]	{pmin=59146400,5973200 pmax=59606001,6438000} mat_cont_lim_struc	mat_cont_struc
 +		[2]	{nedge=23 nalloc=25 ntop=2 ...} mat_cont_poly_struc	mat_cont_struc
@@ -37,6 +35,7 @@ let debug_str = `+		[0]	{nrec=27 nalloc=27 h_ind_id=-1 ...} mat_cont_hdr_struc	m
 +		[25]	{ps=59146400,6303200 pe=59156076,6326462 pc=59179200,6303200 cw=1} mat_curve_struc	mat_cont_struc
 +		[26]	{ps=59156076,6326462 pe=59192738,6363124} mat_seg_struc	mat_cont_struc
 `;
+*/
 
 export class Parser {
     parseToWatchArray(str) {

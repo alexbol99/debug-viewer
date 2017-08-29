@@ -76,8 +76,10 @@ function app(state = defaultAppState, action) {
 
 function layers(state = [], action) {
     switch (action.type) {
+        /*
         case ActionTypes.NEW_STAGE_CREATED:
             return [...state, action.layer];
+            */
 
         case ActionTypes.ADD_LAYER_PRESSED:
             return [...state, action.layer];

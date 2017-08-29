@@ -80,7 +80,7 @@ export class LayersListComponent extends Component {
                         layer={layer}
                     />)
                 }
-                { addLayer }
+                {/* addLayer */}
             </ul>
         )
 

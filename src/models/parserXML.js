@@ -1,27 +1,64 @@
+import { Job } from '../models/job';
 import Flatten from 'flatten-js';
 
 let {Point, Segment, Arc, Polygon} = Flatten;
 let { vector } = Flatten;
 
-export function parseXML(str) {
-    let parser = new DOMParser();
+export function parseXML(filename, str) {
+    let job = new Job();
 
+    job.filename = filename;
+
+    let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(str, "text/xml");
 
-    let profiles = xmlDoc.getElementsByTagName('profile');
+    // Parse document title
+    let titles = xmlDoc.getElementsByTagName('title');
+    if (titles && titles.lenth > 0) {
+        job.title = titles[0];          // take the first title if more than one
+    }
 
-    let material_shapes = xmlDoc.getElementsByTagName('material');
+    // Parse profiles and add polygons to the job
+    let profilesXML = xmlDoc.getElementsByTagName('profile');
+    for (let profileXML of profilesXML) {
+        let polygon = parsePolygon(profileXML);
+        job.profiles.push(polygon);
+    }
 
+    // Parse materials and add polygons to the job
+    let materialXML = xmlDoc.getElementsByTagName('material');
+    for (let shapeXML of materialXML) {
+        let polygon = parsePolygon(shapeXML);
+        job.materials.push(polygon);
+    }
+
+    return job;
+}
+
+function parsePolygon(polygonsXML) {
     let polygon = new Polygon();
 
-    for (let profile of profiles) {
-        // let nedges = parseInt(profile.getAttribute("n_edges"), 10);
-        let edgesXML = profile.getElementsByTagName('edge');
+    // let nedges = parseInt(profile.getAttribute("n_edges"), 10);
+
+    // Augment Flatten object with style
+    let color = polygonsXML.getAttribute("color");
+    polygon.style = {
+        stroke: color || undefined,
+        fill: color || undefined,
+        alpha: 1.0
+    };
+
+    // Add islands
+    let islands = polygonsXML.getElementsByTagName('island');
+    for (let island of islands) {
+        let edgesXML = island.getElementsByTagName('edge');
         polygon.addFace(parseEdges(edgesXML));
     }
 
-    for (let shape of material_shapes) {
-        let edgesXML = shape.getElementsByTagName('edge');
+    // Add holes
+    let holes = polygonsXML.getElementsByTagName('holes');
+    for (let hole of holes) {
+        let edgesXML = hole.getElementsByTagName('edge');
         polygon.addFace(parseEdges(edgesXML));
     }
 

@@ -38,11 +38,11 @@ export class MainComponent extends Component {
     }
 
     registerStage(stage) {
-        let layer = Layers.newLayer(stage, this.state.layers);
+        // let layer = Layers.newLayer(stage, this.state.layers);
         this.dispatch({
             type: ActionTypes.NEW_STAGE_CREATED,
             stage: stage,
-            layer: layer
+            /*layer: layer*/
         });
     }
 
