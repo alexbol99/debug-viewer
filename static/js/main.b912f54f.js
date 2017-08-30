@@ -27267,6 +27267,7 @@
 	
 	            var layer = _layers.Layers.getAffected(this.state.layers);
 	            var shapes = layer ? [].concat(_toConsumableArray(layer.shapes)) : undefined;
+	            var title = layer ? layer.title : "";
 	            var watchContainerHeight = 0.75 * this.height;
 	            return _react2.default.createElement(
 	                'aside',
@@ -27274,6 +27275,11 @@
 	                _react2.default.createElement(_readFilesComponent.ReadFilesComponent, {
 	                    store: this.props.store
 	                }),
+	                _react2.default.createElement(
+	                    'h4',
+	                    null,
+	                    title
+	                ),
 	                _react2.default.createElement(
 	                    'div',
 	                    {
@@ -27928,7 +27934,7 @@
 	                    }
 	                    // layer.displayed = true;
 	                    // layer.affected = true;
-	
+	                    layer.title = job.title;
 	
 	                    var _iteratorNormalCompletion = true;
 	                    var _didIteratorError = false;
@@ -28607,6 +28613,7 @@
 	        this.shapes = new _flattenJs2.default.PlanarSet();
 	        this.name = "";
 	        this.color = "";
+	        this.title = "";
 	        this.displayed = false;
 	        this.edited = false;
 	        this.affected = false;
@@ -28942,8 +28949,8 @@
 	
 	    // Parse document title
 	    var titles = xmlDoc.getElementsByTagName('title');
-	    if (titles && titles.lenth > 0) {
-	        job.title = titles[0]; // take the first title if more than one
+	    if (titles && titles.length > 0) {
+	        job.title = titles[0].firstChild.nodeValue; // take the first title if more than one
 	    }
 	
 	    // Parse profiles and add polygons to the job
@@ -45649,4 +45656,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.67608cd4.js.map
+//# sourceMappingURL=main.b912f54f.js.map
