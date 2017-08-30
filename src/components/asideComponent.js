@@ -119,6 +119,7 @@ export class AsideComponent extends Component {
     render() {
         let layer = Layers.getAffected(this.state.layers);
         let shapes = layer ? [...layer.shapes] : undefined;
+        let title = layer ? layer.title : "";
         let watchContainerHeight = 0.75*this.height;
         return (
             <aside className="App-aside" ref="aside">
@@ -127,6 +128,7 @@ export class AsideComponent extends Component {
                     store={this.props.store}
                 />
                 {/*<h3>... or paste data here</h3>*/}
+                <h4>{title}</h4>
                 <div
                     className="Watch-container"
                     style={{maxHeight:watchContainerHeight}}

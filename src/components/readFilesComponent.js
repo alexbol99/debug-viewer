@@ -36,6 +36,7 @@ export class ReadFilesComponent extends Component {
                 }
                 // layer.displayed = true;
                 // layer.affected = true;
+                layer.title = job.title;
 
 
                 for (let polygon of job.profiles) {

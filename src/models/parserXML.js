@@ -14,8 +14,8 @@ export function parseXML(filename, str) {
 
     // Parse document title
     let titles = xmlDoc.getElementsByTagName('title');
-    if (titles && titles.lenth > 0) {
-        job.title = titles[0];          // take the first title if more than one
+    if (titles && titles.length > 0) {
+        job.title = titles[0].firstChild.nodeValue;          // take the first title if more than one
     }
 
     // Parse profiles and add polygons to the job

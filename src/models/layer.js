@@ -13,6 +13,7 @@ export class Layer {
         this.shapes = new Flatten.PlanarSet();
         this.name = "";
         this.color = "";
+        this.title = "";
         this.displayed = false;
         this.edited = false;
         this.affected = false;
