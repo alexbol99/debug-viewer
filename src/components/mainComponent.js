@@ -35,6 +35,7 @@ export class MainComponent extends Component {
 
         this.setHomeView = this.setHomeView.bind(this);
         this.toggleWidthMode = this.toggleWidthMode.bind(this);
+        this.toggleDisplayVertices = this.toggleDisplayVertices.bind(this);
     }
 
     registerStage(stage) {
@@ -134,6 +135,14 @@ export class MainComponent extends Component {
 
     }
 
+    toggleDisplayVertices() {
+        if (this.state.app.widthOn)
+            return;
+        this.dispatch({
+            type: ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED
+        })
+    }
+
     componentWillMount() {
         this.dispatch = this.props.store.dispatch;
         this.setState(this.props.store.getState());
@@ -183,6 +192,7 @@ export class MainComponent extends Component {
                     onMouseWheelMove={this.handleMouseWheelMove}
                     onHomeKeyPressed={this.setHomeView}
                     onToggleWidthModePressed={this.toggleWidthMode}
+                    onToggleDisplayVerticesPressed={this.toggleDisplayVertices}
                 />
 
                 {
@@ -201,7 +211,7 @@ export class MainComponent extends Component {
                                     displayed={layer.displayed}
                                     color={layer.color}
                                     widthOn={this.state.app.widthOn}
-                                    displayVertices={this.state.app.hoveredShape === shape ? true : false}
+                                    displayVertices={this.state.app.displayVertices}
                                     onMouseOver={this.onMouseRollOverShape}
                                     onMouseOut={this.onMouseRollOutShape}
                                 />

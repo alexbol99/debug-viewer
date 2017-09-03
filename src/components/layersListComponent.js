@@ -3,7 +3,8 @@
  */
 
 import React, {Component} from 'react';
-// import logo from './logo.svg';
+
+// import { ListGroup } from 'react-bootstrap';
 import '../App.css';
 
 import {LayerListElement} from './layerListElement';
@@ -18,6 +19,7 @@ export class LayersListComponent extends Component {
         this.onLayerDoubleClicked = this.onLayerDoubleClicked.bind(this);
         this.onAddLayerSelected = this.onAddLayerSelected.bind(this);
         this.onAffectedBoxClicked = this.onAffectedBoxClicked.bind(this);
+        this.height = 0;
     }
 
     componentWillMount() {
@@ -60,6 +62,13 @@ export class LayersListComponent extends Component {
         })
     }
 
+    componentDidUpdate() {
+        this.height = this.refs.layersComponent.clientHeight;
+        // let container = this.refs.watchContainer;
+        // let parentHeight = container.parentElement.clientHeight;
+        // container.style.maxHeight = 0.7*parentHeight;
+    }
+
     render() {
         let addLayer =
             (<div
@@ -69,8 +78,9 @@ export class LayersListComponent extends Component {
             </div>)
 
         return (
-            <ul className="App-layers">
-                {/*<h4>Layers List</h4>*/}
+            <div className="App-layers" ref="layersComponent">
+                <h4>Layers</h4>
+                <ul style={{maxHeight:0.82*(this.height-40),padding:0,overflow:'auto'}}>
                 { this.state.layers.map((layer) =>
                     <LayerListElement
                         onLayerClicked={() => this.onLayerClicked(layer)}
@@ -80,8 +90,9 @@ export class LayersListComponent extends Component {
                         layer={layer}
                     />)
                 }
+                </ul>
                 {/* addLayer */}
-            </ul>
+            </div>
         )
 
     }

@@ -3,7 +3,9 @@
  */
 
 import React, { Component } from 'react';
-// import logo from './logo.svg';
+
+// import { ListGroupItem } from 'react-bootstrap';
+
 import '../App.css';
 
 
@@ -37,7 +39,9 @@ export class LayerListElement extends Component {
                         </h4>
                     </div>
 
-                    <h4 style={{flex:8, color: color}}>
+                    <h4 style={{flex:8, color: color}}
+                        title={this.props.layer.name}
+                    >
                         {this.props.layer.name}
                     </h4>
 

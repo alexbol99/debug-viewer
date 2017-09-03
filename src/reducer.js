@@ -36,6 +36,7 @@ const defaultAppState = {
     hoveredShape: null,
     parser: new Parser(),
     widthOn: true,
+    displayVertices: false
 };
 
 const defaultMouseState = {
@@ -67,7 +68,12 @@ function app(state = defaultAppState, action) {
             });
         case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
             return Object.assign({}, state, {
-                widthOn: !state.widthOn
+                widthOn: !state.widthOn,
+                displayVertices: state.widthOn ? state.displayVertices : false
+            });
+        case ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED:
+            return Object.assign({}, state, {
+                displayVertices: !state.displayVertices
             });
         default:
             return state;

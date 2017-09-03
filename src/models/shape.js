@@ -21,10 +21,7 @@ export class Shape extends createjs.Shape {
     }
 
     get box() {
-        // TODO: add method box to Polygon
-        return this.geom instanceof Polygon ?
-            [...this.geom.faces][0].box :
-            this.geom.box;
+        return this.geom.box;
     }
 
     get center() {

@@ -80,6 +80,10 @@ export class StageComponent extends Component {
                 this.props.onToggleWidthModePressed();     // toggle width On/Off in graphics model
                 break;
 
+            case "KeyE":
+                this.props.onToggleDisplayVerticesPressed();  // toggle vertices On/Off
+                break;
+
             case "ArrowRight":
                 break;
             case "ArrowLeft":
