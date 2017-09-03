@@ -76,8 +76,10 @@
       -ms-flex: 0 0 12em;
           flex: 0 0 12em;
   background: rgba(147, 128, 108, 0.1);
-  overflow: auto;
-  height: inherit;
+  overflow-y: auto;
+  /*height: inherit;*/
+  -ms-flex-positive: 0;
+      flex-grow: 0;
 }
 
 .App-aside {
@@ -122,7 +124,7 @@
 }
 
 .Layer {
-  padding: 5px;
+  padding: 3px;
   /*border-bottom: 1px solid black;*/
   display: -webkit-box;
   display: -ms-flexbox;
@@ -131,8 +133,11 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  margin-bottom: 2px;
-  background-color: aliceblue;
+  tab-index: 1;
+  z-index: -1;
+  /*margin-bottom: 2px;*/
+  /*margin-right: 2px;*/
+  /*background-color: aliceblue;*/
 }
 
 .Layer h4 {
@@ -152,14 +157,14 @@
   background: rgba(147, 128, 108, 0.1);
   /*background-color: aqua;*/
   /*padding: 10px;*/
-  text-align: left;
+  /*text-align: left;*/
 }
 
 .App-toolbar button {
-  width:40px;
+  /*width:40px;*/
   height:40px;
-  margin-left: 6px;
-  margin-right: 6px;
+  /*margin-left: 6px;*/
+  /*margin-right: 6px;*/
   /*background-repeat: no-repeat;*/
   /*background-position-x: center;*/
   /*background-position-y: center;*/
@@ -260,4 +265,4 @@ html,body {
   height:100%;
 }
 
-/*# sourceMappingURL=main.bdafd995.css.map*/
+/*# sourceMappingURL=main.cb6ea873.css.map*/
