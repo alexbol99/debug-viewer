@@ -1312,6 +1312,8 @@
 	var TOGGLE_DISPLAY_LAYER_PRESSED = exports.TOGGLE_DISPLAY_LAYER_PRESSED = "TOGGLE_DISPLAY_LAYER_PRESSED";
 	var TOGGLE_AFFECTED_LAYER_PRESSED = exports.TOGGLE_AFFECTED_LAYER_PRESSED = "TOGGLE_AFFECTED_LAYER_PRESSED";
 	var EDIT_LAYER_NAME_PRESSED = exports.EDIT_LAYER_NAME_PRESSED = "EDIT_LAYER_NAME_PRESSED";
+	var LAYERS_LIST_ARROW_DOWN_PRESSED = exports.LAYERS_LIST_ARROW_DOWN_PRESSED = "LAYERS_LIST_ARROW_DOWN_PRESSED";
+	var LAYERS_LIST_ARROW_UP_PRESSED = exports.LAYERS_LIST_ARROW_UP_PRESSED = "LAYERS_LIST_ARROW_UP_PRESSED";
 	
 	var TOGGLE_WATCH_EXPAND_CLICKED = exports.TOGGLE_WATCH_EXPAND_CLICKED = "TOGGLE_WATCH_EXPAND_CLICKED";
 	
@@ -27619,7 +27621,8 @@
 	                _react2.default.createElement(
 	                    'h4',
 	                    { style: { flex: 8, color: color },
-	                        title: this.props.layer.name
+	                        title: this.props.layer.name,
+	                        tabIndex: '1'
 	                    },
 	                    this.props.layer.name
 	                )
@@ -27684,6 +27687,7 @@
 	        _this.onLayerDoubleClicked = _this.onLayerDoubleClicked.bind(_this);
 	        _this.onAddLayerSelected = _this.onAddLayerSelected.bind(_this);
 	        _this.onAffectedBoxClicked = _this.onAffectedBoxClicked.bind(_this);
+	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
 	        _this.height = 0;
 	        return _this;
 	    }
@@ -27735,6 +27739,37 @@
 	            });
 	        }
 	    }, {
+	        key: 'handleKeyDown',
+	        value: function handleKeyDown(e) {
+	            if (e.target.parentElement.parentElement.id !== "layersList") return;
+	
+	            switch (e.code) {
+	                case "ArrowRight":
+	                case "ArrowDown":
+	                    this.dispatch({
+	                        type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
+	                    });
+	                    break;
+	                case "ArrowLeft":
+	                case "ArrowUp":
+	                    this.dispatch({
+	                        type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
+	                    });
+	                    break;
+	                default:
+	                    break;
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            // Keyboard event
+	            // var _keydown = _.throttle(this.keydown, 100);
+	            document.addEventListener('keydown', this.handleKeyDown);
+	            // var _keyup = _.throttle(this.keyup, 500);
+	            // document.addEventListener('keyup', this.handleKeyUp);
+	        }
+	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
 	            this.height = this.refs.layersComponent.clientHeight;
@@ -27769,7 +27804,8 @@
 	                ),
 	                _react2.default.createElement(
 	                    'ul',
-	                    { style: { maxHeight: 0.82 * (this.height - 40), padding: 0, overflow: 'auto' } },
+	                    { id: 'layersList',
+	                        style: { maxHeight: 0.82 * (this.height - 40), padding: 0, overflow: 'auto' } },
 	                    this.state.layers.map(function (layer) {
 	                        return _react2.default.createElement(_layerListElement.LayerListElement, {
 	                            onLayerClicked: function onLayerClicked() {
@@ -29767,6 +29803,14 @@
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
 	
+	    var curLayer = state.find(function (layer) {
+	        return layer.affected;
+	    });
+	    var curLayerId = state.findIndex(function (layer) {
+	        return layer.affected;
+	    });
+	    var nextLayer = void 0;
+	
 	    switch (action.type) {
 	        /*
 	        case ActionTypes.NEW_STAGE_CREATED:
@@ -29784,9 +29828,13 @@
 	            }
 	            return state.map(function (layer) {
 	                if (layer !== action.layer) {
-	                    return layer;
+	                    return layer.setAffected(false);
+	                } else {
+	                    var newLayer = layer.toggleDisplayed(color);
+	                    newLayer.affected = newLayer.displayed;
+	                    return newLayer;
 	                }
-	                return layer.toggleDisplayed(color);
+	                // return layer.toggleDisplayed(color);
 	            });
 	
 	        case ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED:
@@ -29825,6 +29873,46 @@
 	                    edited: true
 	                });
 	            });
+	
+	        case ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED:
+	            if (curLayerId == state.length - 1) return;
+	
+	            _nextLayer = state[curLayerId + 1];
+	
+	            return state.map(function (layer) {
+	                if (layer === curLayer) {
+	                    var newCurLayer = layer.toggleDisplayed("");
+	                    newCurLayer.affected = false;
+	                    return newCurLayer;
+	                } else if (layer === _nextLayer) {
+	                    var _color = curLayer.color;
+	                    var newNextLayer = layer.toggleDisplayed(_color);
+	                    newNextLayer.affected = true;
+	                    return newNextLayer;
+	                } else {
+	                    return layer;
+	                }
+	            });
+	
+	        case ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED:
+	            if (curLayerId == 0) return;
+	
+	            var _nextLayer = state[curLayerId - 1];
+	
+	            return state.map(function (layer) {
+	                if (layer === curLayer) {
+	                    var newCurLayer = layer.toggleDisplayed("");
+	                    newCurLayer.affected = false;
+	                    return newCurLayer;
+	                } else if (layer === _nextLayer) {
+	                    var newNextLayer = layer.toggleDisplayed(curLayer.color);
+	                    newNextLayer.affected = true;
+	                    return newNextLayer;
+	                } else {
+	                    return layer;
+	                }
+	            });
+	
 	        default:
 	            return state;
 	    }
@@ -46009,4 +46097,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.c219ed7a.js.map
+//# sourceMappingURL=main.4bef524c.js.map
