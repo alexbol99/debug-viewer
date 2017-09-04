@@ -39,8 +39,9 @@ export class LayerListElement extends Component {
                         </h4>
                     </div>
 
-                    <h4 style={{flex:8, color: color}}
+                    <h4 style={{flex:8, color: color, }}
                         title={this.props.layer.name}
+                        tabIndex='1'
                     >
                         {this.props.layer.name}
                     </h4>
