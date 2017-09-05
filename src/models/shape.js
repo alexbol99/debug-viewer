@@ -15,7 +15,7 @@ export class Shape extends createjs.Shape {
         this.geom = geom;
         stage.addChild(this);
         // this.stage = stage;
-        this.graphics = this.setGraphics(style);
+        this.graphics = new createjs.Graphics(); // this.setGraphics(style);
         this.watch = watch;
         this.expanded = false;
     }

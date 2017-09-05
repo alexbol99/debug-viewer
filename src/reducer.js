@@ -102,7 +102,15 @@ function layers(state = [], action) {
             }
             return state.map((layer) => {
                 if (layer !== action.layer) {
-                    return layer.setAffected(false);
+                    // if action.layer will be undisplayed,
+                    // it cannot become affected, then
+                    // keep affected on this layer
+                    if (action.layer.displayed) {
+                        return layer;
+                    }
+                    else {
+                        return layer.setAffected(false);
+                    }
                 }
                 else {
                     let newLayer = layer.toggleDisplayed(color);
@@ -190,6 +198,7 @@ function layers(state = [], action) {
                 }
                 else if (layer === nextLayer) {
                     let newNextLayer = layer.toggleDisplayed(curLayer.color);
+                    newNextLayer.displayed = true;
                     newNextLayer.affected = true;
                     return newNextLayer;
                 }

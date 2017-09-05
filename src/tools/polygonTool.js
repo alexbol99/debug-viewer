@@ -75,6 +75,9 @@ export class PolygonTool extends Component {
 
 
     shouldComponentUpdate(nextProps, nextState) {
+        // do not update grpahics if it was not displayed and stay not displayed
+        if (nextProps.polygon.alpha == 0 && !nextProps.displayed)
+            return false;
         return true;  // nextProps.polygon.parent.needToBeUpdated;
     }
 

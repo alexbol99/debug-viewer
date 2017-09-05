@@ -63,24 +63,11 @@ export class ReadFilesComponent extends Component {
                         let shape = new Shape(polygon, stage, polygon.style, watch);
 
                         layer.add(shape);
-
-                        // thisComponent.dispatch({
-                        //     type: ActionTypes.NEW_SHAPE_PASTED,
-                        //     shape: shape
-                        // });
-                        /*
-                        thisComponent.dispatch({
-                            type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-                            shape: shape
-                        });*/
                     }
                 }
 
-                thisComponent.dispatch({
-                    type: ActionTypes.ADD_LAYER_PRESSED,
-                    stage: stage,
-                    layer: layer
-                });
+                layers.push(layer);
+
                 thisComponent.dispatch({
                     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
                     shape: layer
