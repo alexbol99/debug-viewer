@@ -1379,7 +1379,7 @@
 	        _this.geom = geom;
 	        stage.addChild(_this);
 	        // this.stage = stage;
-	        _this.graphics = _this.setGraphics(style);
+	        _this.graphics = new createjs.Graphics(); // this.setGraphics(style);
 	        _this.watch = watch;
 	        _this.expanded = false;
 	        return _this;
@@ -28249,16 +28249,6 @@
 	                                var _shape = new _shape2.Shape(_polygon, stage, _polygon.style, _watch);
 	
 	                                layer.add(_shape);
-	
-	                                // thisComponent.dispatch({
-	                                //     type: ActionTypes.NEW_SHAPE_PASTED,
-	                                //     shape: shape
-	                                // });
-	                                /*
-	                                thisComponent.dispatch({
-	                                    type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                                    shape: shape
-	                                });*/
 	                            }
 	                        }
 	                    } catch (err) {
@@ -28276,11 +28266,8 @@
 	                        }
 	                    }
 	
-	                    thisComponent.dispatch({
-	                        type: ActionTypes.ADD_LAYER_PRESSED,
-	                        stage: stage,
-	                        layer: layer
-	                    });
+	                    layers.push(layer);
+	
 	                    thisComponent.dispatch({
 	                        type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
 	                        shape: layer
@@ -29828,7 +29815,14 @@
 	            }
 	            return state.map(function (layer) {
 	                if (layer !== action.layer) {
-	                    return layer.setAffected(false);
+	                    // if action.layer will be undisplayed,
+	                    // it cannot become affected, then
+	                    // keep affected on this layer
+	                    if (action.layer.displayed) {
+	                        return layer;
+	                    } else {
+	                        return layer.setAffected(false);
+	                    }
 	                } else {
 	                    var newLayer = layer.toggleDisplayed(color);
 	                    newLayer.affected = newLayer.displayed;
@@ -29906,6 +29900,7 @@
 	                    return newCurLayer;
 	                } else if (layer === _nextLayer) {
 	                    var newNextLayer = layer.toggleDisplayed(curLayer.color);
+	                    newNextLayer.displayed = true;
 	                    newNextLayer.affected = true;
 	                    return newNextLayer;
 	                } else {
@@ -30213,6 +30208,8 @@
 	    }, {
 	        key: 'shouldComponentUpdate',
 	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            // do not update grpahics if it was not displayed and stay not displayed
+	            if (nextProps.polygon.alpha == 0 && !nextProps.displayed) return false;
 	            return true; // nextProps.polygon.parent.needToBeUpdated;
 	        }
 	    }, {
@@ -46097,4 +46094,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.4bef524c.js.map
+//# sourceMappingURL=main.2b17552b.js.map
