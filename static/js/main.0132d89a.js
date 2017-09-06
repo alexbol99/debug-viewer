@@ -1308,6 +1308,7 @@
 	var PAN_TO_COORDINATE = exports.PAN_TO_COORDINATE = "PAN_TO_COORDINATE";
 	var PAN_AND_ZOOM_TO_SHAPE = exports.PAN_AND_ZOOM_TO_SHAPE = "PAN_AND_ZOOM_TO_SHAPE";
 	
+	var LAYER_LIST_PANEL_PRESSED = exports.LAYER_LIST_PANEL_PRESSED = "LAYER_LIST_PANEL_PRESSED";
 	var ADD_LAYER_PRESSED = exports.ADD_LAYER_PRESSED = "ADD_LAYER_PRESSED";
 	var TOGGLE_DISPLAY_LAYER_PRESSED = exports.TOGGLE_DISPLAY_LAYER_PRESSED = "TOGGLE_DISPLAY_LAYER_PRESSED";
 	var TOGGLE_AFFECTED_LAYER_PRESSED = exports.TOGGLE_AFFECTED_LAYER_PRESSED = "TOGGLE_AFFECTED_LAYER_PRESSED";
@@ -27585,6 +27586,20 @@
 	    }
 	
 	    _createClass(LayerListElement, [{
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (document.activeElement.nodeName === "CANVAS") return;
+	            var elem = this.refs.layerName;
+	            if (this.props.layer.affected) {
+	                elem.focus();
+	            }
+	
+	            // for (let shape of this.props.layer.shapes) {
+	            //     shape.alpha = this.props.layer.displayed ? 1 : 0;
+	            //     shape.redraw();
+	            // }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            // let style = this.props.layer.displayed ?
@@ -27620,7 +27635,8 @@
 	                ),
 	                _react2.default.createElement(
 	                    'h4',
-	                    { style: { flex: 8, color: color },
+	                    { ref: 'layerName',
+	                        style: { flex: 8, color: color },
 	                        title: this.props.layer.name,
 	                        tabIndex: '1'
 	                    },
@@ -27683,6 +27699,7 @@
 	
 	        var _this = _possibleConstructorReturn(this, (LayersListComponent.__proto__ || Object.getPrototypeOf(LayersListComponent)).call(this));
 	
+	        _this.onLayerListClicked = _this.onLayerListClicked.bind(_this);
 	        _this.onLayerClicked = _this.onLayerClicked.bind(_this);
 	        _this.onLayerDoubleClicked = _this.onLayerDoubleClicked.bind(_this);
 	        _this.onAddLayerSelected = _this.onAddLayerSelected.bind(_this);
@@ -27702,6 +27719,13 @@
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            this.setState(nextProps.store.getState());
+	        }
+	    }, {
+	        key: 'onLayerListClicked',
+	        value: function onLayerListClicked() {
+	            this.dispatch({
+	                type: ActionTypes.LAYER_LIST_PANEL_PRESSED
+	            });
 	        }
 	    }, {
 	        key: 'onLayerClicked',
@@ -27756,6 +27780,20 @@
 	                        type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
 	                    });
 	                    break;
+	                /* tab does not work properly
+	                case "Tab":
+	                if (e.shiftKey) {
+	                    this.dispatch({
+	                        type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
+	                    });
+	                }
+	                else {
+	                    this.dispatch({
+	                        type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
+	                    });
+	                }
+	                break;
+	                */
 	                default:
 	                    break;
 	            }
@@ -27796,7 +27834,10 @@
 	
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'App-layers', ref: 'layersComponent' },
+	                { className: 'App-layers',
+	                    ref: 'layersComponent',
+	                    onClick: this.onLayerListClicked
+	                },
 	                _react2.default.createElement(
 	                    'h4',
 	                    null,
@@ -29781,6 +29822,8 @@
 	            return Object.assign({}, state, {
 	                displayVertices: !state.displayVertices
 	            });
+	        case ActionTypes.LAYER_LIST_PANEL_PRESSED:
+	            return state; // only to cause refresh of layers list component
 	        default:
 	            return state;
 	    }
@@ -46094,4 +46137,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.2b17552b.js.map
+//# sourceMappingURL=main.0132d89a.js.map
