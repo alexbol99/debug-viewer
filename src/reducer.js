@@ -75,6 +75,8 @@ function app(state = defaultAppState, action) {
             return Object.assign({}, state, {
                 displayVertices: !state.displayVertices
             });
+        case ActionTypes.LAYER_LIST_PANEL_PRESSED:
+            return state;  // only to cause refresh of layers list component
         default:
             return state;
     }

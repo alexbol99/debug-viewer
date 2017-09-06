@@ -15,6 +15,7 @@ import { Layers } from '../models/layers';
 export class LayersListComponent extends Component {
     constructor() {
         super();
+        this.onLayerListClicked = this.onLayerListClicked.bind(this);
         this.onLayerClicked = this.onLayerClicked.bind(this);
         this.onLayerDoubleClicked = this.onLayerDoubleClicked.bind(this);
         this.onAddLayerSelected = this.onAddLayerSelected.bind(this);
@@ -30,6 +31,12 @@ export class LayersListComponent extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState(nextProps.store.getState());
+    }
+
+    onLayerListClicked() {
+        this.dispatch({
+            type: ActionTypes.LAYER_LIST_PANEL_PRESSED
+        });
     }
 
     onLayerClicked(layer) {
@@ -80,6 +87,20 @@ export class LayersListComponent extends Component {
                     type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
                 });
                 break;
+                /* tab does not work properly
+            case "Tab":
+                if (e.shiftKey) {
+                    this.dispatch({
+                        type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
+                    });
+                }
+                else {
+                    this.dispatch({
+                        type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
+                    });
+                }
+                break;
+                */
             default:
                 break;
         }
@@ -110,7 +131,10 @@ export class LayersListComponent extends Component {
             </div>)
 
         return (
-            <div className="App-layers" ref="layersComponent" >
+            <div className="App-layers"
+                 ref="layersComponent"
+                 onClick={this.onLayerListClicked}
+            >
                 <h4>Layers</h4>
                 <ul id="layersList"
                     style={{maxHeight:0.82*(this.height-40),padding:0,overflow:'auto'}}>

@@ -10,7 +10,21 @@ import '../App.css';
 
 
 export class LayerListElement extends Component {
-   render() {
+    componentDidUpdate() {
+        if (document.activeElement.nodeName === "CANVAS")
+            return;
+        let elem = this.refs.layerName;
+        if (this.props.layer.affected) {
+            elem.focus();
+        }
+
+        // for (let shape of this.props.layer.shapes) {
+        //     shape.alpha = this.props.layer.displayed ? 1 : 0;
+        //     shape.redraw();
+        // }
+    }
+
+    render() {
          // let style = this.props.layer.displayed ?
          //     styleSheet.displayed : styleSheet.undisplayed;
 
@@ -39,7 +53,8 @@ export class LayerListElement extends Component {
                         </h4>
                     </div>
 
-                    <h4 style={{flex:8, color: color, }}
+                    <h4 ref="layerName"
+                        style={{flex:8, color: color, }}
                         title={this.props.layer.name}
                         tabIndex='1'
                     >
