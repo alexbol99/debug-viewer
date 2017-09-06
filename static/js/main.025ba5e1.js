@@ -27765,6 +27765,9 @@
 	    }, {
 	        key: 'handleKeyDown',
 	        value: function handleKeyDown(e) {
+	            e.stopPropagation();
+	            e.preventDefault();
+	
 	            if (e.target.parentElement.parentElement.id !== "layersList") return;
 	
 	            switch (e.code) {
@@ -46137,4 +46140,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.0132d89a.js.map
+//# sourceMappingURL=main.025ba5e1.js.map
