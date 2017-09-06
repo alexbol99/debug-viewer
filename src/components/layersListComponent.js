@@ -71,6 +71,9 @@ export class LayersListComponent extends Component {
     }
 
     handleKeyDown(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
         if (e.target.parentElement.parentElement.id !== "layersList")
             return;
 
