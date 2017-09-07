@@ -8,7 +8,6 @@ import * as ActionTypes from '../actions/action-types';
 import { debug_str } from '../sample';
 import {Layers} from '../models/layers';
 import {Shape} from '../models/shape';
-import { ReadFilesComponent } from './readFilesComponent';
 
 class WatchElement extends Component {
     render() {
@@ -123,10 +122,7 @@ export class AsideComponent extends Component {
         let watchContainerHeight = 0.75*this.height;
         return (
             <aside className="App-aside" ref="aside">
-                {/*<h4>Aside</h4>*/}
-                <ReadFilesComponent
-                    store={this.props.store}
-                />
+                <h4>Info</h4>
                 {/*<h3>... or paste data here</h3>*/}
                 <h4>{title}</h4>
                 <div

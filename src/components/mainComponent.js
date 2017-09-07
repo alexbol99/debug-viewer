@@ -30,7 +30,6 @@ export class MainComponent extends Component {
         this.onMouseRollOverShape = this.onMouseRollOverShape.bind(this);
         this.onMouseRollOutShape = this.onMouseRollOutShape.bind(this);
 
-        this.buttonClicked = this.buttonClicked.bind(this);
         this.resizeStage = this.resizeStage.bind(this);
 
         this.setHomeView = this.setHomeView.bind(this);
@@ -114,10 +113,6 @@ export class MainComponent extends Component {
         })
     }
 
-    buttonClicked() {
-        alert("button clicked")
-    }
-
     setHomeView() {
         let layer = Layers.getAffected(this.state.layers);
         if (!layer) return;
@@ -179,7 +174,8 @@ export class MainComponent extends Component {
             <main className="App-content">
                 <ToolbarComponent
                     {...this.props }
-                    buttonClicked={this.buttonClicked}
+                    onHomeButtonPressed={this.setHomeView}
+                    onToggleWidthModePressed={this.toggleWidthMode}
                 />
                 <StageComponent
                     canvasId="mainCanvas"

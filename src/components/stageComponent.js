@@ -73,7 +73,6 @@ export class StageComponent extends Component {
         switch (e.code) {
             case "KeyH":
                 this.props.onHomeKeyPressed();
-                // _graphicsView.goHome(true);   /* keep input coordinates == true */
                 break;
 
             case "KeyW":

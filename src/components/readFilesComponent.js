@@ -103,8 +103,8 @@ export class ReadFilesComponent extends Component {
 
     render() {
         return (
-            <input style={{fontSize:16, marginTop:5, marginBottom:5}}
-                   type="file" id="files" name="files[]" multiple
+            <input style={{fontSize:16, marginTop:5, marginBottom:5, display: "none"}}
+                   type="file" id="browseFiles" name="files[]" multiple
                    onChange={this.handleFileSelect}
             />
         )
