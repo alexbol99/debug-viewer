@@ -3,9 +3,9 @@
  */
 
 import {Component} from 'react';
-import * as createjs from '../../public/easeljs-NEXT.combined.js';
+// import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
-import Flatten from 'flatten-js';
+// import Flatten from 'flatten-js';
 import { Shape } from '../models/shape';
 
 export class PolygonTool extends Component {
@@ -76,7 +76,7 @@ export class PolygonTool extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         // do not update grpahics if it was not displayed and stay not displayed
-        if (nextProps.polygon.alpha == 0 && !nextProps.displayed)
+        if (nextProps.polygon.alpha === 0 && !nextProps.displayed)
             return false;
         return true;  // nextProps.polygon.parent.needToBeUpdated;
     }

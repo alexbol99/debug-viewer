@@ -5,13 +5,14 @@
 import React, {Component} from 'react';
 
 // import { ButtonToolbar, Button } from 'react-bootstrap';
-import logo from '../logo.svg';
+// import logo from '../logo.svg';
 
 import open from '../../public/icons/Browse.png';
 import home from '../../public/icons/homeIcon20x20.png';
-import width from '../../public/icons/WidthOn.png';
+import pan from '../../public/icons/handDrag20.png';
 import measureContour from '../../public/icons/measureContour.png';
 import measurePoints from '../../public/icons/measurePoints.png';
+import width from '../../public/icons/WidthOn.png';
 import setting from '../../public/icons/Setting.png';
 import about from '../../public/icons/About.png';
 
@@ -43,18 +44,20 @@ export class ToolbarComponent extends Component {
                 <ReadFilesComponent
                     store={this.props.store}
                 />
-                <button title="Zoom and pan to home view"
-                        onClick={this.props.onHomeButtonPressed}>
+                <button title="Zoom and pan to home view" onClick={this.props.onHomeButtonPressed}>
                     <img src={home} alt="home" />
                 </button>
-                <button title="Width on/off" onClick={this.props.onToggleWidthModePressed}>
-                    <img src={width} alt="width" />
+                <button title="Pan by drag" onClick={this.props.onPanByDragPressed}>
+                    <img src={pan} alt="panByDrag" />
                 </button>
-                <button title="Distance between points" onClick={this.notImplemented}>
+                <button title="Measure distance between points" onClick={this.props.onMeasurePointsButtonPressed}>
                     <img src={measurePoints} alt="measurePoints" />
                 </button>
-                <button title="Distance between contours" onClick={this.notImplemented}>
+                <button title="Measure distance between contours" onClick={this.props.onMeasureBetweenContoursButtonPressed}>
                     <img src={measureContour} alt="measureContour" />
+                </button>
+                <button title="Display solid or wire" onClick={this.props.onToggleWidthModePressed}>
+                    <img src={width} alt="width" />
                 </button>
                 <button title="Settings" onClick={this.notImplemented}>
                     <img src={setting} alt="setting" />

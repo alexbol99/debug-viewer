@@ -36,7 +36,8 @@ const defaultAppState = {
     hoveredShape: null,
     parser: new Parser(),
     widthOn: true,
-    displayVertices: false
+    displayVertices: false,
+    measurePointsActive: false
 };
 
 const defaultMouseState = {
@@ -66,6 +67,10 @@ function app(state = defaultAppState, action) {
             return Object.assign({}, state, {
                 hoveredShape:null
             });
+        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
+            return Object.assign({}, state, {
+                measurePointsActive: false
+            });
         case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
             return Object.assign({}, state, {
                 widthOn: !state.widthOn,
@@ -74,6 +79,14 @@ function app(state = defaultAppState, action) {
         case ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED:
             return Object.assign({}, state, {
                 displayVertices: !state.displayVertices
+            });
+        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
+            return Object.assign({}, state, {
+                measurePointsActive: true
+            });
+        case ActionTypes.MEASURE_CONTOURS_BUTTON_PRESSED:
+            return Object.assign({}, state, {
+                measurePointsActive: false
             });
         case ActionTypes.LAYER_LIST_PANEL_PRESSED:
             return state;  // only to cause refresh of layers list component
@@ -85,7 +98,6 @@ function app(state = defaultAppState, action) {
 function layers(state = [], action) {
     let curLayer = state.find(layer => layer.affected);
     let curLayerId = state.findIndex(layer => layer.affected);
-    let nextLayer;
 
     switch (action.type) {
         /*
@@ -164,50 +176,55 @@ function layers(state = [], action) {
             });
 
         case ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED:
-            if (curLayerId == state.length - 1)
-                return;
+            if (curLayerId === state.length - 1) {
+                return state;
+            }
+            else {
 
-            nextLayer = state[curLayerId+1];
+                let nextLayer = state[curLayerId + 1];
 
-            return state.map( layer => {
-                if (layer === curLayer) {
-                    let newCurLayer = layer.toggleDisplayed("")
-                    newCurLayer.affected = false;
-                    return newCurLayer;
-                }
-                else if (layer === nextLayer) {
-                    let color = curLayer.color;
-                    let newNextLayer = layer.toggleDisplayed(color);
-                    newNextLayer.affected = true;
-                    return newNextLayer;
-                }
-                else {
-                    return layer;
-                }
-            });
+                return state.map(layer => {
+                    if (layer === curLayer) {
+                        let newCurLayer = layer.toggleDisplayed("")
+                        newCurLayer.affected = false;
+                        return newCurLayer;
+                    }
+                    else if (layer === nextLayer) {
+                        let color = curLayer.color;
+                        let newNextLayer = layer.toggleDisplayed(color);
+                        newNextLayer.affected = true;
+                        return newNextLayer;
+                    }
+                    else {
+                        return layer;
+                    }
+                });
+            }
 
         case ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED:
-            if (curLayerId == 0)
-                return;
+            if (curLayerId === 0) {
+                return state;
+            }
+            else {
+                let nextLayer = state[curLayerId - 1];
 
-            let nextLayer = state[curLayerId-1];
-
-            return state.map( layer => {
-                if (layer === curLayer) {
-                    let newCurLayer = layer.toggleDisplayed("");
-                    newCurLayer.affected = false;
-                    return newCurLayer;
-                }
-                else if (layer === nextLayer) {
-                    let newNextLayer = layer.toggleDisplayed(curLayer.color);
-                    newNextLayer.displayed = true;
-                    newNextLayer.affected = true;
-                    return newNextLayer;
-                }
-                else {
-                    return layer;
-                }
-            });
+                return state.map(layer => {
+                    if (layer === curLayer) {
+                        let newCurLayer = layer.toggleDisplayed("");
+                        newCurLayer.affected = false;
+                        return newCurLayer;
+                    }
+                    else if (layer === nextLayer) {
+                        let newNextLayer = layer.toggleDisplayed(curLayer.color);
+                        newNextLayer.displayed = true;
+                        newNextLayer.affected = true;
+                        return newNextLayer;
+                    }
+                    else {
+                        return layer;
+                    }
+                });
+            }
 
         default:
             return state;

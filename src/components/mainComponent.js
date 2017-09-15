@@ -16,6 +16,7 @@ import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
 
 import { PolygonTool } from '../tools/polygonTool';
+import { MeasurePointsTool } from '../tools/measurePointsTool';
 
 export class MainComponent extends Component {
     constructor() {
@@ -35,6 +36,9 @@ export class MainComponent extends Component {
         this.setHomeView = this.setHomeView.bind(this);
         this.toggleWidthMode = this.toggleWidthMode.bind(this);
         this.toggleDisplayVertices = this.toggleDisplayVertices.bind(this);
+        this.onMeasurePointsButtonPressed = this.onMeasurePointsButtonPressed.bind(this);
+        this.onMeasureBetweenContoursButtonPressed = this.onMeasureBetweenContoursButtonPressed.bind(this);
+        this.onPanByDragPressed = this.onPanByDragPressed.bind(this);
     }
 
     registerStage(stage) {
@@ -123,6 +127,12 @@ export class MainComponent extends Component {
         })
     }
 
+    onPanByDragPressed() {
+        this.dispatch({
+            type: ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED
+        })
+    }
+
     toggleWidthMode() {
         this.dispatch({
             type: ActionTypes.TOGGLE_WIDTH_MODE_CLICKED
@@ -136,6 +146,19 @@ export class MainComponent extends Component {
         this.dispatch({
             type: ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED
         })
+    }
+
+    onMeasurePointsButtonPressed() {
+        this.dispatch({
+            type: ActionTypes.MEASURE_POINTS_BUTTON_PRESSED
+        });
+    }
+
+    onMeasureBetweenContoursButtonPressed() {
+        this.dispatch({
+            type: ActionTypes.MEASURE_CONTOURS_BUTTON_PRESSED
+        });
+        alert("Not implemented yet")
     }
 
     componentWillMount() {
@@ -175,12 +198,13 @@ export class MainComponent extends Component {
                 <ToolbarComponent
                     {...this.props }
                     onHomeButtonPressed={this.setHomeView}
+                    onPanByDragPressed={this.onPanByDragPressed}
+                    onMeasurePointsButtonPressed={this.onMeasurePointsButtonPressed}
+                    onMeasureBetweenContoursButtonPressed={this.onMeasureBetweenContoursButtonPressed}
                     onToggleWidthModePressed={this.toggleWidthMode}
                 />
                 <StageComponent
-                    canvasId="mainCanvas"
                     stage={this.state.stage}
-                    layers={this.state.layers}
                     onStageCreated={this.registerStage}
                     onMouseDown={this.handleMouseDown}
                     onMouseMove={this.handleMouseMove}
@@ -190,6 +214,16 @@ export class MainComponent extends Component {
                     onToggleWidthModePressed={this.toggleWidthMode}
                     onToggleDisplayVerticesPressed={this.toggleDisplayVertices}
                 />
+                {
+                    this.state.app.measurePointsActive ? (
+                        <MeasurePointsTool
+                            stage={this.state.stage}
+                            divisor={this.state.app.divisor}
+                            decimals={this.state.app.decimals}
+                            onMouseWheelMove={this.handleMouseWheelMove}
+                        />
+                    ) : null
+                }
 
                 {
                     this.state.layers.map((layer) => {
