@@ -33,6 +33,7 @@ export class MainComponent extends Component {
 
         this.resizeStage = this.resizeStage.bind(this);
 
+        this.handleFileSelect = this.handleFileSelect.bind(this);
         this.setHomeView = this.setHomeView.bind(this);
         this.toggleWidthMode = this.toggleWidthMode.bind(this);
         this.toggleDisplayVertices = this.toggleDisplayVertices.bind(this);
@@ -117,6 +118,19 @@ export class MainComponent extends Component {
         })
     }
 
+    handleFileSelect(event) {
+        if (!(File && FileReader && FileList)) return;
+
+        let files = event.target.files; // FileList object
+
+        this.dispatch({
+            type: ActionTypes.FILENAME_LIST_SELECTED,
+            files: files,
+            stage: this.state.stage,
+            layers: this.state.layers
+        });
+    }
+
     setHomeView() {
         let layer = Layers.getAffected(this.state.layers);
         if (!layer) return;
@@ -196,7 +210,7 @@ export class MainComponent extends Component {
         return (
             <main className="App-content">
                 <ToolbarComponent
-                    {...this.props }
+                    onFileSelected={this.handleFileSelect}
                     onHomeButtonPressed={this.setHomeView}
                     onPanByDragPressed={this.onPanByDragPressed}
                     onMeasurePointsButtonPressed={this.onMeasurePointsButtonPressed}

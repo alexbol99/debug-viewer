@@ -7,10 +7,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { reducer } from './reducer';
+import log from './middleware/log';
+import readFiles from './middleware/readFiles';
 
-const store = createStore(reducer);
+const store = createStore(reducer, compose(applyMiddleware(
+    log,
+    readFiles
+)));
 
 ReactDOM.render(
   <App store={store} />,

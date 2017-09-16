@@ -17,7 +17,6 @@ import setting from '../../public/icons/Setting.png';
 import about from '../../public/icons/About.png';
 
 import '../App.css';
-import { ReadFilesComponent } from '../components/readFilesComponent';
 
 export class ToolbarComponent extends Component {
     constructor() {
@@ -33,6 +32,7 @@ export class ToolbarComponent extends Component {
     notImplemented() {
         alert("Not implemented yet")
     }
+
     render() {
         return (
             <div className="App-toolbar">
@@ -41,9 +41,11 @@ export class ToolbarComponent extends Component {
                     <img src={open} alt="open" />
                 </button>
 
-                <ReadFilesComponent
-                    store={this.props.store}
+                <input style={{fontSize: 16, marginTop: 5, marginBottom: 5, display: "none"}}
+                       type="file" id="browseFiles" name="files[]" multiple
+                       onChange={this.props.onFileSelected}
                 />
+
                 <button title="Zoom and pan to home view" onClick={this.props.onHomeButtonPressed}>
                     <img src={home} alt="home" />
                 </button>
@@ -69,44 +71,3 @@ export class ToolbarComponent extends Component {
         )
     }
 };
-
-/*
-            <ButtonToolbar className="App-toolbar">
-                <Button>
-                    <img src={setting} style={{height:20}} alt="setting" />
-                </Button>
-                <Button>
-                    <img src={width} style={{height:20}} alt="width on/off" />
-                </Button>
-                <Button>
-                    <img src={about} style={{height:20}} alt="about" />
-                </Button>
-            </ButtonToolbar>
-
- */
-/*
- <button
- className="Button-select-feature"
- onClick={this.props.buttonClicked} />
- <button
- className="Button-drag"
- onClick={this.props.buttonClicked} />
- <button
- className="Button-zoom-area"
- onClick={this.props.buttonClicked} />
- <button
- className="Button-home"
- onClick={this.props.buttonClicked} />
- <button
- className="Button-pan-to-coordinated"
- onClick={this.props.buttonClicked} />
- <button
- className="Button-measure-between-points"
- onClick={this.props.buttonClicked} />
- <button
- className="Button-measure-between-features"
- onClick={this.props.buttonClicked} />
-
-
-
- */
