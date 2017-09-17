@@ -71,25 +71,27 @@ export class LayersListComponent extends Component {
     }
 
     handleKeyDown(e) {
-        e.stopPropagation();
-        e.preventDefault();
+        // e.stopPropagation();
+        // e.preventDefault();
 
-        if (e.target.parentElement.parentElement.id !== "layersList")
-            return;
+        if (e.target.parentElement.parentElement &&
+            e.target.parentElement.parentElement.id &&
+            e.target.parentElement.parentElement.id === "layersList") {
 
-        switch (e.code) {
-            case "ArrowRight":
-            case "ArrowDown":
-                this.dispatch({
-                    type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
-                });
-                break;
-            case "ArrowLeft":
-            case "ArrowUp":
-                this.dispatch({
-                    type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
-                });
-                break;
+
+            switch (e.code) {
+                case "ArrowRight":
+                case "ArrowDown":
+                    this.dispatch({
+                        type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
+                    });
+                    break;
+                case "ArrowLeft":
+                case "ArrowUp":
+                    this.dispatch({
+                        type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
+                    });
+                    break;
                 /* tab does not work properly
             case "Tab":
                 if (e.shiftKey) {
@@ -104,8 +106,9 @@ export class LayersListComponent extends Component {
                 }
                 break;
                 */
-            default:
-                break;
+                default:
+                    break;
+            }
         }
 
     }

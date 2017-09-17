@@ -216,6 +216,7 @@ export class MainComponent extends Component {
                     onMeasurePointsButtonPressed={this.onMeasurePointsButtonPressed}
                     onMeasureBetweenContoursButtonPressed={this.onMeasureBetweenContoursButtonPressed}
                     onToggleWidthModePressed={this.toggleWidthMode}
+                    onToggleVerticesPressed={this.toggleDisplayVertices}
                 />
                 <StageComponent
                     stage={this.state.stage}
