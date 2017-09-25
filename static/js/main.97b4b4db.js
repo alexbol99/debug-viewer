@@ -67,7 +67,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(221);
+	__webpack_require__(225);
 	module.exports = __webpack_require__(102);
 
 
@@ -662,6 +662,12 @@
 
 /***/ },
 /* 10 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -680,7 +686,7 @@
 	    _assign = __webpack_require__(4);
 	
 	var CallbackQueue = __webpack_require__(62);
-	var PooledClass = __webpack_require__(15);
+	var PooledClass = __webpack_require__(17);
 	var ReactFeatureFlags = __webpack_require__(67);
 	var ReactReconciler = __webpack_require__(20);
 	var Transaction = __webpack_require__(32);
@@ -916,12 +922,6 @@
 	module.exports = ReactUpdates;
 
 /***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -939,7 +939,7 @@
 	
 	var _assign = __webpack_require__(4);
 	
-	var PooledClass = __webpack_require__(15);
+	var PooledClass = __webpack_require__(17);
 	
 	var emptyFunction = __webpack_require__(8);
 	var warning = __webpack_require__(2);
@@ -1253,6 +1253,7 @@
 	
 	var MOUSE_ROLL_OVER_SHAPE = exports.MOUSE_ROLL_OVER_SHAPE = "MOUSE_ROLL_OVER_SHAPE";
 	var MOUSE_ROLL_OUT_SHAPE = exports.MOUSE_ROLL_OUT_SHAPE = "MOUSE_ROLL_OUT_SHAPE";
+	var MOUSE_CLICKED_ON_SHAPE = exports.MOUSE_CLICKED_ON_SHAPE = "MOUSE_CLICKED_ON_SHAPE";
 	
 	// export const HOME_BUTTON_CLICKED = "HOME_BUTTON_CLICKED";
 	var PAN_TO_COORDINATE = exports.PAN_TO_COORDINATE = "PAN_TO_COORDINATE";
@@ -1274,12 +1275,10 @@
 	/** Toolbar buttons **/
 	var PAN_BY_DRAG_BUTTON_CLICKED = exports.PAN_BY_DRAG_BUTTON_CLICKED = "PAN_BY_DRAG_BUTTON_CLICKED";
 	var MEASURE_POINTS_BUTTON_PRESSED = exports.MEASURE_POINTS_BUTTON_PRESSED = "MEASURE_POINTS_BUTTON_PRESSED";
-	var MEASURE_CONTOURS_BUTTON_PRESSED = exports.MEASURE_CONTOURS_BUTTON_PRESSED = "MEASURE_CONTOURS_BUTTON_PRESSED";
+	var MEASURE_SHAPES_BUTTON_PRESSED = exports.MEASURE_SHAPES_BUTTON_PRESSED = "MEASURE_SHAPES_BUTTON_PRESSED";
 
 /***/ },
 /* 15 */
-[251, 3],
-/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1291,7 +1290,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _flattenJs = __webpack_require__(17);
+	var _flattenJs = __webpack_require__(16);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -1336,7 +1335,7 @@
 	        var _this = _possibleConstructorReturn(this, (Shape.__proto__ || Object.getPrototypeOf(Shape)).call(this));
 	
 	        _this.geom = geom;
-	        stage.addChild(_this);
+	        if (stage) stage.addChild(_this);
 	        // this.stage = stage;
 	        _this.graphics = new createjs.Graphics(); // this.setGraphics(style);
 	        _this.watch = watch;
@@ -1357,7 +1356,9 @@
 	    }, {
 	        key: 'setGraphics',
 	        value: function setGraphics(style) {
-	            if (!this.geom) return;
+	            if (!this.geom) {
+	                return new createjs.Graphics();
+	            }
 	            if (this.geom instanceof Point) {
 	                return this.setGraphicsPoint(style);
 	            } else if (this.geom instanceof Segment) {
@@ -1504,7 +1505,7 @@
 	}(createjs.Shape);
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1513,8 +1514,8 @@
 	'use strict';
 	// require("babel-polyfill");
 	
-	let Utils = __webpack_require__(143);
-	let Errors = __webpack_require__(142);
+	let Utils = __webpack_require__(147);
+	let Errors = __webpack_require__(146);
 	
 	/**
 	 * FlattenJS - library for 2d geometry
@@ -1531,27 +1532,37 @@
 	        this.PI_2 = 0.5 * Math.PI;
 	        this.Utils = Utils;
 	        this.Errors = Errors;
+	        this.INSIDE = 1;
+	        this.OUTSIDE = 0;
+	        this.BOUNDARY = 2;
 	    }
 	};
 	
 	let f = new Flatten();
 	
-	__webpack_require__(141)(f);
-	__webpack_require__(137)(f);
+	__webpack_require__(145)(f);
 	__webpack_require__(140)(f);
-	__webpack_require__(136)(f);
-	__webpack_require__(133)(f);
+	__webpack_require__(144)(f);
 	__webpack_require__(139)(f);
-	__webpack_require__(131)(f);
-	__webpack_require__(132)(f);
+	__webpack_require__(136)(f);
+	__webpack_require__(143)(f);
 	__webpack_require__(134)(f);
 	__webpack_require__(135)(f);
+	__webpack_require__(137)(f);
 	__webpack_require__(138)(f);
+	__webpack_require__(142)(f);
+	__webpack_require__(133)(f);
+	__webpack_require__(141)(f);
+	__webpack_require__(132)(f);
+	
+	// f.Point.inject(f.Distance);
 	
 	module.exports = f;
 
 
 /***/ },
+/* 17 */
+[255, 3],
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1902,7 +1913,7 @@
 	
 	'use strict';
 	
-	var ReactRef = __webpack_require__(194);
+	var ReactRef = __webpack_require__(198);
 	var ReactInstrumentation = __webpack_require__(9);
 	
 	var warning = __webpack_require__(2);
@@ -2075,14 +2086,14 @@
 	var _assign = __webpack_require__(4);
 	
 	var ReactBaseClasses = __webpack_require__(82);
-	var ReactChildren = __webpack_require__(225);
-	var ReactDOMFactories = __webpack_require__(226);
+	var ReactChildren = __webpack_require__(229);
+	var ReactDOMFactories = __webpack_require__(230);
 	var ReactElement = __webpack_require__(22);
-	var ReactPropTypes = __webpack_require__(227);
-	var ReactVersion = __webpack_require__(228);
+	var ReactPropTypes = __webpack_require__(231);
+	var ReactVersion = __webpack_require__(232);
 	
-	var createReactClass = __webpack_require__(229);
-	var onlyChild = __webpack_require__(233);
+	var createReactClass = __webpack_require__(233);
+	var onlyChild = __webpack_require__(237);
 	
 	var createElement = ReactElement.createElement;
 	var createFactory = ReactElement.createFactory;
@@ -3224,10 +3235,10 @@
 	var _assign = __webpack_require__(4);
 	
 	var EventPluginRegistry = __webpack_require__(38);
-	var ReactEventEmitterMixin = __webpack_require__(186);
+	var ReactEventEmitterMixin = __webpack_require__(190);
 	var ViewportMetrics = __webpack_require__(72);
 	
-	var getVendorPrefixedEventName = __webpack_require__(218);
+	var getVendorPrefixedEventName = __webpack_require__(222);
 	var isEventSupported = __webpack_require__(49);
 	
 	/**
@@ -4158,7 +4169,7 @@
 	'use strict';
 	
 	var DOMLazyTree = __webpack_require__(18);
-	var Danger = __webpack_require__(163);
+	var Danger = __webpack_require__(167);
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactInstrumentation = __webpack_require__(9);
 	
@@ -4963,7 +4974,7 @@
 	
 	var _prodInvariant = __webpack_require__(3);
 	
-	var ReactPropTypesSecret = __webpack_require__(192);
+	var ReactPropTypesSecret = __webpack_require__(196);
 	var propTypesFactory = __webpack_require__(60);
 	
 	var React = __webpack_require__(21);
@@ -5236,7 +5247,7 @@
 	var ReactCurrentOwner = __webpack_require__(13);
 	var ReactInstanceMap = __webpack_require__(26);
 	var ReactInstrumentation = __webpack_require__(9);
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	
 	var invariant = __webpack_require__(1);
 	var warning = __webpack_require__(2);
@@ -6295,7 +6306,7 @@
 /* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(150);
+	var root = __webpack_require__(154);
 	
 	/** Built-in value references. */
 	var Symbol = root.Symbol;
@@ -6307,9 +6318,9 @@
 /* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(144),
-	    getPrototype = __webpack_require__(146),
-	    isObjectLike = __webpack_require__(151);
+	var baseGetTag = __webpack_require__(148),
+	    getPrototype = __webpack_require__(150),
+	    isObjectLike = __webpack_require__(155);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -6795,7 +6806,7 @@
 	// Therefore we re-export development-only version with all the PropTypes checks here.
 	// However if one is migrating to the `prop-types` npm library, they will go through the
 	// `index.js` entry point, and it will branch depending on the environment.
-	var factory = __webpack_require__(155);
+	var factory = __webpack_require__(159);
 	module.exports = function(isValidElement) {
 	  // It is still allowed in 15.5.
 	  var throwOnDirectAccess = false;
@@ -6982,7 +6993,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var PooledClass = __webpack_require__(15);
+	var PooledClass = __webpack_require__(17);
 	
 	var invariant = __webpack_require__(1);
 	
@@ -7104,7 +7115,7 @@
 	var ReactDOMComponentTree = __webpack_require__(5);
 	var ReactInstrumentation = __webpack_require__(9);
 	
-	var quoteAttributeValueForBrowser = __webpack_require__(219);
+	var quoteAttributeValueForBrowser = __webpack_require__(223);
 	var warning = __webpack_require__(2);
 	
 	var VALID_ATTRIBUTE_NAME_REGEX = new RegExp('^[' + DOMProperty.ATTRIBUTE_NAME_START_CHAR + '][' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
@@ -7365,7 +7376,7 @@
 	
 	var LinkedValueUtils = __webpack_require__(41);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	
 	var warning = __webpack_require__(2);
 	
@@ -7697,9 +7708,9 @@
 	
 	'use strict';
 	
-	var ReactDOMSelection = __webpack_require__(179);
+	var ReactDOMSelection = __webpack_require__(183);
 	
-	var containsNode = __webpack_require__(118);
+	var containsNode = __webpack_require__(119);
 	var focusNode = __webpack_require__(53);
 	var getActiveElement = __webpack_require__(54);
 	
@@ -7832,15 +7843,15 @@
 	var ReactBrowserEventEmitter = __webpack_require__(30);
 	var ReactCurrentOwner = __webpack_require__(13);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactDOMContainerInfo = __webpack_require__(173);
-	var ReactDOMFeatureFlags = __webpack_require__(175);
+	var ReactDOMContainerInfo = __webpack_require__(177);
+	var ReactDOMFeatureFlags = __webpack_require__(179);
 	var ReactFeatureFlags = __webpack_require__(67);
 	var ReactInstanceMap = __webpack_require__(26);
 	var ReactInstrumentation = __webpack_require__(9);
-	var ReactMarkupChecksum = __webpack_require__(189);
+	var ReactMarkupChecksum = __webpack_require__(193);
 	var ReactReconciler = __webpack_require__(20);
 	var ReactUpdateQueue = __webpack_require__(44);
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	
 	var emptyObject = __webpack_require__(29);
 	var instantiateReactComponent = __webpack_require__(78);
@@ -8737,11 +8748,11 @@
 	var _prodInvariant = __webpack_require__(3),
 	    _assign = __webpack_require__(4);
 	
-	var ReactCompositeComponent = __webpack_require__(170);
+	var ReactCompositeComponent = __webpack_require__(174);
 	var ReactEmptyComponent = __webpack_require__(66);
 	var ReactHostComponent = __webpack_require__(68);
 	
-	var getNextDebugID = __webpack_require__(231);
+	var getNextDebugID = __webpack_require__(235);
 	var invariant = __webpack_require__(1);
 	var warning = __webpack_require__(2);
 	
@@ -8981,9 +8992,9 @@
 	var _prodInvariant = __webpack_require__(3);
 	
 	var ReactCurrentOwner = __webpack_require__(13);
-	var REACT_ELEMENT_TYPE = __webpack_require__(185);
+	var REACT_ELEMENT_TYPE = __webpack_require__(189);
 	
-	var getIteratorFn = __webpack_require__(216);
+	var getIteratorFn = __webpack_require__(220);
 	var invariant = __webpack_require__(1);
 	var KeyEscapeUtils = __webpack_require__(40);
 	var warning = __webpack_require__(2);
@@ -9166,7 +9177,7 @@
 	var canDefineProperty = __webpack_require__(86);
 	var emptyObject = __webpack_require__(29);
 	var invariant = __webpack_require__(1);
-	var lowPriorityWarning = __webpack_require__(232);
+	var lowPriorityWarning = __webpack_require__(236);
 	
 	/**
 	 * Base class helpers for the updating state of a component.
@@ -9880,7 +9891,7 @@
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _symbolObservable = __webpack_require__(238);
+	var _symbolObservable = __webpack_require__(242);
 	
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 	
@@ -10145,15 +10156,15 @@
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _combineReducers = __webpack_require__(237);
+	var _combineReducers = __webpack_require__(241);
 	
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 	
-	var _bindActionCreators = __webpack_require__(236);
+	var _bindActionCreators = __webpack_require__(240);
 	
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 	
-	var _applyMiddleware = __webpack_require__(235);
+	var _applyMiddleware = __webpack_require__(239);
 	
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 	
@@ -27092,7 +27103,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	var _headerComponent = __webpack_require__(95);
 	
@@ -27106,7 +27117,7 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _shape = __webpack_require__(16);
+	var _shape = __webpack_require__(15);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -27290,7 +27301,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	var _actionTypes = __webpack_require__(14);
 	
@@ -27300,7 +27311,7 @@
 	
 	var _layers = __webpack_require__(23);
 	
-	var _shape = __webpack_require__(16);
+	var _shape = __webpack_require__(15);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -27529,7 +27540,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27568,7 +27579,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27672,7 +27683,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	var _layerListElement = __webpack_require__(96);
 	
@@ -27892,7 +27903,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	var _toolbarComponent = __webpack_require__(101);
 	
@@ -27906,9 +27917,11 @@
 	
 	var _layers = __webpack_require__(23);
 	
-	var _polygonTool = __webpack_require__(113);
+	var _polygonTool = __webpack_require__(114);
 	
 	var _measurePointsTool = __webpack_require__(112);
+	
+	var _measureShapesTool = __webpack_require__(113);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -27923,10 +27936,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import { CanvasComponent } from './canvasComponent';
-	
-	// import { LayerComponent } from './layerComponent';
 	
 	// import {Stage} from '../models/stage';
 	// import {Layer} from '../models/layer';
@@ -27949,6 +27958,7 @@
 	
 	        _this.onMouseRollOverShape = _this.onMouseRollOverShape.bind(_this);
 	        _this.onMouseRollOutShape = _this.onMouseRollOutShape.bind(_this);
+	        _this.onClickOnShape = _this.onClickOnShape.bind(_this);
 	
 	        _this.resizeStage = _this.resizeStage.bind(_this);
 	
@@ -27957,7 +27967,7 @@
 	        _this.toggleWidthMode = _this.toggleWidthMode.bind(_this);
 	        _this.toggleDisplayVertices = _this.toggleDisplayVertices.bind(_this);
 	        _this.onMeasurePointsButtonPressed = _this.onMeasurePointsButtonPressed.bind(_this);
-	        _this.onMeasureBetweenContoursButtonPressed = _this.onMeasureBetweenContoursButtonPressed.bind(_this);
+	        _this.onMeasureBetweenShapesButtonPressed = _this.onMeasureBetweenShapesButtonPressed.bind(_this);
 	        _this.onPanByDragPressed = _this.onPanByDragPressed.bind(_this);
 	        return _this;
 	    }
@@ -28047,6 +28057,14 @@
 	            });
 	        }
 	    }, {
+	        key: 'onClickOnShape',
+	        value: function onClickOnShape(shape) {
+	            this.dispatch({
+	                type: ActionTypes.MOUSE_CLICKED_ON_SHAPE,
+	                shape: shape
+	            });
+	        }
+	    }, {
 	        key: 'handleFileSelect',
 	        value: function handleFileSelect(event) {
 	            if (!(File && FileReader && FileList)) return;
@@ -28101,12 +28119,11 @@
 	            });
 	        }
 	    }, {
-	        key: 'onMeasureBetweenContoursButtonPressed',
-	        value: function onMeasureBetweenContoursButtonPressed() {
+	        key: 'onMeasureBetweenShapesButtonPressed',
+	        value: function onMeasureBetweenShapesButtonPressed() {
 	            this.dispatch({
-	                type: ActionTypes.MEASURE_CONTOURS_BUTTON_PRESSED
+	                type: ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED
 	            });
-	            alert("Not implemented yet");
 	        }
 	    }, {
 	        key: 'componentWillMount',
@@ -28136,18 +28153,6 @@
 	        value: function render() {
 	            var _this2 = this;
 	
-	            // let state = this.props.store.getState();
-	            var stage = this.state.stage;
-	
-	            var decimals = this.state.app.decimals;
-	            var divisor = this.state.app.divisor;
-	            var coordX = 0;
-	            var coordY = 0;
-	            if (stage) {
-	                coordX = (stage.C2W_X(this.state.mouse.x) / divisor).toFixed(decimals);
-	                coordY = (stage.C2W_Y(this.state.mouse.y) / divisor).toFixed(decimals);
-	            }
-	
 	            return _react2.default.createElement(
 	                'main',
 	                { className: 'App-content' },
@@ -28156,7 +28161,7 @@
 	                    onHomeButtonPressed: this.setHomeView,
 	                    onPanByDragPressed: this.onPanByDragPressed,
 	                    onMeasurePointsButtonPressed: this.onMeasurePointsButtonPressed,
-	                    onMeasureBetweenContoursButtonPressed: this.onMeasureBetweenContoursButtonPressed,
+	                    onMeasureBetweenShapesButtonPressed: this.onMeasureBetweenShapesButtonPressed,
 	                    onToggleWidthModePressed: this.toggleWidthMode,
 	                    onToggleVerticesPressed: this.toggleDisplayVertices
 	                }),
@@ -28177,6 +28182,15 @@
 	                    decimals: this.state.app.decimals,
 	                    onMouseWheelMove: this.handleMouseWheelMove
 	                }) : null,
+	                _react2.default.createElement(_measureShapesTool.MeasureShapesTool, {
+	                    stage: this.state.stage,
+	                    firstMeasuredShape: this.state.app.firstMeasuredShape,
+	                    secondMeasuredShape: this.state.app.secondMeasuredShape,
+	                    distance: this.state.app.distance,
+	                    shortestSegment: this.state.app.shortestSegment,
+	                    divisor: this.state.app.divisor,
+	                    decimals: this.state.app.decimals
+	                }),
 	                this.state.layers.map(function (layer) {
 	                    /*
 	                    let initialScale = this.state.stage.scalingFactor();
@@ -28189,19 +28203,26 @@
 	                            key: index,
 	                            polygon: shape,
 	                            displayed: layer.displayed,
+	                            hovered: shape === _this2.state.app.hoveredShape,
+	                            selected: shape === _this2.state.app.firstMeasuredShape || shape === _this2.state.app.secondMeasuredShape,
 	                            color: layer.color,
 	                            widthOn: _this2.state.app.widthOn,
 	                            displayVertices: _this2.state.app.displayVertices,
 	                            onMouseOver: _this2.onMouseRollOverShape,
-	                            onMouseOut: _this2.onMouseRollOutShape
+	                            onMouseOut: _this2.onMouseRollOutShape,
+	                            onClick: _this2.onClickOnShape
 	                        });
 	                    });
 	                }),
 	                _react2.default.createElement(_statusComponent.StatusComponent, {
+	                    stage: this.state.stage,
 	                    units: this.state.app.units,
+	                    divisor: this.state.app.divisor,
 	                    decimals: this.state.app.decimals,
-	                    coordX: coordX,
-	                    coordY: coordY,
+	                    distance: this.state.app.distance,
+	                    shortestSegment: this.state.app.shortestSegment,
+	                    coordX: this.state.mouse.x,
+	                    coordY: this.state.mouse.y,
 	                    onUnitClicked: this.toggleUnits
 	                })
 	            );
@@ -28228,7 +28249,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	var _stage = __webpack_require__(109);
 	
@@ -28470,8 +28491,36 @@
 	    }
 	
 	    _createClass(StatusComponent, [{
+	        key: "measurement",
+	        value: function measurement() {
+	            var message = "";
+	            if (this.props.shortestSegment && this.props.distance) {
+	                var segment = this.props.shortestSegment;
+	                var dx = segment.end.x - segment.start.x;
+	                var dy = segment.end.y - segment.start.y;
+	                var dist = this.props.distance;
+	
+	                message = "DX=" + this.format(dx) + ",DY=" + this.format(dy) + ",D=" + this.format(dist);
+	            }
+	            return message;
+	        }
+	    }, {
+	        key: "format",
+	        value: function format(num) {
+	            return (num / this.props.divisor).toFixed(this.props.decimals);
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
+	            var stage = this.props.stage;
+	            var coordX = 0;
+	            var coordY = 0;
+	            if (stage) {
+	                coordX = this.format(stage.C2W_X(this.props.coordX));
+	                coordY = this.format(stage.C2W_Y(this.props.coordY));
+	            }
+	            var message = this.measurement();
+	
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "App-status-bar" },
@@ -28481,7 +28530,16 @@
 	                    _react2.default.createElement(
 	                        "h4",
 	                        null,
-	                        "X: " + this.props.coordX + " Y: " + this.props.coordY
+	                        "X: " + coordX + " Y: " + coordY
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { style: { flex: 8, textAlign: "center", marginLeft: 10, padding: 5 } },
+	                    _react2.default.createElement(
+	                        "h4",
+	                        null,
+	                        message
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -28520,43 +28578,43 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Browse = __webpack_require__(242);
+	var _Browse = __webpack_require__(246);
 	
 	var _Browse2 = _interopRequireDefault(_Browse);
 	
-	var _homeIcon20x = __webpack_require__(247);
+	var _homeIcon20x = __webpack_require__(251);
 	
 	var _homeIcon20x2 = _interopRequireDefault(_homeIcon20x);
 	
-	var _handDrag = __webpack_require__(246);
+	var _handDrag = __webpack_require__(250);
 	
 	var _handDrag2 = _interopRequireDefault(_handDrag);
 	
-	var _measureContour = __webpack_require__(248);
+	var _measureContour = __webpack_require__(252);
 	
 	var _measureContour2 = _interopRequireDefault(_measureContour);
 	
-	var _measurePoints = __webpack_require__(249);
+	var _measurePoints = __webpack_require__(253);
 	
 	var _measurePoints2 = _interopRequireDefault(_measurePoints);
 	
-	var _WidthOn = __webpack_require__(244);
+	var _WidthOn = __webpack_require__(248);
 	
 	var _WidthOn2 = _interopRequireDefault(_WidthOn);
 	
-	var _editContourVertextOnOff = __webpack_require__(245);
+	var _editContourVertextOnOff = __webpack_require__(249);
 	
 	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
 	
-	var _Setting = __webpack_require__(243);
+	var _Setting = __webpack_require__(247);
 	
 	var _Setting2 = _interopRequireDefault(_Setting);
 	
-	var _About = __webpack_require__(241);
+	var _About = __webpack_require__(245);
 	
 	var _About2 = _interopRequireDefault(_About);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28626,8 +28684,8 @@
 	                ),
 	                _react2.default.createElement(
 	                    'button',
-	                    { title: 'Measure distance between contours', onClick: this.props.onMeasureBetweenContoursButtonPressed },
-	                    _react2.default.createElement('img', { src: _measureContour2.default, alt: 'measureContour' })
+	                    { title: 'Measure distance between shapes', onClick: this.props.onMeasureBetweenShapesButtonPressed },
+	                    _react2.default.createElement('img', { src: _measureContour2.default, alt: 'measureShapes' })
 	                ),
 	                _react2.default.createElement(
 	                    'button',
@@ -28668,7 +28726,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(157);
+	var _reactDom = __webpack_require__(161);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
@@ -28676,7 +28734,7 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	__webpack_require__(115);
+	__webpack_require__(116);
 	
 	var _redux = __webpack_require__(89);
 	
@@ -28748,7 +28806,7 @@
 	
 	var _layers = __webpack_require__(23);
 	
-	var _shape2 = __webpack_require__(16);
+	var _shape2 = __webpack_require__(15);
 	
 	var _parserXML = __webpack_require__(108);
 	
@@ -28900,7 +28958,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _flattenJs = __webpack_require__(17);
+	var _flattenJs = __webpack_require__(16);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -28996,11 +29054,11 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 17/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _flattenJs = __webpack_require__(17);
+	var _flattenJs = __webpack_require__(16);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _shape = __webpack_require__(16);
+	var _shape = __webpack_require__(15);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29174,7 +29232,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 01/05/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _flattenJs = __webpack_require__(17);
+	var _flattenJs = __webpack_require__(16);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -29331,7 +29389,7 @@
 	
 	var _job = __webpack_require__(105);
 	
-	var _flattenJs = __webpack_require__(17);
+	var _flattenJs = __webpack_require__(16);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -29559,11 +29617,11 @@
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	var _flattenJs = __webpack_require__(17);
+	var _flattenJs = __webpack_require__(16);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _shape = __webpack_require__(16);
+	var _shape = __webpack_require__(15);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29676,13 +29734,13 @@
 	        key: 'zoomIn',
 	        value: function zoomIn(ratio) {
 	            var curRatio = ratio || 1.1;
-	            this.zoomFactor = Math.min(100000, curRatio * this.zoomFactor);
+	            this.zoomFactor = Math.min(10000000, curRatio * this.zoomFactor);
 	        }
 	    }, {
 	        key: 'zoomOut',
 	        value: function zoomOut(ratio) {
 	            var curRatio = ratio || 1.1;
-	            this.zoomFactor = Math.max(0.1, this.zoomFactor / curRatio);
+	            this.zoomFactor = Math.max(0.001, this.zoomFactor / curRatio);
 	        }
 	
 	        // ZoomIn/Out + "Focus follows mouse"
@@ -29797,25 +29855,33 @@
 	});
 	exports.reducer = undefined;
 	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Created by alexanderbol on 13/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+	
+	// import {Stage} from './models/stage';
+	// import {Layer} from './models/layer';
+	
+	
 	var _actionTypes = __webpack_require__(14);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
 	var _redux = __webpack_require__(89);
 	
+	var _flattenJs = __webpack_require__(16);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
 	var _layers = __webpack_require__(23);
 	
 	var _parser = __webpack_require__(107);
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
-	                                                                                                                                                                                                     * Created by alexanderbol on 13/04/2017.
-	                                                                                                                                                                                                     */
-	
-	// import {Stage} from './models/stage';
-	// import {Layer} from './models/layer';
-	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
 	var unitsList = [{
 	    name: "pixels",
@@ -29841,7 +29907,13 @@
 	    parser: new _parser.Parser(),
 	    widthOn: true,
 	    displayVertices: false,
-	    measurePointsActive: false
+	    measurePointsActive: false,
+	    measureShapesActive: false,
+	    measureShapesFirstClick: true,
+	    firstMeasuredShape: null,
+	    secondMeasuredShape: null,
+	    distance: undefined,
+	    shortestSegment: null
 	};
 	
 	var defaultMouseState = {
@@ -29870,15 +29942,55 @@
 	            });
 	        case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
 	            return Object.assign({}, state, {
-	                hoveredShape: action.shape
+	                hoveredShape: state.measureShapesActive ? action.shape : null
 	            });
 	        case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
 	            return Object.assign({}, state, {
 	                hoveredShape: null
 	            });
+	        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
+	            if (!state.measureShapesActive) {
+	                return state;
+	            }
+	            // measureShapesActive
+	
+	            if (state.measureShapesFirstClick) {
+	                return Object.assign({}, state, {
+	                    firstMeasuredShape: action.shape,
+	                    secondMeasuredShape: null,
+	                    measureShapesFirstClick: false,
+	                    distance: undefined,
+	                    shortestSegment: null
+	                });
+	            } else {
+	                // second click
+	                if (action.shape === state.firstMeasuredShape) {
+	                    return state; // second click on the same shape
+	                }
+	
+	                var polygon1 = state.firstMeasuredShape.geom;
+	                var polygon2 = action.shape.geom;
+	
+	                var _Flatten$Distance$pol = _flattenJs2.default.Distance.polygon2polygon(polygon1, polygon2),
+	                    _Flatten$Distance$pol2 = _slicedToArray(_Flatten$Distance$pol, 2),
+	                    distance = _Flatten$Distance$pol2[0],
+	                    shortestSegment = _Flatten$Distance$pol2[1];
+	
+	                return Object.assign({}, state, {
+	                    secondMeasuredShape: action.shape,
+	                    measureShapesFirstClick: true,
+	                    distance: distance,
+	                    shortestSegment: shortestSegment
+	                });
+	            }
 	        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
 	            return Object.assign({}, state, {
-	                measurePointsActive: false
+	                measurePointsActive: false,
+	                measureShapesActive: false,
+	                firstMeasuredShape: null,
+	                secondMeasuredShape: null,
+	                distance: undefined,
+	                shortestSegment: null
 	            });
 	        case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
 	            return Object.assign({}, state, {
@@ -29891,11 +30003,21 @@
 	            });
 	        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
 	            return Object.assign({}, state, {
-	                measurePointsActive: true
+	                measurePointsActive: true,
+	                measureShapesActive: false,
+	                firstMeasuredShape: null,
+	                secondMeasuredShape: null,
+	                distance: undefined,
+	                shortestSegment: null
 	            });
-	        case ActionTypes.MEASURE_CONTOURS_BUTTON_PRESSED:
+	        case ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED:
 	            return Object.assign({}, state, {
-	                measurePointsActive: false
+	                measurePointsActive: false,
+	                measureShapesActive: true,
+	                firstMeasuredShape: null,
+	                secondMeasuredShape: null,
+	                distance: undefined,
+	                shortestSegment: null
 	            });
 	        case ActionTypes.LAYER_LIST_PANEL_PRESSED:
 	            return state; // only to cause refresh of layers list component
@@ -30088,7 +30210,7 @@
 	
 	        case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
 	            var bIn = action.delta > 0;
-	            state.zoomByMouse(action.x, action.y, bIn, 1.05);
+	            state.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta) / 100.);
 	            state.needToBeUpdated = true;
 	            return state;
 	
@@ -30168,7 +30290,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(11);
+	__webpack_require__(10);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30412,13 +30534,182 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.MeasureShapesTool = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(7);
+	
+	__webpack_require__(10);
+	
+	var _shape = __webpack_require__(15);
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import createjs from 'easel-js';
+	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
+	
+	// import Flatten from 'flatten-js';
+	
+	
+	// let {Distance} = Flatten;
+	
+	var MeasureShapesTool = exports.MeasureShapesTool = function (_Component) {
+	    _inherits(MeasureShapesTool, _Component);
+	
+	    function MeasureShapesTool() {
+	        _classCallCheck(this, MeasureShapesTool);
+	
+	        var _this = _possibleConstructorReturn(this, (MeasureShapesTool.__proto__ || Object.getPrototypeOf(MeasureShapesTool)).call(this));
+	
+	        _this.distance = undefined;
+	        _this.segment = undefined;
+	        return _this;
+	    }
+	
+	    _createClass(MeasureShapesTool, [{
+	        key: 'draw',
+	        value: function draw() {
+	            var canvas = this.refs.measureCanvas;
+	            var context = canvas.getContext('2d');
+	            var stage = this.props.stage;
+	
+	            canvas.width = canvas.width;
+	
+	            // Draw rectangle
+	            var pllX = Math.min(stage.W2C_X(this.startX), stage.W2C_X(this.endX));
+	            var pllY = Math.min(stage.W2C_Y(this.startY), stage.W2C_Y(this.endY));
+	            var width = Math.abs(stage.W2C_Scalar(this.startX - this.endX));
+	            var height = Math.abs(stage.W2C_Scalar(this.startY - this.endY));
+	
+	            context.beginPath();
+	            context.rect(pllX, pllY, width, height);
+	
+	            // Draw segment
+	            context.moveTo(stage.W2C_X(this.startX), stage.W2C_Y(this.startY));
+	            context.lineTo(stage.W2C_X(this.endX), stage.W2C_Y(this.endY));
+	
+	            context.lineWidth = 1;
+	            context.strokeStyle = 'black';
+	            context.stroke();
+	
+	            // Draw text
+	            var textX = void 0,
+	                textY = void 0,
+	                textHeight = void 0,
+	                textWidth = void 0;
+	            var backX = void 0,
+	                backY = void 0; // background rectangle
+	            var text = this.measurement();
+	
+	            context.font = "12pt Arial";
+	
+	            textHeight = 12; /* font size*/
+	            textWidth = context.measureText(text).width;
+	
+	            // Rectangle to the right of current point, text aligned left
+	            if (Math.abs(stage.W2C_X(this.endX) - pllX) <= 2) {
+	                context.textAlign = "left";
+	                textX = pllX + 3;
+	                backX = pllX;
+	            }
+	            // Rectangle to the left of current point, text aligned right
+	            else {
+	                    context.textAlign = "right";
+	                    textX = pllX + width - 3;
+	                    backX = textX - textWidth - 3;
+	                }
+	
+	            if (Math.abs(stage.W2C_Y(this.endY) - pllY) <= 2) {
+	                textY = pllY - 3;
+	            } else {
+	                textY = pllY + height + textHeight + 3;
+	            }
+	            backY = textY - textHeight - 3;
+	
+	            context.fillStyle = 'white';
+	            context.globalAlpha = 0.4;
+	            context.fillRect(backX, backY, textWidth + 6, textHeight + 6);
+	
+	            context.fillStyle = "black";
+	            context.globalAlpha = 1;
+	            context.fillText(this.measurement(), textX, textY);
+	        }
+	    }, {
+	        key: 'measurement',
+	        value: function measurement() {
+	            var dx = this.endX - this.startX;
+	            var dy = this.endY - this.startY;
+	            var dist = Math.sqrt(dx * dx + dy * dy);
+	            var message = "DX=" + this.format(dx) + ",DY=" + this.format(dy) + ",D=" + this.format(dist);
+	            return message;
+	        }
+	    }, {
+	        key: 'format',
+	        value: function format(num) {
+	            return (num / this.props.divisor).toFixed(this.props.decimals);
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (this.props.firstMeasuredShape && this.props.secondMeasuredShape && this.props.firstMeasuredShape.alpha > 0 && this.props.secondMeasuredShape.alpha > 0) {
+	                // let polygon1 = this.props.firstMeasuredShape.geom;
+	                // let polygon2 = this.props.secondMeasuredShape.geom;
+	                // let [dist, shortest_segment] = Distance.polygon2polygon(polygon1, polygon2);
+	                // let distance = this.props.distance;
+	                var shortest_segment = this.props.shortestSegment;
+	
+	                // this.draw();
+	                if (shortest_segment) {
+	                    if (!this.segment && this.props.stage) {
+	                        this.segment = new _shape.Shape(shortest_segment, this.props.stage);
+	                    } else {
+	                        this.segment.geom = shortest_segment;
+	                    }
+	                    this.segment.redraw();
+	                }
+	
+	                // shape.graphics = shape.setGraphics();
+	                // this.state.layers[0].add(shape);
+	            } else {
+	                if (this.segment) {
+	                    this.segment.geom = undefined;
+	                    this.segment.redraw();
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return null;
+	        }
+	    }]);
+
+	    return MeasureShapesTool;
+	}(_react.Component);
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.PolygonTool = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(7);
 	
-	var _shape = __webpack_require__(16);
+	var _shape = __webpack_require__(15);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -30445,6 +30736,7 @@
 	        // this.handleMouseMove = this.handleMouseMove.bind(this);
 	        _this.handleMouseOver = _this.handleMouseOver.bind(_this);
 	        _this.handleMouseOut = _this.handleMouseOut.bind(_this);
+	        _this.handleClick = _this.handleClick.bind(_this);
 	        return _this;
 	    }
 	
@@ -30457,6 +30749,11 @@
 	        key: 'handleMouseOut',
 	        value: function handleMouseOut(event) {
 	            this.props.onMouseOut();
+	        }
+	    }, {
+	        key: 'handleClick',
+	        value: function handleClick(event) {
+	            this.props.onClick(this.props.polygon);
 	        }
 	    }, {
 	        key: 'createVertices',
@@ -30519,10 +30816,13 @@
 	        key: 'redraw',
 	        value: function redraw(polygon) {
 	            // Draw polygon
+	            var color = this.props.hovered || this.props.selected ? "black" : this.props.color;
+	            var alpha = this.props.hovered || this.props.selected ? 1.0 : 0.6;
+	
 	            polygon.redraw({
-	                stroke: this.props.color,
+	                stroke: color, // this.props.color,
 	                fill: this.props.widthOn && !this.props.displayVertices ? this.props.color : "white",
-	                alpha: this.props.displayed ? 0.6 : 0.0
+	                alpha: this.props.displayed ? alpha : 0.0
 	            });
 	
 	            // if (!this.props.displayed)
@@ -30538,8 +30838,8 @@
 	                    var vertex = _step3.value;
 	
 	                    vertex.redraw({
-	                        stroke: this.props.color,
-	                        fill: this.props.color,
+	                        stroke: color, // this.props.color,
+	                        fill: color, // this.props.color,
 	                        alpha: this.props.displayed && this.props.displayVertices ? 1.0 : 0.0
 	                    });
 	                }
@@ -30566,6 +30866,7 @@
 	        value: function componentDidMount() {
 	            this.props.polygon.on("mouseover", this.handleMouseOver);
 	            this.props.polygon.on("mouseout", this.handleMouseOut);
+	            this.props.polygon.on("click", this.handleClick);
 	            this.vertices = this.createVertices(this.props.polygon);
 	            this.redraw(this.props.polygon);
 	        }
@@ -30602,7 +30903,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31480,9 +31781,9 @@
 
 
 /***/ },
-/* 115 */
-11,
 /* 116 */
+10,
+/* 117 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -31518,7 +31819,7 @@
 	module.exports = camelize;
 
 /***/ },
-/* 117 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31534,7 +31835,7 @@
 	
 	'use strict';
 	
-	var camelize = __webpack_require__(116);
+	var camelize = __webpack_require__(117);
 	
 	var msPattern = /^-ms-/;
 	
@@ -31562,7 +31863,7 @@
 	module.exports = camelizeStyleName;
 
 /***/ },
-/* 118 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31578,7 +31879,7 @@
 	 * 
 	 */
 	
-	var isTextNode = __webpack_require__(126);
+	var isTextNode = __webpack_require__(127);
 	
 	/*eslint-disable no-bitwise */
 	
@@ -31606,7 +31907,7 @@
 	module.exports = containsNode;
 
 /***/ },
-/* 119 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31737,7 +32038,7 @@
 	module.exports = createArrayFromMixed;
 
 /***/ },
-/* 120 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31757,8 +32058,8 @@
 	
 	var ExecutionEnvironment = __webpack_require__(6);
 	
-	var createArrayFromMixed = __webpack_require__(119);
-	var getMarkupWrap = __webpack_require__(121);
+	var createArrayFromMixed = __webpack_require__(120);
+	var getMarkupWrap = __webpack_require__(122);
 	var invariant = __webpack_require__(1);
 	
 	/**
@@ -31825,7 +32126,7 @@
 	module.exports = createNodesFromMarkup;
 
 /***/ },
-/* 121 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31924,7 +32225,7 @@
 	module.exports = getMarkupWrap;
 
 /***/ },
-/* 122 */
+/* 123 */
 /***/ function(module, exports) {
 
 	/**
@@ -31967,7 +32268,7 @@
 	module.exports = getUnboundedScrollPosition;
 
 /***/ },
-/* 123 */
+/* 124 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32004,7 +32305,7 @@
 	module.exports = hyphenate;
 
 /***/ },
-/* 124 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32020,7 +32321,7 @@
 	
 	'use strict';
 	
-	var hyphenate = __webpack_require__(123);
+	var hyphenate = __webpack_require__(124);
 	
 	var msPattern = /^ms-/;
 	
@@ -32047,7 +32348,7 @@
 	module.exports = hyphenateStyleName;
 
 /***/ },
-/* 125 */
+/* 126 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32076,7 +32377,7 @@
 	module.exports = isNode;
 
 /***/ },
-/* 126 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32092,7 +32393,7 @@
 	 * @typechecks
 	 */
 	
-	var isNode = __webpack_require__(125);
+	var isNode = __webpack_require__(126);
 	
 	/**
 	 * @param {*} object The object to check.
@@ -32105,7 +32406,7 @@
 	module.exports = isTextNode;
 
 /***/ },
-/* 127 */
+/* 128 */
 /***/ function(module, exports) {
 
 	/**
@@ -32139,7 +32440,7 @@
 	module.exports = memoizeStringOnly;
 
 /***/ },
-/* 128 */
+/* 129 */
 /***/ function(module, exports) {
 
 	/**
@@ -32197,7 +32498,7 @@
 	module.exports = Interval;
 
 /***/ },
-/* 129 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32207,7 +32508,7 @@
 	'use strict';
 	
 	// let defaultTraits = require('../utils/numeric_traits');
-	let Interval = __webpack_require__(128);
+	let Interval = __webpack_require__(129);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(55);
 	
 	let Node = class Node {
@@ -32285,7 +32586,7 @@
 
 
 /***/ },
-/* 130 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32293,7 +32594,7 @@
 	 */
 	'use strict';
 	
-	let Node = __webpack_require__(129);
+	let Node = __webpack_require__(130);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(55);
 	
 	let nil_node = new Node();
@@ -32822,7 +33123,660 @@
 
 
 /***/ },
-/* 131 */
+/* 132 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = function(Flatten) {
+	    let {Polygon, Point, Segment, Arc, Circle, Line, Ray, Vector} = Flatten;
+	
+	    let {vector} = Flatten;
+	
+	    Flatten.Distance = class Distance {
+	        /**
+	         * Calculate distance and shortest segment between points
+	         * @param pt1
+	         * @param pt2
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static point2point(pt1, pt2) {
+	            return [pt1.distanceTo(pt2), new Segment(pt1, pt2)];
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between point and line
+	         * @param pt
+	         * @param line
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static point2line(pt, line) {
+	            let closest_point = pt.projectionOn(line);
+	            let vec = vector(pt, closest_point);
+	            return [vec.length, new Segment(pt, closest_point)];
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between point and circle
+	         * @param pt
+	         * @param circle
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static point2circle(pt, circle) {
+	            let dist2center = pt.distanceTo(circle.center);
+	            if (Flatten.Utils.EQ_0(dist2center)) {
+	                return [circle.r, new Segment(pt, circle.toArc().start)];
+	            }
+	            else {
+	                let dist = Math.abs(dist2center - circle.r);
+	                let v = vector(circle.pc, pt).normalize().multiply(circle.r);
+	                let closest_point = circle.pc.translate(v);
+	                return [dist, new Segment(pt, closest_point)];
+	            }
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between point and segment
+	         * @param pt
+	         * @param segment
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static point2segment(pt, segment) {
+	            /* Degenerated case of zero-length segment */
+	            if (segment.start.equalTo(segment.end)) {
+	                return  Distance.point2point(pt, segment.start);
+	            }
+	
+	            let v_seg = new Flatten.Vector(segment.start, segment.end);
+	            let v_ps2pt = new Flatten.Vector(segment.start, pt);
+	            let v_pe2pt = new Flatten.Vector(segment.end, pt);
+	            let start_sp = v_seg.dot(v_ps2pt);
+	            /* dot product v_seg * v_ps2pt */
+	            let end_sp = -v_seg.dot(v_pe2pt);
+	            /* minus dot product v_seg * v_pe2pt */
+	
+	            let dist;
+	            let closest_point;
+	            if (Flatten.Utils.GE(start_sp, 0) && Flatten.Utils.GE(end_sp, 0)) {    /* point inside segment scope */
+	                let v_unit = segment.tangentInStart(); // new Flatten.Vector(v_seg.x / this.length, v_seg.y / this.length);
+	                /* unit vector ||v_unit|| = 1 */
+	                dist = Math.abs(v_unit.cross(v_ps2pt));
+	                /* dist = abs(v_unit x v_ps2pt) */
+	                closest_point = segment.start.translate(v_unit.multiply(v_unit.dot(v_ps2pt)));
+	            }
+	            else if (start_sp < 0) {                             /* point is out of scope closer to ps */
+	                dist = pt.distanceTo(segment.start);
+	                closest_point = segment.start.clone();
+	            }
+	            else {                                               /* point is out of scope closer to pe */
+	                dist = pt.distanceTo(segment.end);
+	                closest_point = segment.end.clone();
+	            }
+	            return [dist, new Segment(pt, closest_point)];
+	        };
+	
+	        /**
+	         * Calculate distance and shortest segment between point and arc
+	         * @param pt
+	         * @param arc
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static point2arc(pt, arc) {
+	            let circle = new Flatten.Circle(arc.pc, arc.r);
+	            let dist_and_segments = [];
+	            let dist, shortest_segment;
+	            [dist, shortest_segment] = Distance.point2circle(pt, circle);
+	            if (shortest_segment.end.on(arc)) {
+	                dist_and_segments.push(Distance.point2circle(pt, circle));
+	            }
+	            dist_and_segments.push( Distance.point2point(pt, arc.start) );
+	            dist_and_segments.push( Distance.point2point(pt, arc.end) );
+	
+	            Distance.sort(dist_and_segments);
+	
+	            return dist_and_segments[0];
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between segment and line
+	         * @param seg
+	         * @param line
+	         * @returns {Number | Segment}
+	         */
+	        static segment2line(seg, line) {
+	            let ip = seg.intersect(line);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0],ip[0])];   // distance = 0, closest point is the first point
+	            }
+	
+	            dist_and_segment.push(Distance.point2line(seg.start, line));
+	            dist_and_segment.push(Distance.point2line(seg.end, line));
+	
+	            Distance.sort( dist_and_segment );
+	            return dist_and_segment[0];
+	
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between two segments
+	         * @param seg1
+	         * @param seg2
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static segment2segment(seg1, seg2) {
+	            let ip = Segment.intersectSegment2Segment(seg1, seg2);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0],ip[0])];   // distance = 0, closest point is the first point
+	            }
+	
+	            // Seg1 and seg2 not intersected
+	            let dist_and_segment = [];
+	
+	            dist_and_segment.push(Distance.point2segment(seg2.start, seg1));
+	            dist_and_segment.push(Distance.point2segment(seg2.end, seg1));
+	            dist_and_segment.push(Distance.point2segment(seg1.start, seg2));
+	            dist_and_segment.push(Distance.point2segment(seg1.end, seg2));
+	
+	            Distance.sort( dist_and_segment );
+	            return dist_and_segment[0];
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between segment and circle
+	         * @param seg
+	         * @param circle
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static segment2circle(seg, circle) {
+	            /* Case 1 Segment and circle intersected. Return the first point and zero distance */
+	            let ip = seg.intersect(circle);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            // No intersection between segment and circle
+	
+	            /* Case 2. Distance to projection of center point to line bigger than radius
+	             * And projection point belong to segment
+	              * Then measure again distance from projection to circle and return it */
+	            let line = new Flatten.Line(seg.ps, seg.pe);
+	            let [dist, shortest_segment] = Distance.point2line(circle.center, line);
+	            if (Flatten.Utils.GE(dist, circle.r) && shortest_segment.end.on(seg)) {
+	                return Distance.point2circle(shortest_segment.end, circle);
+	            }
+	            /* Case 3. Otherwise closest point is one of the end points of the segment */
+	            else {
+	                let [dist_from_start, shortest_segment_from_start] = Distance.point2circle(seg.start, circle);
+	                let [dist_from_end, shortest_segment_from_end] = Distance.point2circle(seg.end, circle);
+	                return Flatten.Utils.LT(dist_from_start, dist_from_end) ?
+	                    [dist_from_start, shortest_segment_from_start] :
+	                    [dist_from_end, shortest_segment_from_end];
+	            }
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between segment and arc
+	         * @param seg
+	         * @param arc
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static segment2arc(seg, arc) {
+	            /* Case 1 Segment and arc intersected. Return the first point and zero distance */
+	            let ip = seg.intersect(arc);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            // No intersection between segment and arc
+	            let line = new Flatten.Line(seg.ps, seg.pe);
+	            let circle = new Flatten.Circle(arc.pc, arc.r);
+	
+	            /* Case 2. Distance to projection of center point to line bigger than radius AND
+	             * projection point belongs to segment AND
+	               * distance from projection point to circle belongs to arc  =>
+	               * return this distance from projection to circle */
+	            let [dist_from_center, shortest_segment_from_center] = Distance.point2line(circle.center, line);
+	            if (Flatten.Utils.GE(dist_from_center, circle.r) && shortest_segment_from_center.end.on(seg)) {
+	                let [dist_from_projection, shortest_segment_from_projection] =
+	                    Distance.point2circle(shortest_segment_from_center.end, circle);
+	                if (shortest_segment_from_projection.end.on(arc)) {
+	                    return [dist_from_projection, shortest_segment_from_projection];
+	                }
+	            }
+	            /* Case 3. Otherwise closest point is one of the end points of the segment */
+	            let dist_and_segment = [];
+	            dist_and_segment.push(Distance.point2arc(seg.start, arc));
+	            dist_and_segment.push(Distance.point2arc(seg.end, arc));
+	
+	            let dist_tmp, segment_tmp;
+	            [dist_tmp, segment_tmp] = Distance.point2segment(arc.start, seg);
+	            dist_and_segment.push([dist_tmp, segment_tmp.swap()]);
+	
+	            [dist_tmp, segment_tmp] = Distance.point2segment(arc.end, seg);
+	            dist_and_segment.push([dist_tmp, segment_tmp.swap()]);
+	
+	            Distance.sort(dist_and_segment);
+	            return dist_and_segment[0];
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between two circles
+	         * @param circle1
+	         * @param circle2
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static circle2circle(circle1, circle2) {
+	            let ip = circle1.intersect(circle2);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            // Case 1. Concentric circles. Convert to arcs and take distance between two arc starts
+	            if (circle1.center.equalTo(circle2.center)) {
+	                let arc1 = circle1.toArc();
+	                let arc2 = circle2.toArc();
+	                return Distance.point2point(arc1.start, arc2.start);
+	            }
+	            else {
+	                // Case 2. Not concentric circles
+	                let line = new Line(circle1.center, circle2.center);
+	                let ip1 = line.intersect(circle1);
+	                let ip2 = line.intersect(circle2);
+	
+	                let dist_and_segment = [];
+	
+	                dist_and_segment.push(Distance.point2point(ip1[0], ip2[0]));
+	                dist_and_segment.push(Distance.point2point(ip1[0], ip2[1]));
+	                dist_and_segment.push(Distance.point2point(ip1[1], ip2[0]));
+	                dist_and_segment.push(Distance.point2point(ip1[1], ip2[1]));
+	
+	                Distance.sort(dist_and_segment);
+	                return dist_and_segment[0];
+	            }
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between two circles
+	         * @param circle
+	         * @param line
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static circle2line(circle, line) {
+	            let ip = circle.intersect(line);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            let [dist_from_center, shortest_segment_from_center] = Distance.point2line(circle.center, line);
+	            let [dist, shortest_segment] = Distance.point2circle(shortest_segment_from_center.end, circle);
+	            shortest_segment = shortest_segment.swap();
+	            return [dist, shortest_segment];
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between arc and line
+	         * @param arc
+	         * @param line
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static arc2line(arc, line) {
+	            /* Case 1 Line and arc intersected. Return the first point and zero distance */
+	            let ip = line.intersect(arc);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            let circle = new Flatten.Circle(arc.center, arc.r);
+	
+	            /* Case 2. Distance to projection of center point to line bigger than radius AND
+	             * projection point belongs to segment AND
+	               * distance from projection point to circle belongs to arc  =>
+	               * return this distance from projection to circle */
+	            let [dist_from_center, shortest_segment_from_center] = Distance.point2line(circle.center, line);
+	            if (Flatten.Utils.GE(dist_from_center, circle.r)) {
+	                let [dist_from_projection, shortest_segment_from_projection] =
+	                    Distance.point2circle(shortest_segment_from_center.end, circle);
+	                if (shortest_segment_from_projection.end.on(arc)) {
+	                    return [dist_from_projection, shortest_segment_from_projection];
+	                }
+	            }
+	            else {
+	                let dist_and_segment = [];
+	                dist_and_segment.push( Distance.point2line(arc.start, line) );
+	                dist_and_segment.push( Distance.point2line(arc.end, line) );
+	
+	                Distance.sort(dist_and_segment);
+	                return dist_and_segment[0];
+	            }
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between arc and circle
+	         * @param arc
+	         * @param circle2
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static arc2circle(arc, circle2) {
+	            let ip = arc.intersect(circle2);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            let circle1 = new Flatten.Circle(arc.center, arc.r);
+	
+	            let [dist, shortest_segment] = Distance.circle2circle(circle1, circle2);
+	            if (shortest_segment.start.on(arc)) {
+	                return [dist, shortest_segment];
+	            }
+	            else {
+	                let dist_and_segment = [];
+	
+	                dist_and_segment.push(Distance.point2circle(arc.start, circle2));
+	                dist_and_segment.push(Distance.point2circle(arc.end, circle2));
+	
+	                Distance.sort(dist_and_segment);
+	
+	                return dist_and_segment[0];
+	            }
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between two arcs
+	         * @param arc1
+	         * @param arc2
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static arc2arc(arc1, arc2) {
+	            let ip = arc1.intersect(arc2);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            let circle1 = new Flatten.Circle(arc1.center, arc1.r);
+	            let circle2 = new Flatten.Circle(arc2.center, arc2.r);
+	
+	            let [dist, shortest_segment] = Distance.circle2circle(circle1, circle2);
+	            if (shortest_segment.start.on(arc1) && shortest_segment.end.on(arc2)) {
+	                return [dist, shortest_segment];
+	            }
+	            else {
+	                let dist_and_segment = [];
+	
+	                let dist_tmp, segment_tmp;
+	
+	                [dist_tmp, segment_tmp] = Distance.point2arc(arc1.start, arc2);
+	                if (segment_tmp.end.on(arc2)) {
+	                    dist_and_segment.push([dist_tmp, segment_tmp]);
+	                }
+	
+	                [dist_tmp, segment_tmp] = Distance.point2arc(arc1.end, arc2);
+	                if (segment_tmp.end.on(arc2)) {
+	                    dist_and_segment.push([dist_tmp, segment_tmp]);
+	                }
+	
+	                [dist_tmp, segment_tmp] = Distance.point2arc(arc2.start, arc1);
+	                if (segment_tmp.end.on(arc1)) {
+	                    dist_and_segment.push([dist_tmp, segment_tmp.swap()]);
+	                }
+	
+	                [dist_tmp, segment_tmp] = Distance.point2arc(arc2.end, arc1);
+	                if (segment_tmp.end.on(arc1)) {
+	                    dist_and_segment.push([dist_tmp, segment_tmp.swap()]);
+	                }
+	
+	                [dist_tmp, segment_tmp] = Distance.point2point(arc1.start, arc2.start);
+	                dist_and_segment.push([dist_tmp, segment_tmp]);
+	
+	                [dist_tmp, segment_tmp] = Distance.point2point(arc1.start, arc2.end);
+	                dist_and_segment.push([dist_tmp, segment_tmp]);
+	
+	                [dist_tmp, segment_tmp] = Distance.point2point(arc1.end, arc2.start);
+	                dist_and_segment.push([dist_tmp, segment_tmp]);
+	
+	                [dist_tmp, segment_tmp] = Distance.point2point(arc1.end, arc2.end);
+	                dist_and_segment.push([dist_tmp, segment_tmp]);
+	
+	                Distance.sort(dist_and_segment);
+	
+	                return dist_and_segment[0];
+	            }
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment between point and polygon
+	         * @param point
+	         * @param polygon
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static point2polygon(point, polygon) {
+	            let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Segment()];
+	            for (let edge of polygon.edges) {
+	                let [dist, shortest_segment] = (edge.shape instanceof Segment) ?
+	                    Distance.point2segment(point, edge.shape) : Distance.point2arc(point, edge.shape);
+	                if (Flatten.Utils.LT(dist, min_dist_and_segment[0])) {
+	                    min_dist_and_segment = [dist, shortest_segment];
+	                }
+	            }
+	            return min_dist_and_segment;
+	        }
+	
+	        static shape2polygon(shape, polygon) {
+	            let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Segment()];
+	            for (let edge of polygon.edges) {
+	                let [dist, shortest_segment] = shape.distanceTo(edge.shape);
+	                if (Flatten.Utils.LT(dist, min_dist_and_segment[0])) {
+	                    min_dist_and_segment = [dist, shortest_segment];
+	                }
+	            }
+	            return min_dist_and_segment;
+	        }
+	
+	/*
+	        static arc2polygon(arc, polygon) {
+	            let ip = arc.intersect(polygon);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Segment()];
+	            for (let edge of polygon.edges) {
+	                let [dist, shortest_segment] = arc.distanceTo(edge.shape);
+	                if (Flatten.Utils.LT(dist, min_dist_and_segment[0])) {
+	                    min_dist_and_segment = [dist, shortest_segment];
+	                }
+	            }
+	            return min_dist_and_segment;
+	        }
+	
+	        static line2polygon(line, polygon) {
+	            let ip = line.intersect(polygon);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Segment()];
+	            for (let edge of polygon.edges) {
+	                let [dist, shortest_segment] = line.distanceTo(edge.shape);
+	                if (Flatten.Utils.LT(dist, min_dist_and_segment[0])) {
+	                    min_dist_and_segment = [dist, shortest_segment];
+	                }
+	            }
+	            return min_dist_and_segment;
+	        }
+	
+	        static circle2polygon(circle, polygon) {
+	            let ip = circle.intersect(polygon);
+	            if (ip.length > 0) {
+	                return [0, new Segment(ip[0], ip[0])];
+	            }
+	
+	            let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Segment()];
+	            for (let edge of polygon.edges) {
+	                let [dist, shortest_segment] = circle.distanceTo(edge.shape);
+	                if (Flatten.Utils.LT(dist, min_dist_and_segment[0])) {
+	                    min_dist_and_segment = [dist, shortest_segment];
+	                }
+	            }
+	            return min_dist_and_segment;
+	        }
+	*/
+	
+	        /**
+	         * Calculate distance and shortest segment between two polygons
+	         * @param polygon1
+	         * @param polygon2
+	         * @returns {Number | Segment} - distance and shortest segment
+	         */
+	        static polygon2polygon(polygon1, polygon2) {
+	            let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Segment()];
+	            for (let edge1 of polygon1.edges) {
+	                for (let edge2 of polygon2.edges) {
+	                    let [dist, shortest_segment] = edge1.shape.distanceTo(edge2.shape);
+	                    if (Flatten.Utils.LT(dist, min_dist_and_segment[0])) {
+	                        min_dist_and_segment = [dist, shortest_segment];
+	                    }
+	                }
+	            }
+	            return min_dist_and_segment;
+	        }
+	
+	        static sort(dist_and_segment) {
+	            dist_and_segment.sort((d1, d2) => {
+	                if (Flatten.Utils.LT(d1[0], d2[0])) {
+	                    return -1;
+	                }
+	                if (Flatten.Utils.GT(d1[0], d2[0])) {
+	                    return 1;
+	                }
+	                return 0;
+	            });
+	        }
+	
+	        static distance(shape1, shape2) {
+	            return shape1.distanceTo(shape2);
+	        }
+	    }
+	};
+
+/***/ },
+/* 133 */
+/***/ function(module, exports) {
+
+	
+	"use strict";
+	
+	module.exports = function(Flatten) {
+	    let {Polygon, Point, Segment, Arc, Line, Ray} = Flatten;
+	
+	    Flatten.ray_shoot = function(polygon, point) {
+	        let contains = undefined;
+	
+	        // if (!(polygon instanceof Polygon && point instanceof Point)) {
+	        //     throw Flatten.Errors.ILLEGAL_PARAMETERS;
+	        // }
+	
+	        // 1. Quick reject
+	        if (polygon.box.notIntersect(point.box)) {
+	            return Flatten.OUTSIDE;
+	        }
+	
+	        let ray = new Ray(point);
+	        let line = new Line(ray.pt, ray.norm);
+	
+	        // 2. Locate relevant edges of the polygon
+	        let resp_edges = polygon.edges.search(ray.box);
+	
+	        if (resp_edges.length == 0) {
+	            return Flatten.OUTSIDE;
+	        }
+	
+	        // 3. Calculate intersections
+	        let intersections = [];
+	        for (let edge of resp_edges) {
+	            for (let ip of ray.intersect(edge.shape)) {
+	
+	                // If intersection is equal to query point than point lays on boundary
+	                if (ip.equalTo(point)) {
+	                    return Flatten.BOUNDARY;
+	                }
+	
+	                intersections.push({
+	                    pt: ip,
+	                    edge: edge
+	                });
+	            }
+	        }
+	
+	        // 4. Sort intersection in x-ascending order
+	        intersections.sort( (i1, i2) => {
+	            if (Flatten.Utils.LT(i1.pt.x, i2.pt.x)) {
+	                return -1;
+	            }
+	            if (Flatten.Utils.GT(i1.pt.x, i2.pt.x)) {
+	                return -1;
+	            }
+	            return 0;
+	        });
+	
+	        // 5. Count real intersections, exclude touching
+	        let counter = 0;
+	
+	        for (let i=0; i < intersections.length; i++) {
+	            let intersection = intersections[i];
+	            if (intersection.pt.equalTo(intersection.edge.shape.start)) {
+	                let prev_edge = intersection.edge.prev;
+	                let prev_tangent = prev_edge.shape.tangentInEnd();
+	                let prev_point = intersection.pt.translate(prev_tangent);
+	
+	                let cur_tangent = intersection.edge.shape.tangentInStart();
+	                let cur_point = intersection.pt.translate(cur_tangent);
+	
+	                let prev_on_the_left = prev_point.leftTo(line);
+	                let cur_on_the_left = cur_point.leftTo(line);
+	
+	                if ( (prev_on_the_left && !cur_on_the_left) || (!prev_on_the_left && cur_on_the_left) ) {
+	                    counter++;
+	                }
+	            }
+	            else if (intersection.pt.equalTo(intersection.edge.shape.end)) {
+	                let next_edge = intersection.edge.next;
+	                let next_tangent = next_edge.shape.tangentInStart();
+	                let next_point = intersection.pt.translate(next_tangent);
+	
+	                let cur_tangent = intersection.edge.shape.tangentInEnd();
+	                let cur_point = intersection.pt.translate(cur_tangent);
+	
+	                let next_on_the_left = next_point.leftTo(line);
+	                let cur_on_the_left = cur_point.leftTo(line);
+	
+	                if ( (next_on_the_left && !cur_on_the_left) || (!next_on_the_left && cur_on_the_left) ) {
+	                    counter++;
+	                }
+	            }
+	            else {        /* intersection point is not a coincident with a vertex */
+	                if (intersection.edge.shape instanceof Segment) {
+	                    counter++;
+	                }
+	                else {
+	                    /* Check if ray does not touch the curve in the extremal (top or bottom) point */
+	                    let box = intersection.edge.shape.box;
+	                    if ( !(Flatten.Utils.EQ(intersection.pt.y, box.ymin) ||
+	                            Flatten.Utils.EQ(intersection.pt.y, box.ymax)) ) {
+	                        counter++;
+	                    }
+	                }
+	            }
+	        }
+	
+	        // 6. Odd or even?
+	        contains = counter % 2 == 1 ? Flatten.INSIDE : Flatten.OUTSIDE;
+	
+	        return contains;
+	    };
+	};
+
+/***/ },
+/* 134 */
 /***/ function(module, exports) {
 
 	/**
@@ -32908,6 +33862,14 @@
 	        }
 	
 	        /**
+	         * Get center of arc
+	         * @returns {Point}
+	         */
+	        get center() {
+	            return this.pc.clone();
+	        }
+	
+	        /**
 	         * Get arc length
 	         * @returns {number}
 	         */
@@ -32916,143 +33878,13 @@
 	        }
 	
 	        /**
-	         * Get bounding box of arc
+	         * Get bounding box of the arc
 	         * @returns {Box}
 	         */
 	        get box() {
-	            let xs,ys,xe,ye;
-	            let dxs,dys,dxe,dye;
-	            let xmin,ymin,xmax,ymax;
-	            let quads, quade, quad;
-	            let xc = this.pc.x;
-	            let yc = this.pc.y;
-	            let r = this.r;
-	
-	            let ps = this.start;
-	            let pe = this.end;
-	
-	            let box = new Flatten.Box();
-	
-	            /* order (xs, xe) and (ys, ye) always clockwise */
-	            if(this.counterClockwise){
-	                xs = pe.x ; ys = pe.y ;
-	                xe = ps.x ; ye = ps.y ;
-	            } else {
-	                xs = ps.x ; ys =ps.y ;
-	                xe = pe.x ; ye = pe.y ;
-	            }
-	            dxs = xs-xc ; dys = ys-yc ;
-	            dxe = xe-xc ; dye = ye-yc ;
-	
-	            xmin = xc-r ; ymin = yc-r ;
-	            xmax = xc+r ; ymax = yc+r ;
-	
-	            xmin = Math.min(xmin,xs) ; xmin = Math.min(xmin,xe);
-	            xmax = Math.max(xmax,xs) ; xmax = Math.max(xmax,xe);
-	            ymin = Math.min(ymin,ys) ; ymin = Math.min(ymin,ye);
-	            ymax = Math.max(ymax,ys) ; ymax = Math.max(ymax,ye);
-	
-	            /* Calculate the quadrant for each point */
-	            /*
-	             *           |
-	             *         1 | 0
-	             *       ----------
-	             *         2 | 3
-	             *           |
-	             */
-	            quads = (dxs >= 0 ? (dys >= 0 ? 0 : 3) : (dys >= 0 ? 1 : 2));
-	            quade = (dxe >= 0 ? (dye >= 0 ? 0 : 3) : (dye >= 0 ? 1 : 2));
-	
-	            /* There are 16 combinations of start-end configurations */
-	            /* The more complex ones are when both points are in the
-	             * same quadrant (They require additional conditions).
-	             * Remember that we converted everything to clockwise !
-	             */
-	
-	            quad = (quads << 2) + quade ;
-	
-	            switch(quad){
-	                case 0 :
-	                    /* From quadrant 0 to 0 */
-	                    if(xs < xe || ys > ye){
-	                        box.set(xs,ye,xe,ys);
-	                    } else {
-	                        box.set(xmin,ymin,xmax,ymax);
-	                    }
-	                    break ;
-	                case 1 :
-	                    /* From quadrant 0 to 1 */
-	                    box.set(xmin,ymin,xmax,Math.max(ys,ye));
-	                    break ;
-	                case 2 :
-	                    /* From quadrant 0 to 2 */
-	                    box.set(xe,ymin,xmax,ys);
-	                    break ;
-	                case 3 :
-	                    /* From quadrant 0 to 3 */
-	                    box.set(Math.min(xs,xe),ye,xmax,ys);
-	                    break ;
-	                case 4 :
-	                    /* From quadrant 1 to 0 */
-	                    box.set(xs,Math.min(ys,ye),xe,ymax);
-	                    break ;
-	                case 5 :
-	                    /* From quadrant 1 to 1 */
-	                    if(xs < xe || ys < ye){
-	                        box.set(xs,ys,xe,ye);
-	                    } else {
-	                        box.set(xmin,ymin,xmax,ymax);
-	                    }
-	                    break ;
-	                case 6 :
-	                    /* From quadrant 1 to 2 */
-	                    box.set(Math.min(xs,xe),ymin,xmax,ymax);
-	                    break ;
-	                case 7 :
-	                    /* From quadrant 1 to 3 */
-	                    box.set(xs,ye,xmax,ymax);
-	                    break ;
-	                case 8 :
-	                    /* From quadrant 2 to 0 */
-	                    box.set(xmin,ys,xe,ymax);
-	                    break ;
-	                case 9 :
-	                    /* From quadrant 2 to 1 */
-	                    box.set(xmin,ys,Math.max(xs,xe),ye);
-	                    break ;
-	                case 10 :
-	                    /* From quadrant 2 to 2 */
-	                    if(xs > xe || ys < ye){
-	                        box.set(xe,ys,xs,ye);
-	                    } else {
-	                        box.set(xmin,ymin,xmax,ymax);
-	                    }
-	                    break ;
-	                case 11 :
-	                    /* From quadrant 2 to 3 */
-	                    box.set(xmin,Math.min(ys,ye),xmax,ymax);
-	                    break ;
-	                case 12 :
-	                    /* From quadrant 3 to 0 */
-	                    box.set(xmin,ymin,Math.max(xs,xe),ymax);
-	                    break ;
-	                case 13 :
-	                    /* From quadrant 3 to 1 */
-	                    box.set(xmin,ymin,xs,ye);
-	                    break ;
-	                case 14 :
-	                    /* From quadrant 3 to 2 */
-	                    box.set(xe,ymin,xs,Math.max(ys,ye));
-	                    break ;
-	                case 15 :
-	                    /* From quadrant 3 to 3 */
-	                    if(xs > xe || ys > ye){
-	                        box.set(xe,ye,xs,ys);
-	                    } else {
-	                        box.set(xmin,ymin,xmax,ymax);
-	                    }
-	                    break ;
-	            }
+	            let func_arcs = this.breakToFunctional();
+	            let box = func_arcs.reduce( (acc, arc) => acc.merge(arc.start.box), new Flatten.Box() );
+	            box = box.merge(this.end.box);
 	            return box;
 	        }
 	
@@ -33096,12 +33928,45 @@
 	            }
 	        }
 	
-	        distanceToPoint(pt) {
-	            let circle = new Flatten.Circle(this.pc, this.r);
-	            let distToCircle = pt.distanceTo(circle);
-	            let distToStart = pt.distanceTo(this.start);
-	            let distToEnd = pt.distanceTo(this.end);
-	            return Math.min(distToCircle, Math.min(distToStart, distToEnd));
+	        /**
+	         * Calculate distance and shortest segment from arc to shape
+	         * @param shape
+	         * @returns {Number | Segment} - distance and shortest segment from arc to shape
+	         */
+	        distanceTo(shape) {
+	            let {Distance} = Flatten;
+	
+	            if (shape instanceof Flatten.Point) {
+	                let [dist, shortest_segment] = Distance.point2arc(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Circle) {
+	                let [dist, shortest_segment] = Distance.arc2circle(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Line) {
+	                let [dist, shortest_segment] = Distance.arc2line(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Segment) {
+	                let [dist, shortest_segment] = Distance.segment2arc(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Arc) {
+	                let [dist, shortest_segment] = Distance.arc2arc(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Polygon) {
+	                let [dist, shortest_segment] = Distance.shape2polygon(this, shape);
+	                return [dist, shortest_segment];
+	            }
 	        }
 	
 	        /**
@@ -33162,6 +34027,28 @@
 	                }
 	            }
 	            return func_arcs_array;
+	        }
+	
+	        /**
+	         * Return tangent unit vector in the start point in the direction from start to end
+	         * @returns {Vector} - tangent vector in start point
+	         */
+	        tangentInStart() {
+	            let vec = new Flatten.Vector(this.pc, this.start);
+	            let angle = this.counterClockwise ? Math.PI/2. : -Math.PI/2.;
+	            let tangent = vec.rotate(angle).normalize();
+	            return tangent;
+	        }
+	
+	        /**
+	         * Return tangent unit vector in the end point in the direction from end to start
+	         * @returns {Vector} - tangent vector in end point
+	         */
+	        tangentInEnd() {
+	            let vec = new Flatten.Vector(this.pc, this.end);
+	            let angle = this.counterClockwise ? -Math.PI/2. : Math.PI/2.;
+	            let tangent = vec.rotate(angle).normalize();
+	            return tangent;
 	        }
 	
 	        static intersectArc2Arc(arc1, arc2) {
@@ -33284,7 +34171,7 @@
 	};
 
 /***/ },
-/* 132 */
+/* 135 */
 /***/ function(module, exports) {
 
 	/**
@@ -33442,7 +34329,7 @@
 	};
 
 /***/ },
-/* 133 */
+/* 136 */
 /***/ function(module, exports) {
 
 	/**
@@ -33452,7 +34339,7 @@
 	"use strict";
 	
 	module.exports = function(Flatten) {
-	    let {Arc} = Flatten;
+	    let {Arc,vector} = Flatten;
 	    /**
 	     * Class representing a circle
 	     * @type {Circle}
@@ -33546,6 +34433,48 @@
 	            }
 	        }
 	
+	        /**
+	         * Calculate distance and shortest segment from circle to shape
+	         * @param shape
+	         * @returns {Number | Segment} - distance and shortest segment from circle to shape
+	         */
+	        distanceTo(shape) {
+	            let {Distance} = Flatten;
+	
+	            if (shape instanceof Flatten.Point) {
+	                let [distance, shortest_segment] = Distance.point2circle(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [distance, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Circle) {
+	                let [distance, shortest_segment] = Distance.circle2circle(this, shape);
+	                return [distance, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Line) {
+	                let [distance, shortest_segment] = Distance.circle2line(this, shape);
+	                return [distance, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Segment) {
+	                let [distance, shortest_segment] = Distance.segment2circle(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [distance, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Arc) {
+	                let [distance, shortest_segment] = Distance.arc2circle(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [distance, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Polygon) {
+	                let [distance, shortest_segment] = Distance.shape2polygon(this, shape);
+	                return [distance, shortest_segment];
+	            }
+	        }
+	
 	        static intersectCirle2Circle(circle1, circle2) {
 	            let ip = [];
 	
@@ -33562,9 +34491,9 @@
 	            if (Flatten.Utils.EQ_0(r1) || Flatten.Utils.EQ_0(r2))
 	                return ip;
 	
-	            // In case of equal circles return one most left intersection points
+	            // In case of equal circles return one leftmost point
 	            if (Flatten.Utils.EQ_0(vec.x) && Flatten.Utils.EQ_0(vec.y) && Flatten.Utils.EQ(r1, r2)) {
-	                ip.push(new Flatten.Point(circle1.x - r1, circle1.y));
+	                ip.push(circle1.pc.translate(-r1, 0));
 	                return ip;
 	            }
 	
@@ -33633,7 +34562,7 @@
 	};
 
 /***/ },
-/* 134 */
+/* 137 */
 /***/ function(module, exports) {
 
 	/**
@@ -33731,7 +34660,7 @@
 	};
 
 /***/ },
-/* 135 */
+/* 138 */
 /***/ function(module, exports) {
 
 	/**
@@ -33942,7 +34871,7 @@
 	};
 
 /***/ },
-/* 136 */
+/* 139 */
 /***/ function(module, exports) {
 
 	/**
@@ -34045,7 +34974,7 @@
 	         * @returns {boolean}
 	         */
 	        parallelTo(other_line) {
-	            return this.norm.equalTo(other_line.norm);
+	            return Flatten.Utils.EQ_0(this.norm.cross(other_line.norm));
 	        }
 	
 	        /**
@@ -34092,6 +35021,42 @@
 	
 	            if (shape instanceof Flatten.Arc) {
 	                return Line.intersectLine2Arc(this, shape);
+	            }
+	        }
+	
+	        /**
+	         * Calculate distance and shortest segment from line to shape
+	         * @param shape
+	         * @returns {Number | Segment} - distance and shortest segment from line to shape
+	         */
+	        distanceTo(shape) {
+	            let {Distance} = Flatten;
+	
+	            if (shape instanceof Flatten.Point) {
+	                let [distance, shortest_segment] = Distance.point2line(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [distance, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Circle) {
+	                let [distance, shortest_segment] = Distance.circle2line(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [distance, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Segment) {
+	                let [distance, shortest_segment] = Distance.segment2line(shape, this);
+	                return [distance, shortest_segment.swap()];
+	            }
+	
+	            if (shape instanceof Flatten.Arc) {
+	                let [distance, shortest_segment] = Distance.arc2line(shape, this);
+	                return [distance, shortest_segment.swap()];
+	            }
+	
+	            if (shape instanceof Flatten.Polygon) {
+	                let [distance, shortest_segment] = Distance.shape2polygon(this, shape);
+	                return [distance, shortest_segment];
 	            }
 	        }
 	
@@ -34173,7 +35138,7 @@
 	        static intersectLine2Arc(line, arc) {
 	            let ip = [];
 	
-	            if (line.box.notIntersect(arc.box)) {
+	            if (Line.intersectLine2Box(line, arc.box).length == 0) {
 	                return ip;
 	            }
 	
@@ -34198,7 +35163,7 @@
 
 
 /***/ },
-/* 137 */
+/* 140 */
 /***/ function(module, exports) {
 
 	/**
@@ -34294,10 +35259,6 @@
 	         * @returns {Point}
 	         */
 	        translate(...args) {
-	            if (args.length == 0) {
-	                return this.clone();
-	            }
-	
 	            if (args.length == 1 && (args[0] instanceof Flatten.Vector)) {
 	                return new Flatten.Point(this.x + args[0].x, this.y + args[0].y);
 	            }
@@ -34320,7 +35281,7 @@
 	
 	            let vec = new Flatten.Vector(this, line.pt);
 	            if (Flatten.Utils.EQ_0(vec.cross(line.norm)))    // vector to point from anchor point collinear to normal vector
-	                return this.clone();
+	                return line.pt.clone();
 	
 	            let dist = vec.dot(line.norm);             // signed distance
 	            let proj_vec = line.norm.multiply(dist);
@@ -34344,27 +35305,40 @@
 	         * @returns {number}
 	         */
 	        distanceTo(shape) {
+	            let {Distance} = Flatten;
+	
 	            if (shape instanceof Point) {
-	                let vec = new Flatten.Vector(this, shape);
-	                return vec.length;
+	                let dx = shape.x - this.x;
+	                let dy = shape.y - this.y;
+	                return Math.sqrt(dx*dx + dy*dy);
 	            }
 	
 	            if (shape instanceof Flatten.Line) {
-	                let vec = new Flatten.Vector(this, this.projectionOn(shape));
-	                return vec.length;
+	                // let [dist,closest_point] = shape.distanceToPoint(this);
+	                let [dist, ...rest] = Distance.point2line(this, shape);
+	                return dist;
+	                // let vec = new Flatten.Vector(this, this.projectionOn(shape));
+	                // return vec.length;
 	            }
 	
 	            if (shape instanceof Flatten.Circle) {
-	                let dist2pc = this.distanceTo(shape.pc);
-	                return Math.abs(dist2pc - shape.r);
+	                let [dist, ...rest] = Distance.point2circle(this, shape);
+	                return dist;
 	            }
 	
 	            if (shape instanceof Flatten.Segment) {
-	                return shape.distanceToPoint(this);
+	                let [dist, ...rest] = Distance.point2segment(this, shape);
+	                return dist;
 	            }
 	
 	            if (shape instanceof Flatten.Arc) {
-	                return shape.distanceToPoint(this);
+	                let [dist, ...rest] = Distance.point2arc(this, shape);
+	                return dist;
+	            }
+	
+	            if (shape instanceof Flatten.Polygon) {
+	                let [dist, ...rest] = Distance.point2polygon(this, shape);
+	                return dist;
 	            }
 	        }
 	
@@ -34393,6 +35367,10 @@
 	            if (shape instanceof Flatten.Arc) {
 	                return shape.contains(this);
 	            }
+	
+	            if (shape instanceof Flatten.Polygon) {
+	                return shape.contains(this);
+	            }
 	        }
 	
 	        /**
@@ -34418,7 +35396,7 @@
 
 
 /***/ },
-/* 138 */
+/* 141 */
 /***/ function(module, exports) {
 
 	/**
@@ -34429,6 +35407,7 @@
 	
 	module.exports = function(Flatten) {
 	    let {Edge, Face, PlanarSet, Box} = Flatten;
+	    let {ray_shoot} = Flatten;
 	    /**
 	     * Class representing a polygon.<br/>
 	     * Polygon in FlattenJS is a multipolygon comprised from a set of faces<br/>
@@ -34523,6 +35502,54 @@
 	        }
 	
 	        /**
+	         * Point in contour test based on ray shooting (tracing) algorithm
+	         * Returns true if point inside contour or lays on boundary,
+	         * otherwise returns false
+	         * @param point - test point
+	         * @returns {boolean} - true if inside or on boundary, false otherwise
+	         */
+	        contains(point) {
+	            let rel = ray_shoot(this, point);
+	            return (rel == Flatten.INSIDE || rel == Flatten.BOUNDARY) ? true : false;
+	        }
+	
+	        /**
+	         * Return distance and shortest segment between polygon and other shape
+	         * @param shape
+	         * @returns {Number | Segment}
+	         */
+	        distanceTo(shape) {
+	            let {Distance} = Flatten;
+	
+	            if (shape instanceof Flatten.Point) {
+	                let [dist, shortest_segment] = Distance.point2polygon(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Circle ||
+	            shape instanceof Flatten.Line ||
+	            shape instanceof Flatten.Segment ||
+	            shape instanceof Flatten.Arc) {
+	                let [dist, shortest_segment] = Distance.shape2polygon(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [dist, shortest_segment];
+	            }
+	
+	            /* this method is slow */
+	            if (shape instanceof  Flatten.Polygon) {
+	                let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Segment()];
+	                for (let edge of this.edges) {
+	                    let [dist, shortest_segment] = Distance.shape2polygon(edge.shape, shape);
+	                    if (Flatten.Utils.LT(dist, min_dist_and_segment[0])) {
+	                        min_dist_and_segment = [dist, shortest_segment];
+	                    }
+	                }
+	                return min_dist_and_segment;
+	            }
+	        }
+	
+	        /**
 	         * Return string to draw polygon in svg
 	         * @param attrs  - json structure with any attributes allowed to svg path element,
 	         * like "stroke", "strokeWidth", "fill", "fillRule"
@@ -34543,7 +35570,144 @@
 	};
 
 /***/ },
-/* 139 */
+/* 142 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = function(Flatten) {
+	    let {Point, Segment, Line, Circle, Arc, Box, Vector} = Flatten;
+	    /**
+	     * Class representing a horizontal ray, used for ray shooting algorithm
+	     * @type {Ray}
+	     */
+	    Flatten.Ray = class Ray {
+	        /**
+	         * Construct ray by setting start point
+	         * @param {Point} pt - start point
+	         */
+	        constructor(...args) {
+	            this.pt = new Point();
+	
+	            if (args.length == 0) {
+	                return;
+	            }
+	
+	            if (args.length == 1 && args[0] instanceof Point) {
+	                this.pt = args[0].clone();
+	                return;
+	            }
+	
+	            if (args.length == 2 && typeof(args[0]) == "number" && typeof(args[1]) == "number") {
+	                this.pt = new Point(args[0], args[1]);
+	                return;
+	            }
+	
+	            throw Flatten.Errors.ILLEGAL_PARAMETERS;
+	        }
+	
+	        /**
+	         * Returns copied instance of the ray object
+	         * @returns {Ray}
+	         */
+	        clone() {
+	            return new Ray(this.pt);
+	        }
+	
+	        /**
+	         * Returns half-infinite bounding box of the ray
+	         * @returns {Box} - bounding box
+	         */
+	        get box() {
+	            return new Box(
+	                this.pt.x,
+	                this.pt.y,
+	                Number.POSITIVE_INFINITY,
+	                this.pt.y
+	            )
+	        }
+	
+	        /**
+	         * Return ray start point
+	         * @returns {Point} - ray start point
+	         */
+	        get start() {
+	            return this.pt;
+	        }
+	
+	        /**
+	         * Return ray normal vector (0,1) - horizontal ray
+	         * @returns {Vector} - ray normal vector
+	         */
+	        get norm() {
+	            return new Vector(0,1);
+	        }
+	
+	        /**
+	         * Intersect ray with shape
+	         * @param {Segment|Arc} - shape to intersect with ray
+	         * @returns {Array} array of intersection points
+	         */
+	        intersect(shape) {
+	            if (shape instanceof Segment) {
+	                return this.intersectRay2Segment(this, shape);
+	            }
+	
+	            if (shape instanceof Arc) {
+	                return this.intersectRay2Arc(this, shape);
+	            }
+	        }
+	
+	        intersectRay2Segment(ray, segment) {
+	            let ip = [];
+	
+	            if (ray.box.notIntersect(segment.box)) {
+	                return ip;
+	            }
+	
+	            let line = new Line(ray.start, ray.norm);
+	            let ip_tmp = line.intersect(segment);
+	
+	            for (let pt of ip_tmp) {
+	                if (Flatten.Utils.GE(pt.x, ray.start.x)) {
+	                    ip.push(pt);
+	                }
+	            }
+	
+	            /* If there were two intersection points between line and ray,
+	            and now there is exactly one left, it means ray starts between these points
+	            and there is another intersection point - start of the ray */
+	            if (ip_tmp.length == 2 && ip.length == 1 && ray.start.on(line)) {
+	                ip.push(ray.start);
+	            }
+	
+	            return ip;
+	        }
+	
+	        intersectRay2Arc(ray, arc) {
+	            let ip = [];
+	
+	            if (ray.box.notIntersect(arc.box)) {
+	                return ip;
+	            }
+	
+	            let line = new Line(ray.start, ray.norm);
+	            let ip_tmp = line.intersect(arc);
+	
+	            for (let pt of ip_tmp) {
+	                if (Flatten.Utils.GE(pt.x, ray.start.x)) {
+	                    ip.push(pt);
+	                }
+	            }
+	            return ip;
+	        }
+	    };
+	
+	    Flatten.ray = (...args) => new Flatten.Ray(...args);
+	};
+
+/***/ },
+/* 143 */
 /***/ function(module, exports) {
 
 	/**
@@ -34552,7 +35716,7 @@
 	
 	"use strict";
 	
-	module.exports = function(Flatten) {
+	module.exports = function (Flatten) {
 	    /**
 	     * Class representing a segment
 	     * @type {Segment}
@@ -34618,27 +35782,11 @@
 	        }
 	
 	        /**
-	         * Set start point
-	         * @param {Point} pt
-	         */
-	        set start(pt) {
-	            this.ps = pt;
-	        }
-	
-	        /**
 	         * End point
 	         * @returns {Point}
 	         */
 	        get end() {
 	            return this.pe;
-	        }
-	
-	        /**
-	         * Set end point
-	         * @param {Point} pt
-	         */
-	        set end(pt) {
-	            this.pe = pt;
 	        }
 	
 	        /**
@@ -34703,41 +35851,84 @@
 	            }
 	        }
 	
+	        /**
+	         * Calculate distance and shortest segment from segment to shape
+	         * @param shape
+	         * @returns {Number | Segment} - distance and shortest segment from segment to shape
+	         */
+	        distanceTo(shape) {
+	            let {Distance} = Flatten;
+	
+	            if (shape instanceof Flatten.Point) {
+	                let [dist, shortest_segment] = Distance.point2segment(shape, this);
+	                shortest_segment = shortest_segment.swap();
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Circle) {
+	                let [dist, shortest_segment] = Distance.segment2circle(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Line) {
+	                let [dist, shortest_segment] = Distance.segment2line(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Segment) {
+	                let [dist, shortest_segment] = Distance.segment2segment(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Arc) {
+	                let [dist, shortest_segment] = Distance.segment2arc(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.Polygon) {
+	                let [dist, shortest_segment] = Distance.shape2polygon(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	        }
+	
+	        /**
+	         * Return tangent unit vector in the start point in the direction from start to end
+	         * @returns {Vector} - tangent vector in start point
+	         */
+	        tangentInStart() {
+	            let vec = new Flatten.Vector(this.start, this.end);
+	            return vec.normalize();
+	        }
+	
+	        /**
+	         * Return tangent unit vector in the end point in the direction from end to start
+	         * @returns {Vector} - tangent vector in end point
+	         */
+	        tangentInEnd() {
+	            let vec = new Flatten.Vector(this.end, this.start);
+	            return vec.normalize();
+	        }
+	
+	        /**
+	         * Return new segment with swapped start and end points
+	         * @returns {Segment}
+	         */
+	        swap() {
+	            return new Segment(this.end, this.start);
+	        }
+	
 	        distanceToPoint(pt) {
-	            /* Degenerated case of zero-length segment */
-	            if (this.start.equalTo(this.end)) {
-	                return pt.distanceTo(this.start);
-	            }
-	
-	            let v_seg = new Flatten.Vector(this.start, this.end);
-	            let v_ps2pt = new Flatten.Vector(this.start, pt);
-	            let v_pe2pt = new Flatten.Vector(this.end, pt);
-	            let start_sp = v_seg.dot(v_ps2pt);    /* dot product v_seg * v_ps2pt */
-	            let end_sp = -v_seg.dot(v_pe2pt);     /* minus dot product v_seg * v_pe2pt */
-	
-	            let dist;
-	            if (Flatten.Utils.GE(start_sp, 0) && Flatten.Utils.GE(end_sp, 0)) {    /* point inside segment scope */
-	                let v_unit = new Flatten.Vector(v_seg.x / this.length, v_seg.y / this.length);
-	                /* unit vector ||v_unit|| = 1 */
-	                dist = Math.abs(v_unit.cross(v_ps2pt));
-	                /* dist = abs(v_unit x v_ps2pt) */
-	            }
-	            else if (start_sp < 0) {                             /* point is out of scope closer to ps */
-	                dist = pt.distanceTo(this.start);
-	            }
-	            else {                                               /* point is out of scope closer to pe */
-	                dist = pt.distanceTo(this.end);
-	            }
+	            let [dist, ...rest] = Flatten.Distance.point2segment(pt, this);
 	            return dist;
 	        };
 	
-	        definiteIntegral(ymin=0.0) {
+	        definiteIntegral(ymin = 0.0) {
 	            let dx = this.end.x - this.start.x;
 	            let dy1 = this.start.y - ymin;
 	            let dy2 = this.end.y - ymin;
-	            return ( dx*(dy1 + dy2)/2 );
+	            return ( dx * (dy1 + dy2) / 2 );
 	        }
-	        
+	
 	        static intersectSegment2Line(seg, line) {
 	            let ip = [];
 	            let zero_segment = Flatten.Utils.EQ_0(seg.length);
@@ -34853,7 +36044,7 @@
 	         * Defaults are stroke:"black", strokeWidth:"3"
 	         * @returns {string}
 	         */
-	        svg(attrs = {stroke:"black",strokeWidth:"3"}) {
+	        svg(attrs = {stroke: "black", strokeWidth: "3"}) {
 	            let {stroke, strokeWidth} = attrs;
 	            return `\n<line x1="${this.start.x}" y1="${this.start.y}" x2="${this.end.x}" y2="${this.end.y}" stroke="${stroke}" stroke-width="${strokeWidth}" />`;
 	        }
@@ -34863,7 +36054,7 @@
 	};
 
 /***/ },
-/* 140 */
+/* 144 */
 /***/ function(module, exports) {
 
 	/**
@@ -35040,7 +36231,7 @@
 
 
 /***/ },
-/* 141 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35051,7 +36242,7 @@
 	
 	// require("babel-polyfill");
 	
-	let IntervalTree = __webpack_require__(130);
+	let IntervalTree = __webpack_require__(131);
 	
 	module.exports = function(Flatten) {
 	    /**
@@ -35139,7 +36330,7 @@
 
 
 /***/ },
-/* 142 */
+/* 146 */
 /***/ function(module, exports) {
 
 	/**
@@ -35153,7 +36344,7 @@
 
 
 /***/ },
-/* 143 */
+/* 147 */
 /***/ function(module, exports) {
 
 	/**
@@ -35205,12 +36396,12 @@
 
 
 /***/ },
-/* 144 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(56),
-	    getRawTag = __webpack_require__(147),
-	    objectToString = __webpack_require__(148);
+	    getRawTag = __webpack_require__(151),
+	    objectToString = __webpack_require__(152);
 	
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -35239,7 +36430,7 @@
 
 
 /***/ },
-/* 145 */
+/* 149 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -35250,10 +36441,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 146 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(149);
+	var overArg = __webpack_require__(153);
 	
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -35262,7 +36453,7 @@
 
 
 /***/ },
-/* 147 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(56);
@@ -35314,7 +36505,7 @@
 
 
 /***/ },
-/* 148 */
+/* 152 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -35342,7 +36533,7 @@
 
 
 /***/ },
-/* 149 */
+/* 153 */
 /***/ function(module, exports) {
 
 	/**
@@ -35363,10 +36554,10 @@
 
 
 /***/ },
-/* 150 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(145);
+	var freeGlobal = __webpack_require__(149);
 	
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -35378,7 +36569,7 @@
 
 
 /***/ },
-/* 151 */
+/* 155 */
 /***/ function(module, exports) {
 
 	/**
@@ -35413,7 +36604,7 @@
 
 
 /***/ },
-/* 152 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35526,7 +36717,7 @@
 
 
 /***/ },
-/* 153 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35644,7 +36835,7 @@
 	}
 
 /***/ },
-/* 154 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35711,7 +36902,7 @@
 
 
 /***/ },
-/* 155 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35729,8 +36920,8 @@
 	var invariant = __webpack_require__(1);
 	var warning = __webpack_require__(2);
 	
-	var ReactPropTypesSecret = __webpack_require__(156);
-	var checkPropTypes = __webpack_require__(154);
+	var ReactPropTypesSecret = __webpack_require__(160);
+	var checkPropTypes = __webpack_require__(158);
 	
 	module.exports = function(isValidElement, throwOnDirectAccess) {
 	  /* global Symbol */
@@ -36229,7 +37420,7 @@
 
 
 /***/ },
-/* 156 */
+/* 160 */
 /***/ function(module, exports) {
 
 	/**
@@ -36249,16 +37440,16 @@
 
 
 /***/ },
-/* 157 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(171);
+	module.exports = __webpack_require__(175);
 
 
 /***/ },
-/* 158 */
+/* 162 */
 /***/ function(module, exports) {
 
 	/**
@@ -36336,7 +37527,7 @@
 	module.exports = ARIADOMPropertyConfig;
 
 /***/ },
-/* 159 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36364,7 +37555,7 @@
 	module.exports = AutoFocusUtils;
 
 /***/ },
-/* 160 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36381,9 +37572,9 @@
 	
 	var EventPropagators = __webpack_require__(25);
 	var ExecutionEnvironment = __webpack_require__(6);
-	var FallbackCompositionState = __webpack_require__(166);
-	var SyntheticCompositionEvent = __webpack_require__(203);
-	var SyntheticInputEvent = __webpack_require__(206);
+	var FallbackCompositionState = __webpack_require__(170);
+	var SyntheticCompositionEvent = __webpack_require__(207);
+	var SyntheticInputEvent = __webpack_require__(210);
 	
 	var END_KEYCODES = [9, 13, 27, 32]; // Tab, Return, Esc, Space
 	var START_KEYCODE = 229;
@@ -36752,7 +37943,7 @@
 	module.exports = BeforeInputEventPlugin;
 
 /***/ },
-/* 161 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36771,10 +37962,10 @@
 	var ExecutionEnvironment = __webpack_require__(6);
 	var ReactInstrumentation = __webpack_require__(9);
 	
-	var camelizeStyleName = __webpack_require__(117);
-	var dangerousStyleValue = __webpack_require__(212);
-	var hyphenateStyleName = __webpack_require__(124);
-	var memoizeStringOnly = __webpack_require__(127);
+	var camelizeStyleName = __webpack_require__(118);
+	var dangerousStyleValue = __webpack_require__(216);
+	var hyphenateStyleName = __webpack_require__(125);
+	var memoizeStringOnly = __webpack_require__(128);
 	var warning = __webpack_require__(2);
 	
 	var processStyleName = memoizeStringOnly(function (styleName) {
@@ -36971,7 +38162,7 @@
 	module.exports = CSSPropertyOperations;
 
 /***/ },
-/* 162 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36990,7 +38181,7 @@
 	var EventPropagators = __webpack_require__(25);
 	var ExecutionEnvironment = __webpack_require__(6);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	var SyntheticEvent = __webpack_require__(12);
 	
 	var inputValueTracking = __webpack_require__(77);
@@ -37287,7 +38478,7 @@
 	module.exports = ChangeEventPlugin;
 
 /***/ },
-/* 163 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37307,7 +38498,7 @@
 	var DOMLazyTree = __webpack_require__(18);
 	var ExecutionEnvironment = __webpack_require__(6);
 	
-	var createNodesFromMarkup = __webpack_require__(120);
+	var createNodesFromMarkup = __webpack_require__(121);
 	var emptyFunction = __webpack_require__(8);
 	var invariant = __webpack_require__(1);
 	
@@ -37337,7 +38528,7 @@
 	module.exports = Danger;
 
 /***/ },
-/* 164 */
+/* 168 */
 /***/ function(module, exports) {
 
 	/**
@@ -37367,7 +38558,7 @@
 	module.exports = DefaultEventPluginOrder;
 
 /***/ },
-/* 165 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37469,7 +38660,7 @@
 	module.exports = EnterLeaveEventPlugin;
 
 /***/ },
-/* 166 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37486,7 +38677,7 @@
 	
 	var _assign = __webpack_require__(4);
 	
-	var PooledClass = __webpack_require__(15);
+	var PooledClass = __webpack_require__(17);
 	
 	var getTextContentAccessor = __webpack_require__(76);
 	
@@ -37568,7 +38759,7 @@
 	module.exports = FallbackCompositionState;
 
 /***/ },
-/* 167 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37808,7 +38999,7 @@
 	module.exports = HTMLDOMPropertyConfig;
 
 /***/ },
-/* 168 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -37966,7 +39157,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(58)))
 
 /***/ },
-/* 169 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37982,7 +39173,7 @@
 	'use strict';
 	
 	var DOMChildrenOperations = __webpack_require__(36);
-	var ReactDOMIDOperations = __webpack_require__(176);
+	var ReactDOMIDOperations = __webpack_require__(180);
 	
 	/**
 	 * Abstracts away all functionality of the reconciler that requires knowledge of
@@ -37998,7 +39189,7 @@
 	module.exports = ReactComponentBrowserEnvironment;
 
 /***/ },
-/* 170 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38902,7 +40093,7 @@
 	module.exports = ReactCompositeComponent;
 
 /***/ },
-/* 171 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38920,15 +40111,15 @@
 	'use strict';
 	
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactDefaultInjection = __webpack_require__(184);
+	var ReactDefaultInjection = __webpack_require__(188);
 	var ReactMount = __webpack_require__(70);
 	var ReactReconciler = __webpack_require__(20);
-	var ReactUpdates = __webpack_require__(10);
-	var ReactVersion = __webpack_require__(197);
+	var ReactUpdates = __webpack_require__(11);
+	var ReactVersion = __webpack_require__(201);
 	
-	var findDOMNode = __webpack_require__(213);
+	var findDOMNode = __webpack_require__(217);
 	var getHostComponentFromComposite = __webpack_require__(75);
-	var renderSubtreeIntoContainer = __webpack_require__(220);
+	var renderSubtreeIntoContainer = __webpack_require__(224);
 	var warning = __webpack_require__(2);
 	
 	ReactDefaultInjection.inject();
@@ -39017,7 +40208,7 @@
 	module.exports = ReactDOM;
 
 /***/ },
-/* 172 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39037,8 +40228,8 @@
 	var _prodInvariant = __webpack_require__(3),
 	    _assign = __webpack_require__(4);
 	
-	var AutoFocusUtils = __webpack_require__(159);
-	var CSSPropertyOperations = __webpack_require__(161);
+	var AutoFocusUtils = __webpack_require__(163);
+	var CSSPropertyOperations = __webpack_require__(165);
 	var DOMLazyTree = __webpack_require__(18);
 	var DOMNamespaces = __webpack_require__(37);
 	var DOMProperty = __webpack_require__(19);
@@ -39048,13 +40239,13 @@
 	var ReactBrowserEventEmitter = __webpack_require__(30);
 	var ReactDOMComponentFlags = __webpack_require__(64);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactDOMInput = __webpack_require__(177);
-	var ReactDOMOption = __webpack_require__(178);
+	var ReactDOMInput = __webpack_require__(181);
+	var ReactDOMOption = __webpack_require__(182);
 	var ReactDOMSelect = __webpack_require__(65);
-	var ReactDOMTextarea = __webpack_require__(181);
+	var ReactDOMTextarea = __webpack_require__(185);
 	var ReactInstrumentation = __webpack_require__(9);
-	var ReactMultiChild = __webpack_require__(190);
-	var ReactServerRenderingTransaction = __webpack_require__(195);
+	var ReactMultiChild = __webpack_require__(194);
+	var ReactServerRenderingTransaction = __webpack_require__(199);
 	
 	var emptyFunction = __webpack_require__(8);
 	var escapeTextContentForBrowser = __webpack_require__(33);
@@ -40031,7 +41222,7 @@
 	module.exports = ReactDOMComponent;
 
 /***/ },
-/* 173 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40068,7 +41259,7 @@
 	module.exports = ReactDOMContainerInfo;
 
 /***/ },
-/* 174 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40132,7 +41323,7 @@
 	module.exports = ReactDOMEmptyComponent;
 
 /***/ },
-/* 175 */
+/* 179 */
 /***/ function(module, exports) {
 
 	/**
@@ -40155,7 +41346,7 @@
 	module.exports = ReactDOMFeatureFlags;
 
 /***/ },
-/* 176 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40192,7 +41383,7 @@
 	module.exports = ReactDOMIDOperations;
 
 /***/ },
-/* 177 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40213,7 +41404,7 @@
 	var DOMPropertyOperations = __webpack_require__(63);
 	var LinkedValueUtils = __webpack_require__(41);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	
 	var invariant = __webpack_require__(1);
 	var warning = __webpack_require__(2);
@@ -40483,7 +41674,7 @@
 	module.exports = ReactDOMInput;
 
 /***/ },
-/* 178 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40609,7 +41800,7 @@
 	module.exports = ReactDOMOption;
 
 /***/ },
-/* 179 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40626,7 +41817,7 @@
 	
 	var ExecutionEnvironment = __webpack_require__(6);
 	
-	var getNodeForCharacterOffset = __webpack_require__(217);
+	var getNodeForCharacterOffset = __webpack_require__(221);
 	var getTextContentAccessor = __webpack_require__(76);
 	
 	/**
@@ -40825,7 +42016,7 @@
 	module.exports = ReactDOMSelection;
 
 /***/ },
-/* 180 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40991,7 +42182,7 @@
 	module.exports = ReactDOMTextComponent;
 
 /***/ },
-/* 181 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41011,7 +42202,7 @@
 	
 	var LinkedValueUtils = __webpack_require__(41);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	
 	var invariant = __webpack_require__(1);
 	var warning = __webpack_require__(2);
@@ -41155,7 +42346,7 @@
 	module.exports = ReactDOMTextarea;
 
 /***/ },
-/* 182 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41295,7 +42486,7 @@
 	};
 
 /***/ },
-/* 183 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41312,7 +42503,7 @@
 	
 	var _assign = __webpack_require__(4);
 	
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	var Transaction = __webpack_require__(32);
 	
 	var emptyFunction = __webpack_require__(8);
@@ -41367,7 +42558,7 @@
 	module.exports = ReactDefaultBatchingStrategy;
 
 /***/ },
-/* 184 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41382,25 +42573,25 @@
 	
 	'use strict';
 	
-	var ARIADOMPropertyConfig = __webpack_require__(158);
-	var BeforeInputEventPlugin = __webpack_require__(160);
-	var ChangeEventPlugin = __webpack_require__(162);
-	var DefaultEventPluginOrder = __webpack_require__(164);
-	var EnterLeaveEventPlugin = __webpack_require__(165);
-	var HTMLDOMPropertyConfig = __webpack_require__(167);
-	var ReactComponentBrowserEnvironment = __webpack_require__(169);
-	var ReactDOMComponent = __webpack_require__(172);
+	var ARIADOMPropertyConfig = __webpack_require__(162);
+	var BeforeInputEventPlugin = __webpack_require__(164);
+	var ChangeEventPlugin = __webpack_require__(166);
+	var DefaultEventPluginOrder = __webpack_require__(168);
+	var EnterLeaveEventPlugin = __webpack_require__(169);
+	var HTMLDOMPropertyConfig = __webpack_require__(171);
+	var ReactComponentBrowserEnvironment = __webpack_require__(173);
+	var ReactDOMComponent = __webpack_require__(176);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactDOMEmptyComponent = __webpack_require__(174);
-	var ReactDOMTreeTraversal = __webpack_require__(182);
-	var ReactDOMTextComponent = __webpack_require__(180);
-	var ReactDefaultBatchingStrategy = __webpack_require__(183);
-	var ReactEventListener = __webpack_require__(187);
-	var ReactInjection = __webpack_require__(188);
-	var ReactReconcileTransaction = __webpack_require__(193);
-	var SVGDOMPropertyConfig = __webpack_require__(198);
-	var SelectEventPlugin = __webpack_require__(199);
-	var SimpleEventPlugin = __webpack_require__(200);
+	var ReactDOMEmptyComponent = __webpack_require__(178);
+	var ReactDOMTreeTraversal = __webpack_require__(186);
+	var ReactDOMTextComponent = __webpack_require__(184);
+	var ReactDefaultBatchingStrategy = __webpack_require__(187);
+	var ReactEventListener = __webpack_require__(191);
+	var ReactInjection = __webpack_require__(192);
+	var ReactReconcileTransaction = __webpack_require__(197);
+	var SVGDOMPropertyConfig = __webpack_require__(202);
+	var SelectEventPlugin = __webpack_require__(203);
+	var SimpleEventPlugin = __webpack_require__(204);
 	
 	var alreadyInjected = false;
 	
@@ -41457,9 +42648,9 @@
 	};
 
 /***/ },
-/* 185 */
+/* 189 */
 84,
-/* 186 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41495,7 +42686,7 @@
 	module.exports = ReactEventEmitterMixin;
 
 /***/ },
-/* 187 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41514,12 +42705,12 @@
 	
 	var EventListener = __webpack_require__(52);
 	var ExecutionEnvironment = __webpack_require__(6);
-	var PooledClass = __webpack_require__(15);
+	var PooledClass = __webpack_require__(17);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	
 	var getEventTarget = __webpack_require__(48);
-	var getUnboundedScrollPosition = __webpack_require__(122);
+	var getUnboundedScrollPosition = __webpack_require__(123);
 	
 	/**
 	 * Find the deepest React component completely containing the root of the
@@ -41654,7 +42845,7 @@
 	module.exports = ReactEventListener;
 
 /***/ },
-/* 188 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41676,7 +42867,7 @@
 	var ReactEmptyComponent = __webpack_require__(66);
 	var ReactBrowserEventEmitter = __webpack_require__(30);
 	var ReactHostComponent = __webpack_require__(68);
-	var ReactUpdates = __webpack_require__(10);
+	var ReactUpdates = __webpack_require__(11);
 	
 	var ReactInjection = {
 	  Component: ReactComponentEnvironment.injection,
@@ -41692,7 +42883,7 @@
 	module.exports = ReactInjection;
 
 /***/ },
-/* 189 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41707,7 +42898,7 @@
 	
 	'use strict';
 	
-	var adler32 = __webpack_require__(211);
+	var adler32 = __webpack_require__(215);
 	
 	var TAG_END = /\/?>/;
 	var COMMENT_START = /^<\!\-\-/;
@@ -41746,7 +42937,7 @@
 	module.exports = ReactMarkupChecksum;
 
 /***/ },
-/* 190 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41769,10 +42960,10 @@
 	
 	var ReactCurrentOwner = __webpack_require__(13);
 	var ReactReconciler = __webpack_require__(20);
-	var ReactChildReconciler = __webpack_require__(168);
+	var ReactChildReconciler = __webpack_require__(172);
 	
 	var emptyFunction = __webpack_require__(8);
-	var flattenChildren = __webpack_require__(214);
+	var flattenChildren = __webpack_require__(218);
 	var invariant = __webpack_require__(1);
 	
 	/**
@@ -42196,7 +43387,7 @@
 	module.exports = ReactMultiChild;
 
 /***/ },
-/* 191 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -42293,7 +43484,7 @@
 	module.exports = ReactOwner;
 
 /***/ },
-/* 192 */
+/* 196 */
 /***/ function(module, exports) {
 
 	/**
@@ -42314,7 +43505,7 @@
 	module.exports = ReactPropTypesSecret;
 
 /***/ },
-/* 193 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -42332,7 +43523,7 @@
 	var _assign = __webpack_require__(4);
 	
 	var CallbackQueue = __webpack_require__(62);
-	var PooledClass = __webpack_require__(15);
+	var PooledClass = __webpack_require__(17);
 	var ReactBrowserEventEmitter = __webpack_require__(30);
 	var ReactInputSelection = __webpack_require__(69);
 	var ReactInstrumentation = __webpack_require__(9);
@@ -42496,7 +43687,7 @@
 	module.exports = ReactReconcileTransaction;
 
 /***/ },
-/* 194 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -42512,7 +43703,7 @@
 	
 	'use strict';
 	
-	var ReactOwner = __webpack_require__(191);
+	var ReactOwner = __webpack_require__(195);
 	
 	var ReactRef = {};
 	
@@ -42589,7 +43780,7 @@
 	module.exports = ReactRef;
 
 /***/ },
-/* 195 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -42606,10 +43797,10 @@
 	
 	var _assign = __webpack_require__(4);
 	
-	var PooledClass = __webpack_require__(15);
+	var PooledClass = __webpack_require__(17);
 	var Transaction = __webpack_require__(32);
 	var ReactInstrumentation = __webpack_require__(9);
-	var ReactServerUpdateQueue = __webpack_require__(196);
+	var ReactServerUpdateQueue = __webpack_require__(200);
 	
 	/**
 	 * Executed within the scope of the `Transaction` instance. Consider these as
@@ -42683,7 +43874,7 @@
 	module.exports = ReactServerRenderingTransaction;
 
 /***/ },
-/* 196 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -42826,7 +44017,7 @@
 	module.exports = ReactServerUpdateQueue;
 
 /***/ },
-/* 197 */
+/* 201 */
 /***/ function(module, exports) {
 
 	/**
@@ -42844,7 +44035,7 @@
 	module.exports = '15.6.1';
 
 /***/ },
-/* 198 */
+/* 202 */
 /***/ function(module, exports) {
 
 	/**
@@ -43150,7 +44341,7 @@
 	module.exports = SVGDOMPropertyConfig;
 
 /***/ },
-/* 199 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43342,7 +44533,7 @@
 	module.exports = SelectEventPlugin;
 
 /***/ },
-/* 200 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43363,17 +44554,17 @@
 	var EventListener = __webpack_require__(52);
 	var EventPropagators = __webpack_require__(25);
 	var ReactDOMComponentTree = __webpack_require__(5);
-	var SyntheticAnimationEvent = __webpack_require__(201);
-	var SyntheticClipboardEvent = __webpack_require__(202);
+	var SyntheticAnimationEvent = __webpack_require__(205);
+	var SyntheticClipboardEvent = __webpack_require__(206);
 	var SyntheticEvent = __webpack_require__(12);
-	var SyntheticFocusEvent = __webpack_require__(205);
-	var SyntheticKeyboardEvent = __webpack_require__(207);
+	var SyntheticFocusEvent = __webpack_require__(209);
+	var SyntheticKeyboardEvent = __webpack_require__(211);
 	var SyntheticMouseEvent = __webpack_require__(31);
-	var SyntheticDragEvent = __webpack_require__(204);
-	var SyntheticTouchEvent = __webpack_require__(208);
-	var SyntheticTransitionEvent = __webpack_require__(209);
+	var SyntheticDragEvent = __webpack_require__(208);
+	var SyntheticTouchEvent = __webpack_require__(212);
+	var SyntheticTransitionEvent = __webpack_require__(213);
 	var SyntheticUIEvent = __webpack_require__(27);
-	var SyntheticWheelEvent = __webpack_require__(210);
+	var SyntheticWheelEvent = __webpack_require__(214);
 	
 	var emptyFunction = __webpack_require__(8);
 	var getEventCharCode = __webpack_require__(46);
@@ -43572,7 +44763,7 @@
 	module.exports = SimpleEventPlugin;
 
 /***/ },
-/* 201 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43615,7 +44806,7 @@
 	module.exports = SyntheticAnimationEvent;
 
 /***/ },
-/* 202 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43657,7 +44848,7 @@
 	module.exports = SyntheticClipboardEvent;
 
 /***/ },
-/* 203 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43697,7 +44888,7 @@
 	module.exports = SyntheticCompositionEvent;
 
 /***/ },
-/* 204 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43737,7 +44928,7 @@
 	module.exports = SyntheticDragEvent;
 
 /***/ },
-/* 205 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43777,7 +44968,7 @@
 	module.exports = SyntheticFocusEvent;
 
 /***/ },
-/* 206 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43818,7 +45009,7 @@
 	module.exports = SyntheticInputEvent;
 
 /***/ },
-/* 207 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43836,7 +45027,7 @@
 	var SyntheticUIEvent = __webpack_require__(27);
 	
 	var getEventCharCode = __webpack_require__(46);
-	var getEventKey = __webpack_require__(215);
+	var getEventKey = __webpack_require__(219);
 	var getEventModifierState = __webpack_require__(47);
 	
 	/**
@@ -43906,7 +45097,7 @@
 	module.exports = SyntheticKeyboardEvent;
 
 /***/ },
-/* 208 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43955,7 +45146,7 @@
 	module.exports = SyntheticTouchEvent;
 
 /***/ },
-/* 209 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -43998,7 +45189,7 @@
 	module.exports = SyntheticTransitionEvent;
 
 /***/ },
-/* 210 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44053,7 +45244,7 @@
 	module.exports = SyntheticWheelEvent;
 
 /***/ },
-/* 211 */
+/* 215 */
 /***/ function(module, exports) {
 
 	/**
@@ -44101,7 +45292,7 @@
 	module.exports = adler32;
 
 /***/ },
-/* 212 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44184,7 +45375,7 @@
 	module.exports = dangerousStyleValue;
 
 /***/ },
-/* 213 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44248,7 +45439,7 @@
 	module.exports = findDOMNode;
 
 /***/ },
-/* 214 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -44329,7 +45520,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(58)))
 
 /***/ },
-/* 215 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44445,7 +45636,7 @@
 	module.exports = getEventKey;
 
 /***/ },
-/* 216 */
+/* 220 */
 /***/ function(module, exports) {
 
 	/**
@@ -44490,7 +45681,7 @@
 	module.exports = getIteratorFn;
 
 /***/ },
-/* 217 */
+/* 221 */
 /***/ function(module, exports) {
 
 	/**
@@ -44568,7 +45759,7 @@
 	module.exports = getNodeForCharacterOffset;
 
 /***/ },
-/* 218 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44673,7 +45864,7 @@
 	module.exports = getVendorPrefixedEventName;
 
 /***/ },
-/* 219 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44703,7 +45894,7 @@
 	module.exports = quoteAttributeValueForBrowser;
 
 /***/ },
-/* 220 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44723,7 +45914,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 221 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @remove-on-eject-begin
@@ -44742,12 +45933,12 @@
 	  // Rejection tracking prevents a common issue where React gets into an
 	  // inconsistent state due to an error, but it gets swallowed by a Promise,
 	  // and the user has no idea what causes React's erratic future behavior.
-	  __webpack_require__(153).enable();
-	  window.Promise = __webpack_require__(152);
+	  __webpack_require__(157).enable();
+	  window.Promise = __webpack_require__(156);
 	}
 	
 	// fetch() polyfill for making API calls.
-	__webpack_require__(222);
+	__webpack_require__(226);
 	
 	// Object.assign() is commonly used with React.
 	// It will use the native implementation if it's present and isn't buggy.
@@ -44755,7 +45946,7 @@
 
 
 /***/ },
-/* 222 */
+/* 226 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -45219,11 +46410,11 @@
 
 
 /***/ },
-/* 223 */
+/* 227 */
 40,
-/* 224 */
-[251, 28],
-/* 225 */
+/* 228 */
+[255, 28],
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45238,11 +46429,11 @@
 	
 	'use strict';
 	
-	var PooledClass = __webpack_require__(224);
+	var PooledClass = __webpack_require__(228);
 	var ReactElement = __webpack_require__(22);
 	
 	var emptyFunction = __webpack_require__(8);
-	var traverseAllChildren = __webpack_require__(234);
+	var traverseAllChildren = __webpack_require__(238);
 	
 	var twoArgumentPooler = PooledClass.twoArgumentPooler;
 	var fourArgumentPooler = PooledClass.fourArgumentPooler;
@@ -45418,7 +46609,7 @@
 	module.exports = ReactChildren;
 
 /***/ },
-/* 226 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45591,7 +46782,7 @@
 	module.exports = ReactDOMFactories;
 
 /***/ },
-/* 227 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45614,9 +46805,9 @@
 	module.exports = factory(isValidElement);
 
 /***/ },
-/* 228 */
-197,
-/* 229 */
+/* 232 */
+201,
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45638,14 +46829,14 @@
 	    isValidElement = _require2.isValidElement;
 	
 	var ReactNoopUpdateQueue = __webpack_require__(85);
-	var factory = __webpack_require__(114);
+	var factory = __webpack_require__(115);
 	
 	module.exports = factory(Component, isValidElement, ReactNoopUpdateQueue);
 
 /***/ },
-/* 230 */
-216,
-/* 231 */
+/* 234 */
+220,
+/* 235 */
 /***/ function(module, exports) {
 
 	/**
@@ -45670,7 +46861,7 @@
 	module.exports = getNextDebugID;
 
 /***/ },
-/* 232 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45739,7 +46930,7 @@
 	module.exports = lowPriorityWarning;
 
 /***/ },
-/* 233 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45781,7 +46972,7 @@
 	module.exports = onlyChild;
 
 /***/ },
-/* 234 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45801,9 +46992,9 @@
 	var ReactCurrentOwner = __webpack_require__(13);
 	var REACT_ELEMENT_TYPE = __webpack_require__(84);
 	
-	var getIteratorFn = __webpack_require__(230);
+	var getIteratorFn = __webpack_require__(234);
 	var invariant = __webpack_require__(1);
-	var KeyEscapeUtils = __webpack_require__(223);
+	var KeyEscapeUtils = __webpack_require__(227);
 	var warning = __webpack_require__(2);
 	
 	var SEPARATOR = '.';
@@ -45961,7 +47152,7 @@
 	module.exports = traverseAllChildren;
 
 /***/ },
-/* 235 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46024,7 +47215,7 @@
 	}
 
 /***/ },
-/* 236 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46080,7 +47271,7 @@
 	}
 
 /***/ },
-/* 237 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46228,14 +47419,14 @@
 	}
 
 /***/ },
-/* 238 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(239);
+	module.exports = __webpack_require__(243);
 
 
 /***/ },
-/* 239 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {'use strict';
@@ -46244,7 +47435,7 @@
 	  value: true
 	});
 	
-	var _ponyfill = __webpack_require__(240);
+	var _ponyfill = __webpack_require__(244);
 	
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 	
@@ -46267,10 +47458,10 @@
 	
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(250)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(254)(module)))
 
 /***/ },
-/* 240 */
+/* 244 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46298,61 +47489,61 @@
 	};
 
 /***/ },
-/* 241 */
+/* 245 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAiVJREFUeNrUljFrU1EUxxNTO1lQHGrTgPDA0ZYQSqGkk6XtUDSxRL9Bi5MW0SxxKChNkEJph1K/QGkkaB0yGbuEQguhoKPQyVq7NEUEwYivvwNHeL7cd5MMGbzw4yTv5f3/955z37kJu64b6ua4EOry6LHdTGbmZQK3IAVxiMFF+Aq7sA0fqq83/gRphINShPgk4SWcwFs4gC/QgCiMwR24Ck8wqbRlgHCYsARP4a6K28YsFOGZPIeR26oGBeiDyybxzwd7WXAhL98RLBGuwyDkrEVm9jIbB7LwPWDGWY2JvxcwkdQ9h0U0ZowG3OglrMA6/LCk5L3GV96LmBwTRHwNrR7TLroPO1CxJfxGfPRe0D1Myojva+2K/hSlWhVU838KRcvP3kDatIIReBQkTMh7LtUtBrKCF6Yix3Sf+8WlmHVSI9v3UC8fWgykFgOmFYiAa8h5jVDD6IruMG+hg7rDb9MKjnQvB405jTU1DRpRbSVNBjXv3jaMRBuzlzEEH00G/1TfVwdJT8YzEdtIq1aTwRZMwbjhoQnvi4aho6b+PiadNwmlJgNekp+Ex/DAYOB4do98zlCHuk88os8uoPXL2Iu4sUk4k9cdLhn2veTfQbzgE5fVrMoW1eZnbdcRbdeO9qVKi5xPQ1mfyfnbte3Akc66DHvaQj7BNz1w+jXXt2EYHiL8rqMTzdNhU8pNuKZHppxyVRDRMuKNjo/M/+ZfxbkAAwATycED9MFlsAAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 242 */
+/* 246 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3MEYwOEQ4MDMwMzJFNDExOUZGN0MyRjAwQkZFNDkwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1ODBBQzAzRTM4MEUxMUU0OERBNjkxMTQ1MjEwNzNEQSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1ODBBQzAzRDM4MEUxMUU0OERBNjkxMTQ1MjEwNzNEQSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkJCREE5NUFCNkMzN0U0MTFBNjMyRUJBMjBBMTYyMTlBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjcwRjA4RDgwMzAzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+xPle8wAAAgZJREFUeNpi/P//PwMtAQshBclVXbikcoHYCIh1gfgSEJ8D4ikkW4ADTAdiKyS+MRRrAXEWpRbkgwwXFRJgSAr2ZFCSlWK4+/gZw7w12xjevP9oDZTLBuKpMMVMZFgAChaGlFBvBjVFWQYWFmYGdSCdCLQMWZ4SC/RAhJKsJIqggrQEjKlFqQUXQMSdh09RBO89fg5jXqbUAlBqYZgLDPOb9x8zgJI5yLKF63cwAoVFgfgKpZE8GYg1gBFq0zV7ObK4GBCLA7EfEM8B4m8gQUZYRgOmd3w5Lg6IF6OJ5UAjFIQvAvE1IA4CYjMg3gu16BuxPsjCYsEULOpmAPEuIHYG4rVA7EVsHFgA8X88GAY+ArEbEB+FBtN/FhoUPyBLbGEWM1HJUJBhj9H42FORkZYaQ1q4D2np9tothlkrt5yY21ZGuDSVkxJj+PHrF0kW3HrwBEQdxyaHkUwzIv0YPn/5xrB08x5yg2sN0CehOH3AwcbGsHjPLoa82CBwYUa0L4C5etLidW+gpSn2IJIUE2bYdvAEg7m+Fpj9+es3oi3Yd/I8iMoE4lfIlRSKBWysLAyMTEwMpnoaDJdv3Wc4cvYyw6NnL0kJntVQ+iAQNwDxARQLnr96y2Ciq8GweMMuhmev3pAT/nCDsfrg1+8/DMfOXSHH4FtAnI5sMEYqohVgYqAxAAgwAOHVpZUAeOcGAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 243 */
+/* 247 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHhQTFRF9PX1mqiyoq+47e/wZHqK7O3ua4CP19zfgZOgbIKR8/Pzj5+qlKSut8HIYnmJmKexg5Wh1drexMvRu8TKm6qziJmlvcXMnau10NbaZ32N8fLy2N3gZXyMkaGsx87TaX+OgJKfztTZipumpLG6n6y27/DxprK79vb2fJPf2AAAACh0Uk5T////////////////////////////////////////////////////AL6qLhgAAADTSURBVHjajFLZEoIwDGyhHBWRS0VEDrXt/v8fWorYzigOeegk2clujhKsGLGuOBzEF+ADlxNwuhjXAipUKPfAvjTuB1CJpCL3AC8XVCZqAQIugbSYwiIFJA8+FdTthyqrUVc2fz4uGqTt40gziGEQmjOK+3bKgrCx8wyDlIbT60am0/BDU7q77d6PttB3ADbVMwcgLK6fOsjU9aqyiaqODRVIVM3iTTOLVxFZ2j2ef7WrB8zcAbMtK1lZoka4XTtX7qF08f0xHyrYdtq/n2Ej8BJgAJLkSJodRgvoAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 244 */
+/* 248 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3MEYwOEQ4MDMwMzJFNDExOUZGN0MyRjAwQkZFNDkwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4NkNFODE2MzMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4NkNFODE2MjMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM3Q0UwRDg3MzgzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjcwRjA4RDgwMzAzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nXk3UAAAAjtJREFUeNrU1ktIVFEcx/FRhExEei0kULQkiijMKduo0RNCEHuQRohgggsVJbRSNy2qRSK4qIjohRARk5YgGvmoVSEWRe9EzHJVkFZEoInT9w+/gXGasjngwgMf7uDcOeee/+Nco/x+v2cuR7RnjkdM4MPh+jOBj+moxVYsxnvcQhO+Bf/48umjEe+gAHcxgM1YgkNIxGOsjHQHUYEcsIP1XHqQg7dIk36Mo8JugxfTf5swdFfBO6jDSU1+CvdRrRDdwFn8wB7XJG9XrFejCOvQhgnkoxE+3ee0gMX7E1bgmfLRgG0qBrvuwiKnKmJ8xCol0ybLxBaUoBcH8QqjrjvwKZGf8QAJeI0NWsRC9Ut/b3SpIgvRUyX6Es4rD7sxhevqgyOqtj71yz+rKThEY9iJOziAVtX9S31vE5ZhEjvwSCU9gi8K4+3QEg5ttEFYP1zBRnzVwtYHVZp8IZoRiyTE4Y2+f4KU2c6iKdV9qXaSgYfoVPwvahEr57VYjmTtxh6sW/fNzEGYM2lGrnAOWYjHGizFBZWuR6EtxFV8IAcnIjlN7SnKdbXfLECL+sXK+Ttytah1/D6X49omH1a8LVzZCmUHjqt/NuEdUl3fB2MKxXMtaP1ioWhXTuwBlqk4nBawA3CvwnVPlWRHygtcUxXuV8n+0Qf/M27qfCpGnp7WynlIrMRr9LIKX0XhRkhlpakUu1RZg3oh2ZMfQ6UdO4FOdnknDwU1ocX+p15KXh2SvrBn0bz9r+K3AAMAvVSdlmlN6ucAAAAASUVORK5CYII="
 
 /***/ },
-/* 245 */
+/* 249 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAB3RJTUUH1AgfBgU3vDbVaQAAAAlwSFlzAAAPPAAADzwBFzqfWQAAAwBQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Bz0LCAAAAAJ0Uk5T/wDltzBKAAAARUlEQVR42mNgxAIYsPEYkMUZoGwGJNVwNoLAUIWmngHVNFQ2iitQnQQTZACqRkfYVaJrg1qFUE20IMnehGtFNZhIQSAAABhlAUeIwcHOAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 246 */
+/* 250 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC42/Ixj3wAAAtxJREFUOE+tlPtOGlEQxn22Nn2Bpn0MY6LRxKa1IEItikJFihgvCCihhUYBtWIil8ol1UhiTb1RIXhFoyZqTLx9nRkLsqj9pz3JxzJnZ35nZnZ2qwD8Vz24Wam+vj7odDoEg0EyH/Yp6sHNcvn9fkxMTGBmZgYDAwOwWCwwGAwYGhqi2/f9721Eo1EJMpu7yUSV1+tDIpFAPp9Hb28vrNYexONxeDweBAIB8SmXwmA5nU5MT09TVpOYmgqhq8sswJ2dHZhMHwhoxcbGBkZHRwVaGa8wWOyUTKawvp6B3W5HfX09ZmdnBcilms1mZLM5+Hxf0NHRSVef7BXj7wFZoVAI29vb+PzZi9q6OoQjERwdHaHHZoONlN/chGt4GA0NDejv75f/7/V6Cn0E6HA4kMn8QjqdRqfRKCWfnp7CQe3gluzu7oKffHV1tfQxkUyisfEVhf4BhsNhjIy4S022Wm1YWEjj8PAQKysr2N/fx+XlJdbW1qgV6yiQ7XS6oNXqMD8/j2gsBpVKfQdsa2uX8szd3XC73dDr26RvnFXlurm5oQMO5IGNjY3h5/KyJOPxfOLbt0C1WkOAuJTGJTU1vaVsgzg4OGCn0mIYZ8r95MwXFxcRi31Da+tt/1jy4/cH0E5P8PvcnJQ1OflVHMuBDLu4uJCsGVgoFATqcg2DE6J1B2RxuVrtOzr1B87Pz6V/fOVVzOzs7Exge3t7MuipVEpeAB52ZrBKQJZK1SzDu7q6KoDiur6+Fvjx8XEJlslkMD4+Tu1RsUuJoQCyDIYOOTGXy+Hq6qpU6snJibRgk2aQYUtLSxgctKOmppbC/gJk8Qjw6ZxReXY8f9lsVnrH77PJZIJG00Ihd7EKULmMRhPN4kKpd9zTra2tUnY8Zi00h5VxCqNcr9804SN9CJLU+DiNUyQSldnj4ffS+6tSN4N9KuMURrksBHv+4iWePH32qDQtWnJVximMfxeqfgOaT96ucQ2K1AAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 247 */
+/* 251 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAFXRFWHRDcmVhdGlvbiBUaW1lAAfRCxQOGStVPgrRAAAAB3RJTUUH0gIRCCggaWerxAAAAAlwSFlzAAAK8AAACvABQqw0mAAAAwBQTFRFAAAAAAEAZ43Nn8P/8fK61NDIz+H/////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvjdahwAAAAZ0Uk5T//////8As7+kvwAAAFxJREFUeNqd0FsKwCAMRNHbidX977hqsD5qKTTkIxwSGMK5KT4wj8CMiBObkWRiQVKKpmPCYjHriG5FOzZriltDVw/XUSXqch7v84p5gyeG8B9tgyZRWwOO9fb5C5cVBoCDYMdpAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 248 */
+/* 252 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACWUExURezp2L3CsAAAAH91jbamy9Sx1NXVxL2u0MvA2yEeEZy460hBJUU/JAC+ACQhE4qi2Zaw5JCp3se72Ap3Hsi82cq+2qK/8XeKtWNfTb+x0nSEsG19pH6QtWFfU8S31nt1Wpax5Xp0WoeeynBrVMm92WhkVsGz02JfU21oU5m06Mq/2se62MS21bmqzsW517ipzbyu0P///wUDcXkAAAAydFJOU/////////////////////////////////////////////////////////////////8ADVCY7wAAAO1JREFUeNpiMMQCAAKIAZsgQABhFQQIIAZDeW5uZTgXwgEIIAZFKX5+aQk2iBiUAxBADDwCClyCfIwQQSgHIICAglxigny8wmAI4TACBBCDhoymkrg6KwMIsEI4jAABxGCoyskpy8gEFmSCcNgAAojBkI2RkZENqhLIMWRkMwQIIKg7YSohACCAoIIwlRAAEEBYVQIEEFaVAAHEwIwJDAECiIGZg4NJSAiE5OSYJCWZWFiYGAECCCgowi6qwi6iza6jxs6uywISBAggoKCoFoeoioiemoE+CxgwMQIEEAMzEwZgBAggBkNGTAAQYABIRSX4H75PxQAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 249 */
+/* 253 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABOUExURezp2AAAAH91jb3CsE9PT83C3CQhE7amy9Sx1ImFdL2u0AC+AMq+2si82Qp3Hsm92cvA28Gz07ipzcq/2se62LmqzsS21cW517yu0P///44+OfEAAAAadFJOU/////////////////////////////////8AFCIA2gAAAMxJREFUeNpikMQCAAKIAZsgQABhFQQIIAYWFklJTjYoD8oBCCAGIAMuJgnlAAQQUDsLG5JOMAcggBiAykGaoADCAQggBqByDhYWbj4w5GTjAJkLEEAg2xkZEIARpB4ggECCHEiCHCBBgADCqhIggLCqBAggrCoBAgirSoAAYmDCBJIAAcTAxMrKiIy4uBiZAQIIKMjLxcPPxSvCJSbIxSXKzs7OyAwQQAxMAjzCAjz8vOKCEkLsYMDIDBBADEyMGIAZIIAYJJkxAUCAAQCiZRN3sUCgAwAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 250 */
+/* 254 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -46368,7 +47559,7 @@
 
 
 /***/ },
-/* 251 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/**
@@ -46485,4 +47676,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.ba35d785.js.map
+//# sourceMappingURL=main.97b4b4db.js.map
