@@ -15,6 +15,7 @@ export class PolygonTool extends Component {
         // this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleMouseOver(event) {
@@ -23,6 +24,10 @@ export class PolygonTool extends Component {
 
     handleMouseOut(event) {
         this.props.onMouseOut();
+    }
+
+    handleClick(event) {
+        this.props.onClick(this.props.polygon);
     }
 
     createVertices(polygon) {
@@ -41,10 +46,13 @@ export class PolygonTool extends Component {
 
     redraw(polygon) {
         // Draw polygon
+        let color = (this.props.hovered || this.props.selected) ? "black" : this.props.color;
+        let alpha = (this.props.hovered || this.props.selected) ? 1.0 : 0.6;
+
         polygon.redraw({
-            stroke: this.props.color,
+            stroke: color,     // this.props.color,
             fill: (this.props.widthOn && !this.props.displayVertices) ? this.props.color : "white",
-            alpha: this.props.displayed ? 0.6 : 0.0
+            alpha: this.props.displayed ? alpha : 0.0
         });
 
         // if (!this.props.displayed)
@@ -53,8 +61,8 @@ export class PolygonTool extends Component {
         /* Update  vertices */
         for (let vertex of this.vertices) {
             vertex.redraw({
-                stroke: this.props.color,
-                fill: this.props.color,
+                stroke: color,    // this.props.color,
+                fill: color,      // this.props.color,
                 alpha: this.props.displayed && this.props.displayVertices ? 1.0 : 0.0
             });
         }
@@ -66,6 +74,7 @@ export class PolygonTool extends Component {
     componentDidMount() {
         this.props.polygon.on("mouseover",this.handleMouseOver);
         this.props.polygon.on("mouseout",this.handleMouseOut);
+        this.props.polygon.on("click",this.handleClick);
         this.vertices = this.createVertices(this.props.polygon);
         this.redraw(this.props.polygon);
     }

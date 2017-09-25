@@ -93,12 +93,12 @@ export class Stage extends createjs.Stage {
     // zoom by 10% each time
     zoomIn(ratio) {
         let curRatio = ratio || 1.1;
-        this.zoomFactor = Math.min(100000, curRatio * this.zoomFactor);
+        this.zoomFactor = Math.min(10000000, curRatio * this.zoomFactor);
     }
 
     zoomOut(ratio) {
         let curRatio = ratio || 1.1;
-        this.zoomFactor = Math.max(0.1, this.zoomFactor / curRatio);
+        this.zoomFactor = Math.max(0.001, this.zoomFactor / curRatio);
     }
 
     // ZoomIn/Out + "Focus follows mouse"

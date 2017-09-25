@@ -13,7 +13,7 @@ export class Shape extends createjs.Shape {
     constructor(geom = undefined, stage = undefined, style={}, watch = undefined ) {
         super();
         this.geom = geom;
-        stage.addChild(this);
+        if (stage) stage.addChild(this);
         // this.stage = stage;
         this.graphics = new createjs.Graphics(); // this.setGraphics(style);
         this.watch = watch;
@@ -37,8 +37,9 @@ export class Shape extends createjs.Shape {
     }
 
     setGraphics(style) {
-        if (!this.geom)
-            return;
+        if (!this.geom) {
+            return new createjs.Graphics();
+        }
         if (this.geom instanceof Point) {
             return this.setGraphicsPoint(style);
         }

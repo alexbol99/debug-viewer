@@ -2,21 +2,20 @@
  * Created by alexanderbol on 17/04/2017.
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
 
-import { ToolbarComponent } from './toolbarComponent';
-// import { CanvasComponent } from './canvasComponent';
-import { StageComponent } from './stageComponent';
-import { StatusComponent } from './statusComponent';
-// import { LayerComponent } from './layerComponent';
+import {ToolbarComponent} from './toolbarComponent';
+import {StageComponent} from './stageComponent';
+import {StatusComponent} from './statusComponent';
 import * as ActionTypes from '../actions/action-types';
 // import {Stage} from '../models/stage';
 // import {Layer} from '../models/layer';
 import {Layers} from '../models/layers';
 
-import { PolygonTool } from '../tools/polygonTool';
-import { MeasurePointsTool } from '../tools/measurePointsTool';
+import {PolygonTool} from '../tools/polygonTool';
+import {MeasurePointsTool} from '../tools/measurePointsTool';
+import {MeasureShapesTool} from "../tools/measureShapesTool";
 
 export class MainComponent extends Component {
     constructor() {
@@ -30,6 +29,7 @@ export class MainComponent extends Component {
 
         this.onMouseRollOverShape = this.onMouseRollOverShape.bind(this);
         this.onMouseRollOutShape = this.onMouseRollOutShape.bind(this);
+        this.onClickOnShape = this.onClickOnShape.bind(this);
 
         this.resizeStage = this.resizeStage.bind(this);
 
@@ -38,7 +38,7 @@ export class MainComponent extends Component {
         this.toggleWidthMode = this.toggleWidthMode.bind(this);
         this.toggleDisplayVertices = this.toggleDisplayVertices.bind(this);
         this.onMeasurePointsButtonPressed = this.onMeasurePointsButtonPressed.bind(this);
-        this.onMeasureBetweenContoursButtonPressed = this.onMeasureBetweenContoursButtonPressed.bind(this);
+        this.onMeasureBetweenShapesButtonPressed = this.onMeasureBetweenShapesButtonPressed.bind(this);
         this.onPanByDragPressed = this.onPanByDragPressed.bind(this);
     }
 
@@ -118,6 +118,13 @@ export class MainComponent extends Component {
         })
     }
 
+    onClickOnShape(shape) {
+        this.dispatch({
+            type: ActionTypes.MOUSE_CLICKED_ON_SHAPE,
+            shape: shape
+        })
+    }
+
     handleFileSelect(event) {
         if (!(File && FileReader && FileList)) return;
 
@@ -168,11 +175,10 @@ export class MainComponent extends Component {
         });
     }
 
-    onMeasureBetweenContoursButtonPressed() {
+    onMeasureBetweenShapesButtonPressed() {
         this.dispatch({
-            type: ActionTypes.MEASURE_CONTOURS_BUTTON_PRESSED
+            type: ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED
         });
-        alert("Not implemented yet")
     }
 
     componentWillMount() {
@@ -195,18 +201,6 @@ export class MainComponent extends Component {
     }
 
     render() {
-        // let state = this.props.store.getState();
-        let stage = this.state.stage;
-
-        let decimals = this.state.app.decimals;
-        let divisor = this.state.app.divisor;
-        let coordX = 0;
-        let coordY = 0;
-        if (stage) {
-            coordX = (stage.C2W_X(this.state.mouse.x)/divisor).toFixed(decimals);
-            coordY = (stage.C2W_Y(this.state.mouse.y)/divisor).toFixed(decimals);
-        }
-
         return (
             <main className="App-content">
                 <ToolbarComponent
@@ -214,7 +208,7 @@ export class MainComponent extends Component {
                     onHomeButtonPressed={this.setHomeView}
                     onPanByDragPressed={this.onPanByDragPressed}
                     onMeasurePointsButtonPressed={this.onMeasurePointsButtonPressed}
-                    onMeasureBetweenContoursButtonPressed={this.onMeasureBetweenContoursButtonPressed}
+                    onMeasureBetweenShapesButtonPressed={this.onMeasureBetweenShapesButtonPressed}
                     onToggleWidthModePressed={this.toggleWidthMode}
                     onToggleVerticesPressed={this.toggleDisplayVertices}
                 />
@@ -240,6 +234,16 @@ export class MainComponent extends Component {
                     ) : null
                 }
 
+                <MeasureShapesTool
+                    stage={this.state.stage}
+                    firstMeasuredShape={this.state.app.firstMeasuredShape}
+                    secondMeasuredShape={this.state.app.secondMeasuredShape}
+                    distance={this.state.app.distance}
+                    shortestSegment={this.state.app.shortestSegment}
+                    divisor={this.state.app.divisor}
+                    decimals={this.state.app.decimals}
+                />
+
                 {
                     this.state.layers.map((layer) => {
                         /*
@@ -254,11 +258,17 @@ export class MainComponent extends Component {
                                     key={index}
                                     polygon={shape}
                                     displayed={layer.displayed}
+                                    hovered={shape === this.state.app.hoveredShape}
+                                    selected={
+                                        shape === this.state.app.firstMeasuredShape ||
+                                        shape === this.state.app.secondMeasuredShape
+                                    }
                                     color={layer.color}
                                     widthOn={this.state.app.widthOn}
                                     displayVertices={this.state.app.displayVertices}
                                     onMouseOver={this.onMouseRollOverShape}
                                     onMouseOut={this.onMouseRollOutShape}
+                                    onClick={this.onClickOnShape}
                                 />
                             )
                         )
@@ -266,10 +276,14 @@ export class MainComponent extends Component {
                 }
 
                 <StatusComponent
+                    stage={this.state.stage}
                     units={this.state.app.units}
+                    divisor={this.state.app.divisor}
                     decimals={this.state.app.decimals}
-                    coordX={coordX}
-                    coordY={coordY}
+                    distance={this.state.app.distance}
+                    shortestSegment={this.state.app.shortestSegment}
+                    coordX={this.state.mouse.x}
+                    coordY={this.state.mouse.y}
                     onUnitClicked={this.toggleUnits}
                 />
             </main>

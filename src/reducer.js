@@ -5,11 +5,12 @@
 import * as ActionTypes from './actions/action-types';
 import {combineReducers} from 'redux';
 
+import Flatten from 'flatten-js';
+
 // import {Stage} from './models/stage';
 // import {Layer} from './models/layer';
 import {Layers} from './models/layers';
 import { Parser } from './models/parser';
-
 const unitsList=[
     {
         name: "pixels",
@@ -37,7 +38,13 @@ const defaultAppState = {
     parser: new Parser(),
     widthOn: true,
     displayVertices: false,
-    measurePointsActive: false
+    measurePointsActive: false,
+    measureShapesActive: false,
+    measureShapesFirstClick: true,
+    firstMeasuredShape: null,
+    secondMeasuredShape: null,
+    distance: undefined,
+    shortestSegment: null
 };
 
 const defaultMouseState = {
@@ -61,15 +68,51 @@ function app(state = defaultAppState, action) {
             });
         case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
             return Object.assign({}, state, {
-                hoveredShape:action.shape
+                hoveredShape: state.measureShapesActive? action.shape : null
             });
         case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
             return Object.assign({}, state, {
                 hoveredShape:null
             });
+        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
+            if (!state.measureShapesActive) {
+                return state;
+            }
+            // measureShapesActive
+
+            if (state.measureShapesFirstClick) {
+                return Object.assign({}, state, {
+                    firstMeasuredShape: action.shape,
+                    secondMeasuredShape: null,
+                    measureShapesFirstClick: false,
+                    distance: undefined,
+                    shortestSegment: null
+                })
+            }
+            else {    // second click
+                if (action.shape === state.firstMeasuredShape) {
+                    return state;  // second click on the same shape
+                }
+
+                let polygon1 = state.firstMeasuredShape.geom;
+                let polygon2 = action.shape.geom;
+                let [distance, shortestSegment] = Flatten.Distance.polygon2polygon(polygon1, polygon2);
+
+                return Object.assign({}, state, {
+                    secondMeasuredShape: action.shape,
+                    measureShapesFirstClick: true,
+                    distance: distance,
+                    shortestSegment: shortestSegment
+                });
+            }
         case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
             return Object.assign({}, state, {
-                measurePointsActive: false
+                measurePointsActive: false,
+                measureShapesActive: false,
+                firstMeasuredShape: null,
+                secondMeasuredShape: null,
+                distance: undefined,
+                shortestSegment: null
             });
         case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
             return Object.assign({}, state, {
@@ -82,11 +125,21 @@ function app(state = defaultAppState, action) {
             });
         case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
             return Object.assign({}, state, {
-                measurePointsActive: true
+                measurePointsActive: true,
+                measureShapesActive: false,
+                firstMeasuredShape: null,
+                secondMeasuredShape: null,
+                distance: undefined,
+                shortestSegment: null
             });
-        case ActionTypes.MEASURE_CONTOURS_BUTTON_PRESSED:
+        case ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED:
             return Object.assign({}, state, {
-                measurePointsActive: false
+                measurePointsActive: false,
+                measureShapesActive: true,
+                firstMeasuredShape: null,
+                secondMeasuredShape: null,
+                distance: undefined,
+                shortestSegment: null
             });
         case ActionTypes.LAYER_LIST_PANEL_PRESSED:
             return state;  // only to cause refresh of layers list component
@@ -281,7 +334,7 @@ function stage(state = null, action) {
 
         case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
             let bIn = action.delta > 0;
-            state.zoomByMouse(action.x, action.y, bIn, 1.05);
+            state.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta)/100.);
             state.needToBeUpdated = true;
             return state;
 

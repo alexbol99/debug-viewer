@@ -10,7 +10,7 @@ import React, {Component} from 'react';
 import open from '../../public/icons/Browse.png';
 import home from '../../public/icons/homeIcon20x20.png';
 import pan from '../../public/icons/handDrag20.png';
-import measureContour from '../../public/icons/measureContour.png';
+import measureShapes from '../../public/icons/measureContour.png';
 import measurePoints from '../../public/icons/measurePoints.png';
 import width from '../../public/icons/WidthOn.png';
 import vertices from '../../public/icons/editContourVertextOnOff.png';
@@ -56,8 +56,8 @@ export class ToolbarComponent extends Component {
                 <button title="Measure distance between points" onClick={this.props.onMeasurePointsButtonPressed}>
                     <img src={measurePoints} alt="measurePoints" />
                 </button>
-                <button title="Measure distance between contours" onClick={this.props.onMeasureBetweenContoursButtonPressed}>
-                    <img src={measureContour} alt="measureContour" />
+                <button title="Measure distance between shapes" onClick={this.props.onMeasureBetweenShapesButtonPressed}>
+                    <img src={measureShapes} alt="measureShapes" />
                 </button>
                 <button title="Display solid or wire" onClick={this.props.onToggleWidthModePressed}>
                     <img src={width} alt="width" />
