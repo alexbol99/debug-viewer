@@ -162,8 +162,8 @@ export class MainComponent extends Component {
     }
 
     toggleDisplayVertices() {
-        if (this.state.app.widthOn)
-            return;
+        // if (this.state.app.widthOn)
+        //     return;
         this.dispatch({
             type: ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED
         })

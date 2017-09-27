@@ -120,9 +120,17 @@ function app(state = defaultAppState, action) {
                 displayVertices: state.widthOn ? state.displayVertices : false
             });
         case ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED:
-            return Object.assign({}, state, {
-                displayVertices: !state.displayVertices
-            });
+            if (state.displayVertices) {
+                return Object.assign({}, state, {
+                    displayVertices: false
+                });
+            }
+            else {
+                return Object.assign({}, state, {
+                    widthOn: false,
+                    displayVertices: true
+                });
+            }
         case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
             return Object.assign({}, state, {
                 measurePointsActive: true,
@@ -334,7 +342,8 @@ function stage(state = null, action) {
 
         case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
             let bIn = action.delta > 0;
-            state.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta)/100.);
+            // state.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta)/100.);
+            state.zoomByMouse(action.x, action.y, bIn, 1.2);
             state.needToBeUpdated = true;
             return state;
 

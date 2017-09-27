@@ -141,11 +141,11 @@ export class AsideComponent extends Component {
                             ) : null
                     }
                 </div>
-                <button className="Aside-add-sample-polygon"
-                     onClick={this.addSamplePolygon}
-                >
-                    Add sample polygon
-                </button>
+                {/*<button className="Aside-add-sample-polygon"*/}
+                     {/*onClick={this.addSamplePolygon}*/}
+                {/*>*/}
+                    {/*Add sample polygon*/}
+                {/*</button>*/}
             </aside>
         )
     }
