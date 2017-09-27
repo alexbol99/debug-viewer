@@ -27510,13 +27510,6 @@
 	                            onSelectShapeClicked: _this4.onSelectShapeClicked
 	                        });
 	                    }) : null
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { className: 'Aside-add-sample-polygon',
-	                        onClick: this.addSamplePolygon
-	                    },
-	                    'Add sample polygon'
 	                )
 	            );
 	        }
@@ -28106,7 +28099,8 @@
 	    }, {
 	        key: 'toggleDisplayVertices',
 	        value: function toggleDisplayVertices() {
-	            if (this.state.app.widthOn) return;
+	            // if (this.state.app.widthOn)
+	            //     return;
 	            this.dispatch({
 	                type: ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED
 	            });
@@ -29998,9 +29992,16 @@
 	                displayVertices: state.widthOn ? state.displayVertices : false
 	            });
 	        case ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED:
-	            return Object.assign({}, state, {
-	                displayVertices: !state.displayVertices
-	            });
+	            if (state.displayVertices) {
+	                return Object.assign({}, state, {
+	                    displayVertices: false
+	                });
+	            } else {
+	                return Object.assign({}, state, {
+	                    widthOn: false,
+	                    displayVertices: true
+	                });
+	            }
 	        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
 	            return Object.assign({}, state, {
 	                measurePointsActive: true,
@@ -30210,7 +30211,8 @@
 	
 	        case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
 	            var bIn = action.delta > 0;
-	            state.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta) / 100.);
+	            // state.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta)/100.);
+	            state.zoomByMouse(action.x, action.y, bIn, 1.2);
 	            state.needToBeUpdated = true;
 	            return state;
 	
@@ -47676,4 +47678,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.97b4b4db.js.map
+//# sourceMappingURL=main.3a385ea3.js.map
