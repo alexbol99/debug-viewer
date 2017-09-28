@@ -27834,12 +27834,17 @@
 	        value: function render() {
 	            var _this2 = this;
 	
-	            // let addLayer =
-	            //     (<div
-	            //         style={{padding:4, backgroundColor: "lightgray"}}
-	            //         onClick={this.onAddLayerSelected}>
-	            //         <h4 style={{margin:0}}>Add layer</h4>
-	            //     </div>)
+	            var addLayer = _react2.default.createElement(
+	                'div',
+	                {
+	                    style: { padding: 4, backgroundColor: "lightgray" },
+	                    onClick: this.onAddLayerSelected },
+	                _react2.default.createElement(
+	                    'h4',
+	                    { style: { margin: 0 } },
+	                    'Add layer'
+	                )
+	            );
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -27871,7 +27876,8 @@
 	                            layer: layer
 	                        });
 	                    })
-	                )
+	                ),
+	                addLayer
 	            );
 	        }
 	    }]);
@@ -47678,4 +47684,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.3a385ea3.js.map
+//# sourceMappingURL=main.daa18a2f.js.map
