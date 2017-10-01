@@ -1,0 +1,298 @@
++		[0]	{nrec=90 nalloc=90 h_ind_id=-1 ...} mat_cont_hdr_struc	mat_cont_struc
++		[1]	{pmin=29824000,29359800 pmax=31027920,30343800} mat_cont_lim_struc	mat_cont_struc
++		[2]	{nedge=64 nalloc=64 ntop=9 ...} mat_cont_poly_struc	mat_cont_struc
++		[3]	{pmin=29824000,29359800 pmax=31027920,30343800} mat_cont_lim_struc	mat_cont_struc
++		[4]	{ps=29827187,29824613 pe=29824000,29832309 pc=29837716,29833481 cw=1} mat_curve_struc	mat_cont_struc
++		[5]	{ps=29824000,29832309 pe=29824000,30129640} mat_seg_struc	mat_cont_struc
++		[6]	{ps=29824000,30129640 pe=29830194,30144137 pc=29844000,30129667 cw=1} mat_curve_struc	mat_cont_struc
++		[7]	{ps=29830194,30144137 pe=29844960,30149640 pc=29843990,30129680 cw=1} mat_curve_struc	mat_cont_struc
++		[8]	{ps=29844960,30149640 pe=29903799,30182237 pc=29847953,30213640 cw=0} mat_curve_struc	mat_cont_struc
++		[9]	{ps=29903799,30182237 pe=29901884,30248217 pc=29847960,30213634 cw=0} mat_curve_struc	mat_cont_struc
++		[10]	{ps=29901884,30248217 pe=29903597,30263397 pc=29914121,30254523 cw=1} mat_curve_struc	mat_cont_struc
++		[11]	{ps=29903597,30263397 pe=29980813,30340613} mat_seg_struc	mat_cont_struc
++		[12]	{ps=29980813,30340613 pe=29988509,30343800 pc=29989681,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[13]	{ps=29988509,30343800 pe=30105009,30343800} mat_seg_struc	mat_cont_struc
++		[14]	{ps=30105009,30343800 pe=30116592,30335261 pc=30103836,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[15]	{ps=30116592,30335261 pe=30239328,30335261 pc=30177960,30353640 cw=0} mat_curve_struc	mat_cont_struc
++		[16]	{ps=30239328,30335261 pe=30250911,30343800 pc=30252084,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[17]	{ps=30250911,30343800 pe=30425009,30343800} mat_seg_struc	mat_cont_struc
++		[18]	{ps=30425009,30343800 pe=30436592,30335261 pc=30423836,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[19]	{ps=30436592,30335261 pe=30559328,30335261 pc=30497960,30353640 cw=0} mat_curve_struc	mat_cont_struc
++		[20]	{ps=30559328,30335261 pe=30570911,30343800 pc=30572084,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[21]	{ps=30570911,30343800 pe=30585013,30343800} mat_seg_struc	mat_cont_struc
++		[22]	{ps=30585013,30343800 pe=30596592,30335261 pc=30583836,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[23]	{ps=30596592,30335261 pe=30697414,30303159 pc=30657966,30353640 cw=0} mat_curve_struc	mat_cont_struc
++		[24]	{ps=30697414,30303159 pe=30713705,30302095 pc=30704837,30291566 cw=1} mat_curve_struc	mat_cont_struc
++		[25]	{ps=30713705,30302095 pe=30762008,30253792} mat_seg_struc	mat_cont_struc
++		[26]	{ps=30762008,30253792 pe=30763480,30238182 pc=30751479,30244925 cw=1} mat_curve_struc	mat_cont_struc
++		[27]	{ps=30763480,30238182 pe=30759960,30233000} mat_seg_struc	mat_cont_struc
++		[28]	{ps=30759960,30233000 pe=30835120,30125680 pc=30817960,30193641 cw=0} mat_curve_struc	mat_cont_struc
++		[29]	{ps=30835120,30125680 pe=30860000,30106280 pc=30839996,30106280 cw=1} mat_curve_struc	mat_cont_struc
++		[30]	{ps=30860000,30106280 pe=30860000,29941349} mat_seg_struc	mat_cont_struc
++		[31]	{ps=30860000,29941349 pe=30856813,29933653 pc=30846284,29942521 cw=1} mat_curve_struc	mat_cont_struc
++		[32]	{ps=30856813,29933653 pe=30849880,29926720} mat_seg_struc	mat_cont_struc
++		[33]	{ps=30849880,29926720 pe=30849880,29820560} mat_seg_struc	mat_cont_struc
++		[34]	{ps=30849880,29820560 pe=30888813,29781627} mat_seg_struc	mat_cont_struc
++		[35]	{ps=30888813,29781627 pe=30892000,29773931 pc=30878284,29772759 cw=1} mat_curve_struc	mat_cont_struc
++		[36]	{ps=30892000,29773931 pe=30892000,29619800} mat_seg_struc	mat_cont_struc
++		[37]	{ps=30892000,29619800 pe=30920840,29590960} mat_seg_struc	mat_cont_struc
++		[38]	{ps=30920840,29590960 pe=30922772,29576242 pc=30910311,29582092 cw=1} mat_curve_struc	mat_cont_struc
++		[39]	{ps=30922772,29576242 pe=30921137,29514014 pc=30977960,29543656 cw=0} mat_curve_struc	mat_cont_struc
++		[40]	{ps=30921137,29514014 pe=30981937,29479698 pc=30977942,29543640 cw=0} mat_curve_struc	mat_cont_struc
++		[41]	{ps=30981937,29479698 pe=30990369,29476471 pc=30981505,29465938 cw=1} mat_curve_struc	mat_cont_struc
++		[42]	{ps=30990369,29476471 pe=31024733,29442107} mat_seg_struc	mat_cont_struc
++		[43]	{ps=31024733,29442107 pe=31027920,29434411 pc=31014204,29433239 cw=1} mat_curve_struc	mat_cont_struc
++		[44]	{ps=31027920,29434411 pe=31027920,29376229} mat_seg_struc	mat_cont_struc
++		[45]	{ps=31027920,29376229 pe=31024733,29368533 pc=31014204,29377401 cw=1} mat_curve_struc	mat_cont_struc
++		[46]	{ps=31024733,29368533 pe=31019187,29362987} mat_seg_struc	mat_cont_struc
++		[47]	{ps=31019187,29362987 pe=31011491,29359800 pc=31010319,29373516 cw=1} mat_curve_struc	mat_cont_struc
++		[48]	{ps=31011491,29359800 pe=30844509,29359800} mat_seg_struc	mat_cont_struc
++		[49]	{ps=30844509,29359800 pe=30836813,29362987 pc=30845681,29373516 cw=1} mat_curve_struc	mat_cont_struc
++		[50]	{ps=30836813,29362987 pe=30815187,29384613} mat_seg_struc	mat_cont_struc
++		[51]	{ps=30815187,29384613 pe=30812000,29392309 pc=30825716,29393481 cw=1} mat_curve_struc	mat_cont_struc
++		[52]	{ps=30812000,29392309 pe=30812000,29555800} mat_seg_struc	mat_cont_struc
++		[53]	{ps=30812000,29555800 pe=30800680,29567120} mat_seg_struc	mat_cont_struc
++		[54]	{ps=30800680,29567120 pe=30799960,29569760} mat_seg_struc	mat_cont_struc
++		[55]	{ps=30799960,29569760 pe=30754080,29615640 pc=30737960,29553640 cw=0} mat_curve_struc	mat_cont_struc
++		[56]	{ps=30754080,29615640 pe=30751440,29616360} mat_seg_struc	mat_cont_struc
++		[57]	{ps=30751440,29616360 pe=30715187,29652613} mat_seg_struc	mat_cont_struc
++		[58]	{ps=30715187,29652613 pe=30712000,29660309 pc=30725716,29661481 cw=1} mat_curve_struc	mat_cont_struc
++		[59]	{ps=30712000,29660309 pe=30712000,29679080} mat_seg_struc	mat_cont_struc
++		[60]	{ps=30712000,29679080 pe=30713360,29681440} mat_seg_struc	mat_cont_struc
++		[61]	{ps=30713360,29681440 pe=30713360,29745840 pc=30657960,29713640 cw=0} mat_curve_struc	mat_cont_struc
++		[62]	{ps=30713360,29745840 pe=30712000,29748200} mat_seg_struc	mat_cont_struc
++		[63]	{ps=30712000,29748200 pe=30712000,29751800} mat_seg_struc	mat_cont_struc
++		[64]	{ps=30712000,29751800 pe=30672000,29791800} mat_seg_struc	mat_cont_struc
++		[65]	{ps=30672000,29791800 pe=29864509,29791800} mat_seg_struc	mat_cont_struc
++		[66]	{ps=29864509,29791800 pe=29856813,29794987 pc=29865681,29805516 cw=1} mat_curve_struc	mat_cont_struc
++		[67]	{ps=29856813,29794987 pe=29827187,29824613} mat_seg_struc	mat_cont_struc
++		[68]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[69]	{pmin=30593880,30129560 pmax=30722040,30257720} mat_cont_lim_struc	mat_cont_struc
++		[70]	{ps=30657960,30129560 pe=30657960,30129560 pc=30657960,30193640 cw=0} mat_curve_struc	mat_cont_struc
++		[71]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[72]	{pmin=30433880,30129560 pmax=30562040,30257720} mat_cont_lim_struc	mat_cont_struc
++		[73]	{ps=30497960,30129560 pe=30497960,30129560 pc=30497960,30193640 cw=0} mat_curve_struc	mat_cont_struc
++		[74]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[75]	{pmin=30278880,30136560 pmax=30407040,30264720} mat_cont_lim_struc	mat_cont_struc
++		[76]	{ps=30342960,30136560 pe=30342960,30136560 pc=30342960,30200640 cw=0} mat_curve_struc	mat_cont_struc
++		[77]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[78]	{pmin=30273880,29969560 pmax=30402040,30097720} mat_cont_lim_struc	mat_cont_struc
++		[79]	{ps=30337960,29969560 pe=30337960,29969560 pc=30337960,30033640 cw=0} mat_curve_struc	mat_cont_struc
++		[80]	{nedge=8 nalloc=8 ntop=6 ...} mat_cont_poly_struc	mat_cont_struc
++		[81]	{pmin=29953886,30128729 pmax=30221594,30257751} mat_cont_lim_struc	mat_cont_struc
++		[82]	{ps=30070920,30157600 pe=30087567,30166351 pc=30087452,30146360 cw=1} mat_curve_struc	mat_cont_struc
++		[83]	{ps=30087567,30166351 pe=30104120,30157400 pc=30087454,30146360 cw=1} mat_curve_struc	mat_cont_struc
++		[84]	{ps=30104120,30157400 pe=30221593,30192396 pc=30157523,30192800 cw=0} mat_curve_struc	mat_cont_struc
++		[85]	{ps=30221593,30192396 pe=30104560,30228880 pc=30157516,30192800 cw=0} mat_curve_struc	mat_cont_struc
++		[86]	{ps=30104560,30228880 pe=30087913,30220129 pc=30088028,30240120 cw=1} mat_curve_struc	mat_cont_struc
++		[87]	{ps=30087913,30220129 pe=30071360,30229080 pc=30088026,30240120 cw=1} mat_curve_struc	mat_cont_struc
++		[88]	{ps=30071360,30229080 pe=29953887,30194084 pc=30017957,30193680 cw=0} mat_curve_struc	mat_cont_struc
++		[89]	{ps=29953887,30194084 pe=30070920,30157600 pc=30017964,30193680 cw=0} mat_curve_struc	mat_cont_struc
+
++		[0]	{nrec=31 nalloc=31 h_ind_id=-1 ...} mat_cont_hdr_struc	mat_cont_struc
++		[1]	{pmin=29832080,29152840 pmax=30671920,29751720} mat_cont_lim_struc	mat_cont_struc
++		[2]	{nedge=27 nalloc=27 ntop=4 ...} mat_cont_poly_struc	mat_cont_struc
++		[3]	{pmin=29832080,29152840 pmax=30671920,29751720} mat_cont_lim_struc	mat_cont_struc
++		[4]	{ps=29835267,29652533 pe=29832080,29660229 pc=29845796,29661401 cw=1} mat_curve_struc	mat_cont_struc
++		[5]	{ps=29832080,29660229 pe=29832080,29740920} mat_seg_struc	mat_cont_struc
++		[6]	{ps=29832080,29740920 pe=29841254,29750094} mat_seg_struc	mat_cont_struc
++		[7]	{ps=29841254,29750094 pe=29845394,29751720 pc=29857961,29713640 cw=1} mat_curve_struc	mat_cont_struc
++		[8]	{ps=29845394,29751720 pe=30655400,29751720} mat_seg_struc	mat_cont_struc
++		[9]	{ps=30655400,29751720 pe=30671920,29735200} mat_seg_struc	mat_cont_struc
++		[10]	{ps=30671920,29735200 pe=30671920,29672984} mat_seg_struc	mat_cont_struc
++		[11]	{ps=30671920,29672984 pe=30659376,29660440 pc=30658204,29674156 cw=1} mat_curve_struc	mat_cont_struc
++		[12]	{ps=30659376,29660440 pe=30650160,29660440} mat_seg_struc	mat_cont_struc
++		[13]	{ps=30650160,29660440 pe=30473520,29483800} mat_seg_struc	mat_cont_struc
++		[14]	{ps=30473520,29483800 pe=30473520,29182949} mat_seg_struc	mat_cont_struc
++		[15]	{ps=30473520,29182949 pe=30470333,29175253 pc=30459804,29184121 cw=1} mat_curve_struc	mat_cont_struc
++		[16]	{ps=30470333,29175253 pe=30451107,29156027} mat_seg_struc	mat_cont_struc
++		[17]	{ps=30451107,29156027 pe=30443411,29152840 pc=30442239,29166556 cw=1} mat_curve_struc	mat_cont_struc
++		[18]	{ps=30443411,29152840 pe=30193629,29152840} mat_seg_struc	mat_cont_struc
++		[19]	{ps=30193629,29152840 pe=30185933,29156027 pc=30194801,29166556 cw=1} mat_curve_struc	mat_cont_struc
++		[20]	{ps=30185933,29156027 pe=30173907,29168053} mat_seg_struc	mat_cont_struc
++		[21]	{ps=30173907,29168053 pe=30170720,29175749 pc=30184436,29176921 cw=1} mat_curve_struc	mat_cont_struc
++		[22]	{ps=30170720,29175749 pe=30170720,29462863} mat_seg_struc	mat_cont_struc
++		[23]	{ps=30170720,29462863 pe=30182293,29475290 pc=30184436,29461691 cw=1} mat_curve_struc	mat_cont_struc
++		[24]	{ps=30182293,29475290 pe=30238228,29561945 pc=30178320,29539235 cw=0} mat_curve_struc	mat_cont_struc
++		[25]	{ps=30238228,29561945 pe=30137440,29588560 pc=30178324,29539240 cw=0} mat_curve_struc	mat_cont_struc
++		[26]	{ps=30137440,29588560 pe=30110520,29589840 pc=30124682,29603960 cw=1} mat_curve_struc	mat_cont_struc
++		[27]	{ps=30110520,29589840 pe=30075520,29624840} mat_seg_struc	mat_cont_struc
++		[28]	{ps=30075520,29624840 pe=29867469,29624840} mat_seg_struc	mat_cont_struc
++		[29]	{ps=29867469,29624840 pe=29859773,29628027 pc=29868641,29638556 cw=1} mat_curve_struc	mat_cont_struc
++		[30]	{ps=29859773,29628027 pe=29835267,29652533} mat_seg_struc	mat_cont_struc
+
++		[0]	{nrec=175 nalloc=175 h_ind_id=-1 ...} mat_cont_hdr_struc	mat_cont_struc
++		[1]	{pmin=30899541,29611720 pmax=32200800,30560840} mat_cont_lim_struc	mat_cont_struc
++		[2]	{nedge=116 nalloc=116 ntop=20 ...} mat_cont_poly_struc	mat_cont_struc
++		[3]	{pmin=30899541,29611720 pmax=32200800,30560840} mat_cont_lim_struc	mat_cont_struc
++		[4]	{ps=31305699,29943080 pe=31305578,29970014 pc=31308491,29956560 cw=1} mat_curve_struc	mat_cont_struc
++		[5]	{ps=31305578,29970014 pe=31246160,30071360 pc=31297960,30033639 cw=0} mat_curve_struc	mat_cont_struc
++		[6]	{ps=31246160,30071360 pe=31231547,30063176 pc=31229976,30083120 cw=1} mat_curve_struc	mat_cont_struc
++		[7]	{ps=31231547,30063176 pe=31215840,30068960 pc=31229973,30083120 cw=1} mat_curve_struc	mat_cont_struc
++		[8]	{ps=31215840,30068960 pe=31194600,30090240} mat_seg_struc	mat_cont_struc
++		[9]	{ps=31194600,30090240 pe=31098153,30103091 pc=31137973,30033600 cw=0} mat_curve_struc	mat_cont_struc
++		[10]	{ps=31098153,30103091 pe=31060480,30013400 pc=31137960,30033613 cw=0} mat_curve_struc	mat_cont_struc
++		[11]	{ps=31060480,30013400 pe=31049240,29990080 pc=31041120,30008363 cw=1} mat_curve_struc	mat_cont_struc
++		[12]	{ps=31049240,29990080 pe=31026373,29973725 pc=31077618,29926240 cw=0} mat_curve_struc	mat_cont_struc
++		[13]	{ps=31026373,29973725 pe=31011800,29949680 pc=31077640,29926215 cw=0} mat_curve_struc	mat_cont_struc
++		[14]	{ps=31011800,29949680 pe=31002990,29939064 pc=30992960,29956351 cw=1} mat_curve_struc	mat_cont_struc
++		[15]	{ps=31002990,29939064 pe=30989400,29936680 pc=30992952,29956360 cw=1} mat_curve_struc	mat_cont_struc
++		[16]	{ps=30989400,29936680 pe=30959642,29935043 pc=30977944,29873640 cw=0} mat_curve_struc	mat_cont_struc
++		[17]	{ps=30959642,29935043 pe=30933840,29920120 pc=30977939,29873640 cw=0} mat_curve_struc	mat_cont_struc
++		[18]	{ps=30933840,29920120 pe=30900080,29934640 pc=30920082,29934640 cw=1} mat_curve_struc	mat_cont_struc
++		[19]	{ps=30900080,29934640 pe=30900080,30172400} mat_seg_struc	mat_cont_struc
++		[20]	{ps=30900080,30172400 pe=30900009,30172472} mat_seg_struc	mat_cont_struc
++		[21]	{ps=30900009,30172472 pe=30902778,30184898 pc=30913307,30176030 cw=1} mat_curve_struc	mat_cont_struc
++		[22]	{ps=30902778,30184898 pe=31275533,30557653} mat_seg_struc	mat_cont_struc
++		[23]	{ps=31275533,30557653 pe=31283229,30560840 pc=31284401,30547124 cw=1} mat_curve_struc	mat_cont_struc
++		[24]	{ps=31283229,30560840 pe=31324611,30560840} mat_seg_struc	mat_cont_struc
++		[25]	{ps=31324611,30560840 pe=31332307,30557653 pc=31323439,30547124 cw=1} mat_curve_struc	mat_cont_struc
++		[26]	{ps=31332307,30557653 pe=31397400,30492560} mat_seg_struc	mat_cont_struc
++		[27]	{ps=31397400,30492560 pe=31398160,30490560} mat_seg_struc	mat_cont_struc
++		[28]	{ps=31398160,30490560 pe=31434880,30453840 pc=31457960,30513640 cw=0} mat_curve_struc	mat_cont_struc
++		[29]	{ps=31434880,30453840 pe=31436880,30453080} mat_seg_struc	mat_cont_struc
++		[30]	{ps=31436880,30453080 pe=31443920,30446040} mat_seg_struc	mat_cont_struc
++		[31]	{ps=31443920,30446040 pe=31712611,30446040} mat_seg_struc	mat_cont_struc
++		[32]	{ps=31712611,30446040 pe=31720307,30442853 pc=31711439,30432324 cw=1} mat_curve_struc	mat_cont_struc
++		[33]	{ps=31720307,30442853 pe=31729560,30433600} mat_seg_struc	mat_cont_struc
++		[34]	{ps=31729560,30433600 pe=31735402,30419932 pc=31715400,30419465 cw=1} mat_curve_struc	mat_cont_struc
++		[35]	{ps=31735402,30419932 pe=31730200,30406000 pc=31715400,30419463 cw=1} mat_curve_struc	mat_cont_struc
++		[36]	{ps=31730200,30406000 pe=31820720,30315480 pc=31777560,30362840 cw=0} mat_curve_struc	mat_cont_struc
++		[37]	{ps=31820720,30315480 pe=31834652,30320682 pc=31834183,30300680 cw=1} mat_curve_struc	mat_cont_struc
++		[38]	{ps=31834652,30320682 pe=31848320,30314840 pc=31834185,30300680 cw=1} mat_curve_struc	mat_cont_struc
++		[39]	{ps=31848320,30314840 pe=31884813,30278347} mat_seg_struc	mat_cont_struc
++		[40]	{ps=31884813,30278347 pe=31888000,30270651 pc=31874284,30269479 cw=1} mat_curve_struc	mat_cont_struc
++		[41]	{ps=31888000,30270651 pe=31888000,30252309} mat_seg_struc	mat_cont_struc
++		[42]	{ps=31888000,30252309 pe=31884813,30244613 pc=31874284,30253481 cw=1} mat_curve_struc	mat_cont_struc
++		[43]	{ps=31884813,30244613 pe=31847267,30207067} mat_seg_struc	mat_cont_struc
++		[44]	{ps=31847267,30207067 pe=31839571,30203880 pc=31838399,30217596 cw=1} mat_curve_struc	mat_cont_struc
++		[45]	{ps=31839571,30203880 pe=31827400,30203880} mat_seg_struc	mat_cont_struc
++		[46]	{ps=31827400,30203880 pe=31717920,30094400} mat_seg_struc	mat_cont_struc
++		[47]	{ps=31717920,30094400 pe=31717920,30077720} mat_seg_struc	mat_cont_struc
++		[48]	{ps=31717920,30077720 pe=31716000,30075800} mat_seg_struc	mat_cont_struc
++		[49]	{ps=31716000,30075800 pe=31716000,30050040} mat_seg_struc	mat_cont_struc
++		[50]	{ps=31716000,30050040 pe=31715720,30048880} mat_seg_struc	mat_cont_struc
++		[51]	{ps=31715720,30048880 pe=31715720,30018400 pc=31777960,30033640 cw=0} mat_curve_struc	mat_cont_struc
++		[52]	{ps=31715720,30018400 pe=31716000,30017240} mat_seg_struc	mat_cont_struc
++		[53]	{ps=31716000,30017240 pe=31716000,30003800} mat_seg_struc	mat_cont_struc
++		[54]	{ps=31716000,30003800 pe=31752000,29967800} mat_seg_struc	mat_cont_struc
++		[55]	{ps=31752000,29967800 pe=31869560,29967800} mat_seg_struc	mat_cont_struc
++		[56]	{ps=31869560,29967800 pe=31954440,29967800 pc=31912000,30015800 cw=0} mat_curve_struc	mat_cont_struc
++		[57]	{ps=31954440,29967800 pe=32046811,29967800} mat_seg_struc	mat_cont_struc
++		[58]	{ps=32046811,29967800 pe=32054507,29964613 pc=32045639,29954084 cw=1} mat_curve_struc	mat_cont_struc
++		[59]	{ps=32054507,29964613 pe=32067400,29951720} mat_seg_struc	mat_cont_struc
++		[60]	{ps=32067400,29951720 pe=32067751,29951720} mat_seg_struc	mat_cont_struc
++		[61]	{ps=32067751,29951720 pe=32074467,29948653 pc=32065600,29938123 cw=1} mat_curve_struc	mat_cont_struc
++		[62]	{ps=32074467,29948653 pe=32197613,29825507} mat_seg_struc	mat_cont_struc
++		[63]	{ps=32197613,29825507 pe=32200800,29817811 pc=32187084,29816639 cw=1} mat_curve_struc	mat_cont_struc
++		[64]	{ps=32200800,29817811 pe=32200800,29799909} mat_seg_struc	mat_cont_struc
++		[65]	{ps=32200800,29799909 pe=32197613,29792213 pc=32187084,29801081 cw=1} mat_curve_struc	mat_cont_struc
++		[66]	{ps=32197613,29792213 pe=32185187,29779787} mat_seg_struc	mat_cont_struc
++		[67]	{ps=32185187,29779787 pe=32177491,29776600 pc=32176319,29790316 cw=1} mat_curve_struc	mat_cont_struc
++		[68]	{ps=32177491,29776600 pe=32156149,29776600} mat_seg_struc	mat_cont_struc
++		[69]	{ps=32156149,29776600 pe=32148453,29779787 pc=32157321,29790316 cw=1} mat_curve_struc	mat_cont_struc
++		[70]	{ps=32148453,29779787 pe=32134520,29793720} mat_seg_struc	mat_cont_struc
++		[71]	{ps=32134520,29793720 pe=32056520,29793720} mat_seg_struc	mat_cont_struc
++		[72]	{ps=32056520,29793720 pe=32016760,29753960} mat_seg_struc	mat_cont_struc
++		[73]	{ps=32016760,29753960 pe=32002755,29748097 pc=32002619,29768080 cw=1} mat_curve_struc	mat_cont_struc
++		[74]	{ps=32002755,29748097 pe=31988680,29753760 pc=32002618,29768080 cw=1} mat_curve_struc	mat_cont_struc
++		[75]	{ps=31988680,29753760 pe=31910757,29762581 pc=31944016,29707800 cw=0} mat_curve_struc	mat_cont_struc
++		[76]	{ps=31910757,29762581 pe=31882640,29689400 pc=31944000,29707817 cw=0} mat_curve_struc	mat_cont_struc
++		[77]	{ps=31882640,29689400 pe=31863480,29663640 pc=31863480,29683645 cw=1} mat_curve_struc	mat_cont_struc
++		[78]	{ps=31863480,29663640 pe=31460000,29663640} mat_seg_struc	mat_cont_struc
++		[79]	{ps=31460000,29663640 pe=31451267,29654907} mat_seg_struc	mat_cont_struc
++		[80]	{ps=31451267,29654907 pe=31443571,29651720 pc=31442399,29665436 cw=1} mat_curve_struc	mat_cont_struc
++		[81]	{ps=31443571,29651720 pe=31439720,29651720} mat_seg_struc	mat_cont_struc
++		[82]	{ps=31439720,29651720 pe=31402907,29614907} mat_seg_struc	mat_cont_struc
++		[83]	{ps=31402907,29614907 pe=31395211,29611720 pc=31394039,29625436 cw=1} mat_curve_struc	mat_cont_struc
++		[84]	{ps=31395211,29611720 pe=30980589,29611720} mat_seg_struc	mat_cont_struc
++		[85]	{ps=30980589,29611720 pe=30972893,29614907 pc=30981761,29625436 cw=1} mat_curve_struc	mat_cont_struc
++		[86]	{ps=30972893,29614907 pe=30935267,29652533} mat_seg_struc	mat_cont_struc
++		[87]	{ps=30935267,29652533 pe=30932080,29660229 pc=30945796,29661401 cw=1} mat_curve_struc	mat_cont_struc
++		[88]	{ps=30932080,29660229 pe=30932080,29793640} mat_seg_struc	mat_cont_struc
++		[89]	{ps=30932080,29793640 pe=30940311,29809817 pc=30952080,29793646 cw=1} mat_curve_struc	mat_cont_struc
++		[90]	{ps=30940311,29809817 pe=30958240,29812680 pc=30952087,29793640 cw=1} mat_curve_struc	mat_cont_struc
++		[91]	{ps=30958240,29812680 pe=31035585,29845616 pc=30977966,29873640 cw=0} mat_curve_struc	mat_cont_struc
++		[92]	{ps=31035585,29845616 pe=31055468,29849572 pc=31047344,29838458 cw=1} mat_curve_struc	mat_cont_struc
++		[93]	{ps=31055468,29849572 pe=31055720,29849320} mat_seg_struc	mat_cont_struc
++		[94]	{ps=31055720,29849320 pe=31055814,29849320} mat_seg_struc	mat_cont_struc
++		[95]	{ps=31055814,29849320 pe=31057272,29848248 pc=31048406,29837717 cw=1} mat_curve_struc	mat_cont_struc
++		[96]	{ps=31057272,29848248 pe=31101760,29803760} mat_seg_struc	mat_cont_struc
++		[97]	{ps=31101760,29803760 pe=31137960,29803760} mat_seg_struc	mat_cont_struc
++		[98]	{ps=31137960,29803760 pe=31205148,29854412 pc=31137960,29873647 cw=0} mat_curve_struc	mat_cont_struc
++		[99]	{ps=31205148,29854412 pe=31230794,29854407 pc=31217970,29849402 cw=1} mat_curve_struc	mat_cont_struc
++		[100]	{ps=31230794,29854407 pe=31248560,29824240 pc=31297960,29873648 cw=0} mat_curve_struc	mat_cont_struc
++		[101]	{ps=31248560,29824240 pe=31265840,29806960} mat_seg_struc	mat_cont_struc
++		[102]	{ps=31265840,29806960 pe=31270440,29802760 pc=31315198,29856400 cw=0} mat_curve_struc	mat_cont_struc
++		[103]	{ps=31270440,29802760 pe=31267200,29769840 pc=31257600,29787404 cw=1} mat_curve_struc	mat_cont_struc
++		[104]	{ps=31267200,29769840 pe=31244240,29748560 pc=31297946,29713640 cw=0} mat_curve_struc	mat_cont_struc
++		[105]	{ps=31244240,29748560 pe=31227579,29739483 pc=31227488,29759480 cw=1} mat_curve_struc	mat_cont_struc
++		[106]	{ps=31227579,29739483 pe=31210840,29748400 pc=31227487,29759480 cw=1} mat_curve_struc	mat_cont_struc
++		[107]	{ps=31210840,29748400 pe=31093440,29712463 pc=31157525,29712840 cw=0} mat_curve_struc	mat_cont_struc
++		[108]	{ps=31093440,29712463 pe=31211240,29677920 pc=31157515,29712840 cw=0} mat_curve_struc	mat_cont_struc
++		[109]	{ps=31211240,29677920 pe=31227901,29686997 pc=31227992,29667000 cw=1} mat_curve_struc	mat_cont_struc
++		[110]	{ps=31227901,29686997 pe=31244640,29678080 pc=31227993,29667000 cw=1} mat_curve_struc	mat_cont_struc
++		[111]	{ps=31244640,29678080 pe=31339663,29664989 pc=31297952,29713640 cw=0} mat_curve_struc	mat_cont_struc
++		[112]	{ps=31339663,29664989 pe=31341240,29760880 pc=31297960,29713633 cw=0} mat_curve_struc	mat_cont_struc
++		[113]	{ps=31341240,29760880 pe=31334957,29778491 pc=31354760,29775630 cw=1} mat_curve_struc	mat_cont_struc
++		[114]	{ps=31334957,29778491 pe=31345960,29793600 pc=31354760,29775631 cw=1} mat_curve_struc	mat_cont_struc
++		[115]	{ps=31345960,29793600 pe=31384158,29844878 pc=31315240,29856350 cw=0} mat_curve_struc	mat_cont_struc
++		[116]	{ps=31384158,29844878 pe=31364640,29905760 pc=31315240,29856353 cw=0} mat_curve_struc	mat_cont_struc
++		[117]	{ps=31364640,29905760 pe=31347360,29923040} mat_seg_struc	mat_cont_struc
++		[118]	{ps=31347360,29923040 pe=31321236,29939516 pc=31297947,29873640 cw=0} mat_curve_struc	mat_cont_struc
++		[119]	{ps=31321236,29939516 pe=31305699,29943080 pc=31297948,29873640 cw=0} mat_curve_struc	mat_cont_struc
++		[120]	{nedge=23 nalloc=23 ntop=2 ...} mat_cont_poly_struc	mat_cont_struc
++		[121]	{pmin=31713500,29760680 pmax=32004082,29946512} mat_cont_lim_struc	mat_cont_struc
++		[122]	{ps=31838519,29903801 pe=31837720,29904600} mat_seg_struc	mat_cont_struc
++		[123]	{ps=31837720,29904600 pe=31836960,29906480} mat_seg_struc	mat_cont_struc
++		[124]	{ps=31836960,29906480 pe=31755152,29942462 pc=31777569,29882440 cw=0} mat_curve_struc	mat_cont_struc
++		[125]	{ps=31755152,29942462 pe=31716960,29861680 pc=31777560,29882449 cw=0} mat_curve_struc	mat_cont_struc
++		[126]	{ps=31716960,29861680 pe=31717480,29860080} mat_seg_struc	mat_cont_struc
++		[127]	{ps=31717480,29860080 pe=31717480,29854920} mat_seg_struc	mat_cont_struc
++		[128]	{ps=31717480,29854920 pe=31719920,29852480} mat_seg_struc	mat_cont_struc
++		[129]	{ps=31719920,29852480 pe=31719920,29846960} mat_seg_struc	mat_cont_struc
++		[130]	{ps=31719920,29846960 pe=31805920,29760680} mat_seg_struc	mat_cont_struc
++		[131]	{ps=31805920,29760680 pe=31841960,29760680} mat_seg_struc	mat_cont_struc
++		[132]	{ps=31841960,29760680 pe=31896640,29795880 pc=31841954,29820760 cw=0} mat_curve_struc	mat_cont_struc
++		[133]	{ps=31896640,29795880 pe=31906707,29805838 pc=31914829,29787560 cw=1} mat_curve_struc	mat_cont_struc
++		[134]	{ps=31906707,29805838 pe=31920840,29806640 pc=31914833,29787560 cw=1} mat_curve_struc	mat_cont_struc
++		[135]	{ps=31920840,29806640 pe=31999173,29892388 pc=31940000,29867790 cw=0} mat_curve_struc	mat_cont_struc
++		[136]	{ps=31999173,29892388 pe=31883160,29897360 pc=31940006,29867800 cw=0} mat_curve_struc	mat_cont_struc
++		[137]	{ps=31883160,29897360 pe=31872583,29887902 pc=31865416,29906560 cw=1} mat_curve_struc	mat_cont_struc
++		[138]	{ps=31872583,29887902 pe=31858400,29887840 pc=31865410,29906560 cw=1} mat_curve_struc	mat_cont_struc
++		[139]	{ps=31858400,29887840 pe=31849548,29890449 pc=31835905,29827840 cw=0} mat_curve_struc	mat_cont_struc
++		[140]	{ps=31849548,29890449 pe=31840080,29901796 pc=31853732,29903564 cw=1} mat_curve_struc	mat_cont_struc
++		[141]	{ps=31840080,29901796 pe=31840080,29902240} mat_seg_struc	mat_cont_struc
++		[142]	{ps=31840080,29902240 pe=31838855,29903465} mat_seg_struc	mat_cont_struc
++		[143]	{ps=31838855,29903465 pe=31838558,29903830 pc=31849383,29912335 cw=1} mat_curve_struc	mat_cont_struc
++		[144]	{ps=31838558,29903830 pe=31838519,29903801} mat_seg_struc	mat_cont_struc
++		[145]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[146]	{pmin=31559680,30170680 pmax=31687840,30298840} mat_cont_lim_struc	mat_cont_struc
++		[147]	{ps=31623760,30170680 pe=31623760,30170680 pc=31623760,30234760 cw=0} mat_curve_struc	mat_cont_struc
++		[148]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[149]	{pmin=31555040,29969560 pmax=31683200,30097720} mat_cont_lim_struc	mat_cont_struc
++		[150]	{ps=31619120,29969560 pe=31619120,29969560 pc=31619120,30033640 cw=0} mat_curve_struc	mat_cont_struc
++		[151]	{nedge=8 nalloc=8 ntop=5 ...} mat_cont_poly_struc	mat_cont_struc
++		[152]	{pmin=31547880,29709722 pmax=31690080,29943720} mat_cont_lim_struc	mat_cont_struc
++		[153]	{ps=31550520,29770160 pe=31551080,29767120} mat_seg_struc	mat_cont_struc
++		[154]	{ps=31551080,29767120 pe=31690080,29779800 pc=31620002,29779800 cw=0} mat_curve_struc	mat_cont_struc
++		[155]	{ps=31690080,29779800 pe=31690080,29828840} mat_seg_struc	mat_cont_struc
++		[156]	{ps=31690080,29828840 pe=31688040,29830880} mat_seg_struc	mat_cont_struc
++		[157]	{ps=31688040,29830880 pe=31688040,29873640} mat_seg_struc	mat_cont_struc
++		[158]	{ps=31688040,29873640 pe=31547880,29873640 pc=31617960,29873640 cw=0} mat_curve_struc	mat_cont_struc
++		[159]	{ps=31547880,29873640 pe=31547880,29772800} mat_seg_struc	mat_cont_struc
++		[160]	{ps=31547880,29772800 pe=31550520,29770160} mat_seg_struc	mat_cont_struc
++		[161]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[162]	{pmin=31393880,30129560 pmax=31522040,30257720} mat_cont_lim_struc	mat_cont_struc
++		[163]	{ps=31457960,30129560 pe=31457960,30129560 pc=31457960,30193640 cw=0} mat_curve_struc	mat_cont_struc
++		[164]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[165]	{pmin=31393880,29969560 pmax=31522040,30097720} mat_cont_lim_struc	mat_cont_struc
++		[166]	{ps=31457960,29969560 pe=31457960,29969560 pc=31457960,30033640 cw=0} mat_curve_struc	mat_cont_struc
++		[167]	{nedge=6 nalloc=6 ntop=5 ...} mat_cont_poly_struc	mat_cont_struc
++		[168]	{pmin=31091850,30129574 pmax=31362030,30268906} mat_cont_lim_struc	mat_cont_struc
++		[169]	{ps=31207360,30166640 pe=31224993,30174669 pc=31223432,30154720 cw=1} mat_curve_struc	mat_cont_struc
++		[170]	{ps=31224993,30174669 pe=31241160,30164000 pc=31223432,30154720 cw=1} mat_curve_struc	mat_cont_struc
++		[171]	{ps=31241160,30164000 pe=31246520,30231840 pc=31297960,30193644 cw=0} mat_curve_struc	mat_cont_struc
++		[172]	{ps=31246520,30231840 pe=31228887,30223811 pc=31230448,30243760 cw=1} mat_curve_struc	mat_cont_struc
++		[173]	{ps=31228887,30223811 pe=31212720,30234480 pc=31230448,30243760 cw=1} mat_curve_struc	mat_cont_struc
++		[174]	{ps=31212720,30234480 pe=31207360,30166640 pc=31155920,30204836 cw=0} mat_curve_struc	mat_cont_struc
