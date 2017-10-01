@@ -129,12 +129,12 @@ export class LayersListComponent extends Component {
     }
 
     render() {
-        // let addLayer =
-        //     (<div
-        //         style={{padding:4, backgroundColor: "lightgray"}}
-        //         onClick={this.onAddLayerSelected}>
-        //         <h4 style={{margin:0}}>Add layer</h4>
-        //     </div>)
+        let addLayer =
+            (<div
+                style={{padding:4, backgroundColor: "lightgray"}}
+                onClick={this.onAddLayerSelected}>
+                <h4 style={{margin:0}}>Add layer</h4>
+            </div>)
 
         return (
             <div className="App-layers"
@@ -154,7 +154,7 @@ export class LayersListComponent extends Component {
                     />)
                 }
                 </ul>
-                {/* addLayer */}
+                {addLayer}
             </div>
         )
 

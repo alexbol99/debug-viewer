@@ -4,6 +4,7 @@
 
 import Flatten from 'flatten-js';
 import { Shape } from '../models/shape';
+import { Model } from './model';
 
 export class Layer {
     constructor(stage) {
@@ -27,6 +28,9 @@ export class Layer {
     add(shape) {
         if (shape instanceof Shape) {
             this.shapes.add(shape)
+        }
+        else if (shape instanceof Model) {
+            this.shapes.add(shape);
         }
         else {
             let geom = shape;

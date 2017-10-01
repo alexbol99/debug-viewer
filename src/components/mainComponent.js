@@ -12,8 +12,8 @@ import * as ActionTypes from '../actions/action-types';
 // import {Stage} from '../models/stage';
 // import {Layer} from '../models/layer';
 import {Layers} from '../models/layers';
-
-import {PolygonTool} from '../tools/polygonTool';
+import {PolygonTool} from "../tools/polygonTool";
+// import {NewPolygonTool} from '../tools/newPolygonTool';
 import {MeasurePointsTool} from '../tools/measurePointsTool';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 
@@ -256,6 +256,7 @@ export class MainComponent extends Component {
                             [...layer.shapes].map((shape, index) =>
                                 <PolygonTool
                                     key={index}
+                                    stage={this.state.stage}
                                     polygon={shape}
                                     displayed={layer.displayed}
                                     hovered={shape === this.state.app.hoveredShape}

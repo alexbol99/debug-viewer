@@ -25,7 +25,6 @@ class App extends Component {
             this.setState(this.props.store.getState());
         });
 
-        this.clickOnShape = this.clickOnShape.bind(this);
     }
     handlePaste(event) {
         if (this.state.layers.length === 0) return;
@@ -68,15 +67,6 @@ class App extends Component {
             // layer.add(point);
             // layer.add(seg1);
             // layer.add(seg2);
-    }
-
-    clickOnShape(event) {
-        let shape = event.target;
-        this.dispatch({
-            type: ActionTypes.PAN_TO_COORDINATE,
-            x: shape.geom.x,
-            y: shape.geom.y
-        })
     }
 
     componentWillMount() {

@@ -1,0 +1,90 @@
++		[0]	{nrec=90 nalloc=90 h_ind_id=-1 ...} mat_cont_hdr_struc	mat_cont_struc
++		[1]	{pmin=29824000,29359800 pmax=31027920,30343800} mat_cont_lim_struc	mat_cont_struc
++		[2]	{nedge=64 nalloc=64 ntop=9 ...} mat_cont_poly_struc	mat_cont_struc
++		[3]	{pmin=29824000,29359800 pmax=31027920,30343800} mat_cont_lim_struc	mat_cont_struc
++		[4]	{ps=29827187,29824613 pe=29824000,29832309 pc=29837716,29833481 cw=1} mat_curve_struc	mat_cont_struc
++		[5]	{ps=29824000,29832309 pe=29824000,30129640} mat_seg_struc	mat_cont_struc
++		[6]	{ps=29824000,30129640 pe=29830194,30144137 pc=29844000,30129667 cw=1} mat_curve_struc	mat_cont_struc
++		[7]	{ps=29830194,30144137 pe=29844960,30149640 pc=29843990,30129680 cw=1} mat_curve_struc	mat_cont_struc
++		[8]	{ps=29844960,30149640 pe=29903799,30182237 pc=29847953,30213640 cw=0} mat_curve_struc	mat_cont_struc
++		[9]	{ps=29903799,30182237 pe=29901884,30248217 pc=29847960,30213634 cw=0} mat_curve_struc	mat_cont_struc
++		[10]	{ps=29901884,30248217 pe=29903597,30263397 pc=29914121,30254523 cw=1} mat_curve_struc	mat_cont_struc
++		[11]	{ps=29903597,30263397 pe=29980813,30340613} mat_seg_struc	mat_cont_struc
++		[12]	{ps=29980813,30340613 pe=29988509,30343800 pc=29989681,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[13]	{ps=29988509,30343800 pe=30105009,30343800} mat_seg_struc	mat_cont_struc
++		[14]	{ps=30105009,30343800 pe=30116592,30335261 pc=30103836,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[15]	{ps=30116592,30335261 pe=30239328,30335261 pc=30177960,30353640 cw=0} mat_curve_struc	mat_cont_struc
++		[16]	{ps=30239328,30335261 pe=30250911,30343800 pc=30252084,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[17]	{ps=30250911,30343800 pe=30425009,30343800} mat_seg_struc	mat_cont_struc
++		[18]	{ps=30425009,30343800 pe=30436592,30335261 pc=30423836,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[19]	{ps=30436592,30335261 pe=30559328,30335261 pc=30497960,30353640 cw=0} mat_curve_struc	mat_cont_struc
++		[20]	{ps=30559328,30335261 pe=30570911,30343800 pc=30572084,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[21]	{ps=30570911,30343800 pe=30585013,30343800} mat_seg_struc	mat_cont_struc
++		[22]	{ps=30585013,30343800 pe=30596592,30335261 pc=30583836,30330084 cw=1} mat_curve_struc	mat_cont_struc
++		[23]	{ps=30596592,30335261 pe=30697414,30303159 pc=30657966,30353640 cw=0} mat_curve_struc	mat_cont_struc
++		[24]	{ps=30697414,30303159 pe=30713705,30302095 pc=30704837,30291566 cw=1} mat_curve_struc	mat_cont_struc
++		[25]	{ps=30713705,30302095 pe=30762008,30253792} mat_seg_struc	mat_cont_struc
++		[26]	{ps=30762008,30253792 pe=30763480,30238182 pc=30751479,30244925 cw=1} mat_curve_struc	mat_cont_struc
++		[27]	{ps=30763480,30238182 pe=30759960,30233000} mat_seg_struc	mat_cont_struc
++		[28]	{ps=30759960,30233000 pe=30835120,30125680 pc=30817960,30193641 cw=0} mat_curve_struc	mat_cont_struc
++		[29]	{ps=30835120,30125680 pe=30860000,30106280 pc=30839996,30106280 cw=1} mat_curve_struc	mat_cont_struc
++		[30]	{ps=30860000,30106280 pe=30860000,29941349} mat_seg_struc	mat_cont_struc
++		[31]	{ps=30860000,29941349 pe=30856813,29933653 pc=30846284,29942521 cw=1} mat_curve_struc	mat_cont_struc
++		[32]	{ps=30856813,29933653 pe=30849880,29926720} mat_seg_struc	mat_cont_struc
++		[33]	{ps=30849880,29926720 pe=30849880,29820560} mat_seg_struc	mat_cont_struc
++		[34]	{ps=30849880,29820560 pe=30888813,29781627} mat_seg_struc	mat_cont_struc
++		[35]	{ps=30888813,29781627 pe=30892000,29773931 pc=30878284,29772759 cw=1} mat_curve_struc	mat_cont_struc
++		[36]	{ps=30892000,29773931 pe=30892000,29619800} mat_seg_struc	mat_cont_struc
++		[37]	{ps=30892000,29619800 pe=30920840,29590960} mat_seg_struc	mat_cont_struc
++		[38]	{ps=30920840,29590960 pe=30922772,29576242 pc=30910311,29582092 cw=1} mat_curve_struc	mat_cont_struc
++		[39]	{ps=30922772,29576242 pe=30921137,29514014 pc=30977960,29543656 cw=0} mat_curve_struc	mat_cont_struc
++		[40]	{ps=30921137,29514014 pe=30981937,29479698 pc=30977942,29543640 cw=0} mat_curve_struc	mat_cont_struc
++		[41]	{ps=30981937,29479698 pe=30990369,29476471 pc=30981505,29465938 cw=1} mat_curve_struc	mat_cont_struc
++		[42]	{ps=30990369,29476471 pe=31024733,29442107} mat_seg_struc	mat_cont_struc
++		[43]	{ps=31024733,29442107 pe=31027920,29434411 pc=31014204,29433239 cw=1} mat_curve_struc	mat_cont_struc
++		[44]	{ps=31027920,29434411 pe=31027920,29376229} mat_seg_struc	mat_cont_struc
++		[45]	{ps=31027920,29376229 pe=31024733,29368533 pc=31014204,29377401 cw=1} mat_curve_struc	mat_cont_struc
++		[46]	{ps=31024733,29368533 pe=31019187,29362987} mat_seg_struc	mat_cont_struc
++		[47]	{ps=31019187,29362987 pe=31011491,29359800 pc=31010319,29373516 cw=1} mat_curve_struc	mat_cont_struc
++		[48]	{ps=31011491,29359800 pe=30844509,29359800} mat_seg_struc	mat_cont_struc
++		[49]	{ps=30844509,29359800 pe=30836813,29362987 pc=30845681,29373516 cw=1} mat_curve_struc	mat_cont_struc
++		[50]	{ps=30836813,29362987 pe=30815187,29384613} mat_seg_struc	mat_cont_struc
++		[51]	{ps=30815187,29384613 pe=30812000,29392309 pc=30825716,29393481 cw=1} mat_curve_struc	mat_cont_struc
++		[52]	{ps=30812000,29392309 pe=30812000,29555800} mat_seg_struc	mat_cont_struc
++		[53]	{ps=30812000,29555800 pe=30800680,29567120} mat_seg_struc	mat_cont_struc
++		[54]	{ps=30800680,29567120 pe=30799960,29569760} mat_seg_struc	mat_cont_struc
++		[55]	{ps=30799960,29569760 pe=30754080,29615640 pc=30737960,29553640 cw=0} mat_curve_struc	mat_cont_struc
++		[56]	{ps=30754080,29615640 pe=30751440,29616360} mat_seg_struc	mat_cont_struc
++		[57]	{ps=30751440,29616360 pe=30715187,29652613} mat_seg_struc	mat_cont_struc
++		[58]	{ps=30715187,29652613 pe=30712000,29660309 pc=30725716,29661481 cw=1} mat_curve_struc	mat_cont_struc
++		[59]	{ps=30712000,29660309 pe=30712000,29679080} mat_seg_struc	mat_cont_struc
++		[60]	{ps=30712000,29679080 pe=30713360,29681440} mat_seg_struc	mat_cont_struc
++		[61]	{ps=30713360,29681440 pe=30713360,29745840 pc=30657960,29713640 cw=0} mat_curve_struc	mat_cont_struc
++		[62]	{ps=30713360,29745840 pe=30712000,29748200} mat_seg_struc	mat_cont_struc
++		[63]	{ps=30712000,29748200 pe=30712000,29751800} mat_seg_struc	mat_cont_struc
++		[64]	{ps=30712000,29751800 pe=30672000,29791800} mat_seg_struc	mat_cont_struc
++		[65]	{ps=30672000,29791800 pe=29864509,29791800} mat_seg_struc	mat_cont_struc
++		[66]	{ps=29864509,29791800 pe=29856813,29794987 pc=29865681,29805516 cw=1} mat_curve_struc	mat_cont_struc
++		[67]	{ps=29856813,29794987 pe=29827187,29824613} mat_seg_struc	mat_cont_struc
++		[68]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[69]	{pmin=30593880,30129560 pmax=30722040,30257720} mat_cont_lim_struc	mat_cont_struc
++		[70]	{ps=30657960,30129560 pe=30657960,30129560 pc=30657960,30193640 cw=0} mat_curve_struc	mat_cont_struc
++		[71]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[72]	{pmin=30433880,30129560 pmax=30562040,30257720} mat_cont_lim_struc	mat_cont_struc
++		[73]	{ps=30497960,30129560 pe=30497960,30129560 pc=30497960,30193640 cw=0} mat_curve_struc	mat_cont_struc
++		[74]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[75]	{pmin=30278880,30136560 pmax=30407040,30264720} mat_cont_lim_struc	mat_cont_struc
++		[76]	{ps=30342960,30136560 pe=30342960,30136560 pc=30342960,30200640 cw=0} mat_curve_struc	mat_cont_struc
++		[77]	{nedge=1 nalloc=1 ntop=0 ...} mat_cont_poly_struc	mat_cont_struc
++		[78]	{pmin=30273880,29969560 pmax=30402040,30097720} mat_cont_lim_struc	mat_cont_struc
++		[79]	{ps=30337960,29969560 pe=30337960,29969560 pc=30337960,30033640 cw=0} mat_curve_struc	mat_cont_struc
++		[80]	{nedge=8 nalloc=8 ntop=6 ...} mat_cont_poly_struc	mat_cont_struc
++		[81]	{pmin=29953886,30128729 pmax=30221594,30257751} mat_cont_lim_struc	mat_cont_struc
++		[82]	{ps=30070920,30157600 pe=30087567,30166351 pc=30087452,30146360 cw=1} mat_curve_struc	mat_cont_struc
++		[83]	{ps=30087567,30166351 pe=30104120,30157400 pc=30087454,30146360 cw=1} mat_curve_struc	mat_cont_struc
++		[84]	{ps=30104120,30157400 pe=30221593,30192396 pc=30157523,30192800 cw=0} mat_curve_struc	mat_cont_struc
++		[85]	{ps=30221593,30192396 pe=30104560,30228880 pc=30157516,30192800 cw=0} mat_curve_struc	mat_cont_struc
++		[86]	{ps=30104560,30228880 pe=30087913,30220129 pc=30088028,30240120 cw=1} mat_curve_struc	mat_cont_struc
++		[87]	{ps=30087913,30220129 pe=30071360,30229080 pc=30088026,30240120 cw=1} mat_curve_struc	mat_cont_struc
++		[88]	{ps=30071360,30229080 pe=29953887,30194084 pc=30017957,30193680 cw=0} mat_curve_struc	mat_cont_struc
++		[89]	{ps=29953887,30194084 pe=30070920,30157600 pc=30017964,30193680 cw=0} mat_curve_struc	mat_cont_struc
