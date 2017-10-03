@@ -1,6 +1,7 @@
 import * as ActionTypes from '../actions/action-types';
 import { Layers } from '../models/layers';
-import { Shape } from '../models/shape';
+// import { Shape } from '../models/shape';
+import { Model } from "../models/model";
 import { parseXML } from '../models/parserXML';
 
 const readFile = (file, stage, layers, dispatch) => {
@@ -22,8 +23,9 @@ const readFile = (file, stage, layers, dispatch) => {
 
             for (let polygon of job.profiles) {
                 if (polygon.edges.size > 0 && polygon.faces.size > 0) {
-                    let watch = undefined; //  parser.parseToWatchArray(string);
-                    let shape = new Shape(polygon, stage, polygon.style, watch);
+                    // let watch = undefined; //  parser.parseToWatchArray(string);
+                    // let shape = new Shape(polygon, stage, polygon.style, watch);
+                    let shape = new Model(polygon);
 
                     layer.add(shape);
                 }
@@ -31,8 +33,9 @@ const readFile = (file, stage, layers, dispatch) => {
 
             for (let polygon of job.materials) {
                 if (polygon.edges.size > 0 && polygon.faces.size > 0) {
-                    let watch = undefined; //  parser.parseToWatchArray(string);
-                    let shape = new Shape(polygon, stage, polygon.style, watch);
+                    // let watch = undefined; //  parser.parseToWatchArray(string);
+                    // let shape = new Shape(polygon, stage, polygon.style, watch);
+                    let shape = new Model(polygon);
 
                     layer.add(shape);
                 }
@@ -40,10 +43,10 @@ const readFile = (file, stage, layers, dispatch) => {
 
             layers.push(layer);
 
-            dispatch({
-                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-                shape: layer
-            })
+            // dispatch({
+            //     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+            //     shape: layer
+            // })
 
         }
     })(file, stage, layers, dispatch);

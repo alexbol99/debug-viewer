@@ -7,7 +7,8 @@ import { reducer } from './reducer';
 import * as ActionTypes from './actions/action-types';
 import Flatten from 'flatten-js';
 import { Parser } from './models/parser';
-import { Shape } from './models/shape';
+// import { Shape } from './models/shape';
+import { Model } from "./models/model";
 
 let {Point, Segment, Polygon} = Flatten;
 
@@ -69,7 +70,8 @@ it('can create graphics for polygon', () => {
 
     let parser = new Parser();
     let poly = parser.parseDebugString("123");
-    let shape = new Shape(poly, stage);
+    // let shape = new Shape(poly, stage);
+    let shape = new Model(poly);
 
     expect(shape.graphics).toBeDefined();
 });

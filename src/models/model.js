@@ -21,14 +21,11 @@ export class Model {
     constructor(geom = undefined, style = undefined) {
         this.geom = geom;
         this.style = style || defaultStyle;
-        this.geomTransformed = undefined;
-        this.origin = undefined;
-        this.zoomFactor = undefined;
     }
 
     clone() {
-        let element = new Model(this.geom, this.style);
-        Object.assign(element, this);
+        let model = new Model(this.geom, this.style);
+        return Object.assign(model, this);
     }
 
     get box() {

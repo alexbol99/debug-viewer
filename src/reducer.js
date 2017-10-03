@@ -43,6 +43,8 @@ const defaultAppState = {
     measureShapesFirstClick: true,
     firstMeasuredShape: null,
     secondMeasuredShape: null,
+    firstMeasuredLayer: null,
+    secondMeasuredLayer: null,
     distance: undefined,
     shortestSegment: null
 };
@@ -83,7 +85,9 @@ function app(state = defaultAppState, action) {
             if (state.measureShapesFirstClick) {
                 return Object.assign({}, state, {
                     firstMeasuredShape: action.shape,
+                    firstMeasuredLayer: action.layer,
                     secondMeasuredShape: null,
+                    secondMeasuredLayer: null,
                     measureShapesFirstClick: false,
                     distance: undefined,
                     shortestSegment: null
@@ -100,6 +104,7 @@ function app(state = defaultAppState, action) {
 
                 return Object.assign({}, state, {
                     secondMeasuredShape: action.shape,
+                    secondMeasuredLayer: action.layer,
                     measureShapesFirstClick: true,
                     distance: distance,
                     shortestSegment: shortestSegment
@@ -110,7 +115,9 @@ function app(state = defaultAppState, action) {
                 measurePointsActive: false,
                 measureShapesActive: false,
                 firstMeasuredShape: null,
+                firstMeasuredLayer: null,
                 secondMeasuredShape: null,
+                secondMeasuredLayer: null,
                 distance: undefined,
                 shortestSegment: null
             });
@@ -136,7 +143,9 @@ function app(state = defaultAppState, action) {
                 measurePointsActive: true,
                 measureShapesActive: false,
                 firstMeasuredShape: null,
+                firstMeasuredLayer: null,
                 secondMeasuredShape: null,
+                secondMeasuredLayer: null,
                 distance: undefined,
                 shortestSegment: null
             });
@@ -145,7 +154,9 @@ function app(state = defaultAppState, action) {
                 measurePointsActive: false,
                 measureShapesActive: true,
                 firstMeasuredShape: null,
+                firstMeasuredLayer: null,
                 secondMeasuredShape: null,
+                secondMeasuredLayer: null,
                 distance: undefined,
                 shortestSegment: null
             });
@@ -287,6 +298,20 @@ function layers(state = [], action) {
                 });
             }
 
+        // case ActionTypes.MOUSE_MOVED_ON_STAGE:
+        //     if (action.dx !== undefined && action.dy !== undefined) {
+        //         return state.map( layer =>
+        //             layer.setTransform(action.stage.origin, action.stage.zoomFactor))
+        //     }
+        //     else {
+        //         return state;
+        //     }
+
+        // case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
+        // case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
+        //     return state.map(layer =>
+        //         layer.setTransform(action.stage.origin, action.stage.zoomFactor));
+
         default:
             return state;
     }
@@ -297,64 +322,7 @@ function stage(state = null, action) {
         case ActionTypes.NEW_STAGE_CREATED:
             return action.stage;
 
-        case ActionTypes.STAGE_RESIZED:
-            state.resize();
-            return state;
-
-        case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
-            state.needToBeUpdated = true;
-            return state;
-
-        case ActionTypes.ADD_SHAPE_TO_STAGE:
-            state.needToBeUpdated = true;
-            return state;
-
-        // return state.add(action.shape);   // stage already mutated !!!
-        case ActionTypes.PAN_TO_COORDINATE:
-            state.panToCoordinate(action.x, action.y);
-            state.needToBeUpdated = true;
-            return state;
-
-        case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
-            let center = action.shape.center;
-            let box = action.shape.box;
-            state.panToCoordinate(center.x, center.y);
-            state.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
-            state.needToBeUpdated = true;
-            return state;
-
-        case ActionTypes.MOUSE_DOWN_ON_STAGE:
-            state.panByMouseStart();
-            state.needToBeUpdated = false;
-            return state;
-
-        case ActionTypes.MOUSE_MOVED_ON_STAGE:
-            if (action.dx !== undefined && action.dy !== undefined) {
-                state.panByMouseMove(action.dx, action.dy);
-                state.needToBeUpdated = true;
-            }
-            return state;
-
-        case ActionTypes.MOUSE_UP_ON_STAGE:
-            state.panByMouseStop();
-            state.needToBeUpdated = false;
-            return state;
-
-        case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
-            let bIn = action.delta > 0;
-            // state.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta)/100.);
-            state.zoomByMouse(action.x, action.y, bIn, 1.2);
-            state.needToBeUpdated = true;
-            return state;
-
-        // case ActionTypes.HOME_BUTTON_CLICKED:
-        //     state.needToBeUpdated = true;
-        //     return state;
-
         default:
-            if (state) {
-                state.needToBeUpdated = false;
-            }
             return state;
     }
 }

@@ -9,11 +9,8 @@ import {ToolbarComponent} from './toolbarComponent';
 import {StageComponent} from './stageComponent';
 import {StatusComponent} from './statusComponent';
 import * as ActionTypes from '../actions/action-types';
-// import {Stage} from '../models/stage';
-// import {Layer} from '../models/layer';
 import {Layers} from '../models/layers';
-import {PolygonTool} from "../tools/polygonTool";
-// import {NewPolygonTool} from '../tools/newPolygonTool';
+import {PolygonTool} from '../tools/polygonTool';
 import {MeasurePointsTool} from '../tools/measurePointsTool';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 
@@ -54,7 +51,8 @@ export class MainComponent extends Component {
     resizeStage() {
         // alert("resized")
         this.dispatch({
-            type: ActionTypes.STAGE_RESIZED
+            type: ActionTypes.STAGE_RESIZED,
+            stage: this.state.stage
         });
     }
 
@@ -67,6 +65,7 @@ export class MainComponent extends Component {
     handleMouseMove(stageX, stageY) {
         this.dispatch({
             type: ActionTypes.MOUSE_MOVED_ON_STAGE,
+            stage: this.state.stage,
             x: stageX,
             y: stageY,
             dx: this.state.mouse.startX ? stageX - this.state.mouse.startX : undefined,
@@ -78,6 +77,7 @@ export class MainComponent extends Component {
         // start pan stage
         this.dispatch({
             type: ActionTypes.MOUSE_DOWN_ON_STAGE,
+            stage: this.state.stage,
             x: stageX,
             y: stageY
         })
@@ -89,6 +89,7 @@ export class MainComponent extends Component {
         this.state.stage.panByMouseStop();
         this.dispatch({
             type: ActionTypes.MOUSE_UP_ON_STAGE,
+            state: this.state.stage,
             x: event.stageX,
             y: event.stageY
         })
@@ -98,6 +99,7 @@ export class MainComponent extends Component {
         if (delta !== 0) {
             this.dispatch({
                 type: ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE,
+                stage: this.state.stage,
                 x: stageX,
                 y: stageY,
                 delta: delta
@@ -118,10 +120,11 @@ export class MainComponent extends Component {
         })
     }
 
-    onClickOnShape(shape) {
+    onClickOnShape(shape, layer) {
         this.dispatch({
             type: ActionTypes.MOUSE_CLICKED_ON_SHAPE,
-            shape: shape
+            shape: shape,
+            layer: layer
         })
     }
 
@@ -144,6 +147,7 @@ export class MainComponent extends Component {
         // TODO: dispatch PAN_AND_ZOOM instead ?
         this.dispatch({
             type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+            stage: this.state.stage,
             shape: layer
         })
     }
@@ -156,7 +160,8 @@ export class MainComponent extends Component {
 
     toggleWidthMode() {
         this.dispatch({
-            type: ActionTypes.TOGGLE_WIDTH_MODE_CLICKED
+            type: ActionTypes.TOGGLE_WIDTH_MODE_CLICKED,
+            widthOn: this.state.app.widthOn
         })
 
     }
@@ -238,6 +243,8 @@ export class MainComponent extends Component {
                     stage={this.state.stage}
                     firstMeasuredShape={this.state.app.firstMeasuredShape}
                     secondMeasuredShape={this.state.app.secondMeasuredShape}
+                    firstMeasuredLayer={this.state.app.firstMeasuredLayer}
+                    secondMeasuredLayer={this.state.app.secondMeasuredLayer}
                     distance={this.state.app.distance}
                     shortestSegment={this.state.app.shortestSegment}
                     divisor={this.state.app.divisor}
@@ -246,17 +253,12 @@ export class MainComponent extends Component {
 
                 {
                     this.state.layers.map((layer) => {
-                        /*
-                        let initialScale = this.state.stage.scalingFactor();
-                        let scale = this.state.stage.scalingFactor() / this.state.stage.initialScalingFactor;
-                        let origin = this.state.stage.origin;
-                        let tx = this.state.stage.tx;
-                        let ty = this.state.stage.ty;*/
                         return (
                             [...layer.shapes].map((shape, index) =>
                                 <PolygonTool
                                     key={index}
                                     stage={this.state.stage}
+                                    layer={layer}
                                     polygon={shape}
                                     displayed={layer.displayed}
                                     hovered={shape === this.state.app.hoveredShape}

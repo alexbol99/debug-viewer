@@ -5,9 +5,9 @@
 import React, {Component} from 'react';
 import '../App.css';
 import * as ActionTypes from '../actions/action-types';
-import { debug_str } from '../sample';
+// import { debug_str } from '../sample';
 import {Layers} from '../models/layers';
-import {Shape} from '../models/shape';
+// import {Shape} from '../models/shape';
 
 class WatchElement extends Component {
     render() {
@@ -61,7 +61,7 @@ export class AsideComponent extends Component {
         super();
         this.onToggleWatchExpandButtonClicked = this.onToggleWatchExpandButtonClicked.bind(this);
         this.onSelectShapeClicked = this.onSelectShapeClicked.bind(this);
-        this.addSamplePolygon = this.addSamplePolygon.bind(this);
+        // this.addSamplePolygon = this.addSamplePolygon.bind(this);
         this.height = 0;
     }
 
@@ -81,23 +81,23 @@ export class AsideComponent extends Component {
         });
     }
 
-    addSamplePolygon() {
-        let parser = this.state.app.parser;
-        let poly = parser.parseToPolygon(debug_str);
-        let watch = parser.parseToWatchArray(debug_str);
-
-        let shape = new Shape(poly, this.state.stage, {}, watch);
-
-        this.dispatch({
-            type: ActionTypes.NEW_SHAPE_PASTED,
-            shape: shape
-        });
-
-        this.dispatch({
-            type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-            shape: shape
-        });
-    }
+    // addSamplePolygon() {
+    //     let parser = this.state.app.parser;
+    //     let poly = parser.parseToPolygon(debug_str);
+    //     let watch = parser.parseToWatchArray(debug_str);
+    //
+    //     let shape = new Shape(poly, this.state.stage, {}, watch);
+    //
+    //     this.dispatch({
+    //         type: ActionTypes.NEW_SHAPE_PASTED,
+    //         shape: shape
+    //     });
+    //
+    //     this.dispatch({
+    //         type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+    //         shape: shape
+    //     });
+    // }
 
     componentWillMount() {
         this.dispatch = this.props.store.dispatch;

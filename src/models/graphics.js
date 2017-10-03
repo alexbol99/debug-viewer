@@ -2,7 +2,7 @@ import Flatten from 'flatten-js';
 
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
-let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
+let {Point, Segment, Circle, Arc, Polygon} = Flatten;
 
 /* Provide conversion methods from FlattenJS objects to CreateJS Graphics */
 
@@ -20,8 +20,8 @@ Segment.prototype.graphics = function(style) {
     return graphics
         .setStrokeStyle(strokeStyle)
         .beginStroke(stroke)
-        .moveTo(this.ps.x, this.y)
-        .lineTo(this.x, this.y)
+        .moveTo(this.ps.x, this.ps.y)
+        .lineTo(this.pe.x, this.pe.y)
         .endStroke();
 };
 

@@ -4,17 +4,19 @@
 
 import {Component} from 'react';
 // import createjs from 'easel-js';
-// import * as createjs from '../../public/easeljs-NEXT.combined.js';
+import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
 import '../App.css';
 
 // import Flatten from 'flatten-js';
-import {Shape} from '../models/shape';
+// import {Shape} from '../models/shape';
+
+import {Model} from '../models/model';
 
 // let {Distance} = Flatten;
 
 export class MeasureShapesTool extends Component {
-    constructor() {
+    constructor(params) {
         super();
         this.distance = undefined;
         this.segment = undefined;
@@ -51,7 +53,8 @@ export class MeasureShapesTool extends Component {
 
         context.font = "12pt Arial";
 
-        textHeight = 12;         /* font size*/
+        textHeight = 12;
+        /* font size*/
         textWidth = context.measureText(text).width;
 
         // Rectangle to the right of current point, text aligned left
@@ -93,37 +96,29 @@ export class MeasureShapesTool extends Component {
     }
 
     format(num) {
-        return (num/this.props.divisor).toFixed(this.props.decimals);
+        return (num / this.props.divisor).toFixed(this.props.decimals);
     }
 
     componentDidUpdate() {
         if (this.props.firstMeasuredShape && this.props.secondMeasuredShape &&
-            this.props.firstMeasuredShape.alpha > 0 &&
-            this.props.secondMeasuredShape.alpha > 0) {
-            // let polygon1 = this.props.firstMeasuredShape.geom;
-            // let polygon2 = this.props.secondMeasuredShape.geom;
-            // let [dist, shortest_segment] = Distance.polygon2polygon(polygon1, polygon2);
-            // let distance = this.props.distance;
-            let shortest_segment = this.props.shortestSegment;
+            this.props.firstMeasuredLayer.displayed &&
+            this.props.secondMeasuredLayer.displayed) {
 
-            // this.draw();
-            if (shortest_segment) {
-                if (!this.segment && this.props.stage) {
-                    this.segment = new Shape(shortest_segment, this.props.stage);
+            if (this.props.shortestSegment && this.props.stage) {
+                let shortest_segment = this.props.shortestSegment;
+                let geomTransformed = Model.transformSegment(shortest_segment, this.props.stage);
+
+                if (!this.segment) {
+                    this.segment = new createjs.Shape();
+                    this.props.stage.addChild(this.segment);
                 }
-                else {
-                    this.segment.geom = shortest_segment;
-                }
-                this.segment.redraw();
+                this.segment.graphics.clear();
+                this.segment.graphics = geomTransformed.graphics();
             }
-
-            // shape.graphics = shape.setGraphics();
-            // this.state.layers[0].add(shape);
         }
         else {
             if (this.segment) {
-                this.segment.geom = undefined;
-                this.segment.redraw();
+                this.segment.graphics.clear();
             }
         }
     }

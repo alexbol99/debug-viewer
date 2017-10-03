@@ -6,7 +6,7 @@ import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
 import Flatten from 'flatten-js';
 
-import { Shape } from '../models/shape';
+// import { Shape } from '../models/shape';
 
 export class Stage extends createjs.Stage {
     constructor(canvas) {
@@ -140,12 +140,12 @@ export class Stage extends createjs.Stage {
         }
     }
 
-    drawSomething() {
-        let shape = new Shape();
-        shape.graphics.beginFill('red').drawRect(0, 0, 20, 20);
-        this.addChild(shape);
-        this.update();
-    }
+    // drawSomething() {
+    //     let shape = new Shape();
+    //     shape.graphics.beginFill('red').drawRect(0, 0, 20, 20);
+    //     this.addChild(shape);
+    //     this.update();
+    // }
 
     panByMouseStart() {
         this.oldOrigin.x = this.origin.x;

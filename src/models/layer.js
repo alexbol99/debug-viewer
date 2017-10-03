@@ -3,7 +3,7 @@
  */
 
 import Flatten from 'flatten-js';
-import { Shape } from '../models/shape';
+// import { Shape } from '../models/shape';
 import { Model } from './model';
 
 export class Layer {
@@ -11,7 +11,7 @@ export class Layer {
         // super();
         // cannot define Layer as extension of PlanarSet due to bug in compiler ?
         this.stage = stage;
-        this.shapes = new Flatten.PlanarSet();
+        this.shapes = [];         // new Flatten.PlanarSet();
         this.name = "";
         this.color = "";
         this.title = "";
@@ -26,16 +26,13 @@ export class Layer {
     }
 
     add(shape) {
-        if (shape instanceof Shape) {
-            this.shapes.add(shape)
-        }
-        else if (shape instanceof Model) {
-            this.shapes.add(shape);
+        if (shape instanceof Model) {
+            this.shapes.push(shape);       // add(shape)
         }
         else {
             let geom = shape;
-            let newShape = new Shape(geom, this.stage);
-            this.shapes.add(newShape);
+            let newShape = new Model(geom) // , this.stage);
+            this.shapes.push(newShape);     // add(newShape);
         }
         return this;
     }
@@ -54,9 +51,10 @@ export class Layer {
     }
 
     toggleDisplayed(color) {
+        let displayed = !this.displayed;
         return Object.assign(this.clone(),
             {
-                displayed : !this.displayed,
+                displayed : displayed,
                 color: color
             });
     }

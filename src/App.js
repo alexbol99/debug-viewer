@@ -13,7 +13,8 @@ import * as ActionTypes from './actions/action-types';
 // import { Parser } from './models/parser';
 // import { Layer } from './models/layer';
 
-import { Shape } from './models/shape';
+// import { Shape } from './models/shape';
+import { Model } from "./models/model";
 
 // let {Point} = Flatten;
 
@@ -40,9 +41,10 @@ class App extends Component {
                 let poly = parser.parseToPolygon(string);
                 // TODO: add something like poly.valid()
                 if (poly.edges.size > 0 && poly.faces.size > 0) {
-                    let watch = parser.parseToWatchArray(string);
+                    // let watch = parser.parseToWatchArray(string);
 
-                    let shape = new Shape(poly, this.state.stage, {}, watch);
+                    // let shape = new Shape(poly, this.state.stage, {}, watch);
+                    let shape = new Model(poly);
 
                     this.dispatch({
                         type: ActionTypes.NEW_SHAPE_PASTED,

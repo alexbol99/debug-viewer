@@ -13,11 +13,13 @@ import log from './middleware/log';
 import readFiles from './middleware/readFiles';
 // import demo from './middleware/demo';
 import test from './middleware/test';
+import stageController from './middleware/stageController';
 
 const store = createStore(reducer, compose(applyMiddleware(
     log,
     readFiles,
-    test
+    test,
+    stageController
 )));
 
 ReactDOM.render(
