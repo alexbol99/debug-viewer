@@ -255,8 +255,8 @@ export class MainComponent extends Component {
                                             />
                                         )
                                     }
-                                    else if (shape.geom instanceof Flatten.Segment ||
-                                    shape.geom instanceof Flatten.Point) {
+                                    else /*if (shape.geom instanceof Flatten.Segment ||
+                                    shape.geom instanceof Flatten.Point) */{
                                         return (
                                             <SegmentTool
                                                 key={index}

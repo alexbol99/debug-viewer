@@ -98,10 +98,16 @@ function app(state = defaultAppState, action) {
                     return state;  // second click on the same shape
                 }
 
-                let polygon1 = state.firstMeasuredShape.geom;
-                let polygon2 = action.shape.geom;
-                // let [distance, shortestSegment] = Flatten.Distance.polygon2polygon(polygon1, polygon2);
-                let [distance, shortestSegment] = Flatten.Distance.distance(polygon1, polygon2);
+                let shape1 = state.firstMeasuredShape.geom;
+                let shape2 = action.shape.geom;
+                let [distance, shortestSegment] = [];
+                if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
+                    [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
+                }
+                else {
+                    [distance, shortestSegment] = Flatten.Distance.distance(shape1, shape2);
+                }
+
 
                 return Object.assign({}, state, {
                     secondMeasuredShape: action.shape,
