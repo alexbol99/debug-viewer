@@ -45,7 +45,7 @@ export class LayerListElement extends Component {
                     onDoubleClick={this.props.onLayerDoubleClicked}>
 
                     <div
-                        style={{flex: 2}}
+                        style={{flex: 2, marginRight: 3}}
                         onClick={this.props.onAffectedBoxClicked}
                     >
                         <h4 style={{opacity: alpha, color: color}}>
@@ -54,7 +54,7 @@ export class LayerListElement extends Component {
                     </div>
 
                     <h4 ref="layerName"
-                        style={{flex:8, color: color, }}
+                        style={{flex:8, color: color}}
                         title={this.props.layer.name}
                         tabIndex='1'
                     >

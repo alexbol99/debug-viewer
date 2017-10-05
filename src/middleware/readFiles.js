@@ -41,6 +41,11 @@ const readFile = (file, stage, layers, dispatch) => {
                 }
             }
 
+            for (let shape of job.shapes) {
+                let model = new Model(shape, undefined, shape.label)
+                layer.add(model);
+            }
+
             layers.push(layer);
 
             // dispatch({

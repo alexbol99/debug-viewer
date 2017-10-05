@@ -4,13 +4,14 @@
 
 import React, {Component} from 'react';
 import '../App.css';
-
+import Flatten from 'flatten-js';
 import {ToolbarComponent} from './toolbarComponent';
 import {StageComponent} from './stageComponent';
 import {StatusComponent} from './statusComponent';
 import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
 import {PolygonTool} from '../tools/polygonTool';
+import {SegmentTool} from "../tools/segmentTool";
 import {MeasurePointsTool} from '../tools/measurePointsTool';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 
@@ -229,6 +230,61 @@ export class MainComponent extends Component {
                     onToggleDisplayVerticesPressed={this.toggleDisplayVertices}
                 />
                 {
+                    this.state.layers.map((layer) => {
+                        return (
+                            [...layer.shapes].map((shape, index) => {
+                                    if (shape.geom instanceof Flatten.Polygon) {
+                                        return (
+                                            <PolygonTool
+                                                key={index}
+                                                stage={this.state.stage}
+                                                layer={layer}
+                                                polygon={shape}
+                                                displayed={layer.displayed}
+                                                hovered={shape === this.state.app.hoveredShape}
+                                                selected={
+                                                    shape === this.state.app.firstMeasuredShape ||
+                                                    shape === this.state.app.secondMeasuredShape
+                                                }
+                                                color={layer.color}
+                                                widthOn={this.state.app.widthOn}
+                                                displayVertices={this.state.app.displayVertices}
+                                                onMouseOver={this.onMouseRollOverShape}
+                                                onMouseOut={this.onMouseRollOutShape}
+                                                onClick={this.onClickOnShape}
+                                            />
+                                        )
+                                    }
+                                    else if (shape.geom instanceof Flatten.Segment ||
+                                    shape.geom instanceof Flatten.Point) {
+                                        return (
+                                            <SegmentTool
+                                                key={index}
+                                                stage={this.state.stage}
+                                                layer={layer}
+                                                model={shape}
+                                                displayed={layer.displayed}
+                                                hovered={shape === this.state.app.hoveredShape}
+                                                selected={
+                                                    shape === this.state.app.firstMeasuredShape ||
+                                                    shape === this.state.app.secondMeasuredShape
+                                                }
+                                                color={layer.color}
+                                                widthOn={this.state.app.widthOn}
+                                                displayVertices={this.state.app.displayVertices}
+                                                onMouseOver={this.onMouseRollOverShape}
+                                                onMouseOut={this.onMouseRollOutShape}
+                                                onClick={this.onClickOnShape}
+                                            />
+                                        )
+                                    }
+                                }
+                            )
+                        )
+                    })
+                }
+
+                {
                     this.state.app.measurePointsActive ? (
                         <MeasurePointsTool
                             stage={this.state.stage}
@@ -250,33 +306,6 @@ export class MainComponent extends Component {
                     divisor={this.state.app.divisor}
                     decimals={this.state.app.decimals}
                 />
-
-                {
-                    this.state.layers.map((layer) => {
-                        return (
-                            [...layer.shapes].map((shape, index) =>
-                                <PolygonTool
-                                    key={index}
-                                    stage={this.state.stage}
-                                    layer={layer}
-                                    polygon={shape}
-                                    displayed={layer.displayed}
-                                    hovered={shape === this.state.app.hoveredShape}
-                                    selected={
-                                        shape === this.state.app.firstMeasuredShape ||
-                                        shape === this.state.app.secondMeasuredShape
-                                    }
-                                    color={layer.color}
-                                    widthOn={this.state.app.widthOn}
-                                    displayVertices={this.state.app.displayVertices}
-                                    onMouseOver={this.onMouseRollOverShape}
-                                    onMouseOut={this.onMouseRollOutShape}
-                                    onClick={this.onClickOnShape}
-                                />
-                            )
-                        )
-                    })
-                }
 
                 <StatusComponent
                     stage={this.state.stage}

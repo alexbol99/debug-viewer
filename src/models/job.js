@@ -8,6 +8,7 @@ export class Job {
         this.title = "";
         this.profiles = [];   // array of FlattenJS Polygons
         this.materials = [];  // array of FlattenJS Polygons
+        this.shapes = [];     // array of other FlattenJS shapes
     }
 
     get box() {
@@ -16,6 +17,9 @@ export class Job {
             b.merge(shape.box);
         }
         for (let shape of this.materials) {
+            b.merge(shape.box);
+        }
+        for (let shape of this.shapes) {
             b.merge(shape.box);
         }
         return b;

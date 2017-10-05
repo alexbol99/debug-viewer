@@ -18,9 +18,10 @@ will be rendered to Stage canvas.
 and perform graphics recalculation this element is a new element
  */
 export class Model {
-    constructor(geom = undefined, style = undefined) {
+    constructor(geom = undefined, style = undefined, label = "") {
         this.geom = geom;
         this.style = style || defaultStyle;
+        this.label = label;
     }
 
     clone() {

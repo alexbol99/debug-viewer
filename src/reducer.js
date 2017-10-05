@@ -100,7 +100,8 @@ function app(state = defaultAppState, action) {
 
                 let polygon1 = state.firstMeasuredShape.geom;
                 let polygon2 = action.shape.geom;
-                let [distance, shortestSegment] = Flatten.Distance.polygon2polygon(polygon1, polygon2);
+                // let [distance, shortestSegment] = Flatten.Distance.polygon2polygon(polygon1, polygon2);
+                let [distance, shortestSegment] = Flatten.Distance.distance(polygon1, polygon2);
 
                 return Object.assign({}, state, {
                     secondMeasuredShape: action.shape,
