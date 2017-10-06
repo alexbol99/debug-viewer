@@ -4,14 +4,17 @@
 
 import React, {Component} from 'react';
 import '../App.css';
-import Flatten from 'flatten-js';
+// import Flatten from 'flatten-js';
 import {ToolbarComponent} from './toolbarComponent';
 import {StageComponent} from './stageComponent';
 import {StatusComponent} from './statusComponent';
+import {LayerComponent} from "./layerComponent";
+
 import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
-import {PolygonTool} from '../tools/polygonTool';
-import {SegmentTool} from "../tools/segmentTool";
+
+// import {PolygonTool} from '../tools/polygonTool';
+// import {SegmentTool} from "../tools/segmentTool";
 import {MeasurePointsTool} from '../tools/measurePointsTool';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 
@@ -229,60 +232,24 @@ export class MainComponent extends Component {
                     onToggleWidthModePressed={this.toggleWidthMode}
                     onToggleDisplayVerticesPressed={this.toggleDisplayVertices}
                 />
-                {
-                    this.state.layers.map((layer) => {
-                        return (
-                            [...layer.shapes].map((shape, index) => {
-                                    if (shape.geom instanceof Flatten.Polygon) {
-                                        return (
-                                            <PolygonTool
-                                                key={index}
-                                                stage={this.state.stage}
-                                                layer={layer}
-                                                polygon={shape}
-                                                displayed={layer.displayed}
-                                                hovered={shape === this.state.app.hoveredShape}
-                                                selected={
-                                                    shape === this.state.app.firstMeasuredShape ||
-                                                    shape === this.state.app.secondMeasuredShape
-                                                }
-                                                color={layer.color}
-                                                widthOn={this.state.app.widthOn}
-                                                displayVertices={this.state.app.displayVertices}
-                                                onMouseOver={this.onMouseRollOverShape}
-                                                onMouseOut={this.onMouseRollOutShape}
-                                                onClick={this.onClickOnShape}
-                                            />
-                                        )
-                                    }
-                                    else /*if (shape.geom instanceof Flatten.Segment ||
-                                    shape.geom instanceof Flatten.Point) */{
-                                        return (
-                                            <SegmentTool
-                                                key={index}
-                                                stage={this.state.stage}
-                                                layer={layer}
-                                                model={shape}
-                                                displayed={layer.displayed}
-                                                hovered={shape === this.state.app.hoveredShape}
-                                                selected={
-                                                    shape === this.state.app.firstMeasuredShape ||
-                                                    shape === this.state.app.secondMeasuredShape
-                                                }
-                                                color={layer.color}
-                                                widthOn={this.state.app.widthOn}
-                                                displayVertices={this.state.app.displayVertices}
-                                                onMouseOver={this.onMouseRollOverShape}
-                                                onMouseOut={this.onMouseRollOutShape}
-                                                onClick={this.onClickOnShape}
-                                            />
-                                        )
-                                    }
-                                }
-                            )
-                        )
-                    })
-                }
+
+                {this.state.layers.map((layer) =>
+                    <LayerComponent
+                        key={layer.name}
+                        stage={this.state.stage}
+                        layer={layer}
+                        color={layer.color}
+                        displayed={layer.displayed}
+                        displayVertices={this.state.app.displayVertices}
+                        widthOn={this.state.app.widthOn}
+                        hoveredShape={this.state.app.hoveredShape}
+                        firstMeasuredShape={this.state.app.firstMeasuredShape}
+                        secondMeasuredShape={this.state.app.secondMeasuredShape}
+                        onMouseOver={this.onMouseRollOverShape}
+                        onMouseOut={this.onMouseRollOutShape}
+                        onClick={this.onClickOnShape}
+                    />
+                )}
 
                 {
                     this.state.app.measurePointsActive ? (
@@ -294,18 +261,21 @@ export class MainComponent extends Component {
                         />
                     ) : null
                 }
-
-                <MeasureShapesTool
-                    stage={this.state.stage}
-                    firstMeasuredShape={this.state.app.firstMeasuredShape}
-                    secondMeasuredShape={this.state.app.secondMeasuredShape}
-                    firstMeasuredLayer={this.state.app.firstMeasuredLayer}
-                    secondMeasuredLayer={this.state.app.secondMeasuredLayer}
-                    distance={this.state.app.distance}
-                    shortestSegment={this.state.app.shortestSegment}
-                    divisor={this.state.app.divisor}
-                    decimals={this.state.app.decimals}
-                />
+                {
+                    this.state.app.measureShapesActive ? (
+                        <MeasureShapesTool
+                            stage={this.state.stage}
+                            firstMeasuredShape={this.state.app.firstMeasuredShape}
+                            secondMeasuredShape={this.state.app.secondMeasuredShape}
+                            firstMeasuredLayer={this.state.app.firstMeasuredLayer}
+                            secondMeasuredLayer={this.state.app.secondMeasuredLayer}
+                            distance={this.state.app.distance}
+                            shortestSegment={this.state.app.shortestSegment}
+                            divisor={this.state.app.divisor}
+                            decimals={this.state.app.decimals}
+                        />
+                    ) : null
+                }
 
                 <StatusComponent
                     stage={this.state.stage}
