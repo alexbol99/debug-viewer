@@ -9,7 +9,7 @@ import React, {Component} from 'react';
 import '../App.css';
 
 // import { LayerComponent } from '../components/layerComponent';
-import { Stage } from '../models/stage';
+import {Stage} from '../models/stage';
 // import {PolygonTool} from '../tools/polygonTool';
 
 // import {Layer} from '../models/layer';
@@ -68,7 +68,7 @@ export class StageComponent extends Component {
 
     handleKeyDown(e) {
         // let ctrl = e.ctrlKey;
-        if (e.target.id !== "mainCanvas" )
+        if (e.target.id !== "mainCanvas")
             return;
         switch (e.code) {
             case "KeyH":
@@ -100,6 +100,7 @@ export class StageComponent extends Component {
     handleKeyUp(event) {
 
     }
+
     componentWillMount() {
         // this.dispatch = this.props.store.dispatch;
         // this.setState(this.props.store.getState());
@@ -143,13 +144,9 @@ export class StageComponent extends Component {
         this.props.onStageCreated(stage);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.stage ? nextProps.stage.needToBeUpdated : true;
-    }
-
     componentDidUpdate() {
         // if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
-            this.props.stage.update();
+        // this.props.stage.update();
         // }
     }
 
@@ -164,13 +161,3 @@ export class StageComponent extends Component {
         )
     }
 }
-/*
- {
- this.props.layers.map((layer) =>
- <LayerComponent
- key={layer.name}
- layer={layer}
- />)
- }
-
- */

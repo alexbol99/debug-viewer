@@ -205,6 +205,11 @@ export class MainComponent extends Component {
 
     componentDidUpdate() {
         if (this.state.stage.canvas && this.state.stage.canvas.getContext('2d')) {
+
+            let origin = this.state.stage.origin;
+            let zoomFactor = this.state.stage.zoomFactor*this.state.stage.resolution;
+            this.state.stage.setTransform(origin.x, origin.y, zoomFactor, -zoomFactor);
+
             this.state.stage.update();
         }
     }

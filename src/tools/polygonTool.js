@@ -4,7 +4,6 @@
 
 import {Component} from 'react';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
-import { Model } from '../models/model';
 import '../models/graphics';
 
 export class PolygonTool extends Component {
@@ -14,14 +13,11 @@ export class PolygonTool extends Component {
         this.shape = new createjs.Shape();
         params.stage.addChild(this.shape);
 
-        this.geomTransformed = undefined;
-
         this.vertexShapes = [];
         for (let vertex of params.polygon.geom.vertices) {
             let vertexShape = new createjs.Shape();
             vertexShape.geom = vertex;   // augment Shape with geom struct
             params.stage.addChild(vertexShape);
-
             this.vertexShapes.push(vertexShape);
         }
 
@@ -34,8 +30,7 @@ export class PolygonTool extends Component {
             selected: params.selected,
             widthOn: params.widthOn,
             origin: params.stage.origin,
-            zoomFactor: params.stage.zoomFactor,
-            needTransform: true
+            zoomFactor: params.stage.zoomFactor
         };
 
 
@@ -73,13 +68,11 @@ export class PolygonTool extends Component {
 
         for (let vertexShape of this.vertexShapes) {
             let vertex = vertexShape.geom;
-
-            let vertexTransformed = Model.transformPoint(vertex, stage);
-
             vertexShape.graphics.clear();
-            vertexShape.graphics = vertexTransformed.graphics({
+            vertexShape.graphics = vertex.graphics({
                 stroke: stroke,     // this.props.color,
-                fill: fill
+                fill: fill,
+                radius: 3./(stage.zoomFactor*stage.resolution)
             });
             vertexShape.alpha = alpha;
         }
@@ -89,18 +82,10 @@ export class PolygonTool extends Component {
         // Draw polygon
         let color = (this.props.hovered || this.props.selected) ? "black" : this.props.color;
         let alpha = (this.props.hovered || this.props.selected) ? 1.0 : 0.6;
-
-        let stage = this.props.stage;
-        let geom = this.state.polygon.geom;
-
-        if (this.state.needTransform) {
-            this.geomTransformed = Model.transformPolygon(geom, stage);
-        }
-
         let widthOn = this.props.widthOn;
 
         this.shape.graphics.clear();
-        this.shape.graphics = this.geomTransformed.graphics({
+        this.shape.graphics = this.state.polygon.geom.graphics({
             stroke: color,     // this.props.color,
             fill: (widthOn && !this.props.displayVertices) ? this.props.color : "white"
         });
@@ -123,9 +108,6 @@ export class PolygonTool extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let needTransform = !(this.state.origin === nextProps.stage.origin &&
-            this.state.zoomFactor === nextProps.stage.zoomFactor);
-
         this.setState({
             polygon: nextProps.polygon,
             color: nextProps.color,
@@ -135,8 +117,7 @@ export class PolygonTool extends Component {
             selected: nextProps.selected,
             widthOn: nextProps.widthOn,
             origin: nextProps.stage.origin,
-            zoomFactor: nextProps.stage.zoomFactor,
-            needTransform: needTransform
+            zoomFactor: nextProps.stage.zoomFactor
         })
     }
 

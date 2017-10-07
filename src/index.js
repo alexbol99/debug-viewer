@@ -14,6 +14,7 @@ import readFiles from './middleware/readFiles';
 // import demo from './middleware/demo';
 import test from './middleware/test';
 import stageController from './middleware/stageController';
+// import matrix_test from './middleware/matrix-test';
 
 const store = createStore(reducer, compose(applyMiddleware(
     log,

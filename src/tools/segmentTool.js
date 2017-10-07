@@ -5,7 +5,6 @@
 import {Component} from 'react';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 import Flatten from 'flatten-js';
-import { Model } from '../models/model';
 import '../models/graphics';
 
 export class SegmentTool extends Component {
@@ -15,10 +14,7 @@ export class SegmentTool extends Component {
         this.shape = new createjs.Shape();
         params.stage.addChild(this.shape);
 
-        this.geomTransformed = undefined;
-
         this.vertexShapes = [];
-
         if (params.model.geom instanceof Flatten.Segment) {
             let segment = params.model.geom;
             let vertices = [segment.ps, segment.pe];
@@ -26,7 +22,6 @@ export class SegmentTool extends Component {
                 let vertexShape = new createjs.Shape();
                 vertexShape.geom = vertex;   // augment Shape with geom struct
                 params.stage.addChild(vertexShape);
-
                 this.vertexShapes.push(vertexShape);
             }
         }
@@ -34,7 +29,6 @@ export class SegmentTool extends Component {
             let vertexShape = new createjs.Shape();
             vertexShape.geom = params.model.geom;   // augment Shape with geom struct
             params.stage.addChild(vertexShape);
-
             this.vertexShapes.push(vertexShape);
         }
 
@@ -47,8 +41,7 @@ export class SegmentTool extends Component {
             selected: params.selected,
             widthOn: params.widthOn,
             origin: params.stage.origin,
-            zoomFactor: params.stage.zoomFactor,
-            needTransform: true
+            zoomFactor: params.stage.zoomFactor
         };
 
 
@@ -87,12 +80,11 @@ export class SegmentTool extends Component {
         for (let vertexShape of this.vertexShapes) {
             let vertex = vertexShape.geom;
 
-            let vertexTransformed = Model.transformPoint(vertex, stage);
-
             vertexShape.graphics.clear();
-            vertexShape.graphics = vertexTransformed.graphics({
+            vertexShape.graphics = vertex.graphics({
                 stroke: stroke,     // this.props.color,
-                fill: fill
+                fill: fill,
+                radius: 3./(stage.zoomFactor*stage.resolution)
             });
             vertexShape.alpha = alpha;
         }
@@ -106,21 +98,13 @@ export class SegmentTool extends Component {
         let stage = this.props.stage;
         let geom = this.props.model.geom;
 
-        if (this.state.needTransform) {
-            if (geom instanceof Flatten.Segment) {
-                this.geomTransformed = Model.transformSegment(geom, stage);
-            }
-            else if (geom instanceof Flatten.Point) {
-                this.geomTransformed = Model.transformPoint(geom, stage);
-            }
-        }
-
         let widthOn = this.props.widthOn;
 
         this.shape.graphics.clear();
-        this.shape.graphics = this.geomTransformed.graphics({
+        this.shape.graphics = geom.graphics({
             stroke: color,     // this.props.color,
-            fill: (widthOn && !this.props.displayVertices) ? this.props.color : "white"
+            fill: (widthOn && !this.props.displayVertices) ? this.props.color : "white",
+            radius: 3./(stage.zoomFactor*stage.resolution)
         });
         this.shape.alpha = this.props.displayed ? alpha : 0.0;
 
@@ -141,9 +125,6 @@ export class SegmentTool extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let needTransform = !(this.state.origin === nextProps.stage.origin &&
-            this.state.zoomFactor === nextProps.stage.zoomFactor);
-
         this.setState({
             model: nextProps.model,
             color: nextProps.color,
@@ -153,8 +134,7 @@ export class SegmentTool extends Component {
             selected: nextProps.selected,
             widthOn: nextProps.widthOn,
             origin: nextProps.stage.origin,
-            zoomFactor: nextProps.stage.zoomFactor,
-            needTransform: needTransform
+            zoomFactor: nextProps.stage.zoomFactor
         })
     }
 
