@@ -208,167 +208,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Model = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _flattenJs = __webpack_require__(3);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	// import createjs from 'easel-js';
-	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
-	
-	// let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
-	
-	var defaultStyle = {
-	    strokeStyle: 1,
-	    stroke: "#FF0303",
-	    fill: "#FF0303",
-	    alpha: 1.0
-	};
-	
-	/* Class Model represents data model that
-	will be rendered to Stage canvas.
-	  Rendering method will get this element as props
-	and perform graphics recalculation this element is a new element
-	 */
-	
-	var Model = exports.Model = function () {
-	    function Model() {
-	        var geom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
-	        var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
-	        var label = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
-	
-	        _classCallCheck(this, Model);
-	
-	        this.geom = geom;
-	        this.style = style || defaultStyle;
-	        this.label = label;
-	    }
-	
-	    _createClass(Model, [{
-	        key: "clone",
-	        value: function clone() {
-	            var model = new Model(this.geom, this.style);
-	            return Object.assign(model, this);
-	        }
-	    }, {
-	        key: "box",
-	        get: function get() {
-	            return this.geom.box;
-	        }
-	    }], [{
-	        key: "transformPoint",
-	        value: function transformPoint(pt, stage) {
-	            return new _flattenJs2.default.Point(stage.W2C_X(pt.x), stage.W2C_Y(pt.y));
-	        }
-	    }, {
-	        key: "transformSegment",
-	        value: function transformSegment(segment, stage) {
-	            return new _flattenJs2.default.Segment(Model.transformPoint(segment.ps, stage), Model.transformPoint(segment.pe, stage));
-	        }
-	    }, {
-	        key: "transformArc",
-	        value: function transformArc(arc, stage) {
-	            return new _flattenJs2.default.Arc(Model.transformPoint(arc.pc, stage), stage.W2C_Scalar(arc.r), arc.startAngle, arc.endAngle, arc.counterClockwise);
-	        }
-	    }, {
-	        key: "transformEdge",
-	        value: function transformEdge(shape, stage) {
-	            if (shape instanceof _flattenJs2.default.Segment) {
-	                return Model.transformSegment(shape, stage);
-	            } else if (shape instanceof _flattenJs2.default.Arc) {
-	                return Model.transformArc(shape, stage);
-	            }
-	        }
-	    }, {
-	        key: "transformFace",
-	        value: function transformFace(face, stage) {
-	            // Get shapes of face as array
-	            var shapes = [];
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = face[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var edge = _step.value;
-	
-	                    shapes.push(edge.shape);
-	                }
-	
-	                // Transform array of edges
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            return shapes.map(function (shape) {
-	                return Model.transformEdge(shape, stage);
-	            });
-	        }
-	    }, {
-	        key: "transformPolygon",
-	        value: function transformPolygon(polygon, stage) {
-	            var newPolygon = new _flattenJs2.default.Polygon();
-	            var shapes = [];
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-	
-	            try {
-	                for (var _iterator2 = polygon.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var face = _step2.value;
-	
-	                    shapes = Model.transformFace(face, stage);
-	                    newPolygon.addFace(shapes);
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	
-	            return newPolygon;
-	        }
-	    }]);
-
-	    return Model;
-	}();
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
 	exports.Layers = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
@@ -474,7 +313,7 @@
 	}();
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/*!
@@ -17107,6 +16946,167 @@
 	module.exports = createjs;
 
 /***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Model = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _flattenJs = __webpack_require__(3);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	// import createjs from 'easel-js';
+	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
+	
+	// let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
+	
+	var defaultStyle = {
+	    strokeStyle: 1,
+	    stroke: "#FF0303",
+	    fill: "#FF0303",
+	    alpha: 1.0
+	};
+	
+	/* Class Model represents data model that
+	will be rendered to Stage canvas.
+	  Rendering method will get this element as props
+	and perform graphics recalculation this element is a new element
+	 */
+	
+	var Model = exports.Model = function () {
+	    function Model() {
+	        var geom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+	        var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+	        var label = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+	
+	        _classCallCheck(this, Model);
+	
+	        this.geom = geom;
+	        this.style = style || defaultStyle;
+	        this.label = label;
+	    }
+	
+	    _createClass(Model, [{
+	        key: "clone",
+	        value: function clone() {
+	            var model = new Model(this.geom, this.style);
+	            return Object.assign(model, this);
+	        }
+	    }, {
+	        key: "box",
+	        get: function get() {
+	            return this.geom.box;
+	        }
+	    }], [{
+	        key: "transformPoint",
+	        value: function transformPoint(pt, stage) {
+	            return new _flattenJs2.default.Point(stage.W2C_X(pt.x), stage.W2C_Y(pt.y));
+	        }
+	    }, {
+	        key: "transformSegment",
+	        value: function transformSegment(segment, stage) {
+	            return new _flattenJs2.default.Segment(Model.transformPoint(segment.ps, stage), Model.transformPoint(segment.pe, stage));
+	        }
+	    }, {
+	        key: "transformArc",
+	        value: function transformArc(arc, stage) {
+	            return new _flattenJs2.default.Arc(Model.transformPoint(arc.pc, stage), stage.W2C_Scalar(arc.r), arc.startAngle, arc.endAngle, arc.counterClockwise);
+	        }
+	    }, {
+	        key: "transformEdge",
+	        value: function transformEdge(shape, stage) {
+	            if (shape instanceof _flattenJs2.default.Segment) {
+	                return Model.transformSegment(shape, stage);
+	            } else if (shape instanceof _flattenJs2.default.Arc) {
+	                return Model.transformArc(shape, stage);
+	            }
+	        }
+	    }, {
+	        key: "transformFace",
+	        value: function transformFace(face, stage) {
+	            // Get shapes of face as array
+	            var shapes = [];
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = face[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var edge = _step.value;
+	
+	                    shapes.push(edge.shape);
+	                }
+	
+	                // Transform array of edges
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            return shapes.map(function (shape) {
+	                return Model.transformEdge(shape, stage);
+	            });
+	        }
+	    }, {
+	        key: "transformPolygon",
+	        value: function transformPolygon(polygon, stage) {
+	            var newPolygon = new _flattenJs2.default.Polygon();
+	            var shapes = [];
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = polygon.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var face = _step2.value;
+	
+	                    shapes = Model.transformFace(face, stage);
+	                    newPolygon.addFace(shapes);
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            return newPolygon;
+	        }
+	    }]);
+
+	    return Model;
+	}();
+
+/***/ },
 /* 8 */
 /***/ function(module, exports) {
 
@@ -17253,7 +17253,7 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _easeljsNEXTCombined = __webpack_require__(7);
+	var _easeljsNEXTCombined = __webpack_require__(6);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
@@ -17280,7 +17280,7 @@
 	    var graphics = new createjs.Graphics();
 	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
 	    var stroke = style && style.stroke ? style.stroke : "black";
-	    return graphics.setStrokeStyle(strokeStyle).beginStroke(stroke).moveTo(this.ps.x, this.ps.y).lineTo(this.pe.x, this.pe.y).endStroke();
+	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).moveTo(this.ps.x, this.ps.y).lineTo(this.pe.x, this.pe.y).endStroke();
 	};
 	
 	Arc.prototype.graphics = function (style) {
@@ -17297,7 +17297,7 @@
 	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
 	    var stroke = style && style.stroke ? style.stroke : "black";
 	    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
-	    return graphics.setStrokeStyle(strokeStyle).beginStroke(stroke).drawCircle(this.pc.x, this.pc.y, this.r).endStroke();
+	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).drawCircle(this.pc.x, this.pc.y, this.r).endStroke();
 	};
 	
 	function setGraphicsEdgeSegment(graphics, segment) {
@@ -17305,9 +17305,9 @@
 	}
 	
 	function setGraphicsEdgeArc(graphics, arc) {
-	    var startAngle = 2 * Math.PI - arc.startAngle;
-	    var endAngle = 2 * Math.PI - arc.endAngle;
-	    graphics.arc(arc.pc.x, arc.pc.y, arc.r, startAngle, endAngle, arc.counterClockwise);
+	    // let startAngle = 2 * Math.PI - arc.startAngle;
+	    // let endAngle = 2 * Math.PI - arc.endAngle;
+	    graphics.arc(arc.pc.x, arc.pc.y, arc.r, arc.startAngle, arc.endAngle, !arc.counterClockwise);
 	}
 	
 	function setGraphicsEdge(graphics, edge) {
@@ -17353,7 +17353,7 @@
 	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
 	    var stroke = style && style.stroke ? style.stroke : "#FF0303";
 	    var fill = style && style.fill ? style.fill : "#FF0303";
-	    graphics.setStrokeStyle(strokeStyle);
+	    graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true);
 	    graphics.beginStroke(stroke);
 	    graphics.beginFill(fill);
 	
@@ -18428,7 +18428,7 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _model = __webpack_require__(5);
+	var _model = __webpack_require__(7);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -18611,7 +18611,7 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _layers = __webpack_require__(6);
+	var _layers = __webpack_require__(5);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -19153,7 +19153,7 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _layers = __webpack_require__(6);
+	var _layers = __webpack_require__(5);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -19385,7 +19385,7 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _layers = __webpack_require__(6);
+	var _layers = __webpack_require__(5);
 	
 	var _measurePointsTool = __webpack_require__(43);
 	
@@ -19623,6 +19623,11 @@
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
 	            if (this.state.stage.canvas && this.state.stage.canvas.getContext('2d')) {
+	
+	                var origin = this.state.stage.origin;
+	                var zoomFactor = this.state.stage.zoomFactor * this.state.stage.resolution;
+	                this.state.stage.setTransform(origin.x, origin.y, zoomFactor, -zoomFactor);
+	
 	                this.state.stage.update();
 	            }
 	        }
@@ -19891,15 +19896,10 @@
 	            this.props.onStageCreated(stage);
 	        }
 	    }, {
-	        key: 'shouldComponentUpdate',
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            return nextProps.stage ? nextProps.stage.needToBeUpdated : true;
-	        }
-	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
 	            // if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
-	            this.props.stage.update();
+	            // this.props.stage.update();
 	            // }
 	        }
 	    }, {
@@ -19911,19 +19911,9 @@
 	            return _react2.default.createElement('canvas', { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' });
 	        }
 	    }]);
-	
+
 	    return StageComponent;
 	}(_react.Component);
-	/*
-	 {
-	 this.props.layers.map((layer) =>
-	 <LayerComponent
-	 key={layer.name}
-	 layer={layer}
-	 />)
-	 }
-
-	 */
 
 /***/ },
 /* 30 */
@@ -20232,6 +20222,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// import matrix_test from './middleware/matrix-test';
+	
 	// import demo from './middleware/demo';
 	
 	
@@ -20289,9 +20281,9 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _layers = __webpack_require__(6);
+	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(5);
+	var _model = __webpack_require__(7);
 	
 	var _parserXML = __webpack_require__(40);
 	
@@ -20543,9 +20535,9 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _layers = __webpack_require__(6);
+	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(5);
+	var _model = __webpack_require__(7);
 	
 	var _polygon = __webpack_require__(105);
 	
@@ -20756,7 +20748,7 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _model = __webpack_require__(5);
+	var _model = __webpack_require__(7);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21390,7 +21382,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _easeljsNEXTCombined = __webpack_require__(7);
+	var _easeljsNEXTCombined = __webpack_require__(6);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
@@ -21650,7 +21642,7 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _layers = __webpack_require__(6);
+	var _layers = __webpack_require__(5);
 	
 	var _parser = __webpack_require__(39);
 	
@@ -22292,13 +22284,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _easeljsNEXTCombined = __webpack_require__(7);
+	var _easeljsNEXTCombined = __webpack_require__(6);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
 	__webpack_require__(2);
-	
-	var _model = __webpack_require__(5);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -22313,11 +22303,6 @@
 	// import createjs from 'easel-js';
 	
 	
-	// import Flatten from 'flatten-js';
-	// import {Shape} from '../models/shape';
-	
-	// let {Distance} = Flatten;
-	
 	var MeasureShapesTool = exports.MeasureShapesTool = function (_Component) {
 	    _inherits(MeasureShapesTool, _Component);
 	
@@ -22326,109 +22311,24 @@
 	
 	        var _this = _possibleConstructorReturn(this, (MeasureShapesTool.__proto__ || Object.getPrototypeOf(MeasureShapesTool)).call(this));
 	
-	        _this.distance = undefined;
 	        _this.segment = undefined;
 	        return _this;
 	    }
 	
 	    _createClass(MeasureShapesTool, [{
-	        key: 'draw',
-	        value: function draw() {
-	            var canvas = this.refs.measureCanvas;
-	            var context = canvas.getContext('2d');
-	            var stage = this.props.stage;
-	
-	            canvas.width = canvas.width;
-	
-	            // Draw rectangle
-	            var pllX = Math.min(stage.W2C_X(this.startX), stage.W2C_X(this.endX));
-	            var pllY = Math.min(stage.W2C_Y(this.startY), stage.W2C_Y(this.endY));
-	            var width = Math.abs(stage.W2C_Scalar(this.startX - this.endX));
-	            var height = Math.abs(stage.W2C_Scalar(this.startY - this.endY));
-	
-	            context.beginPath();
-	            context.rect(pllX, pllY, width, height);
-	
-	            // Draw segment
-	            context.moveTo(stage.W2C_X(this.startX), stage.W2C_Y(this.startY));
-	            context.lineTo(stage.W2C_X(this.endX), stage.W2C_Y(this.endY));
-	
-	            context.lineWidth = 1;
-	            context.strokeStyle = 'black';
-	            context.stroke();
-	
-	            // Draw text
-	            var textX = void 0,
-	                textY = void 0,
-	                textHeight = void 0,
-	                textWidth = void 0;
-	            var backX = void 0,
-	                backY = void 0; // background rectangle
-	            var text = this.measurement();
-	
-	            context.font = "12pt Arial";
-	
-	            textHeight = 12;
-	            /* font size*/
-	            textWidth = context.measureText(text).width;
-	
-	            // Rectangle to the right of current point, text aligned left
-	            if (Math.abs(stage.W2C_X(this.endX) - pllX) <= 2) {
-	                context.textAlign = "left";
-	                textX = pllX + 3;
-	                backX = pllX;
-	            }
-	            // Rectangle to the left of current point, text aligned right
-	            else {
-	                    context.textAlign = "right";
-	                    textX = pllX + width - 3;
-	                    backX = textX - textWidth - 3;
-	                }
-	
-	            if (Math.abs(stage.W2C_Y(this.endY) - pllY) <= 2) {
-	                textY = pllY - 3;
-	            } else {
-	                textY = pllY + height + textHeight + 3;
-	            }
-	            backY = textY - textHeight - 3;
-	
-	            context.fillStyle = 'white';
-	            context.globalAlpha = 0.4;
-	            context.fillRect(backX, backY, textWidth + 6, textHeight + 6);
-	
-	            context.fillStyle = "black";
-	            context.globalAlpha = 1;
-	            context.fillText(this.measurement(), textX, textY);
-	        }
-	    }, {
-	        key: 'measurement',
-	        value: function measurement() {
-	            var dx = this.endX - this.startX;
-	            var dy = this.endY - this.startY;
-	            var dist = Math.sqrt(dx * dx + dy * dy);
-	            var message = "DX=" + this.format(dx) + ",DY=" + this.format(dy) + ",D=" + this.format(dist);
-	            return message;
-	        }
-	    }, {
-	        key: 'format',
-	        value: function format(num) {
-	            return (num / this.props.divisor).toFixed(this.props.decimals);
-	        }
-	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
 	            if (this.props.firstMeasuredShape && this.props.secondMeasuredShape && this.props.firstMeasuredLayer.displayed && this.props.secondMeasuredLayer.displayed) {
 	
 	                if (this.props.shortestSegment && this.props.stage) {
 	                    var shortest_segment = this.props.shortestSegment;
-	                    var geomTransformed = _model.Model.transformSegment(shortest_segment, this.props.stage);
 	
 	                    if (!this.segment) {
 	                        this.segment = new createjs.Shape();
 	                        this.props.stage.addChild(this.segment);
 	                    }
 	                    this.segment.graphics.clear();
-	                    this.segment.graphics = geomTransformed.graphics();
+	                    this.segment.graphics = shortest_segment.graphics();
 	                }
 	            } else {
 	                if (this.segment) {
@@ -22461,11 +22361,9 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _easeljsNEXTCombined = __webpack_require__(7);
+	var _easeljsNEXTCombined = __webpack_require__(6);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
-	
-	var _model = __webpack_require__(5);
 	
 	__webpack_require__(10);
 	
@@ -22490,8 +22388,6 @@
 	        _this.shape = new createjs.Shape();
 	        params.stage.addChild(_this.shape);
 	
-	        _this.geomTransformed = undefined;
-	
 	        _this.vertexShapes = [];
 	        var _iteratorNormalCompletion = true;
 	        var _didIteratorError = false;
@@ -22504,7 +22400,6 @@
 	                var vertexShape = new createjs.Shape();
 	                vertexShape.geom = vertex; // augment Shape with geom struct
 	                params.stage.addChild(vertexShape);
-	
 	                _this.vertexShapes.push(vertexShape);
 	            }
 	        } catch (err) {
@@ -22531,8 +22426,7 @@
 	            selected: params.selected,
 	            widthOn: params.widthOn,
 	            origin: params.stage.origin,
-	            zoomFactor: params.stage.zoomFactor,
-	            needTransform: true
+	            zoomFactor: params.stage.zoomFactor
 	        };
 	
 	        // this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -22605,13 +22499,11 @@
 	                    var vertexShape = _step3.value;
 	
 	                    var vertex = vertexShape.geom;
-	
-	                    var vertexTransformed = _model.Model.transformPoint(vertex, stage);
-	
 	                    vertexShape.graphics.clear();
-	                    vertexShape.graphics = vertexTransformed.graphics({
+	                    vertexShape.graphics = vertex.graphics({
 	                        stroke: stroke, // this.props.color,
-	                        fill: fill
+	                        fill: fill,
+	                        radius: 3. / (stage.zoomFactor * stage.resolution)
 	                    });
 	                    vertexShape.alpha = alpha;
 	                }
@@ -22636,18 +22528,10 @@
 	            // Draw polygon
 	            var color = this.props.hovered || this.props.selected ? "black" : this.props.color;
 	            var alpha = this.props.hovered || this.props.selected ? 1.0 : 0.6;
-	
-	            var stage = this.props.stage;
-	            var geom = this.state.polygon.geom;
-	
-	            if (this.state.needTransform) {
-	                this.geomTransformed = _model.Model.transformPolygon(geom, stage);
-	            }
-	
 	            var widthOn = this.props.widthOn;
 	
 	            this.shape.graphics.clear();
-	            this.shape.graphics = this.geomTransformed.graphics({
+	            this.shape.graphics = this.state.polygon.geom.graphics({
 	                stroke: color, // this.props.color,
 	                fill: widthOn && !this.props.displayVertices ? this.props.color : "white"
 	            });
@@ -22672,8 +22556,6 @@
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
-	            var needTransform = !(this.state.origin === nextProps.stage.origin && this.state.zoomFactor === nextProps.stage.zoomFactor);
-	
 	            this.setState({
 	                polygon: nextProps.polygon,
 	                color: nextProps.color,
@@ -22683,8 +22565,7 @@
 	                selected: nextProps.selected,
 	                widthOn: nextProps.widthOn,
 	                origin: nextProps.stage.origin,
-	                zoomFactor: nextProps.stage.zoomFactor,
-	                needTransform: needTransform
+	                zoomFactor: nextProps.stage.zoomFactor
 	            });
 	        }
 	    }, {
@@ -22733,15 +22614,13 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _easeljsNEXTCombined = __webpack_require__(7);
+	var _easeljsNEXTCombined = __webpack_require__(6);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
 	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _model = __webpack_require__(5);
 	
 	__webpack_require__(10);
 	
@@ -22768,10 +22647,7 @@
 	        _this.shape = new createjs.Shape();
 	        params.stage.addChild(_this.shape);
 	
-	        _this.geomTransformed = undefined;
-	
 	        _this.vertexShapes = [];
-	
 	        if (params.model.geom instanceof _flattenJs2.default.Segment) {
 	            var segment = params.model.geom;
 	            var vertices = [segment.ps, segment.pe];
@@ -22786,7 +22662,6 @@
 	                    var vertexShape = new createjs.Shape();
 	                    vertexShape.geom = vertex; // augment Shape with geom struct
 	                    params.stage.addChild(vertexShape);
-	
 	                    _this.vertexShapes.push(vertexShape);
 	                }
 	            } catch (err) {
@@ -22807,7 +22682,6 @@
 	            var _vertexShape = new createjs.Shape();
 	            _vertexShape.geom = params.model.geom; // augment Shape with geom struct
 	            params.stage.addChild(_vertexShape);
-	
 	            _this.vertexShapes.push(_vertexShape);
 	        }
 	
@@ -22820,8 +22694,7 @@
 	            selected: params.selected,
 	            widthOn: params.widthOn,
 	            origin: params.stage.origin,
-	            zoomFactor: params.stage.zoomFactor,
-	            needTransform: true
+	            zoomFactor: params.stage.zoomFactor
 	        };
 	
 	        // this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -22895,12 +22768,11 @@
 	
 	                    var vertex = vertexShape.geom;
 	
-	                    var vertexTransformed = _model.Model.transformPoint(vertex, stage);
-	
 	                    vertexShape.graphics.clear();
-	                    vertexShape.graphics = vertexTransformed.graphics({
+	                    vertexShape.graphics = vertex.graphics({
 	                        stroke: stroke, // this.props.color,
-	                        fill: fill
+	                        fill: fill,
+	                        radius: 3. / (stage.zoomFactor * stage.resolution)
 	                    });
 	                    vertexShape.alpha = alpha;
 	                }
@@ -22929,20 +22801,13 @@
 	            var stage = this.props.stage;
 	            var geom = this.props.model.geom;
 	
-	            if (this.state.needTransform) {
-	                if (geom instanceof _flattenJs2.default.Segment) {
-	                    this.geomTransformed = _model.Model.transformSegment(geom, stage);
-	                } else if (geom instanceof _flattenJs2.default.Point) {
-	                    this.geomTransformed = _model.Model.transformPoint(geom, stage);
-	                }
-	            }
-	
 	            var widthOn = this.props.widthOn;
 	
 	            this.shape.graphics.clear();
-	            this.shape.graphics = this.geomTransformed.graphics({
+	            this.shape.graphics = geom.graphics({
 	                stroke: color, // this.props.color,
-	                fill: widthOn && !this.props.displayVertices ? this.props.color : "white"
+	                fill: widthOn && !this.props.displayVertices ? this.props.color : "white",
+	                radius: 3. / (stage.zoomFactor * stage.resolution)
 	            });
 	            this.shape.alpha = this.props.displayed ? alpha : 0.0;
 	
@@ -22965,8 +22830,6 @@
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
-	            var needTransform = !(this.state.origin === nextProps.stage.origin && this.state.zoomFactor === nextProps.stage.zoomFactor);
-	
 	            this.setState({
 	                model: nextProps.model,
 	                color: nextProps.color,
@@ -22976,8 +22839,7 @@
 	                selected: nextProps.selected,
 	                widthOn: nextProps.widthOn,
 	                origin: nextProps.stage.origin,
-	                zoomFactor: nextProps.stage.zoomFactor,
-	                needTransform: needTransform
+	                zoomFactor: nextProps.stage.zoomFactor
 	            });
 	        }
 	    }, {
@@ -29007,4 +28869,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.6a19e169.js.map
+//# sourceMappingURL=main.1a39b212.js.map
