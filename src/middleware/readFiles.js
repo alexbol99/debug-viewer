@@ -48,10 +48,10 @@ const readFile = (file, stage, layers, dispatch) => {
 
             layers.push(layer);
 
-            // dispatch({
-            //     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-            //     shape: layer
-            // })
+            dispatch({
+                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+                shape: layer
+            })
 
         }
     })(file, stage, layers, dispatch);

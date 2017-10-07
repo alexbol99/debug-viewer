@@ -40,7 +40,6 @@ export class SegmentTool extends Component {
             hovered: params.hovered,
             selected: params.selected,
             widthOn: params.widthOn,
-            origin: params.stage.origin,
             zoomFactor: params.stage.zoomFactor
         };
 
@@ -80,12 +79,16 @@ export class SegmentTool extends Component {
         for (let vertexShape of this.vertexShapes) {
             let vertex = vertexShape.geom;
 
-            vertexShape.graphics.clear();
-            vertexShape.graphics = vertex.graphics({
-                stroke: stroke,     // this.props.color,
-                fill: fill,
-                radius: 3./(stage.zoomFactor*stage.resolution)
-            });
+            if (vertexShape.graphics.isEmpty()) {
+                vertexShape.graphics = vertex.graphics({
+                    stroke: stroke,     // this.props.color,
+                    fill: fill,
+                    radius: 3. / (stage.zoomFactor * stage.resolution)
+                });
+            }
+            else {
+                vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution)
+            }
             vertexShape.alpha = alpha;
         }
     }
@@ -133,7 +136,6 @@ export class SegmentTool extends Component {
             hovered: nextProps.hovered,
             selected: nextProps.selected,
             widthOn: nextProps.widthOn,
-            origin: nextProps.stage.origin,
             zoomFactor: nextProps.stage.zoomFactor
         })
     }

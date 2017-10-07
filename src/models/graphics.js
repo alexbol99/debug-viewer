@@ -10,7 +10,9 @@ Point.prototype.graphics = function(style) {
     let graphics = new createjs.Graphics();
     let radius = (style && style.radius) ? style.radius : 3;
     let fill = style && style.fill ? style.fill : "red";
-    return graphics.beginFill(fill).drawCircle(this.x, this.y, radius);
+    graphics.fill = graphics.beginFill(fill).command;
+    graphics.circle = graphics.drawCircle(this.x, this.y, radius).command;
+    return graphics;
 };
 
 Segment.prototype.graphics = function(style) {
@@ -84,8 +86,8 @@ Polygon.prototype.graphics = function(style) {
     let stroke = style && style.stroke ? style.stroke : "#FF0303";
     let fill = style && style.fill ? style.fill : "#FF0303";
     graphics.setStrokeStyle(strokeStyle,0,0,10,true);
-    graphics.beginStroke(stroke);
-    graphics.beginFill(fill);
+    graphics.stroke = graphics.beginStroke(stroke).command;
+    graphics.fill = graphics.beginFill(fill).command;
 
     for (let face of this.faces) {
         setGraphicsFace(graphics, face);

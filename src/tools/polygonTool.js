@@ -29,7 +29,6 @@ export class PolygonTool extends Component {
             hovered: params.hovered,
             selected: params.selected,
             widthOn: params.widthOn,
-            origin: params.stage.origin,
             zoomFactor: params.stage.zoomFactor
         };
 
@@ -68,12 +67,16 @@ export class PolygonTool extends Component {
 
         for (let vertexShape of this.vertexShapes) {
             let vertex = vertexShape.geom;
-            vertexShape.graphics.clear();
-            vertexShape.graphics = vertex.graphics({
-                stroke: stroke,     // this.props.color,
-                fill: fill,
-                radius: 3./(stage.zoomFactor*stage.resolution)
-            });
+            if (vertexShape.graphics.isEmpty()) {
+                vertexShape.graphics = vertex.graphics({
+                    stroke: stroke,     // this.props.color,
+                    fill: fill,
+                    radius: 3. / (stage.zoomFactor * stage.resolution)
+                });
+            }
+            else {
+                vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
+            }
             vertexShape.alpha = alpha;
         }
     }
@@ -83,12 +86,18 @@ export class PolygonTool extends Component {
         let color = (this.props.hovered || this.props.selected) ? "black" : this.props.color;
         let alpha = (this.props.hovered || this.props.selected) ? 1.0 : 0.6;
         let widthOn = this.props.widthOn;
+        let fill = (widthOn && !this.props.displayVertices) ? this.props.color : "white";
 
-        this.shape.graphics.clear();
-        this.shape.graphics = this.state.polygon.geom.graphics({
-            stroke: color,     // this.props.color,
-            fill: (widthOn && !this.props.displayVertices) ? this.props.color : "white"
-        });
+        if (this.shape.graphics.isEmpty()) {
+            this.shape.graphics = this.state.polygon.geom.graphics({
+                stroke: color,
+                fill: fill
+            });
+        }
+        else {
+            this.shape.graphics.stroke.style = color;
+            this.shape.graphics.fill.style = fill;
+        }
         this.shape.alpha = this.props.displayed ? alpha : 0.0;
 
         // Draw vertices
@@ -108,6 +117,9 @@ export class PolygonTool extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        // let redraw = (this.state.zoomFactor !== nextProps.zoomFactor &&
+        //     nextProps.displayVertices);
+
         this.setState({
             polygon: nextProps.polygon,
             color: nextProps.color,
@@ -116,7 +128,6 @@ export class PolygonTool extends Component {
             hovered: nextProps.hovered,
             selected: nextProps.selected,
             widthOn: nextProps.widthOn,
-            origin: nextProps.stage.origin,
             zoomFactor: nextProps.stage.zoomFactor
         })
     }

@@ -24,8 +24,6 @@ export class Stage extends createjs.Stage {
         this.oldOrigin = {x: undefined, y: undefined};   // used by pan
         this.resolution = 0.00001;          // MM 2 Pixels when zoomFactor = 1;
         this.zoomFactor = 1.0;
-
-        this.needToBeUpdated = false;
     }
 
     get box() {
