@@ -161,6 +161,7 @@
 	var TOGGLE_UNITS_CLICKED = exports.TOGGLE_UNITS_CLICKED = "TOGGLE_UNITS_CLICKED";
 	var TOGGLE_WIDTH_MODE_CLICKED = exports.TOGGLE_WIDTH_MODE_CLICKED = "TOGGLE_WIDTH_MODE_CLICKED";
 	var TOGGLE_DISPLAY_VERTICES_CLICKED = exports.TOGGLE_DISPLAY_VERTICES_CLICKED = "TOGGLE_DISPLAY_VERTICES_CLICKED";
+	var TOGGLE_DISPLAY_LABELS_CLICKED = exports.TOGGLE_DISPLAY_LABELS_CLICKED = "TOGGLE_DISPLAY_LABELS_CLICKED";
 	
 	var MOUSE_MOVED_ON_STAGE = exports.MOUSE_MOVED_ON_STAGE = "MOUSE_MOVED_ON_STAGE";
 	var MOUSE_DOWN_ON_STAGE = exports.MOUSE_DOWN_ON_STAGE = "MOUSE_DOWN_ON_STAGE";
@@ -314,6 +315,167 @@
 
 /***/ },
 /* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Model = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	// import createjs from 'easel-js';
+	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
+	
+	// let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
+	
+	var defaultStyle = {
+	    strokeStyle: 1,
+	    stroke: "#FF0303",
+	    fill: "#FF0303",
+	    alpha: 1.0
+	};
+	
+	/* Class Model represents data model that
+	will be rendered to Stage canvas.
+	  Rendering method will get this element as props
+	and perform graphics recalculation this element is a new element
+	 */
+	
+	var Model = exports.Model = function () {
+	    function Model() {
+	        var geom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+	        var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+	        var label = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+	
+	        _classCallCheck(this, Model);
+	
+	        this.geom = geom;
+	        this.style = style || defaultStyle;
+	        this.label = label;
+	    }
+	
+	    _createClass(Model, [{
+	        key: "clone",
+	        value: function clone() {
+	            var model = new Model(this.geom, this.style);
+	            return Object.assign(model, this);
+	        }
+	    }, {
+	        key: "box",
+	        get: function get() {
+	            return this.geom.box;
+	        }
+	    }], [{
+	        key: "transformPoint",
+	        value: function transformPoint(pt, stage) {
+	            return new _flattenJs2.default.Point(stage.W2C_X(pt.x), stage.W2C_Y(pt.y));
+	        }
+	    }, {
+	        key: "transformSegment",
+	        value: function transformSegment(segment, stage) {
+	            return new _flattenJs2.default.Segment(Model.transformPoint(segment.ps, stage), Model.transformPoint(segment.pe, stage));
+	        }
+	    }, {
+	        key: "transformArc",
+	        value: function transformArc(arc, stage) {
+	            return new _flattenJs2.default.Arc(Model.transformPoint(arc.pc, stage), stage.W2C_Scalar(arc.r), arc.startAngle, arc.endAngle, arc.counterClockwise);
+	        }
+	    }, {
+	        key: "transformEdge",
+	        value: function transformEdge(shape, stage) {
+	            if (shape instanceof _flattenJs2.default.Segment) {
+	                return Model.transformSegment(shape, stage);
+	            } else if (shape instanceof _flattenJs2.default.Arc) {
+	                return Model.transformArc(shape, stage);
+	            }
+	        }
+	    }, {
+	        key: "transformFace",
+	        value: function transformFace(face, stage) {
+	            // Get shapes of face as array
+	            var shapes = [];
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = face[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var edge = _step.value;
+	
+	                    shapes.push(edge.shape);
+	                }
+	
+	                // Transform array of edges
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            return shapes.map(function (shape) {
+	                return Model.transformEdge(shape, stage);
+	            });
+	        }
+	    }, {
+	        key: "transformPolygon",
+	        value: function transformPolygon(polygon, stage) {
+	            var newPolygon = new _flattenJs2.default.Polygon();
+	            var shapes = [];
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = polygon.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var face = _step2.value;
+	
+	                    shapes = Model.transformFace(face, stage);
+	                    newPolygon.addFace(shapes);
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            return newPolygon;
+	        }
+	    }]);
+
+	    return Model;
+	}();
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
 	/*!
@@ -16946,167 +17108,6 @@
 	module.exports = createjs;
 
 /***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Model = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	// import createjs from 'easel-js';
-	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
-	
-	// let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
-	
-	var defaultStyle = {
-	    strokeStyle: 1,
-	    stroke: "#FF0303",
-	    fill: "#FF0303",
-	    alpha: 1.0
-	};
-	
-	/* Class Model represents data model that
-	will be rendered to Stage canvas.
-	  Rendering method will get this element as props
-	and perform graphics recalculation this element is a new element
-	 */
-	
-	var Model = exports.Model = function () {
-	    function Model() {
-	        var geom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
-	        var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
-	        var label = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
-	
-	        _classCallCheck(this, Model);
-	
-	        this.geom = geom;
-	        this.style = style || defaultStyle;
-	        this.label = label;
-	    }
-	
-	    _createClass(Model, [{
-	        key: "clone",
-	        value: function clone() {
-	            var model = new Model(this.geom, this.style);
-	            return Object.assign(model, this);
-	        }
-	    }, {
-	        key: "box",
-	        get: function get() {
-	            return this.geom.box;
-	        }
-	    }], [{
-	        key: "transformPoint",
-	        value: function transformPoint(pt, stage) {
-	            return new _flattenJs2.default.Point(stage.W2C_X(pt.x), stage.W2C_Y(pt.y));
-	        }
-	    }, {
-	        key: "transformSegment",
-	        value: function transformSegment(segment, stage) {
-	            return new _flattenJs2.default.Segment(Model.transformPoint(segment.ps, stage), Model.transformPoint(segment.pe, stage));
-	        }
-	    }, {
-	        key: "transformArc",
-	        value: function transformArc(arc, stage) {
-	            return new _flattenJs2.default.Arc(Model.transformPoint(arc.pc, stage), stage.W2C_Scalar(arc.r), arc.startAngle, arc.endAngle, arc.counterClockwise);
-	        }
-	    }, {
-	        key: "transformEdge",
-	        value: function transformEdge(shape, stage) {
-	            if (shape instanceof _flattenJs2.default.Segment) {
-	                return Model.transformSegment(shape, stage);
-	            } else if (shape instanceof _flattenJs2.default.Arc) {
-	                return Model.transformArc(shape, stage);
-	            }
-	        }
-	    }, {
-	        key: "transformFace",
-	        value: function transformFace(face, stage) {
-	            // Get shapes of face as array
-	            var shapes = [];
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = face[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var edge = _step.value;
-	
-	                    shapes.push(edge.shape);
-	                }
-	
-	                // Transform array of edges
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            return shapes.map(function (shape) {
-	                return Model.transformEdge(shape, stage);
-	            });
-	        }
-	    }, {
-	        key: "transformPolygon",
-	        value: function transformPolygon(polygon, stage) {
-	            var newPolygon = new _flattenJs2.default.Polygon();
-	            var shapes = [];
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-	
-	            try {
-	                for (var _iterator2 = polygon.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var face = _step2.value;
-	
-	                    shapes = Model.transformFace(face, stage);
-	                    newPolygon.addFace(shapes);
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	
-	            return newPolygon;
-	        }
-	    }]);
-
-	    return Model;
-	}();
-
-/***/ },
 /* 8 */
 /***/ function(module, exports) {
 
@@ -17253,7 +17254,7 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _easeljsNEXTCombined = __webpack_require__(6);
+	var _easeljsNEXTCombined = __webpack_require__(7);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
@@ -17270,9 +17271,9 @@
 	/* Provide conversion methods from FlattenJS objects to CreateJS Graphics */
 	
 	Point.prototype.graphics = function (style) {
-	    var graphics = new createjs.Graphics();
 	    var radius = style && style.radius ? style.radius : 3;
 	    var fill = style && style.fill ? style.fill : "red";
+	    var graphics = new createjs.Graphics();
 	    graphics.fill = graphics.beginFill(fill).command;
 	    graphics.circle = graphics.drawCircle(this.x, this.y, radius).command;
 	    return graphics;
@@ -18430,7 +18431,7 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _model = __webpack_require__(7);
+	var _model = __webpack_require__(6);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -18794,12 +18795,12 @@
 	                'aside',
 	                { className: 'App-aside', ref: 'aside' },
 	                _react2.default.createElement(
-	                    'h4',
+	                    'h5',
 	                    null,
 	                    'Info'
 	                ),
 	                _react2.default.createElement(
-	                    'h4',
+	                    'h5',
 	                    null,
 	                    title
 	                ),
@@ -18908,6 +18909,7 @@
 	            color: params.color,
 	            displayed: params.displayed,
 	            displayVertices: params.displayVertices,
+	            displayLabels: params.displayLabels,
 	            hovered: params.hovered,
 	            selected: params.selected,
 	            widthOn: params.widthOn,
@@ -18928,6 +18930,7 @@
 	                color: nextProps.color,
 	                displayed: nextProps.displayed,
 	                displayVertices: nextProps.displayVertices,
+	                displayLabels: nextProps.displayLabels,
 	                hovered: nextProps.hovered,
 	                selected: nextProps.selected,
 	                widthOn: nextProps.widthOn,
@@ -18998,6 +19001,7 @@
 	                        color: _this2.state.layer.color,
 	                        widthOn: _this2.state.widthOn,
 	                        displayVertices: _this2.state.displayVertices,
+	                        displayLabels: _this2.state.displayLabels,
 	                        onMouseOver: _this2.props.onMouseOver,
 	                        onMouseOut: _this2.props.onMouseOut,
 	                        onClick: _this2.props.onClick
@@ -19014,6 +19018,7 @@
 	                        color: _this2.state.layer.color,
 	                        widthOn: _this2.state.widthOn,
 	                        displayVertices: _this2.state.displayVertices,
+	                        displayLabels: _this2.state.displayLabels,
 	                        onMouseOver: _this2.props.onMouseOver,
 	                        onMouseOut: _this2.props.onMouseOut,
 	                        onClick: _this2.props.onClick
@@ -19311,7 +19316,7 @@
 	                    style: { padding: 4, backgroundColor: "lightgray" },
 	                    onClick: this.onAddLayerSelected },
 	                _react2.default.createElement(
-	                    'h4',
+	                    'h5',
 	                    { style: { margin: 0 } },
 	                    'Add layer'
 	                )
@@ -19324,7 +19329,7 @@
 	                    onClick: this.onLayerListClicked
 	                },
 	                _react2.default.createElement(
-	                    'h4',
+	                    'h5',
 	                    null,
 	                    'Layers'
 	                ),
@@ -19437,6 +19442,8 @@
 	        _this.setHomeView = _this.setHomeView.bind(_this);
 	        _this.toggleWidthMode = _this.toggleWidthMode.bind(_this);
 	        _this.toggleDisplayVertices = _this.toggleDisplayVertices.bind(_this);
+	        _this.toggleDisplayLabels = _this.toggleDisplayLabels.bind(_this);
+	
 	        _this.onMeasurePointsButtonPressed = _this.onMeasurePointsButtonPressed.bind(_this);
 	        _this.onMeasureBetweenShapesButtonPressed = _this.onMeasureBetweenShapesButtonPressed.bind(_this);
 	        _this.onPanByDragPressed = _this.onPanByDragPressed.bind(_this);
@@ -19592,6 +19599,13 @@
 	            });
 	        }
 	    }, {
+	        key: 'toggleDisplayLabels',
+	        value: function toggleDisplayLabels() {
+	            this.dispatch({
+	                type: ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED
+	            });
+	        }
+	    }, {
 	        key: 'onMeasurePointsButtonPressed',
 	        value: function onMeasurePointsButtonPressed() {
 	            this.dispatch({
@@ -19648,7 +19662,8 @@
 	                    onMeasurePointsButtonPressed: this.onMeasurePointsButtonPressed,
 	                    onMeasureBetweenShapesButtonPressed: this.onMeasureBetweenShapesButtonPressed,
 	                    onToggleWidthModePressed: this.toggleWidthMode,
-	                    onToggleVerticesPressed: this.toggleDisplayVertices
+	                    onToggleVerticesPressed: this.toggleDisplayVertices,
+	                    onToggleLabelsPressed: this.toggleDisplayLabels
 	                }),
 	                _react2.default.createElement(_stageComponent.StageComponent, {
 	                    stage: this.state.stage,
@@ -19669,6 +19684,7 @@
 	                        color: layer.color,
 	                        displayed: layer.displayed,
 	                        displayVertices: _this2.state.app.displayVertices,
+	                        displayLabels: _this2.state.app.displayLabels,
 	                        widthOn: _this2.state.app.widthOn,
 	                        hoveredShape: _this2.state.app.hoveredShape,
 	                        firstMeasuredShape: _this2.state.app.firstMeasuredShape,
@@ -19910,7 +19926,11 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('canvas', { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' });
+	            return _react2.default.createElement(
+	                'canvas',
+	                { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' },
+	                this.props.children
+	            );
 	        }
 	    }]);
 
@@ -19994,31 +20014,36 @@
 	                    "div",
 	                    { style: { flex: 4, textAlign: "left", marginLeft: 10, padding: 5 } },
 	                    _react2.default.createElement(
-	                        "h4",
+	                        "h5",
 	                        null,
 	                        "X: " + coordX + " Y: " + coordY
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    "div",
-	                    { style: { flex: 8, textAlign: "center", marginLeft: 10, padding: 5 } },
+	                    { style: { flex: 6, textAlign: "left", marginLeft: 10, padding: 5 } },
 	                    _react2.default.createElement(
-	                        "h4",
+	                        "h5",
 	                        null,
 	                        message
 	                    )
 	                ),
 	                _react2.default.createElement(
-	                    "div",
+	                    "button",
 	                    {
-	                        style: { flex: 4, textAlign: "right", marginRight: 10, padding: 5 },
+	                        style: { flex: 2, height: "50%", margin: 5, border: "1px", backgroundColor: "inherit" },
 	                        onClick: this.props.onUnitClicked
 	                    },
 	                    _react2.default.createElement(
-	                        "h4",
+	                        "h3",
 	                        null,
-	                        "Units: " + this.props.units
+	                        "Units"
 	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "h5",
+	                    { style: { flex: 2, height: "50%", margin: 5 } },
+	                    this.props.units
 	                )
 	            );
 	        }
@@ -20056,11 +20081,11 @@
 	
 	var _handDrag2 = _interopRequireDefault(_handDrag);
 	
-	var _measureContour = __webpack_require__(104);
+	var _measureContour = __webpack_require__(105);
 	
 	var _measureContour2 = _interopRequireDefault(_measureContour);
 	
-	var _measurePoints = __webpack_require__(105);
+	var _measurePoints = __webpack_require__(106);
 	
 	var _measurePoints2 = _interopRequireDefault(_measurePoints);
 	
@@ -20071,6 +20096,10 @@
 	var _editContourVertextOnOff = __webpack_require__(101);
 	
 	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
+	
+	var _label_icon = __webpack_require__(104);
+	
+	var _label_icon2 = _interopRequireDefault(_label_icon);
 	
 	var _Setting = __webpack_require__(99);
 	
@@ -20162,6 +20191,11 @@
 	                    'button',
 	                    { title: 'Display vertices on/off', onClick: this.props.onToggleVerticesPressed },
 	                    _react2.default.createElement('img', { src: _editContourVertextOnOff2.default, alt: 'vertices' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Display labels on/off', onClick: this.props.onToggleLabelsPressed },
+	                    _react2.default.createElement('img', { src: _label_icon2.default, alt: 'labels' })
 	                ),
 	                _react2.default.createElement(
 	                    'button',
@@ -20290,11 +20324,11 @@
 	
 	var _layers = __webpack_require__(5);
 	
+	var _model = __webpack_require__(6);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// import { Model } from "../models/model";
 	
 	var point = _flattenJs2.default.point,
 	    segment = _flattenJs2.default.segment,
@@ -20326,16 +20360,17 @@
 	                    layer.name = "demo1";
 	                    layer.title = "demo1";
 	
-	                    layer.add(segment(-100, 0, 100, 0));
-	                    layer.add(segment(0, -100, 0, 50));
+	                    layer.add(new _model.Model(segment(-100, 0, 100, 0), {}, "segment1"));
+	                    layer.add(new _model.Model(segment(0, -100, 0, 50), {}, "segment 2"));
 	
 	                    var polygon = new Polygon();
 	
-	                    layer.add(point(20, 20));
+	                    layer.add(new _model.Model(point(20, 20), {}, "ABC123"));
+	                    layer.add(new _model.Model(point(-50, 30), {}, "Boom boom"));
 	
-	                    polygon.addFace([segment(-50, -50, 50, -50), segment(50, -50, 100, 100), segment(100, 100, -100, 100), segment(-100, 100, -50, -50)]);
+	                    polygon.addFace([segment(-500000, -500000, 500000, -500000), segment(500000, -500000, 100000, 100000), segment(100000, 100000, -100000, 100000), segment(-100000, 100000, -500000, -500000)]);
 	
-	                    layer.add(polygon);
+	                    // layer.add(new Model(polygon,{},"polygonchik"));
 	
 	                    zoomHome(layer, stage);
 	                    state.layers.push(layer);
@@ -20364,7 +20399,7 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(7);
+	var _model = __webpack_require__(6);
 	
 	var _parserXML = __webpack_require__(41);
 	
@@ -20399,7 +20434,7 @@
 	                    if (polygon.edges.size > 0 && polygon.faces.size > 0) {
 	                        // let watch = undefined; //  parser.parseToWatchArray(string);
 	                        // let shape = new Shape(polygon, stage, polygon.style, watch);
-	                        var _shape = new _model.Model(polygon);
+	                        var _shape = new _model.Model(polygon, undefined, polygon.label);
 	
 	                        layer.add(_shape);
 	                    }
@@ -20430,7 +20465,7 @@
 	                    if (_polygon.edges.size > 0 && _polygon.faces.size > 0) {
 	                        // let watch = undefined; //  parser.parseToWatchArray(string);
 	                        // let shape = new Shape(polygon, stage, polygon.style, watch);
-	                        var _shape2 = new _model.Model(_polygon);
+	                        var _shape2 = new _model.Model(_polygon, undefined, _polygon.label);
 	
 	                        layer.add(_shape2);
 	                    }
@@ -20618,9 +20653,9 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(7);
+	var _model = __webpack_require__(6);
 	
-	var _polygon = __webpack_require__(106);
+	var _polygon = __webpack_require__(107);
 	
 	var _polygon2 = _interopRequireDefault(_polygon);
 	
@@ -20829,7 +20864,7 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _model = __webpack_require__(7);
+	var _model = __webpack_require__(6);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21240,6 +21275,10 @@
 	        alpha: 1.0
 	    };
 	
+	    // Augment Flatten object with label
+	    var label = polygonsXML.getAttribute("label");
+	    polygon.label = label;
+	
 	    // Add islands
 	    var islands = polygonsXML.getElementsByTagName('island');
 	    var _iteratorNormalCompletion2 = true;
@@ -21463,7 +21502,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _easeljsNEXTCombined = __webpack_require__(6);
+	var _easeljsNEXTCombined = __webpack_require__(7);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
@@ -21755,6 +21794,7 @@
 	    parser: new _parser.Parser(),
 	    widthOn: true,
 	    displayVertices: false,
+	    displayLabels: true,
 	    measurePointsActive: false,
 	    measureShapesActive: false,
 	    measureShapesFirstClick: true,
@@ -21877,6 +21917,12 @@
 	                    displayVertices: true
 	                });
 	            }
+	
+	        case ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED:
+	            return Object.assign({}, state, {
+	                displayLabels: !state.displayLabels
+	            });
+	
 	        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
 	            return Object.assign({}, state, {
 	                measurePointsActive: true,
@@ -22363,7 +22409,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _easeljsNEXTCombined = __webpack_require__(6);
+	var _easeljsNEXTCombined = __webpack_require__(7);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
@@ -22440,7 +22486,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _easeljsNEXTCombined = __webpack_require__(6);
+	var _easeljsNEXTCombined = __webpack_require__(7);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
@@ -22468,6 +22514,8 @@
 	        params.stage.addChild(_this.shape);
 	
 	        _this.vertexShapes = [];
+	        _this.labelShape = undefined;
+	
 	        var _iteratorNormalCompletion = true;
 	        var _didIteratorError = false;
 	        var _iteratorError = undefined;
@@ -22496,11 +22544,31 @@
 	            }
 	        }
 	
+	        if (params.polygon.label && params.polygon.label.trim() !== "") {
+	            var html = document.createElement('div');
+	            html.innerText = params.polygon.label;
+	            html.style.position = "absolute";
+	            html.style.top = 0;
+	            html.style.left = 0;
+	
+	            document.body.appendChild(html);
+	
+	            _this.labelShape = new createjs.DOMElement(html);
+	
+	            // let labelShape = new createjs.Text();
+	            // labelShape.text = params.polygon.label;
+	            // labelShape.textBaseline = "alphabetic";
+	
+	            _this.labelShape.geom = params.polygon.geom; // augment label Shape with geom struct
+	            params.stage.addChild(_this.labelShape);
+	        }
+	
 	        _this.state = {
 	            polygon: params.polygon,
 	            color: params.color,
 	            displayed: params.displayed,
 	            displayVertices: params.displayVertices,
+	            displayLabels: params.displayLabels,
 	            hovered: params.hovered,
 	            selected: params.selected,
 	            widthOn: params.widthOn,
@@ -22585,6 +22653,7 @@
 	                        });
 	                    } else {
 	                        vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
+	                        vertexShape.graphics.fill.style = fill;
 	                    }
 	                    vertexShape.alpha = alpha;
 	                }
@@ -22602,6 +22671,26 @@
 	                    }
 	                }
 	            }
+	        }
+	    }, {
+	        key: 'redrawLabels',
+	        value: function redrawLabels(showLabel) {
+	            if (!this.labelShape) return;
+	
+	            var stage = this.props.stage;
+	
+	            this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
+	
+	            var box = this.props.polygon.geom.box;
+	            var point = { x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2 };
+	            var dx = 6. / (stage.zoomFactor * stage.resolution);
+	            var dy = 4. / (stage.zoomFactor * stage.resolution);
+	
+	            this.labelShape.htmlElement.style.font = "16px Arial";
+	            var unscale = 1. / (stage.zoomFactor * stage.resolution);
+	            var tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
+	            var ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
+	            this.labelShape.setTransform(tx, ty, unscale, -unscale);
 	        }
 	    }, {
 	        key: 'redraw',
@@ -22626,6 +22715,10 @@
 	            // Draw vertices
 	            alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
 	            this.redrawVertices(color, color, alpha);
+	
+	            // Draw labels
+	            var showLabel = this.props.displayed && this.props.displayLabels;
+	            this.redrawLabels(showLabel);
 	        }
 	    }, {
 	        key: 'componentWillMount',
@@ -22650,6 +22743,7 @@
 	                color: nextProps.color,
 	                displayed: nextProps.displayed,
 	                displayVertices: nextProps.displayVertices,
+	                displayLabels: nextProps.displayLabels,
 	                hovered: nextProps.hovered,
 	                selected: nextProps.selected,
 	                widthOn: nextProps.widthOn,
@@ -22702,7 +22796,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _easeljsNEXTCombined = __webpack_require__(6);
+	var _easeljsNEXTCombined = __webpack_require__(7);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
@@ -22736,6 +22830,8 @@
 	        params.stage.addChild(_this.shape);
 	
 	        _this.vertexShapes = [];
+	        _this.labelShape = undefined;
+	
 	        if (params.model.geom instanceof _flattenJs2.default.Segment) {
 	            var segment = params.model.geom;
 	            var vertices = [segment.ps, segment.pe];
@@ -22768,9 +22864,28 @@
 	            }
 	        } else if (params.model.geom instanceof _flattenJs2.default.Point) {
 	            var _vertexShape = new createjs.Shape();
-	            _vertexShape.geom = params.model.geom; // augment Shape with geom struct
+	            _vertexShape.geom = params.model.geom; // augment vertex Shape with geom struct
 	            params.stage.addChild(_vertexShape);
 	            _this.vertexShapes.push(_vertexShape);
+	        }
+	
+	        if (params.model.label && params.model.label.trim() !== "") {
+	            var html = document.createElement('div');
+	            html.innerText = params.model.label;
+	            html.style.position = "absolute";
+	            html.style.top = 0;
+	            html.style.left = 0;
+	
+	            document.body.appendChild(html);
+	
+	            _this.labelShape = new createjs.DOMElement(html);
+	
+	            // let labelShape = new createjs.Text();
+	            // labelShape.text = params.model.label;
+	            // labelShape.textBaseline = "alphabetic";
+	
+	            _this.labelShape.geom = params.model.geom; // augment label Shape with geom struct
+	            params.stage.addChild(_this.labelShape);
 	        }
 	
 	        _this.state = {
@@ -22778,6 +22893,7 @@
 	            color: params.color,
 	            displayed: params.displayed,
 	            displayVertices: params.displayVertices,
+	            displayLabels: params.displayLabels,
 	            hovered: params.hovered,
 	            selected: params.selected,
 	            widthOn: params.widthOn,
@@ -22863,6 +22979,7 @@
 	                        });
 	                    } else {
 	                        vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
+	                        vertexShape.graphics.fill.style = fill;
 	                    }
 	                    vertexShape.alpha = alpha;
 	                }
@@ -22880,6 +22997,24 @@
 	                    }
 	                }
 	            }
+	        }
+	    }, {
+	        key: 'redrawLabels',
+	        value: function redrawLabels(showLabel) {
+	            var stage = this.props.stage;
+	
+	            this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
+	
+	            var box = this.props.model.geom.box;
+	            var point = { x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2 };
+	            var dx = 6. / (stage.zoomFactor * stage.resolution);
+	            var dy = 16. / (stage.zoomFactor * stage.resolution);
+	
+	            this.labelShape.htmlElement.style.font = "16px Arial";
+	            var unscale = 1. / (stage.zoomFactor * stage.resolution);
+	            var tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
+	            var ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
+	            this.labelShape.setTransform(tx, ty, unscale, -unscale);
 	        }
 	    }, {
 	        key: 'redraw',
@@ -22904,6 +23039,10 @@
 	            // Draw vertices
 	            alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
 	            this.redrawVertices(color, color, alpha);
+	
+	            // Redraw labels
+	            var showLabel = this.props.displayed && this.props.displayLabels;
+	            this.redrawLabels(showLabel);
 	        }
 	    }, {
 	        key: 'componentWillMount',
@@ -22925,6 +23064,7 @@
 	                color: nextProps.color,
 	                displayed: nextProps.displayed,
 	                displayVertices: nextProps.displayVertices,
+	                displayLabels: nextProps.displayLabels,
 	                hovered: nextProps.hovered,
 	                selected: nextProps.selected,
 	                widthOn: nextProps.widthOn,
@@ -28850,7 +28990,7 @@
 	
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(107)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(108)(module)))
 
 /***/ },
 /* 96 */
@@ -28926,22 +29066,28 @@
 /* 104 */
 /***/ function(module, exports) {
 
-	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACWUExURezp2L3CsAAAAH91jbamy9Sx1NXVxL2u0MvA2yEeEZy460hBJUU/JAC+ACQhE4qi2Zaw5JCp3se72Ap3Hsi82cq+2qK/8XeKtWNfTb+x0nSEsG19pH6QtWFfU8S31nt1Wpax5Xp0WoeeynBrVMm92WhkVsGz02JfU21oU5m06Mq/2se62MS21bmqzsW517ipzbyu0P///wUDcXkAAAAydFJOU/////////////////////////////////////////////////////////////////8ADVCY7wAAAO1JREFUeNpiMMQCAAKIAZsgQABhFQQIIAZDeW5uZTgXwgEIIAZFKX5+aQk2iBiUAxBADDwCClyCfIwQQSgHIICAglxigny8wmAI4TACBBCDhoymkrg6KwMIsEI4jAABxGCoyskpy8gEFmSCcNgAAojBkI2RkZENqhLIMWRkMwQIIKg7YSohACCAoIIwlRAAEEBYVQIEEFaVAAHEwIwJDAECiIGZg4NJSAiE5OSYJCWZWFiYGAECCCgowi6qwi6iza6jxs6uywISBAggoKCoFoeoioiemoE+CxgwMQIEEAMzEwZgBAggBkNGTAAQYABIRSX4H75PxQAAAABJRU5ErkJggg=="
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAGJSURBVHjaYvz//z8DOmhuamLAApiAmB+JD9L4AV0RQAAxMRAHGIF4NhC/Q8LvgXgCuhkAAcREpGGzgDgJi1w+EK8GYk6YAEAAMRFh2HQgTsGjJgiI9wCxMIgDEEAsBAybAsTpyIKamsIMPr6qDF++/GJYtvQqw8ePP0HCVkB8HIjdAAKICY9hE4E4C13C2lqGgZ2dmUFYmJNBT18MWUoViD0AAgiXgf1AnItN4tnzL3D2cyQ2FHwCCCAWLEmmDxrYWMGO7fcY7t//yPD500+GJ08+Y8gDBBALmmE9QKoQXyz9+/ef4fq1N7ik3wAEEBOSYR1AqpiBfFAOxLsAAogJalgbVIASw7pADIAAYmZmYkoE0j0UGFYGxN0wDkAAgVyoRy3DQAAggEAGtgPxTWoYBgIAAcRUW1f3Ckg7kmgoVsNAACCAwJECNPQ5CYbiNAwEAAIInmyINBSvYSAAEEAoWY+AoQQNAwGAAMLIyzgMJcowEAAIIFzFF8hQOyAuAuJzQLyK2NgCCDAAenVhjnx59yMAAAAASUVORK5CYII="
 
 /***/ },
 /* 105 */
 /***/ function(module, exports) {
 
-	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABOUExURezp2AAAAH91jb3CsE9PT83C3CQhE7amy9Sx1ImFdL2u0AC+AMq+2si82Qp3Hsm92cvA28Gz07ipzcq/2se62LmqzsS21cW517yu0P///44+OfEAAAAadFJOU/////////////////////////////////8AFCIA2gAAAMxJREFUeNpikMQCAAKIAZsgQABhFQQIIAYWFklJTjYoD8oBCCAGIAMuJgnlAAQQUDsLG5JOMAcggBiAykGaoADCAQggBqByDhYWbj4w5GTjAJkLEEAg2xkZEIARpB4ggECCHEiCHCBBgADCqhIggLCqBAggrCoBAgirSoAAYmDCBJIAAcTAxMrKiIy4uBiZAQIIKMjLxcPPxSvCJSbIxSXKzs7OyAwQQAxMAjzCAjz8vOKCEkLsYMDIDBBADEyMGIAZIIAYJJkxAUCAAQCiZRN3sUCgAwAAAABJRU5ErkJggg=="
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACWUExURezp2L3CsAAAAH91jbamy9Sx1NXVxL2u0MvA2yEeEZy460hBJUU/JAC+ACQhE4qi2Zaw5JCp3se72Ap3Hsi82cq+2qK/8XeKtWNfTb+x0nSEsG19pH6QtWFfU8S31nt1Wpax5Xp0WoeeynBrVMm92WhkVsGz02JfU21oU5m06Mq/2se62MS21bmqzsW517ipzbyu0P///wUDcXkAAAAydFJOU/////////////////////////////////////////////////////////////////8ADVCY7wAAAO1JREFUeNpiMMQCAAKIAZsgQABhFQQIIAZDeW5uZTgXwgEIIAZFKX5+aQk2iBiUAxBADDwCClyCfIwQQSgHIICAglxigny8wmAI4TACBBCDhoymkrg6KwMIsEI4jAABxGCoyskpy8gEFmSCcNgAAojBkI2RkZENqhLIMWRkMwQIIKg7YSohACCAoIIwlRAAEEBYVQIEEFaVAAHEwIwJDAECiIGZg4NJSAiE5OSYJCWZWFiYGAECCCgowi6qwi6iza6jxs6uywISBAggoKCoFoeoioiemoE+CxgwMQIEEAMzEwZgBAggBkNGTAAQYABIRSX4H75PxQAAAABJRU5ErkJggg=="
 
 /***/ },
 /* 106 */
 /***/ function(module, exports) {
 
-	module.exports = "data:text/plain;base64,KwkJWzBdCXtucmVjPTI3IG5hbGxvYz0yNyBoX2luZF9pZD0tMSAuLi59IG1hdF9jb250X2hkcl9zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMl0Je25lZGdlPTIzIG5hbGxvYz0yNSBudG9wPTIgLi4ufSBtYXRfY29udF9wb2x5X3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVszXQl7cG1pbj01OTE0NjQwMCw1OTczMjAwIHBtYXg9NTk2MDYwMDEsNjQzODAwMH0gbWF0X2NvbnRfbGltX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs0XQl7cHM9NTkxOTI3MzgsNjM2MzEyNCBwZT01OTIxNjAwMCw2MzcyODAwIHBjPTU5MjE2MDAwLDYzNDAwMDAgY3c9MX0gbWF0X2N1cnZlX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs1XQl7cHM9NTkyMTYwMDAsNjM3MjgwMCBwZT01OTI2NzY1Miw2MzcyODAwfSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs2XQl7cHM9NTkyNjc2NTIsNjM3MjgwMCBwZT01OTI2NzY1Miw2MzA3MjAwIHBjPTU5MzYwMDAwLDYzNDAwMDAgY3c9MX0gbWF0X2N1cnZlX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs3XQl7cHM9NTkyNjc2NTIsNjMwNzIwMCBwZT01OTIyOTU4Niw2MzA3MjAwfSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs4XQl7cHM9NTkyMjk1ODYsNjMwNzIwMCBwZT01OTIxMjAwMCw2Mjg5NjE0fSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs5XQl7cHM9NTkyMTIwMDAsNjI4OTYxNCBwZT01OTIxMjAwMCw2MDU2Mzg2fSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsxMF0Je3BzPTU5MjEyMDAwLDYwNTYzODYgcGU9NTkyMjk1ODYsNjAzODgwMH0gbWF0X3NlZ19zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMTFdCXtwcz01OTIyOTU4Niw2MDM4ODAwIHBlPTU5NDY5NjE0LDYwMzg4MDB9IG1hdF9zZWdfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzEyXQl7cHM9NTk0Njk2MTQsNjAzODgwMCBwZT01OTQ4NzIwMCw2MDU2Mzg2fSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsxM10Je3BzPTU5NDg3MjAwLDYwNTYzODYgcGU9NTk0ODcyMDAsNjEwMDUwMH0gbWF0X3NlZ19zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMTRdCXtwcz01OTQ4NzIwMCw2MTAwNTAwIHBlPTU5NDM0MDAwLDYxODAwMDAgcGM9NTk1MjAwMDAsNjE4MDAwMCBjdz0xfSBtYXRfY3VydmVfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzE1XQl7cHM9NTk0MzQwMDAsNjE4MDAwMCBwZT01OTU1MjgwMCw2MTAwNTAwIHBjPTU5NTIwMDAwLDYxODAwMDAgY3c9MX0gbWF0X2N1cnZlX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsxNl0Je3BzPTU5NTUyODAwLDYxMDA1MDAgcGU9NTk1NTI4MDAsNjA0MjgwMH0gbWF0X3NlZ19zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMTddCXtwcz01OTU1MjgwMCw2MDQyODAwIHBlPTU5NTQzMTI0LDYwMTk1MzggcGM9NTk1MjAwMDAsNjA0MjgwMCBjdz0xfSBtYXRfY3VydmVfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzE4XQl7cHM9NTk1NDMxMjQsNjAxOTUzOCBwZT01OTUwNjQ2Miw1OTgyODc2fSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsxOV0Je3BzPTU5NTA2NDYyLDU5ODI4NzYgcGU9NTk0ODMyMDAsNTk3MzIwMCBwYz01OTQ4MzIwMCw2MDA2MDAwIGN3PTF9IG1hdF9jdXJ2ZV9zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMjBdCXtwcz01OTQ4MzIwMCw1OTczMjAwIHBlPTU5MjE2MDAwLDU5NzMyMDB9IG1hdF9zZWdfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzIxXQl7cHM9NTkyMTYwMDAsNTk3MzIwMCBwZT01OTE5MjczOCw1OTgyODc2IHBjPTU5MjE2MDAwLDYwMDYwMDAgY3c9MX0gbWF0X2N1cnZlX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsyMl0Je3BzPTU5MTkyNzM4LDU5ODI4NzYgcGU9NTkxNTYwNzYsNjAxOTUzOH0gbWF0X3NlZ19zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMjNdCXtwcz01OTE1NjA3Niw2MDE5NTM4IHBlPTU5MTQ2NDAwLDYwNDI4MDAgcGM9NTkxNzkyMDAsNjA0MjgwMCBjdz0xfSBtYXRfY3VydmVfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzI0XQl7cHM9NTkxNDY0MDAsNjA0MjgwMCBwZT01OTE0NjQwMCw2MzAzMjAwfSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsyNV0Je3BzPTU5MTQ2NDAwLDYzMDMyMDAgcGU9NTkxNTYwNzYsNjMyNjQ2MiBwYz01OTE3OTIwMCw2MzAzMjAwIGN3PTF9IG1hdF9jdXJ2ZV9zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMjZdCXtwcz01OTE1NjA3Niw2MzI2NDYyIHBlPTU5MTkyNzM4LDYzNjMxMjR9IG1hdF9zZWdfc3RydWMJbWF0X2NvbnRfc3RydWMK"
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABOUExURezp2AAAAH91jb3CsE9PT83C3CQhE7amy9Sx1ImFdL2u0AC+AMq+2si82Qp3Hsm92cvA28Gz07ipzcq/2se62LmqzsS21cW517yu0P///44+OfEAAAAadFJOU/////////////////////////////////8AFCIA2gAAAMxJREFUeNpikMQCAAKIAZsgQABhFQQIIAYWFklJTjYoD8oBCCAGIAMuJgnlAAQQUDsLG5JOMAcggBiAykGaoADCAQggBqByDhYWbj4w5GTjAJkLEEAg2xkZEIARpB4ggECCHEiCHCBBgADCqhIggLCqBAggrCoBAgirSoAAYmDCBJIAAcTAxMrKiIy4uBiZAQIIKMjLxcPPxSvCJSbIxSXKzs7OyAwQQAxMAjzCAjz8vOKCEkLsYMDIDBBADEyMGIAZIIAYJJkxAUCAAQCiZRN3sUCgAwAAAABJRU5ErkJggg=="
 
 /***/ },
 /* 107 */
+/***/ function(module, exports) {
+
+	module.exports = "data:text/plain;base64,KwkJWzBdCXtucmVjPTI3IG5hbGxvYz0yNyBoX2luZF9pZD0tMSAuLi59IG1hdF9jb250X2hkcl9zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMl0Je25lZGdlPTIzIG5hbGxvYz0yNSBudG9wPTIgLi4ufSBtYXRfY29udF9wb2x5X3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVszXQl7cG1pbj01OTE0NjQwMCw1OTczMjAwIHBtYXg9NTk2MDYwMDEsNjQzODAwMH0gbWF0X2NvbnRfbGltX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs0XQl7cHM9NTkxOTI3MzgsNjM2MzEyNCBwZT01OTIxNjAwMCw2MzcyODAwIHBjPTU5MjE2MDAwLDYzNDAwMDAgY3c9MX0gbWF0X2N1cnZlX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs1XQl7cHM9NTkyMTYwMDAsNjM3MjgwMCBwZT01OTI2NzY1Miw2MzcyODAwfSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs2XQl7cHM9NTkyNjc2NTIsNjM3MjgwMCBwZT01OTI2NzY1Miw2MzA3MjAwIHBjPTU5MzYwMDAwLDYzNDAwMDAgY3c9MX0gbWF0X2N1cnZlX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs3XQl7cHM9NTkyNjc2NTIsNjMwNzIwMCBwZT01OTIyOTU4Niw2MzA3MjAwfSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs4XQl7cHM9NTkyMjk1ODYsNjMwNzIwMCBwZT01OTIxMjAwMCw2Mjg5NjE0fSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVs5XQl7cHM9NTkyMTIwMDAsNjI4OTYxNCBwZT01OTIxMjAwMCw2MDU2Mzg2fSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsxMF0Je3BzPTU5MjEyMDAwLDYwNTYzODYgcGU9NTkyMjk1ODYsNjAzODgwMH0gbWF0X3NlZ19zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMTFdCXtwcz01OTIyOTU4Niw2MDM4ODAwIHBlPTU5NDY5NjE0LDYwMzg4MDB9IG1hdF9zZWdfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzEyXQl7cHM9NTk0Njk2MTQsNjAzODgwMCBwZT01OTQ4NzIwMCw2MDU2Mzg2fSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsxM10Je3BzPTU5NDg3MjAwLDYwNTYzODYgcGU9NTk0ODcyMDAsNjEwMDUwMH0gbWF0X3NlZ19zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMTRdCXtwcz01OTQ4NzIwMCw2MTAwNTAwIHBlPTU5NDM0MDAwLDYxODAwMDAgcGM9NTk1MjAwMDAsNjE4MDAwMCBjdz0xfSBtYXRfY3VydmVfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzE1XQl7cHM9NTk0MzQwMDAsNjE4MDAwMCBwZT01OTU1MjgwMCw2MTAwNTAwIHBjPTU5NTIwMDAwLDYxODAwMDAgY3c9MX0gbWF0X2N1cnZlX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsxNl0Je3BzPTU5NTUyODAwLDYxMDA1MDAgcGU9NTk1NTI4MDAsNjA0MjgwMH0gbWF0X3NlZ19zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMTddCXtwcz01OTU1MjgwMCw2MDQyODAwIHBlPTU5NTQzMTI0LDYwMTk1MzggcGM9NTk1MjAwMDAsNjA0MjgwMCBjdz0xfSBtYXRfY3VydmVfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzE4XQl7cHM9NTk1NDMxMjQsNjAxOTUzOCBwZT01OTUwNjQ2Miw1OTgyODc2fSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsxOV0Je3BzPTU5NTA2NDYyLDU5ODI4NzYgcGU9NTk0ODMyMDAsNTk3MzIwMCBwYz01OTQ4MzIwMCw2MDA2MDAwIGN3PTF9IG1hdF9jdXJ2ZV9zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMjBdCXtwcz01OTQ4MzIwMCw1OTczMjAwIHBlPTU5MjE2MDAwLDU5NzMyMDB9IG1hdF9zZWdfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzIxXQl7cHM9NTkyMTYwMDAsNTk3MzIwMCBwZT01OTE5MjczOCw1OTgyODc2IHBjPTU5MjE2MDAwLDYwMDYwMDAgY3c9MX0gbWF0X2N1cnZlX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsyMl0Je3BzPTU5MTkyNzM4LDU5ODI4NzYgcGU9NTkxNTYwNzYsNjAxOTUzOH0gbWF0X3NlZ19zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMjNdCXtwcz01OTE1NjA3Niw2MDE5NTM4IHBlPTU5MTQ2NDAwLDYwNDI4MDAgcGM9NTkxNzkyMDAsNjA0MjgwMCBjdz0xfSBtYXRfY3VydmVfc3RydWMJbWF0X2NvbnRfc3RydWMKKwkJWzI0XQl7cHM9NTkxNDY0MDAsNjA0MjgwMCBwZT01OTE0NjQwMCw2MzAzMjAwfSBtYXRfc2VnX3N0cnVjCW1hdF9jb250X3N0cnVjCisJCVsyNV0Je3BzPTU5MTQ2NDAwLDYzMDMyMDAgcGU9NTkxNTYwNzYsNjMyNjQ2MiBwYz01OTE3OTIwMCw2MzAzMjAwIGN3PTF9IG1hdF9jdXJ2ZV9zdHJ1YwltYXRfY29udF9zdHJ1YworCQlbMjZdCXtwcz01OTE1NjA3Niw2MzI2NDYyIHBlPTU5MTkyNzM4LDYzNjMxMjR9IG1hdF9zZWdfc3RydWMJbWF0X2NvbnRfc3RydWMK"
+
+/***/ },
+/* 108 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -28958,4 +29104,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.252a44e2.js.map
+//# sourceMappingURL=main.3aa0212a.js.map

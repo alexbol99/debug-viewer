@@ -206,6 +206,9 @@
       -ms-flex-direction: row;
           flex-direction: row;
   background: rgba(147, 128, 108, 0.1);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 @media (min-width: 768px) {
@@ -247,4 +250,4 @@ html,body {
   height:100%;
 }
 
-/*# sourceMappingURL=main.62a09ebc.css.map*/
+/*# sourceMappingURL=main.9b681f18.css.map*/
