@@ -49,6 +49,10 @@ function parsePolygon(polygonsXML) {
         alpha: 1.0
     };
 
+    // Augment Flatten object with label
+    let label = polygonsXML.getAttribute("label");
+    polygon.label = label;
+
     // Add islands
     let islands = polygonsXML.getElementsByTagName('island');
     for (let island of islands) {

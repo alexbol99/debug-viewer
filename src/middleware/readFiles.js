@@ -25,7 +25,7 @@ const readFile = (file, stage, layers, dispatch) => {
                 if (polygon.edges.size > 0 && polygon.faces.size > 0) {
                     // let watch = undefined; //  parser.parseToWatchArray(string);
                     // let shape = new Shape(polygon, stage, polygon.style, watch);
-                    let shape = new Model(polygon);
+                    let shape = new Model(polygon, undefined, polygon.label);
 
                     layer.add(shape);
                 }
@@ -35,14 +35,14 @@ const readFile = (file, stage, layers, dispatch) => {
                 if (polygon.edges.size > 0 && polygon.faces.size > 0) {
                     // let watch = undefined; //  parser.parseToWatchArray(string);
                     // let shape = new Shape(polygon, stage, polygon.style, watch);
-                    let shape = new Model(polygon);
+                    let shape = new Model(polygon, undefined, polygon.label);
 
                     layer.add(shape);
                 }
             }
 
             for (let shape of job.shapes) {
-                let model = new Model(shape, undefined, shape.label)
+                let model = new Model(shape, undefined, shape.label);
                 layer.add(model);
             }
 

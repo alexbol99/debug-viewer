@@ -38,6 +38,7 @@ const defaultAppState = {
     parser: new Parser(),
     widthOn: true,
     displayVertices: false,
+    displayLabels: true,
     measurePointsActive: false,
     measureShapesActive: false,
     measureShapesFirstClick: true,
@@ -145,6 +146,12 @@ function app(state = defaultAppState, action) {
                     displayVertices: true
                 });
             }
+
+        case ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED:
+            return Object.assign({}, state, {
+                displayLabels: !state.displayLabels
+            });
+
         case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
             return Object.assign({}, state, {
                 measurePointsActive: true,

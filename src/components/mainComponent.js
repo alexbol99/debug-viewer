@@ -38,6 +38,8 @@ export class MainComponent extends Component {
         this.setHomeView = this.setHomeView.bind(this);
         this.toggleWidthMode = this.toggleWidthMode.bind(this);
         this.toggleDisplayVertices = this.toggleDisplayVertices.bind(this);
+        this.toggleDisplayLabels = this.toggleDisplayLabels.bind(this);
+
         this.onMeasurePointsButtonPressed = this.onMeasurePointsButtonPressed.bind(this);
         this.onMeasureBetweenShapesButtonPressed = this.onMeasureBetweenShapesButtonPressed.bind(this);
         this.onPanByDragPressed = this.onPanByDragPressed.bind(this);
@@ -178,6 +180,12 @@ export class MainComponent extends Component {
         })
     }
 
+    toggleDisplayLabels() {
+        this.dispatch({
+            type: ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED
+        })
+    }
+
     onMeasurePointsButtonPressed() {
         this.dispatch({
             type: ActionTypes.MEASURE_POINTS_BUTTON_PRESSED
@@ -225,6 +233,7 @@ export class MainComponent extends Component {
                     onMeasureBetweenShapesButtonPressed={this.onMeasureBetweenShapesButtonPressed}
                     onToggleWidthModePressed={this.toggleWidthMode}
                     onToggleVerticesPressed={this.toggleDisplayVertices}
+                    onToggleLabelsPressed={this.toggleDisplayLabels}
                 />
                 <StageComponent
                     stage={this.state.stage}
@@ -246,6 +255,7 @@ export class MainComponent extends Component {
                         color={layer.color}
                         displayed={layer.displayed}
                         displayVertices={this.state.app.displayVertices}
+                        displayLabels={this.state.app.displayLabels}
                         widthOn={this.state.app.widthOn}
                         hoveredShape={this.state.app.hoveredShape}
                         firstMeasuredShape={this.state.app.firstMeasuredShape}

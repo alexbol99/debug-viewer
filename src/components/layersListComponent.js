@@ -133,7 +133,7 @@ export class LayersListComponent extends Component {
             (<div
                 style={{padding:4, backgroundColor: "lightgray"}}
                 onClick={this.onAddLayerSelected}>
-                <h4 style={{margin:0}}>Add layer</h4>
+                <h5 style={{margin:0}}>Add layer</h5>
             </div>)
 
         return (
@@ -141,7 +141,7 @@ export class LayersListComponent extends Component {
                  ref="layersComponent"
                  onClick={this.onLayerListClicked}
             >
-                <h4>Layers</h4>
+                <h5>Layers</h5>
                 <ul id="layersList"
                     style={{maxHeight:0.82*(this.height-40),padding:0,overflow:'auto'}}>
                 { this.state.layers.map((layer) =>

@@ -14,6 +14,7 @@ import measureShapes from '../../public/icons/measureContour.png';
 import measurePoints from '../../public/icons/measurePoints.png';
 import width from '../../public/icons/WidthOn.png';
 import vertices from '../../public/icons/editContourVertextOnOff.png';
+import label from '../../public/icons/label_icon.png';
 import setting from '../../public/icons/Setting.png';
 import about from '../../public/icons/About.png';
 
@@ -64,6 +65,9 @@ export class ToolbarComponent extends Component {
                 </button>
                 <button title="Display vertices on/off" onClick={this.props.onToggleVerticesPressed}>
                     <img src={vertices} alt="vertices" />
+                </button>
+                <button title="Display labels on/off" onClick={this.props.onToggleLabelsPressed}>
+                    <img src={label} alt="labels" />
                 </button>
                 <button title="Settings" onClick={this.notImplemented}>
                     <img src={setting} alt="setting" />

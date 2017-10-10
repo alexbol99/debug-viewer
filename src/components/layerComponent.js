@@ -11,6 +11,7 @@ export class LayerComponent extends Component {
             color: params.color,
             displayed: params.displayed,
             displayVertices: params.displayVertices,
+            displayLabels: params.displayLabels,
             hovered: params.hovered,
             selected: params.selected,
             widthOn: params.widthOn,
@@ -28,6 +29,7 @@ export class LayerComponent extends Component {
             color: nextProps.color,
             displayed: nextProps.displayed,
             displayVertices: nextProps.displayVertices,
+            displayLabels: nextProps.displayLabels,
             hovered: nextProps.hovered,
             selected: nextProps.selected,
             widthOn: nextProps.widthOn,
@@ -76,6 +78,7 @@ export class LayerComponent extends Component {
                             color={this.state.layer.color}
                             widthOn={this.state.widthOn}
                             displayVertices={this.state.displayVertices}
+                            displayLabels={this.state.displayLabels}
                             onMouseOver={this.props.onMouseOver}
                             onMouseOut={this.props.onMouseOut}
                             onClick={this.props.onClick}
@@ -97,6 +100,7 @@ export class LayerComponent extends Component {
                             color={this.state.layer.color}
                             widthOn={this.state.widthOn}
                             displayVertices={this.state.displayVertices}
+                            displayLabels={this.state.displayLabels}
                             onMouseOver={this.props.onMouseOver}
                             onMouseOut={this.props.onMouseOut}
                             onClick={this.props.onClick}

@@ -15,6 +15,8 @@ export class SegmentTool extends Component {
         params.stage.addChild(this.shape);
 
         this.vertexShapes = [];
+        this.labelShape = undefined;
+
         if (params.model.geom instanceof Flatten.Segment) {
             let segment = params.model.geom;
             let vertices = [segment.ps, segment.pe];
@@ -27,9 +29,28 @@ export class SegmentTool extends Component {
         }
         else if (params.model.geom instanceof Flatten.Point) {
             let vertexShape = new createjs.Shape();
-            vertexShape.geom = params.model.geom;   // augment Shape with geom struct
+            vertexShape.geom = params.model.geom;   // augment vertex Shape with geom struct
             params.stage.addChild(vertexShape);
             this.vertexShapes.push(vertexShape);
+        }
+
+        if (params.model.label && params.model.label.trim() !== "") {
+            var html = document.createElement('div');
+            html.innerText = params.model.label;
+            html.style.position = "absolute";
+            html.style.top = 0;
+            html.style.left = 0;
+
+            document.body.appendChild(html);
+
+            this.labelShape = new createjs.DOMElement(html);
+
+            // let labelShape = new createjs.Text();
+            // labelShape.text = params.model.label;
+            // labelShape.textBaseline = "alphabetic";
+
+            this.labelShape.geom = params.model.geom;     // augment label Shape with geom struct
+            params.stage.addChild(this.labelShape);
         }
 
         this.state = {
@@ -37,6 +58,7 @@ export class SegmentTool extends Component {
             color: params.color,
             displayed: params.displayed,
             displayVertices: params.displayVertices,
+            displayLabels: params.displayLabels,
             hovered: params.hovered,
             selected: params.selected,
             widthOn: params.widthOn,
@@ -87,10 +109,28 @@ export class SegmentTool extends Component {
                 });
             }
             else {
-                vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution)
+                vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
+                vertexShape.graphics.fill.style = fill;
             }
             vertexShape.alpha = alpha;
         }
+    }
+
+    redrawLabels(showLabel) {
+        let stage = this.props.stage;
+
+        this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
+
+        let box = this.props.model.geom.box;
+        let point = {x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2};
+        let dx = 6. / (stage.zoomFactor * stage.resolution);
+        let dy = 16. / (stage.zoomFactor * stage.resolution);
+
+        this.labelShape.htmlElement.style.font = "16px Arial";
+        let unscale = 1. / (stage.zoomFactor * stage.resolution);
+        let tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
+        let ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
+        this.labelShape.setTransform(tx, ty, unscale, -unscale);
     }
 
     redraw() {
@@ -114,6 +154,10 @@ export class SegmentTool extends Component {
         // Draw vertices
         alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
         this.redrawVertices(color, color, alpha);
+
+        // Redraw labels
+        let showLabel = this.props.displayed && this.props.displayLabels;
+        this.redrawLabels(showLabel);
     }
 
     componentWillMount() {
@@ -133,6 +177,7 @@ export class SegmentTool extends Component {
             color: nextProps.color,
             displayed: nextProps.displayed,
             displayVertices: nextProps.displayVertices,
+            displayLabels: nextProps.displayLabels,
             hovered: nextProps.hovered,
             selected: nextProps.selected,
             widthOn: nextProps.widthOn,

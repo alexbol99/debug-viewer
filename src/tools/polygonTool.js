@@ -14,6 +14,8 @@ export class PolygonTool extends Component {
         params.stage.addChild(this.shape);
 
         this.vertexShapes = [];
+        this.labelShape = undefined;
+
         for (let vertex of params.polygon.geom.vertices) {
             let vertexShape = new createjs.Shape();
             vertexShape.geom = vertex;   // augment Shape with geom struct
@@ -21,11 +23,31 @@ export class PolygonTool extends Component {
             this.vertexShapes.push(vertexShape);
         }
 
+        if (params.polygon.label && params.polygon.label.trim() !== "") {
+            var html = document.createElement('div');
+            html.innerText = params.polygon.label;
+            html.style.position = "absolute";
+            html.style.top = 0;
+            html.style.left = 0;
+
+            document.body.appendChild(html);
+
+            this.labelShape = new createjs.DOMElement(html);
+
+            // let labelShape = new createjs.Text();
+            // labelShape.text = params.polygon.label;
+            // labelShape.textBaseline = "alphabetic";
+
+            this.labelShape.geom = params.polygon.geom;     // augment label Shape with geom struct
+            params.stage.addChild(this.labelShape);
+        }
+
         this.state = {
             polygon: params.polygon,
             color: params.color,
             displayed: params.displayed,
             displayVertices: params.displayVertices,
+            displayLabels: params.displayLabels,
             hovered: params.hovered,
             selected: params.selected,
             widthOn: params.widthOn,
@@ -76,9 +98,30 @@ export class PolygonTool extends Component {
             }
             else {
                 vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
+                vertexShape.graphics.fill.style = fill;
             }
             vertexShape.alpha = alpha;
         }
+    }
+
+    redrawLabels(showLabel) {
+        if (!this.labelShape) return;
+
+        let stage = this.props.stage;
+
+        this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
+
+        let box = this.props.polygon.geom.box;
+        let point = {x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2};
+        let dx = 6. / (stage.zoomFactor * stage.resolution);
+        let dy = 4. / (stage.zoomFactor * stage.resolution);
+
+        this.labelShape.htmlElement.style.font = "16px Arial";
+        let unscale = 1. / (stage.zoomFactor * stage.resolution);
+        let tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
+        let ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
+        this.labelShape.setTransform(tx, ty, unscale, -unscale);
+
     }
 
     redraw() {
@@ -103,6 +146,10 @@ export class PolygonTool extends Component {
         // Draw vertices
         alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
         this.redrawVertices(color, color, alpha);
+
+        // Draw labels
+        let showLabel = this.props.displayed && this.props.displayLabels;
+        this.redrawLabels(showLabel);
     }
 
     componentWillMount() {
@@ -125,6 +172,7 @@ export class PolygonTool extends Component {
             color: nextProps.color,
             displayed: nextProps.displayed,
             displayVertices: nextProps.displayVertices,
+            displayLabels: nextProps.displayLabels,
             hovered: nextProps.hovered,
             selected: nextProps.selected,
             widthOn: nextProps.widthOn,

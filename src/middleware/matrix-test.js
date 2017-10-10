@@ -1,7 +1,7 @@
 import Flatten from 'flatten-js';
 import * as ActionTypes from '../actions/action-types';
 import { Layers } from '../models/layers';
-// import { Model } from "../models/model";
+import { Model } from "../models/model";
 
 let {point, segment, Polygon} = Flatten;
 
@@ -26,21 +26,22 @@ const matrix_test = ({ dispatch, getState }) => next => action => {
             layer.name = "demo1";
             layer.title = "demo1";
 
-            layer.add( segment(-100, 0, 100, 0) );
-            layer.add( segment(0, -100, 0, 50) );
+            layer.add( new Model(segment(-100, 0, 100, 0), {}, "segment1"));
+            layer.add( new Model(segment(0, -100, 0, 50), {}, "segment 2"));
 
             let polygon = new Polygon();
 
-            layer.add( point(20,20) );
+            layer.add( new Model(point(20,20),{},"ABC123") );
+            layer.add( new Model(point(-50,30),{},"Boom boom") );
 
             polygon.addFace( [
-                segment(-50,-50, 50, -50),
-                segment(50, -50, 100, 100),
-                segment(100,100, -100, 100),
-                segment(-100,100, -50, -50)
+                segment(-500000,-500000, 500000, -500000),
+                segment(500000, -500000, 100000, 100000),
+                segment(100000,100000, -100000, 100000),
+                segment(-100000,100000, -500000, -500000)
             ]);
 
-            layer.add(polygon);
+            // layer.add(new Model(polygon,{},"polygonchik"));
 
             zoomHome(layer, stage);
             state.layers.push(layer);

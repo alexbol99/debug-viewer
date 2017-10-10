@@ -35,25 +35,27 @@ export class StatusComponent extends Component {
         return (
             <div className="App-status-bar">
                 <div style={{flex: 4, textAlign: "left", marginLeft: 10, padding: 5}}>
-                    <h4>
+                    <h5>
                         {`X: ${coordX} Y: ${coordY}`}
-                    </h4>
+                    </h5>
                 </div>
 
-                <div style={{flex: 8, textAlign: "center", marginLeft: 10, padding: 5}}>
-                    <h4>
+                <div style={{flex: 6, textAlign: "left", marginLeft: 10, padding: 5}}>
+                    <h5>
                         {message}
-                    </h4>
+                    </h5>
                 </div>
 
-                <div
-                    style={{flex: 4, textAlign: "right", marginRight: 10, padding: 5}}
+                <button
+                    style={{flex: 2, height: "50%", margin: 5, border: "1px", backgroundColor: "inherit"}}
                     onClick={this.props.onUnitClicked}
                 >
-                    <h4>
-                        {`Units: ${this.props.units}`}
-                    </h4>
-                </div>
+                    <h3>Units</h3>
+                </button>
+                <h5 style={{flex: 2, height: "50%", margin: 5}}>
+                    {this.props.units}
+                </h5>
+
             </div>
         )
     }

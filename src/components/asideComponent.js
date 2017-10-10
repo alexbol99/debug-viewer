@@ -122,9 +122,9 @@ export class AsideComponent extends Component {
         let watchContainerHeight = 0.75*this.height;
         return (
             <aside className="App-aside" ref="aside">
-                <h4>Info</h4>
+                <h5>Info</h5>
                 {/*<h3>... or paste data here</h3>*/}
-                <h4>{title}</h4>
+                <h5>{title}</h5>
                 <div
                     className="Watch-container"
                     style={{maxHeight:watchContainerHeight}}

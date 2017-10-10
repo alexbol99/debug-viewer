@@ -7,9 +7,9 @@ let {Point, Segment, Circle, Arc, Polygon} = Flatten;
 /* Provide conversion methods from FlattenJS objects to CreateJS Graphics */
 
 Point.prototype.graphics = function(style) {
-    let graphics = new createjs.Graphics();
     let radius = (style && style.radius) ? style.radius : 3;
     let fill = style && style.fill ? style.fill : "red";
+    let graphics = new createjs.Graphics();
     graphics.fill = graphics.beginFill(fill).command;
     graphics.circle = graphics.drawCircle(this.x, this.y, radius).command;
     return graphics;
