@@ -68,7 +68,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(88);
-	module.exports = __webpack_require__(32);
+	module.exports = __webpack_require__(33);
 
 
 /***/ },
@@ -215,7 +215,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 20/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _layer = __webpack_require__(39);
+	var _layer = __webpack_require__(40);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -17471,6140 +17471,6 @@
 
 /***/ },
 /* 13 */
-/***/ function(module, exports) {
-
-	/**
-	 * Created by Alex Bol on 3/28/2017.
-	 */
-	
-	'use strict';
-	
-	module.exports = {
-	    RB_TREE_COLOR_RED: 0,
-	    RB_TREE_COLOR_BLACK: 1
-	};
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var root = __webpack_require__(82);
-	
-	/** Built-in value references. */
-	var Symbol = root.Symbol;
-	
-	module.exports = Symbol;
-
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseGetTag = __webpack_require__(76),
-	    getPrototype = __webpack_require__(78),
-	    isObjectLike = __webpack_require__(83);
-	
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-	
-	/** Used for built-in method references. */
-	var funcProto = Function.prototype,
-	    objectProto = Object.prototype;
-	
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = funcProto.toString;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/** Used to infer the `Object` constructor. */
-	var objectCtorString = funcToString.call(Object);
-	
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.8.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
-	    return false;
-	  }
-	  var proto = getPrototype(value);
-	  if (proto === null) {
-	    return true;
-	  }
-	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
-	    funcToString.call(Ctor) == objectCtorString;
-	}
-	
-	module.exports = isPlainObject;
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var asap = __webpack_require__(21);
-	
-	function noop() {}
-	
-	// States:
-	//
-	// 0 - pending
-	// 1 - fulfilled with _value
-	// 2 - rejected with _value
-	// 3 - adopted the state of another promise, _value
-	//
-	// once the state is no longer pending (0) it is immutable
-	
-	// All `_` prefixed properties will be reduced to `_{random number}`
-	// at build time to obfuscate them and discourage their use.
-	// We don't use symbols or Object.defineProperty to fully hide them
-	// because the performance isn't good enough.
-	
-	
-	// to avoid using try/catch inside critical functions, we
-	// extract them to here.
-	var LAST_ERROR = null;
-	var IS_ERROR = {};
-	function getThen(obj) {
-	  try {
-	    return obj.then;
-	  } catch (ex) {
-	    LAST_ERROR = ex;
-	    return IS_ERROR;
-	  }
-	}
-	
-	function tryCallOne(fn, a) {
-	  try {
-	    return fn(a);
-	  } catch (ex) {
-	    LAST_ERROR = ex;
-	    return IS_ERROR;
-	  }
-	}
-	function tryCallTwo(fn, a, b) {
-	  try {
-	    fn(a, b);
-	  } catch (ex) {
-	    LAST_ERROR = ex;
-	    return IS_ERROR;
-	  }
-	}
-	
-	module.exports = Promise;
-	
-	function Promise(fn) {
-	  if (typeof this !== 'object') {
-	    throw new TypeError('Promises must be constructed via new');
-	  }
-	  if (typeof fn !== 'function') {
-	    throw new TypeError('not a function');
-	  }
-	  this._45 = 0;
-	  this._81 = 0;
-	  this._65 = null;
-	  this._54 = null;
-	  if (fn === noop) return;
-	  doResolve(fn, this);
-	}
-	Promise._10 = null;
-	Promise._97 = null;
-	Promise._61 = noop;
-	
-	Promise.prototype.then = function(onFulfilled, onRejected) {
-	  if (this.constructor !== Promise) {
-	    return safeThen(this, onFulfilled, onRejected);
-	  }
-	  var res = new Promise(noop);
-	  handle(this, new Handler(onFulfilled, onRejected, res));
-	  return res;
-	};
-	
-	function safeThen(self, onFulfilled, onRejected) {
-	  return new self.constructor(function (resolve, reject) {
-	    var res = new Promise(noop);
-	    res.then(resolve, reject);
-	    handle(self, new Handler(onFulfilled, onRejected, res));
-	  });
-	};
-	function handle(self, deferred) {
-	  while (self._81 === 3) {
-	    self = self._65;
-	  }
-	  if (Promise._10) {
-	    Promise._10(self);
-	  }
-	  if (self._81 === 0) {
-	    if (self._45 === 0) {
-	      self._45 = 1;
-	      self._54 = deferred;
-	      return;
-	    }
-	    if (self._45 === 1) {
-	      self._45 = 2;
-	      self._54 = [self._54, deferred];
-	      return;
-	    }
-	    self._54.push(deferred);
-	    return;
-	  }
-	  handleResolved(self, deferred);
-	}
-	
-	function handleResolved(self, deferred) {
-	  asap(function() {
-	    var cb = self._81 === 1 ? deferred.onFulfilled : deferred.onRejected;
-	    if (cb === null) {
-	      if (self._81 === 1) {
-	        resolve(deferred.promise, self._65);
-	      } else {
-	        reject(deferred.promise, self._65);
-	      }
-	      return;
-	    }
-	    var ret = tryCallOne(cb, self._65);
-	    if (ret === IS_ERROR) {
-	      reject(deferred.promise, LAST_ERROR);
-	    } else {
-	      resolve(deferred.promise, ret);
-	    }
-	  });
-	}
-	function resolve(self, newValue) {
-	  // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
-	  if (newValue === self) {
-	    return reject(
-	      self,
-	      new TypeError('A promise cannot be resolved with itself.')
-	    );
-	  }
-	  if (
-	    newValue &&
-	    (typeof newValue === 'object' || typeof newValue === 'function')
-	  ) {
-	    var then = getThen(newValue);
-	    if (then === IS_ERROR) {
-	      return reject(self, LAST_ERROR);
-	    }
-	    if (
-	      then === self.then &&
-	      newValue instanceof Promise
-	    ) {
-	      self._81 = 3;
-	      self._65 = newValue;
-	      finale(self);
-	      return;
-	    } else if (typeof then === 'function') {
-	      doResolve(then.bind(newValue), self);
-	      return;
-	    }
-	  }
-	  self._81 = 1;
-	  self._65 = newValue;
-	  finale(self);
-	}
-	
-	function reject(self, newValue) {
-	  self._81 = 2;
-	  self._65 = newValue;
-	  if (Promise._97) {
-	    Promise._97(self, newValue);
-	  }
-	  finale(self);
-	}
-	function finale(self) {
-	  if (self._45 === 1) {
-	    handle(self, self._54);
-	    self._54 = null;
-	  }
-	  if (self._45 === 2) {
-	    for (var i = 0; i < self._54.length; i++) {
-	      handle(self, self._54[i]);
-	    }
-	    self._54 = null;
-	  }
-	}
-	
-	function Handler(onFulfilled, onRejected, promise){
-	  this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
-	  this.onRejected = typeof onRejected === 'function' ? onRejected : null;
-	  this.promise = promise;
-	}
-	
-	/**
-	 * Take a potentially misbehaving resolver function and make sure
-	 * onFulfilled and onRejected are only called once.
-	 *
-	 * Makes no guarantees about asynchrony.
-	 */
-	function doResolve(fn, promise) {
-	  var done = false;
-	  var res = tryCallTwo(fn, function (value) {
-	    if (done) return;
-	    done = true;
-	    resolve(promise, value);
-	  }, function (reason) {
-	    if (done) return;
-	    done = true;
-	    reject(promise, reason);
-	  })
-	  if (!done && res === IS_ERROR) {
-	    done = true;
-	    reject(promise, LAST_ERROR);
-	  }
-	}
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	exports["default"] = compose;
-	/**
-	 * Composes single-argument functions from right to left. The rightmost
-	 * function can take multiple arguments as it provides the signature for
-	 * the resulting composite function.
-	 *
-	 * @param {...Function} funcs The functions to compose.
-	 * @returns {Function} A function obtained by composing the argument functions
-	 * from right to left. For example, compose(f, g, h) is identical to doing
-	 * (...args) => f(g(h(...args))).
-	 */
-	
-	function compose() {
-	  for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key < _len; _key++) {
-	    funcs[_key] = arguments[_key];
-	  }
-	
-	  if (funcs.length === 0) {
-	    return function (arg) {
-	      return arg;
-	    };
-	  }
-	
-	  if (funcs.length === 1) {
-	    return funcs[0];
-	  }
-	
-	  return funcs.reduce(function (a, b) {
-	    return function () {
-	      return a(b.apply(undefined, arguments));
-	    };
-	  });
-	}
-
-/***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports.ActionTypes = undefined;
-	exports['default'] = createStore;
-	
-	var _isPlainObject = __webpack_require__(15);
-	
-	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-	
-	var _symbolObservable = __webpack_require__(94);
-	
-	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	/**
-	 * These are private action types reserved by Redux.
-	 * For any unknown actions, you must return the current state.
-	 * If the current state is undefined, you must return the initial state.
-	 * Do not reference these action types directly in your code.
-	 */
-	var ActionTypes = exports.ActionTypes = {
-	  INIT: '@@redux/INIT'
-	
-	  /**
-	   * Creates a Redux store that holds the state tree.
-	   * The only way to change the data in the store is to call `dispatch()` on it.
-	   *
-	   * There should only be a single store in your app. To specify how different
-	   * parts of the state tree respond to actions, you may combine several reducers
-	   * into a single reducer function by using `combineReducers`.
-	   *
-	   * @param {Function} reducer A function that returns the next state tree, given
-	   * the current state tree and the action to handle.
-	   *
-	   * @param {any} [preloadedState] The initial state. You may optionally specify it
-	   * to hydrate the state from the server in universal apps, or to restore a
-	   * previously serialized user session.
-	   * If you use `combineReducers` to produce the root reducer function, this must be
-	   * an object with the same shape as `combineReducers` keys.
-	   *
-	   * @param {Function} [enhancer] The store enhancer. You may optionally specify it
-	   * to enhance the store with third-party capabilities such as middleware,
-	   * time travel, persistence, etc. The only store enhancer that ships with Redux
-	   * is `applyMiddleware()`.
-	   *
-	   * @returns {Store} A Redux store that lets you read the state, dispatch actions
-	   * and subscribe to changes.
-	   */
-	};function createStore(reducer, preloadedState, enhancer) {
-	  var _ref2;
-	
-	  if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
-	    enhancer = preloadedState;
-	    preloadedState = undefined;
-	  }
-	
-	  if (typeof enhancer !== 'undefined') {
-	    if (typeof enhancer !== 'function') {
-	      throw new Error('Expected the enhancer to be a function.');
-	    }
-	
-	    return enhancer(createStore)(reducer, preloadedState);
-	  }
-	
-	  if (typeof reducer !== 'function') {
-	    throw new Error('Expected the reducer to be a function.');
-	  }
-	
-	  var currentReducer = reducer;
-	  var currentState = preloadedState;
-	  var currentListeners = [];
-	  var nextListeners = currentListeners;
-	  var isDispatching = false;
-	
-	  function ensureCanMutateNextListeners() {
-	    if (nextListeners === currentListeners) {
-	      nextListeners = currentListeners.slice();
-	    }
-	  }
-	
-	  /**
-	   * Reads the state tree managed by the store.
-	   *
-	   * @returns {any} The current state tree of your application.
-	   */
-	  function getState() {
-	    return currentState;
-	  }
-	
-	  /**
-	   * Adds a change listener. It will be called any time an action is dispatched,
-	   * and some part of the state tree may potentially have changed. You may then
-	   * call `getState()` to read the current state tree inside the callback.
-	   *
-	   * You may call `dispatch()` from a change listener, with the following
-	   * caveats:
-	   *
-	   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
-	   * If you subscribe or unsubscribe while the listeners are being invoked, this
-	   * will not have any effect on the `dispatch()` that is currently in progress.
-	   * However, the next `dispatch()` call, whether nested or not, will use a more
-	   * recent snapshot of the subscription list.
-	   *
-	   * 2. The listener should not expect to see all state changes, as the state
-	   * might have been updated multiple times during a nested `dispatch()` before
-	   * the listener is called. It is, however, guaranteed that all subscribers
-	   * registered before the `dispatch()` started will be called with the latest
-	   * state by the time it exits.
-	   *
-	   * @param {Function} listener A callback to be invoked on every dispatch.
-	   * @returns {Function} A function to remove this change listener.
-	   */
-	  function subscribe(listener) {
-	    if (typeof listener !== 'function') {
-	      throw new Error('Expected listener to be a function.');
-	    }
-	
-	    var isSubscribed = true;
-	
-	    ensureCanMutateNextListeners();
-	    nextListeners.push(listener);
-	
-	    return function unsubscribe() {
-	      if (!isSubscribed) {
-	        return;
-	      }
-	
-	      isSubscribed = false;
-	
-	      ensureCanMutateNextListeners();
-	      var index = nextListeners.indexOf(listener);
-	      nextListeners.splice(index, 1);
-	    };
-	  }
-	
-	  /**
-	   * Dispatches an action. It is the only way to trigger a state change.
-	   *
-	   * The `reducer` function, used to create the store, will be called with the
-	   * current state tree and the given `action`. Its return value will
-	   * be considered the **next** state of the tree, and the change listeners
-	   * will be notified.
-	   *
-	   * The base implementation only supports plain object actions. If you want to
-	   * dispatch a Promise, an Observable, a thunk, or something else, you need to
-	   * wrap your store creating function into the corresponding middleware. For
-	   * example, see the documentation for the `redux-thunk` package. Even the
-	   * middleware will eventually dispatch plain object actions using this method.
-	   *
-	   * @param {Object} action A plain object representing “what changed”. It is
-	   * a good idea to keep actions serializable so you can record and replay user
-	   * sessions, or use the time travelling `redux-devtools`. An action must have
-	   * a `type` property which may not be `undefined`. It is a good idea to use
-	   * string constants for action types.
-	   *
-	   * @returns {Object} For convenience, the same action object you dispatched.
-	   *
-	   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
-	   * return something else (for example, a Promise you can await).
-	   */
-	  function dispatch(action) {
-	    if (!(0, _isPlainObject2['default'])(action)) {
-	      throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
-	    }
-	
-	    if (typeof action.type === 'undefined') {
-	      throw new Error('Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?');
-	    }
-	
-	    if (isDispatching) {
-	      throw new Error('Reducers may not dispatch actions.');
-	    }
-	
-	    try {
-	      isDispatching = true;
-	      currentState = currentReducer(currentState, action);
-	    } finally {
-	      isDispatching = false;
-	    }
-	
-	    var listeners = currentListeners = nextListeners;
-	    for (var i = 0; i < listeners.length; i++) {
-	      var listener = listeners[i];
-	      listener();
-	    }
-	
-	    return action;
-	  }
-	
-	  /**
-	   * Replaces the reducer currently used by the store to calculate the state.
-	   *
-	   * You might need this if your app implements code splitting and you want to
-	   * load some of the reducers dynamically. You might also need this if you
-	   * implement a hot reloading mechanism for Redux.
-	   *
-	   * @param {Function} nextReducer The reducer for the store to use instead.
-	   * @returns {void}
-	   */
-	  function replaceReducer(nextReducer) {
-	    if (typeof nextReducer !== 'function') {
-	      throw new Error('Expected the nextReducer to be a function.');
-	    }
-	
-	    currentReducer = nextReducer;
-	    dispatch({ type: ActionTypes.INIT });
-	  }
-	
-	  /**
-	   * Interoperability point for observable/reactive libraries.
-	   * @returns {observable} A minimal observable of state changes.
-	   * For more information, see the observable proposal:
-	   * https://github.com/tc39/proposal-observable
-	   */
-	  function observable() {
-	    var _ref;
-	
-	    var outerSubscribe = subscribe;
-	    return _ref = {
-	      /**
-	       * The minimal observable subscription method.
-	       * @param {Object} observer Any object that can be used as an observer.
-	       * The observer object should have a `next` method.
-	       * @returns {subscription} An object with an `unsubscribe` method that can
-	       * be used to unsubscribe the observable from the store, and prevent further
-	       * emission of values from the observable.
-	       */
-	      subscribe: function subscribe(observer) {
-	        if (typeof observer !== 'object') {
-	          throw new TypeError('Expected the observer to be an object.');
-	        }
-	
-	        function observeState() {
-	          if (observer.next) {
-	            observer.next(getState());
-	          }
-	        }
-	
-	        observeState();
-	        var unsubscribe = outerSubscribe(observeState);
-	        return { unsubscribe: unsubscribe };
-	      }
-	    }, _ref[_symbolObservable2['default']] = function () {
-	      return this;
-	    }, _ref;
-	  }
-	
-	  // When a store is created, an "INIT" action is dispatched so that every
-	  // reducer returns their initial state. This effectively populates
-	  // the initial state tree.
-	  dispatch({ type: ActionTypes.INIT });
-	
-	  return _ref2 = {
-	    dispatch: dispatch,
-	    subscribe: subscribe,
-	    getState: getState,
-	    replaceReducer: replaceReducer
-	  }, _ref2[_symbolObservable2['default']] = observable, _ref2;
-	}
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
-	
-	var _createStore = __webpack_require__(18);
-	
-	var _createStore2 = _interopRequireDefault(_createStore);
-	
-	var _combineReducers = __webpack_require__(93);
-	
-	var _combineReducers2 = _interopRequireDefault(_combineReducers);
-	
-	var _bindActionCreators = __webpack_require__(92);
-	
-	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
-	
-	var _applyMiddleware = __webpack_require__(91);
-	
-	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
-	
-	var _compose = __webpack_require__(17);
-	
-	var _compose2 = _interopRequireDefault(_compose);
-	
-	var _warning = __webpack_require__(20);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	/*
-	* This is a dummy function to check if the function name has been altered by minification.
-	* If the function has been minified and NODE_ENV !== 'production', warn the user.
-	*/
-	function isCrushed() {}
-	
-	if (false) {
-	  (0, _warning2['default'])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
-	}
-	
-	exports.createStore = _createStore2['default'];
-	exports.combineReducers = _combineReducers2['default'];
-	exports.bindActionCreators = _bindActionCreators2['default'];
-	exports.applyMiddleware = _applyMiddleware2['default'];
-	exports.compose = _compose2['default'];
-
-/***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports['default'] = warning;
-	/**
-	 * Prints a warning in the console if it exists.
-	 *
-	 * @param {String} message The warning message.
-	 * @returns {void}
-	 */
-	function warning(message) {
-	  /* eslint-disable no-console */
-	  if (typeof console !== 'undefined' && typeof console.error === 'function') {
-	    console.error(message);
-	  }
-	  /* eslint-enable no-console */
-	  try {
-	    // This error was thrown as a convenience so that if you enable
-	    // "break on all exceptions" in your console,
-	    // it would pause the execution at this line.
-	    throw new Error(message);
-	    /* eslint-disable no-empty */
-	  } catch (e) {}
-	  /* eslint-enable no-empty */
-	}
-
-/***/ },
-/* 21 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
-	
-	// Use the fastest means possible to execute a task in its own turn, with
-	// priority over other events including IO, animation, reflow, and redraw
-	// events in browsers.
-	//
-	// An exception thrown by a task will permanently interrupt the processing of
-	// subsequent tasks. The higher level `asap` function ensures that if an
-	// exception is thrown by a task, that the task queue will continue flushing as
-	// soon as possible, but if you use `rawAsap` directly, you are responsible to
-	// either ensure that no exceptions are thrown from your task, or to manually
-	// call `rawAsap.requestFlush` if an exception is thrown.
-	module.exports = rawAsap;
-	function rawAsap(task) {
-	    if (!queue.length) {
-	        requestFlush();
-	        flushing = true;
-	    }
-	    // Equivalent to push, but avoids a function call.
-	    queue[queue.length] = task;
-	}
-	
-	var queue = [];
-	// Once a flush has been requested, no further calls to `requestFlush` are
-	// necessary until the next `flush` completes.
-	var flushing = false;
-	// `requestFlush` is an implementation-specific method that attempts to kick
-	// off a `flush` event as quickly as possible. `flush` will attempt to exhaust
-	// the event queue before yielding to the browser's own event loop.
-	var requestFlush;
-	// The position of the next task to execute in the task queue. This is
-	// preserved between calls to `flush` so that it can be resumed if
-	// a task throws an exception.
-	var index = 0;
-	// If a task schedules additional tasks recursively, the task queue can grow
-	// unbounded. To prevent memory exhaustion, the task queue will periodically
-	// truncate already-completed tasks.
-	var capacity = 1024;
-	
-	// The flush function processes all tasks that have been scheduled with
-	// `rawAsap` unless and until one of those tasks throws an exception.
-	// If a task throws an exception, `flush` ensures that its state will remain
-	// consistent and will resume where it left off when called again.
-	// However, `flush` does not make any arrangements to be called again if an
-	// exception is thrown.
-	function flush() {
-	    while (index < queue.length) {
-	        var currentIndex = index;
-	        // Advance the index before calling the task. This ensures that we will
-	        // begin flushing on the next task the task throws an error.
-	        index = index + 1;
-	        queue[currentIndex].call();
-	        // Prevent leaking memory for long chains of recursive calls to `asap`.
-	        // If we call `asap` within tasks scheduled by `asap`, the queue will
-	        // grow, but to avoid an O(n) walk for every task we execute, we don't
-	        // shift tasks off the queue after they have been executed.
-	        // Instead, we periodically shift 1024 tasks off the queue.
-	        if (index > capacity) {
-	            // Manually shift all values starting at the index back to the
-	            // beginning of the queue.
-	            for (var scan = 0, newLength = queue.length - index; scan < newLength; scan++) {
-	                queue[scan] = queue[scan + index];
-	            }
-	            queue.length -= index;
-	            index = 0;
-	        }
-	    }
-	    queue.length = 0;
-	    index = 0;
-	    flushing = false;
-	}
-	
-	// `requestFlush` is implemented using a strategy based on data collected from
-	// every available SauceLabs Selenium web driver worker at time of writing.
-	// https://docs.google.com/spreadsheets/d/1mG-5UYGup5qxGdEMWkhP6BWCz053NUb2E1QoUTU16uA/edit#gid=783724593
-	
-	// Safari 6 and 6.1 for desktop, iPad, and iPhone are the only browsers that
-	// have WebKitMutationObserver but not un-prefixed MutationObserver.
-	// Must use `global` or `self` instead of `window` to work in both frames and web
-	// workers. `global` is a provision of Browserify, Mr, Mrs, or Mop.
-	
-	/* globals self */
-	var scope = typeof global !== "undefined" ? global : self;
-	var BrowserMutationObserver = scope.MutationObserver || scope.WebKitMutationObserver;
-	
-	// MutationObservers are desirable because they have high priority and work
-	// reliably everywhere they are implemented.
-	// They are implemented in all modern browsers.
-	//
-	// - Android 4-4.3
-	// - Chrome 26-34
-	// - Firefox 14-29
-	// - Internet Explorer 11
-	// - iPad Safari 6-7.1
-	// - iPhone Safari 7-7.1
-	// - Safari 6-7
-	if (typeof BrowserMutationObserver === "function") {
-	    requestFlush = makeRequestCallFromMutationObserver(flush);
-	
-	// MessageChannels are desirable because they give direct access to the HTML
-	// task queue, are implemented in Internet Explorer 10, Safari 5.0-1, and Opera
-	// 11-12, and in web workers in many engines.
-	// Although message channels yield to any queued rendering and IO tasks, they
-	// would be better than imposing the 4ms delay of timers.
-	// However, they do not work reliably in Internet Explorer or Safari.
-	
-	// Internet Explorer 10 is the only browser that has setImmediate but does
-	// not have MutationObservers.
-	// Although setImmediate yields to the browser's renderer, it would be
-	// preferrable to falling back to setTimeout since it does not have
-	// the minimum 4ms penalty.
-	// Unfortunately there appears to be a bug in Internet Explorer 10 Mobile (and
-	// Desktop to a lesser extent) that renders both setImmediate and
-	// MessageChannel useless for the purposes of ASAP.
-	// https://github.com/kriskowal/q/issues/396
-	
-	// Timers are implemented universally.
-	// We fall back to timers in workers in most engines, and in foreground
-	// contexts in the following browsers.
-	// However, note that even this simple case requires nuances to operate in a
-	// broad spectrum of browsers.
-	//
-	// - Firefox 3-13
-	// - Internet Explorer 6-9
-	// - iPad Safari 4.3
-	// - Lynx 2.8.7
-	} else {
-	    requestFlush = makeRequestCallFromTimer(flush);
-	}
-	
-	// `requestFlush` requests that the high priority event queue be flushed as
-	// soon as possible.
-	// This is useful to prevent an error thrown in a task from stalling the event
-	// queue if the exception handled by Node.js’s
-	// `process.on("uncaughtException")` or by a domain.
-	rawAsap.requestFlush = requestFlush;
-	
-	// To request a high priority event, we induce a mutation observer by toggling
-	// the text of a text node between "1" and "-1".
-	function makeRequestCallFromMutationObserver(callback) {
-	    var toggle = 1;
-	    var observer = new BrowserMutationObserver(callback);
-	    var node = document.createTextNode("");
-	    observer.observe(node, {characterData: true});
-	    return function requestCall() {
-	        toggle = -toggle;
-	        node.data = toggle;
-	    };
-	}
-	
-	// The message channel technique was discovered by Malte Ubl and was the
-	// original foundation for this library.
-	// http://www.nonblocking.io/2011/06/windownexttick.html
-	
-	// Safari 6.0.5 (at least) intermittently fails to create message ports on a
-	// page's first load. Thankfully, this version of Safari supports
-	// MutationObservers, so we don't need to fall back in that case.
-	
-	// function makeRequestCallFromMessageChannel(callback) {
-	//     var channel = new MessageChannel();
-	//     channel.port1.onmessage = callback;
-	//     return function requestCall() {
-	//         channel.port2.postMessage(0);
-	//     };
-	// }
-	
-	// For reasons explained above, we are also unable to use `setImmediate`
-	// under any circumstances.
-	// Even if we were, there is another bug in Internet Explorer 10.
-	// It is not sufficient to assign `setImmediate` to `requestFlush` because
-	// `setImmediate` must be called *by name* and therefore must be wrapped in a
-	// closure.
-	// Never forget.
-	
-	// function makeRequestCallFromSetImmediate(callback) {
-	//     return function requestCall() {
-	//         setImmediate(callback);
-	//     };
-	// }
-	
-	// Safari 6.0 has a problem where timers will get lost while the user is
-	// scrolling. This problem does not impact ASAP because Safari 6.0 supports
-	// mutation observers, so that implementation is used instead.
-	// However, if we ever elect to use timers in Safari, the prevalent work-around
-	// is to add a scroll event listener that calls for a flush.
-	
-	// `setTimeout` does not call the passed callback if the delay is less than
-	// approximately 7 in web workers in Firefox 8 through 18, and sometimes not
-	// even then.
-	
-	function makeRequestCallFromTimer(callback) {
-	    return function requestCall() {
-	        // We dispatch a timeout with a specified delay of 0 for engines that
-	        // can reliably accommodate that request. This will usually be snapped
-	        // to a 4 milisecond delay, but once we're flushing, there's no delay
-	        // between events.
-	        var timeoutHandle = setTimeout(handleTimer, 0);
-	        // However, since this timer gets frequently dropped in Firefox
-	        // workers, we enlist an interval handle that will try to fire
-	        // an event 20 times per second until it succeeds.
-	        var intervalHandle = setInterval(handleTimer, 50);
-	
-	        function handleTimer() {
-	            // Whichever timer succeeds will cancel both timers and
-	            // execute the callback.
-	            clearTimeout(timeoutHandle);
-	            clearInterval(intervalHandle);
-	            callback();
-	        }
-	    };
-	}
-	
-	// This is for `asap.js` only.
-	// Its name will be periodically randomized to break any code that depends on
-	// its existence.
-	rawAsap.makeRequestCallFromTimer = makeRequestCallFromTimer;
-	
-	// ASAP was originally a nextTick shim included in Q. This was factored out
-	// into this ASAP package. It was later adapted to RSVP which made further
-	// amendments. These decisions, particularly to marginalize MessageChannel and
-	// to capture the MutationObserver implementation in a closure, were integrated
-	// back into ASAP proper.
-	// https://github.com/tildeio/rsvp.js/blob/cddf7232546a9cf858524b75cde6f9edf72620a7/lib/rsvp/asap.js
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(4);
-	
-	var _headerComponent = __webpack_require__(24);
-	
-	var _mainComponent = __webpack_require__(28);
-	
-	var _layersListComponent = __webpack_require__(27);
-	
-	var _asideComponent = __webpack_require__(23);
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _model = __webpack_require__(6);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import logo from './logo.svg';
-	
-	
-	// import Flatten from 'flatten-js';
-	// import { Parser } from './models/parser';
-	// import { Layer } from './models/layer';
-	
-	// import { Shape } from './models/shape';
-	
-	
-	// let {Point} = Flatten;
-	
-	var App = function (_Component) {
-	    _inherits(App, _Component);
-	
-	    function App(props) {
-	        _classCallCheck(this, App);
-	
-	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-	
-	        _this.state = _this.props.store.getState();
-	        _this.props.store.subscribe(function () {
-	            _this.setState(_this.props.store.getState());
-	        });
-	
-	        return _this;
-	    }
-	
-	    _createClass(App, [{
-	        key: 'handlePaste',
-	        value: function handlePaste(event) {
-	            var _this2 = this;
-	
-	            if (this.state.layers.length === 0) return;
-	
-	            var layer = this.state.layers.find(function (lay) {
-	                return lay.affected;
-	            });
-	            if (!layer) return;
-	
-	            var parser = this.state.app.parser;
-	            var dispatch = this.dispatch;
-	
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = event.clipboardData.items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var item = _step.value;
-	
-	                    item.getAsString(function (string) {
-	                        var poly = parser.parseToPolygon(string);
-	                        // TODO: add something like poly.valid()
-	                        if (poly.edges.size > 0 && poly.faces.size > 0) {
-	                            // let watch = parser.parseToWatchArray(string);
-	
-	                            // let shape = new Shape(poly, this.state.stage, {}, watch);
-	                            var shape = new _model.Model(poly);
-	
-	                            _this2.dispatch({
-	                                type: ActionTypes.NEW_SHAPE_PASTED,
-	                                shape: shape
-	                            });
-	
-	                            dispatch({
-	                                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                                shape: shape
-	                            });
-	                        }
-	                    });
-	
-	                    break;
-	                }
-	
-	                // let point = new Point(0, 0);
-	                // let seg1 = new Segment(new Point(-10, 0), new Point(10, 0));
-	                // let seg2 = new Segment(new Point(0, -10), new Point(0, 10));
-	
-	                // layer.add(point);
-	                // layer.add(seg1);
-	                // layer.add(seg2);
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.dispatch = this.props.store.dispatch;
-	            this.setState(this.props.store.getState());
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState(nextProps.store.getState());
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this3 = this;
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'App' },
-	                _react2.default.createElement(_headerComponent.HeaderComponent, this.props),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'App-body',
-	                        onPaste: function onPaste(e) {
-	                            return _this3.handlePaste(e);
-	                        } },
-	                    _react2.default.createElement(_mainComponent.MainComponent, this.props),
-	                    _react2.default.createElement(_layersListComponent.LayersListComponent, this.props),
-	                    _react2.default.createElement(_asideComponent.AsideComponent, this.props)
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return App;
-	}(_react.Component);
-	
-	exports.default = App;
-	
-	/*
-	 <div className="App">
-	 <div className="App-header">
-	 <h2>Debug Viewer</h2>
-	 </div>
-	
-	 </div>
-	*/
-	
-	/*
-	 <img src={logo} className="App-logo" alt="logo" />
-	 */
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.AsideComponent = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(4);
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _layers = __webpack_require__(5);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 06/05/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import { debug_str } from '../sample';
-	
-	
-	// import {Shape} from '../models/shape';
-	
-	var WatchElement = function (_Component) {
-	    _inherits(WatchElement, _Component);
-	
-	    function WatchElement() {
-	        _classCallCheck(this, WatchElement);
-	
-	        return _possibleConstructorReturn(this, (WatchElement.__proto__ || Object.getPrototypeOf(WatchElement)).apply(this, arguments));
-	    }
-	
-	    _createClass(WatchElement, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-	
-	            var watch = this.props.shape.watch;
-	            if (watch === undefined) return null;
-	            var expandedSign = this.props.shape.expanded ? '-' : '+';
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                this.props.shape.expanded ? watch.map(function (edgeWatch, index) {
-	                    return _react2.default.createElement(
-	                        'div',
-	                        {
-	                            key: index,
-	                            className: 'Watch-element-title'
-	                        },
-	                        _react2.default.createElement(
-	                            'div',
-	                            {
-	                                style: { flex: 1 },
-	                                onClick: function onClick(event) {
-	                                    return _this2.props.onToggleWatchExpandButtonClicked(_this2.props.shape);
-	                                } },
-	                            '-'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            {
-	                                title: edgeWatch,
-	                                onClick: function onClick(event) {
-	                                    return _this2.props.onSelectShapeClicked(_this2.props.shape);
-	                                } },
-	                            edgeWatch
-	                        )
-	                    );
-	                }) : _react2.default.createElement(
-	                    'div',
-	                    { className: 'Watch-element-title'
-	                    },
-	                    _react2.default.createElement(
-	                        'div',
-	                        {
-	                            style: { flex: 1 },
-	                            onClick: function onClick(event) {
-	                                return _this2.props.onToggleWatchExpandButtonClicked(_this2.props.shape);
-	                            } },
-	                        expandedSign
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        {
-	                            title: watch[0],
-	                            onClick: function onClick(event) {
-	                                return _this2.props.onSelectShapeClicked(_this2.props.shape);
-	                            } },
-	                        watch[0]
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return WatchElement;
-	}(_react.Component);
-	
-	var AsideComponent = exports.AsideComponent = function (_Component2) {
-	    _inherits(AsideComponent, _Component2);
-	
-	    function AsideComponent() {
-	        _classCallCheck(this, AsideComponent);
-	
-	        var _this3 = _possibleConstructorReturn(this, (AsideComponent.__proto__ || Object.getPrototypeOf(AsideComponent)).call(this));
-	
-	        _this3.onToggleWatchExpandButtonClicked = _this3.onToggleWatchExpandButtonClicked.bind(_this3);
-	        _this3.onSelectShapeClicked = _this3.onSelectShapeClicked.bind(_this3);
-	        // this.addSamplePolygon = this.addSamplePolygon.bind(this);
-	        _this3.height = 0;
-	        return _this3;
-	    }
-	
-	    _createClass(AsideComponent, [{
-	        key: 'onToggleWatchExpandButtonClicked',
-	        value: function onToggleWatchExpandButtonClicked(shape) {
-	            if (!shape) return;
-	            this.dispatch({
-	                type: ActionTypes.TOGGLE_WATCH_EXPAND_CLICKED,
-	                shape: shape
-	            });
-	        }
-	    }, {
-	        key: 'onSelectShapeClicked',
-	        value: function onSelectShapeClicked(shape) {
-	            if (!shape) return;
-	            this.dispatch({
-	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                shape: shape
-	            });
-	        }
-	
-	        // addSamplePolygon() {
-	        //     let parser = this.state.app.parser;
-	        //     let poly = parser.parseToPolygon(debug_str);
-	        //     let watch = parser.parseToWatchArray(debug_str);
-	        //
-	        //     let shape = new Shape(poly, this.state.stage, {}, watch);
-	        //
-	        //     this.dispatch({
-	        //         type: ActionTypes.NEW_SHAPE_PASTED,
-	        //         shape: shape
-	        //     });
-	        //
-	        //     this.dispatch({
-	        //         type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	        //         shape: shape
-	        //     });
-	        // }
-	
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.dispatch = this.props.store.dispatch;
-	            this.setState(this.props.store.getState());
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState(nextProps.store.getState());
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            this.height = this.refs.aside.clientHeight;
-	            // let container = this.refs.watchContainer;
-	            // let parentHeight = container.parentElement.clientHeight;
-	            // container.style.maxHeight = 0.7*parentHeight;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this4 = this;
-	
-	            var layer = _layers.Layers.getAffected(this.state.layers);
-	            var shapes = layer ? [].concat(_toConsumableArray(layer.shapes)) : undefined;
-	            var title = layer ? layer.title : "";
-	            var watchContainerHeight = 0.75 * this.height;
-	            return _react2.default.createElement(
-	                'aside',
-	                { className: 'App-aside', ref: 'aside' },
-	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    'Info'
-	                ),
-	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    title
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    {
-	                        className: 'Watch-container',
-	                        style: { maxHeight: watchContainerHeight }
-	                    },
-	                    shapes ? shapes.map(function (shape, index) {
-	                        return _react2.default.createElement(WatchElement, {
-	                            key: index,
-	                            shape: shape,
-	                            onToggleWatchExpandButtonClicked: _this4.onToggleWatchExpandButtonClicked,
-	                            onSelectShapeClicked: _this4.onSelectShapeClicked
-	                        });
-	                    }) : null
-	                )
-	            );
-	        }
-	    }]);
-
-	    return AsideComponent;
-	}(_react.Component);
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.HeaderComponent = undefined;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(4);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Created by alexanderbol on 13/04/2017.
-	 */
-	
-	var HeaderComponent = exports.HeaderComponent = function HeaderComponent(props) {
-	    var state = props.store.getState();
-	    return _react2.default.createElement(
-	        'header',
-	        { className: 'App-header' },
-	        _react2.default.createElement(
-	            'h2',
-	            null,
-	            state.app.title
-	        )
-	    );
-	};
-	// import logo from './logo.svg';
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.LayerComponent = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _polygonTool = __webpack_require__(46);
-	
-	var _segmentTool = __webpack_require__(47);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var LayerComponent = exports.LayerComponent = function (_Component) {
-	    _inherits(LayerComponent, _Component);
-	
-	    function LayerComponent(params) {
-	        _classCallCheck(this, LayerComponent);
-	
-	        var _this = _possibleConstructorReturn(this, (LayerComponent.__proto__ || Object.getPrototypeOf(LayerComponent)).call(this));
-	
-	        _this.state = {
-	            layer: params.layer,
-	            color: params.color,
-	            displayed: params.displayed,
-	            displayVertices: params.displayVertices,
-	            displayLabels: params.displayLabels,
-	            hovered: params.hovered,
-	            selected: params.selected,
-	            widthOn: params.widthOn,
-	            origin: params.stage.origin,
-	            zoomFactor: params.stage.zoomFactor,
-	            hoveredShape: params.hoveredShape,
-	            firstMeasuredShape: params.firstMeasuredShape,
-	            secondMeasuredShape: params.secondMeasuredShape
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(LayerComponent, [{
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                layer: nextProps.layer,
-	                color: nextProps.color,
-	                displayed: nextProps.displayed,
-	                displayVertices: nextProps.displayVertices,
-	                displayLabels: nextProps.displayLabels,
-	                hovered: nextProps.hovered,
-	                selected: nextProps.selected,
-	                widthOn: nextProps.widthOn,
-	                origin: nextProps.stage.origin,
-	                zoomFactor: nextProps.stage.zoomFactor,
-	                hoveredShape: nextProps.hoveredShape,
-	                firstMeasuredShape: nextProps.firstMeasuredShape,
-	                secondMeasuredShape: nextProps.secondMeasuredShape
-	            });
-	        }
-	    }, {
-	        key: 'equalState',
-	        value: function equalState(nextState) {
-	            var equal = true;
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = Object.keys(nextState)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var key = _step.value;
-	
-	                    if (nextState[key] !== this.state[key]) {
-	                        equal = false;
-	                        break;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            return equal;
-	        }
-	    }, {
-	        key: 'shouldComponentUpdate',
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            if (this.equalState(nextState)) {
-	                return false;
-	            }
-	            return true;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-	
-	            return this.props.layer.shapes.map(function (shape, index) {
-	                if (shape.geom instanceof _flattenJs2.default.Polygon) {
-	                    return _react2.default.createElement(_polygonTool.PolygonTool, {
-	                        key: index,
-	                        stage: _this2.props.stage,
-	                        layer: _this2.state.layer,
-	                        polygon: shape,
-	                        displayed: _this2.state.layer.displayed,
-	                        hovered: shape === _this2.state.hoveredShape,
-	                        selected: shape === _this2.state.firstMeasuredShape || shape === _this2.state.secondMeasuredShape,
-	                        color: _this2.state.layer.color,
-	                        widthOn: _this2.state.widthOn,
-	                        displayVertices: _this2.state.displayVertices,
-	                        displayLabels: _this2.state.displayLabels,
-	                        onMouseOver: _this2.props.onMouseOver,
-	                        onMouseOut: _this2.props.onMouseOut,
-	                        onClick: _this2.props.onClick
-	                    });
-	                } else {
-	                    return _react2.default.createElement(_segmentTool.SegmentTool, {
-	                        key: index,
-	                        stage: _this2.props.stage,
-	                        layer: _this2.state.layer,
-	                        model: shape,
-	                        displayed: _this2.state.layer.displayed,
-	                        hovered: shape === _this2.state.hoveredShape,
-	                        selected: shape === _this2.state.firstMeasuredShape || shape === _this2.state.secondMeasuredShape,
-	                        color: _this2.state.layer.color,
-	                        widthOn: _this2.state.widthOn,
-	                        displayVertices: _this2.state.displayVertices,
-	                        displayLabels: _this2.state.displayLabels,
-	                        onMouseOver: _this2.props.onMouseOver,
-	                        onMouseOut: _this2.props.onMouseOut,
-	                        onClick: _this2.props.onClick
-	                    });
-	                }
-	            });
-	        }
-	    }]);
-
-	    return LayerComponent;
-	}(_react.Component);
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.LayerListElement = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(4);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import { ListGroupItem } from 'react-bootstrap';
-	
-	var LayerListElement = exports.LayerListElement = function (_Component) {
-	    _inherits(LayerListElement, _Component);
-	
-	    function LayerListElement() {
-	        _classCallCheck(this, LayerListElement);
-	
-	        return _possibleConstructorReturn(this, (LayerListElement.__proto__ || Object.getPrototypeOf(LayerListElement)).apply(this, arguments));
-	    }
-	
-	    _createClass(LayerListElement, [{
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            if (document.activeElement.nodeName === "CANVAS") return;
-	            var elem = this.refs.layerName;
-	            if (this.props.layer.affected) {
-	                elem.focus();
-	            }
-	
-	            // for (let shape of this.props.layer.shapes) {
-	            //     shape.alpha = this.props.layer.displayed ? 1 : 0;
-	            //     shape.redraw();
-	            // }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            // let style = this.props.layer.displayed ?
-	            //     styleSheet.displayed : styleSheet.undisplayed;
-	
-	            var displayed = this.props.layer.displayed ? "Layer-displayed" : "Layer-undisplayed";
-	            var color = displayed ? this.props.layer.color : "black";
-	            var alpha = this.props.layer.affected ? 1 : 0;
-	            return this.props.layer.edited ? _react2.default.createElement(
-	                'div',
-	                {
-	                    className: 'Layer ' + displayed,
-	                    onClick: this.props.onLayerClicked
-	                },
-	                _react2.default.createElement('input', { val: this.props.layer.name })
-	            ) : _react2.default.createElement(
-	                'li',
-	                {
-	                    className: 'Layer ' + displayed,
-	                    onClick: this.props.onLayerClicked,
-	                    onDoubleClick: this.props.onLayerDoubleClicked },
-	                _react2.default.createElement(
-	                    'div',
-	                    {
-	                        style: { flex: 2, marginRight: 3 },
-	                        onClick: this.props.onAffectedBoxClicked
-	                    },
-	                    _react2.default.createElement(
-	                        'h4',
-	                        { style: { opacity: alpha, color: color } },
-	                        'V'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'h4',
-	                    { ref: 'layerName',
-	                        style: { flex: 8, color: color },
-	                        title: this.props.layer.name,
-	                        tabIndex: '1'
-	                    },
-	                    this.props.layer.name
-	                )
-	            );
-	        }
-	    }]);
-
-	    return LayerListElement;
-	}(_react.Component);
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.LayersListComponent = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(4);
-	
-	var _layerListElement = __webpack_require__(26);
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _layers = __webpack_require__(5);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import { ListGroup } from 'react-bootstrap';
-	
-	
-	var LayersListComponent = exports.LayersListComponent = function (_Component) {
-	    _inherits(LayersListComponent, _Component);
-	
-	    function LayersListComponent() {
-	        _classCallCheck(this, LayersListComponent);
-	
-	        var _this = _possibleConstructorReturn(this, (LayersListComponent.__proto__ || Object.getPrototypeOf(LayersListComponent)).call(this));
-	
-	        _this.onLayerListClicked = _this.onLayerListClicked.bind(_this);
-	        _this.onLayerClicked = _this.onLayerClicked.bind(_this);
-	        _this.onLayerDoubleClicked = _this.onLayerDoubleClicked.bind(_this);
-	        _this.onAddLayerSelected = _this.onAddLayerSelected.bind(_this);
-	        _this.onAffectedBoxClicked = _this.onAffectedBoxClicked.bind(_this);
-	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
-	        _this.height = 0;
-	        return _this;
-	    }
-	
-	    _createClass(LayersListComponent, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.dispatch = this.props.store.dispatch;
-	            this.setState(this.props.store.getState());
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState(nextProps.store.getState());
-	        }
-	    }, {
-	        key: 'onLayerListClicked',
-	        value: function onLayerListClicked() {
-	            this.dispatch({
-	                type: ActionTypes.LAYER_LIST_PANEL_PRESSED
-	            });
-	        }
-	    }, {
-	        key: 'onLayerClicked',
-	        value: function onLayerClicked(layer) {
-	            this.dispatch({
-	                type: ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED,
-	                layer: layer
-	            });
-	        }
-	    }, {
-	        key: 'onLayerDoubleClicked',
-	        value: function onLayerDoubleClicked(layer) {
-	            // this.dispatch({
-	            //     type: ActionTypes.EDIT_LAYER_NAME_PRESSED,
-	            //     layer: layer
-	            // });
-	        }
-	    }, {
-	        key: 'onAffectedBoxClicked',
-	        value: function onAffectedBoxClicked(layer) {
-	            this.dispatch({
-	                type: ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED,
-	                layer: layer
-	            });
-	        }
-	    }, {
-	        key: 'onAddLayerSelected',
-	        value: function onAddLayerSelected() {
-	            var layer = _layers.Layers.newLayer(this.state.stage, this.state.layers);
-	
-	            this.dispatch({
-	                type: ActionTypes.ADD_LAYER_PRESSED,
-	                stage: this.state.stage,
-	                layer: layer
-	            });
-	        }
-	    }, {
-	        key: 'handleKeyDown',
-	        value: function handleKeyDown(e) {
-	            // e.stopPropagation();
-	            // e.preventDefault();
-	
-	            if (e.target.parentElement.parentElement && e.target.parentElement.parentElement.id && e.target.parentElement.parentElement.id === "layersList") {
-	
-	                switch (e.code) {
-	                    case "ArrowRight":
-	                    case "ArrowDown":
-	                        this.dispatch({
-	                            type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
-	                        });
-	                        break;
-	                    case "ArrowLeft":
-	                    case "ArrowUp":
-	                        this.dispatch({
-	                            type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
-	                        });
-	                        break;
-	                    /* tab does not work properly
-	                    case "Tab":
-	                    if (e.shiftKey) {
-	                        this.dispatch({
-	                            type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
-	                        });
-	                    }
-	                    else {
-	                        this.dispatch({
-	                            type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
-	                        });
-	                    }
-	                    break;
-	                    */
-	                    default:
-	                        break;
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            // Keyboard event
-	            // var _keydown = _.throttle(this.keydown, 100);
-	            document.addEventListener('keydown', this.handleKeyDown);
-	            // var _keyup = _.throttle(this.keyup, 500);
-	            // document.addEventListener('keyup', this.handleKeyUp);
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            this.height = this.refs.layersComponent.clientHeight;
-	            // let container = this.refs.watchContainer;
-	            // let parentHeight = container.parentElement.clientHeight;
-	            // container.style.maxHeight = 0.7*parentHeight;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-	
-	            var addLayer = _react2.default.createElement(
-	                'div',
-	                {
-	                    style: { padding: 4, backgroundColor: "lightgray" },
-	                    onClick: this.onAddLayerSelected },
-	                _react2.default.createElement(
-	                    'h5',
-	                    { style: { margin: 0 } },
-	                    'Add layer'
-	                )
-	            );
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'App-layers',
-	                    ref: 'layersComponent',
-	                    onClick: this.onLayerListClicked
-	                },
-	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    'Layers'
-	                ),
-	                _react2.default.createElement(
-	                    'ul',
-	                    { id: 'layersList',
-	                        style: { maxHeight: 0.82 * (this.height - 40), padding: 0, overflow: 'auto' } },
-	                    this.state.layers.map(function (layer) {
-	                        return _react2.default.createElement(_layerListElement.LayerListElement, {
-	                            onLayerClicked: function onLayerClicked() {
-	                                return _this2.onLayerClicked(layer);
-	                            },
-	                            onLayerDoubleClicked: function onLayerDoubleClicked() {
-	                                return _this2.onLayerDoubleClicked(layer);
-	                            },
-	                            onAffectedBoxClicked: function onAffectedBoxClicked() {
-	                                return _this2.onAffectedBoxClicked(layer);
-	                            },
-	                            key: layer.name,
-	                            layer: layer
-	                        });
-	                    })
-	                ),
-	                addLayer
-	            );
-	        }
-	    }]);
-
-	    return LayersListComponent;
-	}(_react.Component);
-
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.MainComponent = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(4);
-	
-	var _toolbarComponent = __webpack_require__(31);
-	
-	var _stageComponent = __webpack_require__(29);
-	
-	var _statusComponent = __webpack_require__(30);
-	
-	var _layerComponent = __webpack_require__(25);
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _layers = __webpack_require__(5);
-	
-	var _measurePointsTool = __webpack_require__(44);
-	
-	var _measureShapesTool = __webpack_require__(45);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import Flatten from 'flatten-js';
-	
-	
-	// import {PolygonTool} from '../tools/polygonTool';
-	// import {SegmentTool} from "../tools/segmentTool";
-	
-	
-	var MainComponent = exports.MainComponent = function (_Component) {
-	    _inherits(MainComponent, _Component);
-	
-	    function MainComponent() {
-	        _classCallCheck(this, MainComponent);
-	
-	        var _this = _possibleConstructorReturn(this, (MainComponent.__proto__ || Object.getPrototypeOf(MainComponent)).call(this));
-	
-	        _this.handleMouseMove = _this.handleMouseMove.bind(_this);
-	        _this.handleMouseDown = _this.handleMouseDown.bind(_this);
-	        _this.handleMouseUp = _this.handleMouseUp.bind(_this);
-	        _this.handleMouseWheelMove = _this.handleMouseWheelMove.bind(_this);
-	        _this.registerStage = _this.registerStage.bind(_this);
-	        _this.toggleUnits = _this.toggleUnits.bind(_this);
-	
-	        _this.onMouseRollOverShape = _this.onMouseRollOverShape.bind(_this);
-	        _this.onMouseRollOutShape = _this.onMouseRollOutShape.bind(_this);
-	        _this.onClickOnShape = _this.onClickOnShape.bind(_this);
-	
-	        _this.resizeStage = _this.resizeStage.bind(_this);
-	
-	        _this.handleFileSelect = _this.handleFileSelect.bind(_this);
-	        _this.setHomeView = _this.setHomeView.bind(_this);
-	        _this.toggleWidthMode = _this.toggleWidthMode.bind(_this);
-	        _this.toggleDisplayVertices = _this.toggleDisplayVertices.bind(_this);
-	        _this.toggleDisplayLabels = _this.toggleDisplayLabels.bind(_this);
-	
-	        _this.onMeasurePointsButtonPressed = _this.onMeasurePointsButtonPressed.bind(_this);
-	        _this.onMeasureBetweenShapesButtonPressed = _this.onMeasureBetweenShapesButtonPressed.bind(_this);
-	        _this.onPanByDragPressed = _this.onPanByDragPressed.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(MainComponent, [{
-	        key: 'registerStage',
-	        value: function registerStage(stage) {
-	            // let layer = Layers.newLayer(stage, this.state.layers);
-	            this.dispatch({
-	                type: ActionTypes.NEW_STAGE_CREATED,
-	                stage: stage
-	            });
-	        }
-	    }, {
-	        key: 'resizeStage',
-	        value: function resizeStage() {
-	            // alert("resized")
-	            this.dispatch({
-	                type: ActionTypes.STAGE_RESIZED,
-	                stage: this.state.stage
-	            });
-	        }
-	    }, {
-	        key: 'toggleUnits',
-	        value: function toggleUnits() {
-	            this.dispatch({
-	                type: ActionTypes.TOGGLE_UNITS_CLICKED
-	            });
-	        }
-	    }, {
-	        key: 'handleMouseMove',
-	        value: function handleMouseMove(stageX, stageY) {
-	            this.dispatch({
-	                type: ActionTypes.MOUSE_MOVED_ON_STAGE,
-	                stage: this.state.stage,
-	                x: stageX,
-	                y: stageY,
-	                dx: this.state.mouse.startX ? stageX - this.state.mouse.startX : undefined,
-	                dy: this.state.mouse.startY ? stageY - this.state.mouse.startY : undefined
-	            });
-	        }
-	    }, {
-	        key: 'handleMouseDown',
-	        value: function handleMouseDown(stageX, stageY) {
-	            // start pan stage
-	            this.dispatch({
-	                type: ActionTypes.MOUSE_DOWN_ON_STAGE,
-	                stage: this.state.stage,
-	                x: stageX,
-	                y: stageY
-	            });
-	        }
-	    }, {
-	        key: 'handleMouseUp',
-	        value: function handleMouseUp(stageX, stageY) {
-	            // stop pan stage
-	            // Patch bug in Firefox when dispatch is not fired
-	            this.state.stage.panByMouseStop();
-	            this.dispatch({
-	                type: ActionTypes.MOUSE_UP_ON_STAGE,
-	                state: this.state.stage,
-	                x: event.stageX,
-	                y: event.stageY
-	            });
-	        }
-	    }, {
-	        key: 'handleMouseWheelMove',
-	        value: function handleMouseWheelMove(stageX, stageY, delta) {
-	            if (delta !== 0) {
-	                this.dispatch({
-	                    type: ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE,
-	                    stage: this.state.stage,
-	                    x: stageX,
-	                    y: stageY,
-	                    delta: delta
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'onMouseRollOverShape',
-	        value: function onMouseRollOverShape(shape) {
-	            this.dispatch({
-	                type: ActionTypes.MOUSE_ROLL_OVER_SHAPE,
-	                shape: shape
-	            });
-	        }
-	    }, {
-	        key: 'onMouseRollOutShape',
-	        value: function onMouseRollOutShape() {
-	            this.dispatch({
-	                type: ActionTypes.MOUSE_ROLL_OUT_SHAPE
-	            });
-	        }
-	    }, {
-	        key: 'onClickOnShape',
-	        value: function onClickOnShape(shape, layer) {
-	            this.dispatch({
-	                type: ActionTypes.MOUSE_CLICKED_ON_SHAPE,
-	                shape: shape,
-	                layer: layer
-	            });
-	        }
-	    }, {
-	        key: 'handleFileSelect',
-	        value: function handleFileSelect(event) {
-	            if (!(File && FileReader && FileList)) return;
-	
-	            var files = event.target.files; // FileList object
-	
-	            this.dispatch({
-	                type: ActionTypes.FILENAME_LIST_SELECTED,
-	                files: files,
-	                stage: this.state.stage,
-	                layers: this.state.layers
-	            });
-	        }
-	    }, {
-	        key: 'setHomeView',
-	        value: function setHomeView() {
-	            var layer = _layers.Layers.getAffected(this.state.layers);
-	            if (!layer) return;
-	            // TODO: dispatch PAN_AND_ZOOM instead ?
-	            this.dispatch({
-	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                stage: this.state.stage,
-	                shape: layer
-	            });
-	        }
-	    }, {
-	        key: 'onPanByDragPressed',
-	        value: function onPanByDragPressed() {
-	            this.dispatch({
-	                type: ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED
-	            });
-	        }
-	    }, {
-	        key: 'toggleWidthMode',
-	        value: function toggleWidthMode() {
-	            this.dispatch({
-	                type: ActionTypes.TOGGLE_WIDTH_MODE_CLICKED,
-	                widthOn: this.state.app.widthOn
-	            });
-	        }
-	    }, {
-	        key: 'toggleDisplayVertices',
-	        value: function toggleDisplayVertices() {
-	            // if (this.state.app.widthOn)
-	            //     return;
-	            this.dispatch({
-	                type: ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED
-	            });
-	        }
-	    }, {
-	        key: 'toggleDisplayLabels',
-	        value: function toggleDisplayLabels() {
-	            this.dispatch({
-	                type: ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED
-	            });
-	        }
-	    }, {
-	        key: 'onMeasurePointsButtonPressed',
-	        value: function onMeasurePointsButtonPressed() {
-	            this.dispatch({
-	                type: ActionTypes.MEASURE_POINTS_BUTTON_PRESSED
-	            });
-	        }
-	    }, {
-	        key: 'onMeasureBetweenShapesButtonPressed',
-	        value: function onMeasureBetweenShapesButtonPressed() {
-	            this.dispatch({
-	                type: ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED
-	            });
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.dispatch = this.props.store.dispatch;
-	            this.setState(this.props.store.getState());
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            window.onresize = this.resizeStage;
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState(nextProps.store.getState());
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            if (this.state.stage.canvas && this.state.stage.canvas.getContext('2d')) {
-	
-	                var origin = this.state.stage.origin;
-	                var zoomFactor = this.state.stage.zoomFactor * this.state.stage.resolution;
-	                this.state.stage.setTransform(origin.x, origin.y, zoomFactor, -zoomFactor);
-	
-	                this.state.stage.update();
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-	
-	            return _react2.default.createElement(
-	                'main',
-	                { className: 'App-content' },
-	                _react2.default.createElement(_toolbarComponent.ToolbarComponent, {
-	                    onFileSelected: this.handleFileSelect,
-	                    onHomeButtonPressed: this.setHomeView,
-	                    onPanByDragPressed: this.onPanByDragPressed,
-	                    onMeasurePointsButtonPressed: this.onMeasurePointsButtonPressed,
-	                    onMeasureBetweenShapesButtonPressed: this.onMeasureBetweenShapesButtonPressed,
-	                    onToggleWidthModePressed: this.toggleWidthMode,
-	                    onToggleVerticesPressed: this.toggleDisplayVertices,
-	                    onToggleLabelsPressed: this.toggleDisplayLabels
-	                }),
-	                _react2.default.createElement(_stageComponent.StageComponent, {
-	                    stage: this.state.stage,
-	                    onStageCreated: this.registerStage,
-	                    onMouseDown: this.handleMouseDown,
-	                    onMouseMove: this.handleMouseMove,
-	                    onMouseUp: this.handleMouseUp,
-	                    onMouseWheelMove: this.handleMouseWheelMove,
-	                    onHomeKeyPressed: this.setHomeView,
-	                    onToggleWidthModePressed: this.toggleWidthMode,
-	                    onToggleDisplayVerticesPressed: this.toggleDisplayVertices
-	                }),
-	                this.state.layers.map(function (layer) {
-	                    return _react2.default.createElement(_layerComponent.LayerComponent, {
-	                        key: layer.name,
-	                        stage: _this2.state.stage,
-	                        layer: layer,
-	                        color: layer.color,
-	                        displayed: layer.displayed,
-	                        displayVertices: _this2.state.app.displayVertices,
-	                        displayLabels: _this2.state.app.displayLabels,
-	                        widthOn: _this2.state.app.widthOn,
-	                        hoveredShape: _this2.state.app.hoveredShape,
-	                        firstMeasuredShape: _this2.state.app.firstMeasuredShape,
-	                        secondMeasuredShape: _this2.state.app.secondMeasuredShape,
-	                        onMouseOver: _this2.onMouseRollOverShape,
-	                        onMouseOut: _this2.onMouseRollOutShape,
-	                        onClick: _this2.onClickOnShape
-	                    });
-	                }),
-	                this.state.app.measurePointsActive ? _react2.default.createElement(_measurePointsTool.MeasurePointsTool, {
-	                    stage: this.state.stage,
-	                    divisor: this.state.app.divisor,
-	                    decimals: this.state.app.decimals,
-	                    onMouseWheelMove: this.handleMouseWheelMove
-	                }) : null,
-	                this.state.app.measureShapesActive ? _react2.default.createElement(_measureShapesTool.MeasureShapesTool, {
-	                    stage: this.state.stage,
-	                    firstMeasuredShape: this.state.app.firstMeasuredShape,
-	                    secondMeasuredShape: this.state.app.secondMeasuredShape,
-	                    firstMeasuredLayer: this.state.app.firstMeasuredLayer,
-	                    secondMeasuredLayer: this.state.app.secondMeasuredLayer,
-	                    distance: this.state.app.distance,
-	                    shortestSegment: this.state.app.shortestSegment,
-	                    divisor: this.state.app.divisor,
-	                    decimals: this.state.app.decimals
-	                }) : null,
-	                _react2.default.createElement(_statusComponent.StatusComponent, {
-	                    stage: this.state.stage,
-	                    units: this.state.app.units,
-	                    divisor: this.state.app.divisor,
-	                    decimals: this.state.app.decimals,
-	                    distance: this.state.app.distance,
-	                    shortestSegment: this.state.app.shortestSegment,
-	                    coordX: this.state.mouse.x,
-	                    coordY: this.state.mouse.y,
-	                    onUnitClicked: this.toggleUnits
-	                })
-	            );
-	        }
-	    }]);
-
-	    return MainComponent;
-	}(_react.Component);
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.StageComponent = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(4);
-	
-	var _stage = __webpack_require__(42);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import createjs from 'easel-js';
-	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
-	
-	// import { LayerComponent } from '../components/layerComponent';
-	
-	
-	// import {PolygonTool} from '../tools/polygonTool';
-	
-	// import {Layer} from '../models/layer';
-	// import {Layers} from '../models/layers';
-	
-	// import * as ActionTypes from '../actions/action-types';
-	
-	var StageComponent = exports.StageComponent = function (_Component) {
-	    _inherits(StageComponent, _Component);
-	
-	    function StageComponent() {
-	        _classCallCheck(this, StageComponent);
-	
-	        var _this = _possibleConstructorReturn(this, (StageComponent.__proto__ || Object.getPrototypeOf(StageComponent)).call(this));
-	
-	        _this.handleMouseMove = _this.handleMouseMove.bind(_this);
-	        _this.handleMouseDown = _this.handleMouseDown.bind(_this);
-	        _this.handleMouseUp = _this.handleMouseUp.bind(_this);
-	        _this.handleMouseLeave = _this.handleMouseLeave.bind(_this);
-	        _this.handleMouseWheel = _this.handleMouseWheel.bind(_this);
-	        _this.handleMouseWheelFox = _this.handleMouseWheelFox.bind(_this);
-	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
-	        _this.handleKeyUp = _this.handleKeyUp.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(StageComponent, [{
-	        key: 'handleMouseMove',
-	        value: function handleMouseMove(event) {
-	            this.props.stage.canvas.focus();
-	            this.props.onMouseMove(event.stageX, event.stageY);
-	        }
-	    }, {
-	        key: 'handleMouseDown',
-	        value: function handleMouseDown(event) {
-	            this.props.onMouseDown(event.stageX, event.stageY);
-	        }
-	    }, {
-	        key: 'handleMouseUp',
-	        value: function handleMouseUp(event) {
-	            event.stopPropagation();
-	            event.preventDefault();
-	            this.props.onMouseUp(event.stageX, event.stageY);
-	        }
-	    }, {
-	        key: 'handleMouseLeave',
-	        value: function handleMouseLeave(event) {
-	            // nothing works except click
-	            this.props.stage.canvas.blur();
-	            document.body.focus();
-	        }
-	    }, {
-	        key: 'handleMouseWheel',
-	        value: function handleMouseWheel(event) {
-	            event.preventDefault();
-	
-	            var delta = event.detail || event.wheelDelta;
-	            if (delta !== 0) {
-	                this.props.onMouseWheelMove(event.offsetX, event.offsetY, delta);
-	            }
-	        }
-	    }, {
-	        key: 'handleMouseWheelFox',
-	        value: function handleMouseWheelFox(event) {
-	            event.preventDefault();
-	            if (event.detail !== 0) {
-	                this.props.onMousewheelMove(event.layerX, event.layerY, -event.detail);
-	            }
-	        }
-	    }, {
-	        key: 'handleKeyDown',
-	        value: function handleKeyDown(e) {
-	            // let ctrl = e.ctrlKey;
-	            if (e.target.id !== "mainCanvas") return;
-	            switch (e.code) {
-	                case "KeyH":
-	                    this.props.onHomeKeyPressed();
-	                    break;
-	
-	                case "KeyW":
-	                    this.props.onToggleWidthModePressed(); // toggle width On/Off in graphics model
-	                    break;
-	
-	                case "KeyE":
-	                    this.props.onToggleDisplayVerticesPressed(); // toggle vertices On/Off
-	                    break;
-	
-	                case "ArrowRight":
-	                    break;
-	                case "ArrowLeft":
-	                    break;
-	                case "ArrowUp":
-	                    break;
-	                case "ArrowDown":
-	                    break;
-	                default:
-	                    break;
-	            }
-	        }
-	    }, {
-	        key: 'handleKeyUp',
-	        value: function handleKeyUp(event) {}
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            // this.dispatch = this.props.store.dispatch;
-	            // this.setState(this.props.store.getState());
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var stage = new _stage.Stage(this.refs.canvas);
-	
-	            // stage.setClearColor("#F1F1F1");
-	
-	            stage.on("stagemousemove", this.handleMouseMove);
-	            stage.on("stagemousedown", this.handleMouseDown);
-	            stage.on("stagemouseup", this.handleMouseUp);
-	            stage.on("mouseleave", this.handleMouseLeave);
-	            stage.canvas.addEventListener("mousewheel", this.handleMouseWheel);
-	            stage.canvas.addEventListener("DOMMouseScroll", this.handleMouseWheelFox);
-	
-	            // Keyboard event
-	            // var _keydown = _.throttle(this.keydown, 100);
-	            document.addEventListener('keydown', this.handleKeyDown);
-	            // var _keyup = _.throttle(this.keyup, 500);
-	            document.addEventListener('keyup', this.handleKeyUp);
-	
-	            // var r = 50;
-	            // var graphics = new createjs.Graphics();
-	            // graphics.beginFill("red")
-	            //     .drawCircle(200,50, r)
-	            //     .endFill();
-	            //
-	            // var cached = new createjs.Shape(graphics);
-	            //
-	            // stage.addChild(cached);
-	            //
-	            // cached.x = 0;
-	            // cached.y = 0;
-	            //
-	            // cached.cache(200-r,50-r, r*2,r*2);
-	            //
-	            // stage.update();
-	
-	            this.props.onStageCreated(stage);
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            // if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
-	            // this.props.stage.update();
-	            // }
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {}
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'canvas',
-	                { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' },
-	                this.props.children
-	            );
-	        }
-	    }]);
-
-	    return StageComponent;
-	}(_react.Component);
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.StatusComponent = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/06/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	
-	// import '../App.css';
-	
-	var StatusComponent = exports.StatusComponent = function (_Component) {
-	    _inherits(StatusComponent, _Component);
-	
-	    function StatusComponent() {
-	        _classCallCheck(this, StatusComponent);
-	
-	        return _possibleConstructorReturn(this, (StatusComponent.__proto__ || Object.getPrototypeOf(StatusComponent)).apply(this, arguments));
-	    }
-	
-	    _createClass(StatusComponent, [{
-	        key: "measurement",
-	        value: function measurement() {
-	            var message = "";
-	            if (this.props.shortestSegment && this.props.distance) {
-	                var segment = this.props.shortestSegment;
-	                var dx = segment.end.x - segment.start.x;
-	                var dy = segment.end.y - segment.start.y;
-	                var dist = this.props.distance;
-	
-	                message = "DX=" + this.format(dx) + ",DY=" + this.format(dy) + ",D=" + this.format(dist);
-	            }
-	            return message;
-	        }
-	    }, {
-	        key: "format",
-	        value: function format(num) {
-	            return (num / this.props.divisor).toFixed(this.props.decimals);
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var stage = this.props.stage;
-	            var coordX = 0;
-	            var coordY = 0;
-	            if (stage) {
-	                coordX = this.format(stage.C2W_X(this.props.coordX));
-	                coordY = this.format(stage.C2W_Y(this.props.coordY));
-	            }
-	            var message = this.measurement();
-	
-	            return _react2.default.createElement(
-	                "div",
-	                { className: "App-status-bar" },
-	                _react2.default.createElement(
-	                    "div",
-	                    { style: { flex: 4, textAlign: "left", marginLeft: 10, padding: 5 } },
-	                    _react2.default.createElement(
-	                        "h5",
-	                        null,
-	                        "X: " + coordX + " Y: " + coordY
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { style: { flex: 6, textAlign: "left", marginLeft: 10, padding: 5 } },
-	                    _react2.default.createElement(
-	                        "h5",
-	                        null,
-	                        message
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "button",
-	                    {
-	                        style: { flex: 2, height: "50%", margin: 5, border: "1px", backgroundColor: "inherit" },
-	                        onClick: this.props.onUnitClicked
-	                    },
-	                    _react2.default.createElement(
-	                        "h3",
-	                        null,
-	                        "Units"
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "h5",
-	                    { style: { flex: 2, height: "50%", margin: 5 } },
-	                    this.props.units
-	                )
-	            );
-	        }
-	    }]);
-
-	    return StatusComponent;
-	}(_react.Component);
-
-/***/ },
-/* 31 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.ToolbarComponent = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Browse = __webpack_require__(98);
-	
-	var _Browse2 = _interopRequireDefault(_Browse);
-	
-	var _homeIcon20x = __webpack_require__(103);
-	
-	var _homeIcon20x2 = _interopRequireDefault(_homeIcon20x);
-	
-	var _handDrag = __webpack_require__(102);
-	
-	var _handDrag2 = _interopRequireDefault(_handDrag);
-	
-	var _measureContour = __webpack_require__(105);
-	
-	var _measureContour2 = _interopRequireDefault(_measureContour);
-	
-	var _measurePoints = __webpack_require__(106);
-	
-	var _measurePoints2 = _interopRequireDefault(_measurePoints);
-	
-	var _WidthOn = __webpack_require__(100);
-	
-	var _WidthOn2 = _interopRequireDefault(_WidthOn);
-	
-	var _editContourVertextOnOff = __webpack_require__(101);
-	
-	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
-	
-	var _label_icon = __webpack_require__(104);
-	
-	var _label_icon2 = _interopRequireDefault(_label_icon);
-	
-	var _Setting = __webpack_require__(99);
-	
-	var _Setting2 = _interopRequireDefault(_Setting);
-	
-	var _About = __webpack_require__(97);
-	
-	var _About2 = _interopRequireDefault(_About);
-	
-	__webpack_require__(4);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import { ButtonToolbar, Button } from 'react-bootstrap';
-	// import logo from '../logo.svg';
-	
-	var ToolbarComponent = exports.ToolbarComponent = function (_Component) {
-	    _inherits(ToolbarComponent, _Component);
-	
-	    function ToolbarComponent() {
-	        _classCallCheck(this, ToolbarComponent);
-	
-	        var _this = _possibleConstructorReturn(this, (ToolbarComponent.__proto__ || Object.getPrototypeOf(ToolbarComponent)).call(this));
-	
-	        _this.openJobButtonClicked = _this.openJobButtonClicked.bind(_this);
-	        _this.notImplemented = _this.notImplemented.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(ToolbarComponent, [{
-	        key: 'openJobButtonClicked',
-	        value: function openJobButtonClicked() {
-	            document.getElementById("browseFiles").click();
-	        }
-	    }, {
-	        key: 'notImplemented',
-	        value: function notImplemented() {
-	            alert("Not implemented yet");
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'App-toolbar' },
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Open file', onClick: this.openJobButtonClicked },
-	                    _react2.default.createElement('img', { src: _Browse2.default, alt: 'open' })
-	                ),
-	                _react2.default.createElement('input', { style: { fontSize: 16, marginTop: 5, marginBottom: 5, display: "none" },
-	                    type: 'file', id: 'browseFiles', name: 'files[]', multiple: true,
-	                    onChange: this.props.onFileSelected
-	                }),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Zoom and pan to home view', onClick: this.props.onHomeButtonPressed },
-	                    _react2.default.createElement('img', { src: _homeIcon20x2.default, alt: 'home' })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Pan by drag', onClick: this.props.onPanByDragPressed },
-	                    _react2.default.createElement('img', { src: _handDrag2.default, alt: 'panByDrag' })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Measure distance between points', onClick: this.props.onMeasurePointsButtonPressed },
-	                    _react2.default.createElement('img', { src: _measurePoints2.default, alt: 'measurePoints' })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Measure distance between shapes', onClick: this.props.onMeasureBetweenShapesButtonPressed },
-	                    _react2.default.createElement('img', { src: _measureContour2.default, alt: 'measureShapes' })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Display solid or wire', onClick: this.props.onToggleWidthModePressed },
-	                    _react2.default.createElement('img', { src: _WidthOn2.default, alt: 'width' })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Display vertices on/off', onClick: this.props.onToggleVerticesPressed },
-	                    _react2.default.createElement('img', { src: _editContourVertextOnOff2.default, alt: 'vertices' })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Display labels on/off', onClick: this.props.onToggleLabelsPressed },
-	                    _react2.default.createElement('img', { src: _label_icon2.default, alt: 'labels' })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'Settings', onClick: this.notImplemented },
-	                    _react2.default.createElement('img', { src: _Setting2.default, alt: 'setting' })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { title: 'About', onClick: this.notImplemented },
-	                    _react2.default.createElement('img', { src: _About2.default, alt: 'about' })
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return ToolbarComponent;
-	}(_react.Component);
-	
-	;
-
-/***/ },
-/* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(87);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _App = __webpack_require__(22);
-	
-	var _App2 = _interopRequireDefault(_App);
-	
-	__webpack_require__(48);
-	
-	var _redux = __webpack_require__(19);
-	
-	var _reducer = __webpack_require__(43);
-	
-	var _log = __webpack_require__(33);
-	
-	var _log2 = _interopRequireDefault(_log);
-	
-	var _readFiles = __webpack_require__(35);
-	
-	var _readFiles2 = _interopRequireDefault(_readFiles);
-	
-	var _test = __webpack_require__(37);
-	
-	var _test2 = _interopRequireDefault(_test);
-	
-	var _stageController = __webpack_require__(36);
-	
-	var _stageController2 = _interopRequireDefault(_stageController);
-	
-	var _matrixTest = __webpack_require__(34);
-	
-	var _matrixTest2 = _interopRequireDefault(_matrixTest);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _test2.default, _stageController2.default, _matrixTest2.default)));
-	// import demo from './middleware/demo';
-	
-	
-	// import 'bootstrap/dist/css/bootstrap.css';
-	// import 'bootstrap/dist/css/bootstrap-theme.css';
-	
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, { store: store }), document.getElementById('root'));
-
-/***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	var log = function log(_ref) {
-	    var getState = _ref.getState,
-	        dispatch = _ref.dispatch;
-	    return function (next) {
-	        return function (action) {
-	
-	            if (action.type !== ActionTypes.MOUSE_MOVED_ON_STAGE) {
-	                console.log('ACTION: ' + action.type, action);
-	            }
-	
-	            next(action);
-	        };
-	    };
-	};
-	
-	exports.default = log;
-
-/***/ },
-/* 34 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _layers = __webpack_require__(5);
-	
-	var _model = __webpack_require__(6);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var point = _flattenJs2.default.point,
-	    segment = _flattenJs2.default.segment,
-	    Polygon = _flattenJs2.default.Polygon;
-	
-	
-	function zoomHome(shape, stage) {
-	    var box = shape.box;
-	    var x = (box.xmin + box.xmax) / 2;
-	    var y = (box.ymin + box.ymax) / 2;
-	    stage.panToCoordinate(x, y);
-	    stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
-	}
-	
-	var matrix_test = function matrix_test(_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	        return function (action) {
-	
-	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
-	                if (document.location.pathname === '/matrix_test') {
-	
-	                    var stage = action.stage;
-	                    var state = getState();
-	                    var layers = state.layers;
-	
-	                    var layer = _layers.Layers.newLayer(stage, layers);
-	                    layer.name = "demo1";
-	                    layer.title = "demo1";
-	
-	                    layer.add(new _model.Model(segment(-100, 0, 100, 0), {}, "segment1"));
-	                    layer.add(new _model.Model(segment(0, -100, 0, 50), {}, "segment 2"));
-	
-	                    var polygon = new Polygon();
-	
-	                    layer.add(new _model.Model(point(20, 20), {}, "ABC123"));
-	                    layer.add(new _model.Model(point(-50, 30), {}, "Boom boom"));
-	
-	                    polygon.addFace([segment(-500000, -500000, 500000, -500000), segment(500000, -500000, 100000, 100000), segment(100000, 100000, -100000, 100000), segment(-100000, 100000, -500000, -500000)]);
-	
-	                    // layer.add(new Model(polygon,{},"polygonchik"));
-	
-	                    zoomHome(layer, stage);
-	                    state.layers.push(layer);
-	                }
-	            }
-	            return next(action);
-	        };
-	    };
-	};
-	
-	exports.default = matrix_test;
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _layers = __webpack_require__(5);
-	
-	var _model = __webpack_require__(6);
-	
-	var _parserXML = __webpack_require__(41);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	// import { Shape } from '../models/shape';
-	var readFile = function readFile(file, stage, layers, dispatch) {
-	    if (!file.type.match('text.*')) return; // validate type is text
-	
-	    var reader = new FileReader();
-	
-	    // Closure to capture file information and parameters
-	    reader.onload = function (theFile, stage, layers, dispatch) {
-	        return function (event) {
-	            var string = event.target.result;
-	
-	            var job = (0, _parserXML.parseXML)(theFile.name, string);
-	            var layer = _layers.Layers.newLayer(stage, layers);
-	            if (theFile.name !== "") {
-	                layer.name = theFile.name;
-	            }
-	            layer.title = job.title;
-	
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = job.profiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var polygon = _step.value;
-	
-	                    if (polygon.edges.size > 0 && polygon.faces.size > 0) {
-	                        // let watch = undefined; //  parser.parseToWatchArray(string);
-	                        // let shape = new Shape(polygon, stage, polygon.style, watch);
-	                        var _shape = new _model.Model(polygon, undefined, polygon.label);
-	
-	                        layer.add(_shape);
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-	
-	            try {
-	                for (var _iterator2 = job.materials[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var _polygon = _step2.value;
-	
-	                    if (_polygon.edges.size > 0 && _polygon.faces.size > 0) {
-	                        // let watch = undefined; //  parser.parseToWatchArray(string);
-	                        // let shape = new Shape(polygon, stage, polygon.style, watch);
-	                        var _shape2 = new _model.Model(_polygon, undefined, _polygon.label);
-	
-	                        layer.add(_shape2);
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-	
-	            try {
-	                for (var _iterator3 = job.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var shape = _step3.value;
-	
-	                    var model = new _model.Model(shape, undefined, shape.label);
-	                    layer.add(model);
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	
-	            layers.push(layer);
-	
-	            dispatch({
-	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                shape: layer
-	            });
-	        };
-	    }(file, stage, layers, dispatch);
-	
-	    reader.readAsText(file);
-	};
-	
-	var readFiles = function readFiles(_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	        return function (action) {
-	
-	            if (action.type !== ActionTypes.FILENAME_LIST_SELECTED) {
-	                return next(action);
-	            }
-	
-	            var stage = action.stage;
-	            var layers = action.layers;
-	
-	            // Load and parse files
-	            var _iteratorNormalCompletion4 = true;
-	            var _didIteratorError4 = false;
-	            var _iteratorError4 = undefined;
-	
-	            try {
-	                for (var _iterator4 = action.files[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	                    var file = _step4.value;
-	
-	                    readFile(file, stage, layers, dispatch);
-	                }
-	            } catch (err) {
-	                _didIteratorError4 = true;
-	                _iteratorError4 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	                        _iterator4.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError4) {
-	                        throw _iteratorError4;
-	                    }
-	                }
-	            }
-	        };
-	    };
-	};
-	
-	exports.default = readFiles;
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	var stageController = function stageController(_ref) {
-	    var getState = _ref.getState,
-	        dispatch = _ref.dispatch;
-	    return function (next) {
-	        return function (action) {
-	
-	            // let state = getState();
-	            var stage = action.stage;
-	
-	            if (stage) {
-	                switch (action.type) {
-	                    case ActionTypes.STAGE_RESIZED:
-	                        stage.resize();
-	                        break;
-	
-	                    case ActionTypes.MOUSE_DOWN_ON_STAGE:
-	                        stage.panByMouseStart();
-	                        break;
-	
-	                    case ActionTypes.MOUSE_MOVED_ON_STAGE:
-	                        if (action.dx !== undefined && action.dy !== undefined) {
-	                            stage.panByMouseMove(action.dx, action.dy);
-	                        }
-	                        break;
-	
-	                    case ActionTypes.MOUSE_UP_ON_STAGE:
-	                        stage.panByMouseStop();
-	                        break;
-	
-	                    case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
-	                        var center = action.shape.center;
-	                        var box = action.shape.box;
-	                        stage.panToCoordinate(center.x, center.y);
-	                        stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
-	                        break;
-	
-	                    case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
-	                        var bIn = action.delta > 0;
-	                        // stage.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta)/100.);
-	                        stage.zoomByMouse(action.x, action.y, bIn, 1.2);
-	                        break;
-	
-	                    default:
-	                        break;
-	                }
-	            }
-	
-	            next(action);
-	        };
-	    };
-	};
-	
-	exports.default = stageController;
-
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _layers = __webpack_require__(5);
-	
-	var _model = __webpack_require__(6);
-	
-	var _polygon = __webpack_require__(107);
-	
-	var _polygon2 = _interopRequireDefault(_polygon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	// import { Shape } from '../models/shape';
-	var demo = function demo(_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	        return function (action) {
-	
-	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
-	                if (document.location.pathname === '/test') {
-	                    // console.log(document.location.pathname);
-	                    // console.log(getState());
-	                    var str = _polygon2.default;
-	                    var text = atob(str.split(',')[1]);
-	
-	                    var stage = action.stage;
-	                    var state = getState();
-	                    var parser = state.app.parser;
-	                    var layers = state.layers;
-	
-	                    var polygon = parser.parseToPolygon(text);
-	
-	                    var layer = _layers.Layers.newLayer(stage, layers);
-	                    layer.name = "demo1";
-	                    layer.title = "demo1";
-	
-	                    var model = new _model.Model(polygon);
-	
-	                    var box = polygon.box;
-	                    var x = (box.xmin + box.xmax) / 2;
-	                    var y = (box.ymin + box.ymax) / 2;
-	
-	                    stage.panToCoordinate(x, y);
-	                    stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
-	
-	                    model.origin = stage.origin;
-	                    model.zoomFactor = stage.zoomFactor;
-	
-	                    // element.geomTransformed =
-	                    //     StageElement.transformPolygon(polygon, stage);
-	
-	                    layer.add(model);
-	
-	                    state.layers.push(layer);
-	
-	                    // dispatch({
-	                    //     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                    //     shape: layer
-	                    // })
-	                }
-	            }
-	            return next(action);
-	        };
-	    };
-	};
-	
-	// import { parseXML } from '../models/parserXML';
-	// import file1 from '../../public/test_xml_0.xml';
-	exports.default = demo;
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Job = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Box = _flattenJs2.default.Box;
-	
-	var Job = exports.Job = function () {
-	    function Job() {
-	        _classCallCheck(this, Job);
-	
-	        this.filename = "";
-	        this.title = "";
-	        this.profiles = []; // array of FlattenJS Polygons
-	        this.materials = []; // array of FlattenJS Polygons
-	        this.shapes = []; // array of other FlattenJS shapes
-	    }
-	
-	    _createClass(Job, [{
-	        key: "box",
-	        get: function get() {
-	            var b = new Box();
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = this.profiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var shape = _step.value;
-	
-	                    b.merge(shape.box);
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-	
-	            try {
-	                for (var _iterator2 = this.materials[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var _shape = _step2.value;
-	
-	                    b.merge(_shape.box);
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-	
-	            try {
-	                for (var _iterator3 = this.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var _shape2 = _step3.value;
-	
-	                    b.merge(_shape2.box);
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	
-	            return b;
-	        }
-	    }]);
-
-	    return Job;
-	}();
-
-/***/ },
-/* 39 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Layer = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 17/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-	
-	// import { Shape } from '../models/shape';
-	
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _model = __webpack_require__(6);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Layer = exports.Layer = function () {
-	    function Layer(stage) {
-	        _classCallCheck(this, Layer);
-	
-	        // super();
-	        // cannot define Layer as extension of PlanarSet due to bug in compiler ?
-	        this.stage = stage;
-	        this.shapes = []; // new Flatten.PlanarSet();
-	        this.name = "";
-	        this.color = "";
-	        this.title = "";
-	        this.displayed = false;
-	        this.edited = false;
-	        this.affected = false;
-	    }
-	
-	    _createClass(Layer, [{
-	        key: 'clone',
-	        value: function clone() {
-	            var layer = new Layer(this.stage);
-	            return Object.assign(layer, this);
-	        }
-	    }, {
-	        key: 'add',
-	        value: function add(shape) {
-	            if (shape instanceof _model.Model) {
-	                this.shapes.push(shape); // add(shape)
-	            } else {
-	                var geom = shape;
-	                var newShape = new _model.Model(geom); // , this.stage);
-	                this.shapes.push(newShape); // add(newShape);
-	            }
-	            return this;
-	        }
-	    }, {
-	        key: 'toggleDisplayed',
-	        value: function toggleDisplayed(color) {
-	            var displayed = !this.displayed;
-	            return Object.assign(this.clone(), {
-	                displayed: displayed,
-	                color: color
-	            });
-	        }
-	    }, {
-	        key: 'setAffected',
-	        value: function setAffected(affected) {
-	            return Object.assign(this.clone(), {
-	                affected: affected
-	            });
-	        }
-	    }, {
-	        key: 'setAlpha',
-	        value: function setAlpha() {
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = this.shapes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var shape = _step.value;
-	
-	                    shape.alpha = this.displayed ? 1 : 0;
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            return this.shapes;
-	        }
-	    }, {
-	        key: 'toggleExpanded',
-	        value: function toggleExpanded(shapeToggle) {
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-	
-	            try {
-	                for (var _iterator2 = this.shapes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var shape = _step2.value;
-	
-	                    if (shape === shapeToggle) {
-	                        shape.expanded = !shape.expanded;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	
-	            return this;
-	        }
-	    }, {
-	        key: 'box',
-	        get: function get() {
-	            var box = new _flattenJs2.default.Box();
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-	
-	            try {
-	                for (var _iterator3 = this.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var shape = _step3.value;
-	
-	                    box = box.merge(shape.box);
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	
-	            return box;
-	        }
-	    }, {
-	        key: 'center',
-	        get: function get() {
-	            var box = this.box;
-	            return new _flattenJs2.default.Point((box.xmin + box.xmax) / 2, (box.ymin + box.ymax) / 2);
-	        }
-	    }]);
-
-	    return Layer;
-	}();
-
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Parser = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 01/05/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Point = _flattenJs2.default.Point,
-	    Segment = _flattenJs2.default.Segment,
-	    Arc = _flattenJs2.default.Arc,
-	    Polygon = _flattenJs2.default.Polygon;
-	var vector = _flattenJs2.default.vector;
-	
-	/*
-	let debug_str = `+		[0]	{nrec=27 nalloc=27 h_ind_id=-1 ...} mat_cont_hdr_struc	mat_cont_struc
-	    +		[1]	{pmin=59146400,5973200 pmax=59606001,6438000} mat_cont_lim_struc	mat_cont_struc
-	+		[2]	{nedge=23 nalloc=25 ntop=2 ...} mat_cont_poly_struc	mat_cont_struc
-	+		[3]	{pmin=59146400,5973200 pmax=59606001,6438000} mat_cont_lim_struc	mat_cont_struc
-	+		[4]	{ps=59192738,6363124 pe=59216000,6372800 pc=59216000,6340000 cw=1} mat_curve_struc	mat_cont_struc
-	+		[5]	{ps=59216000,6372800 pe=59267652,6372800} mat_seg_struc	mat_cont_struc
-	+		[6]	{ps=59267652,6372800 pe=59267652,6307200 pc=59360000,6340000 cw=1} mat_curve_struc	mat_cont_struc
-	+		[7]	{ps=59267652,6307200 pe=59229586,6307200} mat_seg_struc	mat_cont_struc
-	+		[8]	{ps=59229586,6307200 pe=59212000,6289614} mat_seg_struc	mat_cont_struc
-	+		[9]	{ps=59212000,6289614 pe=59212000,6056386} mat_seg_struc	mat_cont_struc
-	+		[10]	{ps=59212000,6056386 pe=59229586,6038800} mat_seg_struc	mat_cont_struc
-	+		[11]	{ps=59229586,6038800 pe=59469614,6038800} mat_seg_struc	mat_cont_struc
-	+		[12]	{ps=59469614,6038800 pe=59487200,6056386} mat_seg_struc	mat_cont_struc
-	+		[13]	{ps=59487200,6056386 pe=59487200,6100500} mat_seg_struc	mat_cont_struc
-	+		[14]	{ps=59487200,6100500 pe=59434000,6180000 pc=59520000,6180000 cw=1} mat_curve_struc	mat_cont_struc
-	+		[15]	{ps=59434000,6180000 pe=59552800,6100500 pc=59520000,6180000 cw=1} mat_curve_struc	mat_cont_struc
-	+		[16]	{ps=59552800,6100500 pe=59552800,6042800} mat_seg_struc	mat_cont_struc
-	+		[17]	{ps=59552800,6042800 pe=59543124,6019538 pc=59520000,6042800 cw=1} mat_curve_struc	mat_cont_struc
-	+		[18]	{ps=59543124,6019538 pe=59506462,5982876} mat_seg_struc	mat_cont_struc
-	+		[19]	{ps=59506462,5982876 pe=59483200,5973200 pc=59483200,6006000 cw=1} mat_curve_struc	mat_cont_struc
-	+		[20]	{ps=59483200,5973200 pe=59216000,5973200} mat_seg_struc	mat_cont_struc
-	+		[21]	{ps=59216000,5973200 pe=59192738,5982876 pc=59216000,6006000 cw=1} mat_curve_struc	mat_cont_struc
-	+		[22]	{ps=59192738,5982876 pe=59156076,6019538} mat_seg_struc	mat_cont_struc
-	+		[23]	{ps=59156076,6019538 pe=59146400,6042800 pc=59179200,6042800 cw=1} mat_curve_struc	mat_cont_struc
-	+		[24]	{ps=59146400,6042800 pe=59146400,6303200} mat_seg_struc	mat_cont_struc
-	+		[25]	{ps=59146400,6303200 pe=59156076,6326462 pc=59179200,6303200 cw=1} mat_curve_struc	mat_cont_struc
-	+		[26]	{ps=59156076,6326462 pe=59192738,6363124} mat_seg_struc	mat_cont_struc
-	`;
-	*/
-	
-	var Parser = exports.Parser = function () {
-	    function Parser() {
-	        _classCallCheck(this, Parser);
-	    }
-	
-	    _createClass(Parser, [{
-	        key: 'parseToWatchArray',
-	        value: function parseToWatchArray(str) {
-	            var arrayOfLines = str.match(/[^\r\n]+/g);
-	            var watchArray = [];
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = arrayOfLines[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var line = _step.value;
-	
-	                    watchArray.push(line.substring(line.indexOf('{')));
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            return watchArray;
-	        }
-	    }, {
-	        key: 'parseToPolygon',
-	        value: function parseToPolygon(str) {
-	            var polygon = new Polygon();
-	            // let mulitystr = debug_str;
-	            var arrayOfLines = str.match(/[^\r\n]+/g);
-	
-	            for (var i = 0; i < arrayOfLines.length; i++) {
-	                var line = arrayOfLines[i];
-	                if (line.search('mat_cont_poly_struc') >= 0) {
-	                    var parenth = line.match(/\{([^)]+)\}/)[1]; // string inside {..}
-	                    var termArr = parenth.split(' '); // array of terms "attr=value"
-	                    var nedgesTerm = termArr[0]; // "nedge=nn"
-	                    var nedgesStr = nedgesTerm.split('=')[1];
-	                    var nedges = parseInt(nedgesStr, 10);
-	
-	                    // Create new face from next #nedges of segments and arcs
-	                    var edges = [];
-	                    for (var j = i + 2; j < i + 2 + nedges; j++) {
-	                        line = arrayOfLines[j];
-	                        var _parenth = line.match(/\{([^)]+)\}/)[1]; // string inside {..}
-	                        var _termArr = _parenth.split(' '); // array of terms "attr=value"
-	
-	                        if (line.search('mat_seg_struc') >= 0) {
-	                            var psArr = _termArr[0].split('=')[1].split(',');
-	                            var ps = new Point(parseInt(psArr[0], 10), parseInt(psArr[1], 10));
-	
-	                            var peArr = _termArr[1].split('=')[1].split(',');
-	                            var pe = new Point(parseInt(peArr[0], 10), parseInt(peArr[1], 10));
-	
-	                            edges.push(new Segment(ps, pe));
-	                        } else if (line.search('mat_curve_struc') >= 0) {
-	                            var _psArr = _termArr[0].split('=')[1].split(',');
-	                            var _ps = new Point(parseInt(_psArr[0], 10), parseInt(_psArr[1], 10));
-	
-	                            var _peArr = _termArr[1].split('=')[1].split(',');
-	                            var _pe = new Point(parseInt(_peArr[0], 10), parseInt(_peArr[1], 10));
-	
-	                            var pcArr = _termArr[2].split('=')[1].split(',');
-	                            var pc = new Point(parseInt(pcArr[0], 10), parseInt(pcArr[1], 10));
-	
-	                            var cwStr = _termArr[3].split('=')[1];
-	                            var counterClockwise = cwStr === '0' ? true : false;
-	
-	                            var startAngle = vector(pc, _ps).slope;
-	                            var endAngle = vector(pc, _pe).slope;
-	
-	                            var r = vector(pc, _ps).length;
-	
-	                            edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
-	                        }
-	                    }
-	                    polygon.addFace(edges);
-	                }
-	            }
-	            return polygon;
-	        }
-	    }]);
-
-	    return Parser;
-	}();
-
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.parseXML = parseXML;
-	
-	var _job = __webpack_require__(38);
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Point = _flattenJs2.default.Point,
-	    Segment = _flattenJs2.default.Segment,
-	    Arc = _flattenJs2.default.Arc,
-	    Polygon = _flattenJs2.default.Polygon;
-	var vector = _flattenJs2.default.vector;
-	
-	
-	function parseEdges(edgesXML) {
-	    var edges = [];
-	
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-	
-	    try {
-	        for (var _iterator = edgesXML[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var edge = _step.value;
-	
-	            var type = edge.getAttribute('type');
-	
-	            if (type === "segment") {
-	                var ps = new Point(parseInt(edge.getAttribute('xs'), 10), parseInt(edge.getAttribute('ys'), 10));
-	                var pe = new Point(parseInt(edge.getAttribute('xe'), 10), parseInt(edge.getAttribute('ye'), 10));
-	
-	                edges.push(new Segment(ps, pe));
-	            }
-	
-	            if (type === "curve") {
-	                var _ps = new Point(parseInt(edge.getAttribute('xs'), 10), parseInt(edge.getAttribute('ys'), 10));
-	                var _pe = new Point(parseInt(edge.getAttribute('xe'), 10), parseInt(edge.getAttribute('ye'), 10));
-	                var pc = new Point(parseInt(edge.getAttribute('xc'), 10), parseInt(edge.getAttribute('yc'), 10));
-	
-	                var counterClockwise = edge.getAttribute('cw') === 'no' ? true : false;
-	
-	                var startAngle = vector(pc, _ps).slope;
-	                var endAngle = vector(pc, _pe).slope;
-	
-	                var r = vector(pc, _ps).length;
-	
-	                edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
-	            }
-	        }
-	    } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion && _iterator.return) {
-	                _iterator.return();
-	            }
-	        } finally {
-	            if (_didIteratorError) {
-	                throw _iteratorError;
-	            }
-	        }
-	    }
-	
-	    return edges;
-	}
-	
-	function parsePolygon(polygonsXML) {
-	    var polygon = new Polygon();
-	
-	    // let nedges = parseInt(profile.getAttribute("n_edges"), 10);
-	
-	    // Augment Flatten object with style
-	    var color = polygonsXML.getAttribute("color");
-	    polygon.style = {
-	        stroke: color || undefined,
-	        fill: color || undefined,
-	        alpha: 1.0
-	    };
-	
-	    // Augment Flatten object with label
-	    var label = polygonsXML.getAttribute("label");
-	    polygon.label = label;
-	
-	    // Add islands
-	    var islands = polygonsXML.getElementsByTagName('island');
-	    var _iteratorNormalCompletion2 = true;
-	    var _didIteratorError2 = false;
-	    var _iteratorError2 = undefined;
-	
-	    try {
-	        for (var _iterator2 = islands[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var island = _step2.value;
-	
-	            var edgesXML = island.getElementsByTagName('edge');
-	            polygon.addFace(parseEdges(edgesXML));
-	        }
-	
-	        // Add holes
-	    } catch (err) {
-	        _didIteratorError2 = true;
-	        _iteratorError2 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                _iterator2.return();
-	            }
-	        } finally {
-	            if (_didIteratorError2) {
-	                throw _iteratorError2;
-	            }
-	        }
-	    }
-	
-	    var holes = polygonsXML.getElementsByTagName('hole');
-	    var _iteratorNormalCompletion3 = true;
-	    var _didIteratorError3 = false;
-	    var _iteratorError3 = undefined;
-	
-	    try {
-	        for (var _iterator3 = holes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	            var hole = _step3.value;
-	
-	            var edgesXML = hole.getElementsByTagName('edge');
-	            polygon.addFace(parseEdges(edgesXML));
-	        }
-	    } catch (err) {
-	        _didIteratorError3 = true;
-	        _iteratorError3 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                _iterator3.return();
-	            }
-	        } finally {
-	            if (_didIteratorError3) {
-	                throw _iteratorError3;
-	            }
-	        }
-	    }
-	
-	    return polygon;
-	}
-	
-	function parseSegment(segmentXML) {
-	    var ps = new Point(parseInt(segmentXML.getAttribute('xs'), 10), parseInt(segmentXML.getAttribute('ys'), 10));
-	    var pe = new Point(parseInt(segmentXML.getAttribute('xe'), 10), parseInt(segmentXML.getAttribute('ye'), 10));
-	
-	    var segment = new Segment(ps, pe);
-	
-	    return segment;
-	}
-	
-	function parsePoint(pointXML) {
-	    var point = new Point(parseInt(pointXML.getAttribute('x'), 10), parseInt(pointXML.getAttribute('y'), 10));
-	
-	    // Augment Flatten object with label property
-	    var label = pointXML.getAttribute("label");
-	    point.label = label;
-	
-	    return point;
-	}
-	function parseXML(filename, str) {
-	    var job = new _job.Job();
-	
-	    job.filename = filename;
-	
-	    var parser = new DOMParser();
-	    var xmlDoc = parser.parseFromString(str, "text/xml");
-	
-	    // Parse document title
-	    var titles = xmlDoc.getElementsByTagName('title');
-	    if (titles && titles.length > 0) {
-	        job.title = titles[0].firstChild.nodeValue; // take the first title if more than one
-	    }
-	
-	    // Parse profiles and add polygons to the job
-	    var profilesXML = xmlDoc.getElementsByTagName('profile');
-	    var _iteratorNormalCompletion4 = true;
-	    var _didIteratorError4 = false;
-	    var _iteratorError4 = undefined;
-	
-	    try {
-	        for (var _iterator4 = profilesXML[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	            var profileXML = _step4.value;
-	
-	            var polygon = parsePolygon(profileXML);
-	            job.profiles.push(polygon);
-	        }
-	
-	        // Parse materials and add polygons to the job
-	    } catch (err) {
-	        _didIteratorError4 = true;
-	        _iteratorError4 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	                _iterator4.return();
-	            }
-	        } finally {
-	            if (_didIteratorError4) {
-	                throw _iteratorError4;
-	            }
-	        }
-	    }
-	
-	    var materialXML = xmlDoc.getElementsByTagName('material');
-	    var _iteratorNormalCompletion5 = true;
-	    var _didIteratorError5 = false;
-	    var _iteratorError5 = undefined;
-	
-	    try {
-	        for (var _iterator5 = materialXML[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-	            var shapeXML = _step5.value;
-	
-	            var polygon = parsePolygon(shapeXML);
-	            job.materials.push(polygon);
-	        }
-	
-	        // Parse segments
-	    } catch (err) {
-	        _didIteratorError5 = true;
-	        _iteratorError5 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion5 && _iterator5.return) {
-	                _iterator5.return();
-	            }
-	        } finally {
-	            if (_didIteratorError5) {
-	                throw _iteratorError5;
-	            }
-	        }
-	    }
-	
-	    var segmentsXML = xmlDoc.getElementsByTagName('segment');
-	    var _iteratorNormalCompletion6 = true;
-	    var _didIteratorError6 = false;
-	    var _iteratorError6 = undefined;
-	
-	    try {
-	        for (var _iterator6 = segmentsXML[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-	            var segmentXML = _step6.value;
-	
-	            var segment = parseSegment(segmentXML);
-	            job.shapes.push(segment);
-	        }
-	
-	        // Parse points
-	    } catch (err) {
-	        _didIteratorError6 = true;
-	        _iteratorError6 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion6 && _iterator6.return) {
-	                _iterator6.return();
-	            }
-	        } finally {
-	            if (_didIteratorError6) {
-	                throw _iteratorError6;
-	            }
-	        }
-	    }
-	
-	    var pointsXML = xmlDoc.getElementsByTagName('point');
-	    var _iteratorNormalCompletion7 = true;
-	    var _didIteratorError7 = false;
-	    var _iteratorError7 = undefined;
-	
-	    try {
-	        for (var _iterator7 = pointsXML[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-	            var pointXML = _step7.value;
-	
-	            var point = parsePoint(pointXML);
-	            job.shapes.push(point);
-	        }
-	    } catch (err) {
-	        _didIteratorError7 = true;
-	        _iteratorError7 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion7 && _iterator7.return) {
-	                _iterator7.return();
-	            }
-	        } finally {
-	            if (_didIteratorError7) {
-	                throw _iteratorError7;
-	            }
-	        }
-	    }
-	
-	    return job;
-	}
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Stage = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _easeljsNEXTCombined = __webpack_require__(7);
-	
-	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	// import createjs from 'easel-js';
-	
-	
-	// import { Shape } from '../models/shape';
-	
-	var Stage = exports.Stage = function (_createjs$Stage) {
-	    _inherits(Stage, _createjs$Stage);
-	
-	    function Stage(canvas) {
-	        _classCallCheck(this, Stage);
-	
-	        var _this = _possibleConstructorReturn(this, (Stage.__proto__ || Object.getPrototypeOf(Stage)).call(this, canvas));
-	
-	        createjs.Touch.enable(_this);
-	        _this.mouseMoveOutside = false; // true;
-	        _this.enableMouseOver(20);
-	
-	        if (_this.canvas.clientWidth > 0 && _this.canvas.clientHeight > 0) {
-	            _this.canvas.width = _this.canvas.clientWidth;
-	            _this.canvas.height = _this.canvas.clientHeight;
-	        }
-	        _this.origin = { x: _this.canvas.width / 2, y: _this.canvas.height / 2 };
-	        _this.oldOrigin = { x: undefined, y: undefined }; // used by pan
-	        _this.resolution = 0.00001; // MM 2 Pixels when zoomFactor = 1;
-	        _this.zoomFactor = 1.0;
-	        return _this;
-	    }
-	
-	    _createClass(Stage, [{
-	        key: 'clone',
-	        value: function clone() {
-	            var stage = new Stage(this.canvas);
-	            return Object.assign(stage, this);
-	        }
-	    }, {
-	        key: 'add',
-	        value: function add(shape) {
-	            this.addChild(shape);
-	            return this;
-	        }
-	    }, {
-	        key: 'scalingFactor',
-	        value: function scalingFactor() {
-	            return this.resolution * this.zoomFactor;
-	        }
-	    }, {
-	        key: 'C2W_Scalar',
-	        value: function C2W_Scalar(scalar) {
-	            return scalar / this.scalingFactor();
-	        }
-	    }, {
-	        key: 'W2C_Scalar',
-	        value: function W2C_Scalar(scalar) {
-	            return this.scalingFactor() * scalar;
-	        }
-	    }, {
-	        key: 'C2W_X',
-	        value: function C2W_X(canvasX) {
-	            return (canvasX - this.origin.x) / this.scalingFactor();
-	        }
-	    }, {
-	        key: 'C2W_Y',
-	        value: function C2W_Y(canvasY) {
-	            return (this.origin.y - canvasY) / this.scalingFactor();
-	        }
-	    }, {
-	        key: 'W2C_X',
-	        value: function W2C_X(worldX) {
-	            return this.scalingFactor() * worldX + this.origin.x;
-	        }
-	    }, {
-	        key: 'W2C_Y',
-	        value: function W2C_Y(worldY) {
-	            return this.origin.y - this.scalingFactor() * worldY;
-	        }
-	    }, {
-	        key: 'W2C',
-	        value: function W2C(point) {
-	            return { x: this.W2C_X(point.x), y: this.W2C_Y(point.y) };
-	        }
-	    }, {
-	        key: 'panTo',
-	        value: function panTo(newOrigin) {
-	            this.origin = { x: newOrigin.x, y: newOrigin.y };
-	        }
-	    }, {
-	        key: 'panBy',
-	        value: function panBy(deltaX, deltaY) {
-	            this.origin = {
-	                x: this.origin.x + deltaX,
-	                y: this.origin.y + deltaY
-	            };
-	        }
-	
-	        // zoom by 10% each time
-	
-	    }, {
-	        key: 'zoomIn',
-	        value: function zoomIn(ratio) {
-	            var curRatio = ratio || 1.1;
-	            this.zoomFactor = Math.min(10000000, curRatio * this.zoomFactor);
-	        }
-	    }, {
-	        key: 'zoomOut',
-	        value: function zoomOut(ratio) {
-	            var curRatio = ratio || 1.1;
-	            this.zoomFactor = Math.max(0.001, this.zoomFactor / curRatio);
-	        }
-	
-	        // ZoomIn/Out + "Focus follows mouse"
-	
-	    }, {
-	        key: 'zoom',
-	        value: function zoom(focusX, focusY, bIn, ratio) {
-	            var worldX = this.C2W_X(focusX); // world coordinate of mouse focus before zoom
-	            var worldY = this.C2W_Y(focusY);
-	
-	            bIn ? this.zoomIn(ratio) : this.zoomOut(ratio);
-	
-	            var newFocusX = this.W2C_X(worldX); // canvas coordinate after zoom
-	            var newFocusY = this.W2C_Y(worldY);
-	
-	            this.panBy(focusX - newFocusX, focusY - newFocusY);
-	
-	            return [newFocusX, newFocusY];
-	        }
-	    }, {
-	        key: 'zoomByMouse',
-	        value: function zoomByMouse(focusX, focusY, bIn, ratio) {
-	            this.zoom(focusX, focusY, bIn, ratio);
-	        }
-	    }, {
-	        key: 'zoomToLimits',
-	        value: function zoomToLimits(width, height) {
-	            var resolution = Math.min(this.canvas.width / (1.1 * width), this.canvas.height / (1.1 * height));
-	            var zoomFactor = resolution / this.resolution;
-	            var ratio = zoomFactor / this.zoomFactor;
-	            var bIn = true; //ratio > 1;
-	
-	            var focusX = this.canvas.width / 2;
-	            var focusY = this.canvas.height / 2;
-	            this.zoom(focusX, focusY, bIn, ratio);
-	        }
-	    }, {
-	        key: 'resize',
-	        value: function resize() {
-	            // this.origin.x = this.canvas.width / 2;
-	            // this.origin.y = this.canvas.height / 2;
-	            if (this.canvas.clientWidth > 0 && this.canvas.clientHeight > 0) {
-	                this.canvas.width = this.canvas.clientWidth;
-	                this.canvas.height = this.canvas.clientHeight;
-	            }
-	        }
-	
-	        // drawSomething() {
-	        //     let shape = new Shape();
-	        //     shape.graphics.beginFill('red').drawRect(0, 0, 20, 20);
-	        //     this.addChild(shape);
-	        //     this.update();
-	        // }
-	
-	    }, {
-	        key: 'panByMouseStart',
-	        value: function panByMouseStart() {
-	            this.oldOrigin.x = this.origin.x;
-	            this.oldOrigin.y = this.origin.y;
-	        }
-	    }, {
-	        key: 'panByMouseMove',
-	        value: function panByMouseMove(dx, dy) {
-	            if (dx !== undefined && dy !== undefined && this.oldOrigin.x !== undefined && this.oldOrigin.y !== undefined) {
-	                this.origin = {
-	                    x: this.oldOrigin.x + dx,
-	                    y: this.oldOrigin.y + dy
-	                };
-	            }
-	        }
-	    }, {
-	        key: 'panByMouseStop',
-	        value: function panByMouseStop() {
-	            this.oldOrigin.x = undefined;
-	            this.oldOrigin.y = undefined;
-	            this.tx = undefined;
-	            this.ty = undefined;
-	        }
-	    }, {
-	        key: 'panToCoordinate',
-	        value: function panToCoordinate(x, y) {
-	            var canvasX = this.W2C_X(x);
-	            var canvasY = this.W2C_Y(y);
-	
-	            var dx = this.canvas.width / 2 - canvasX;
-	            var dy = this.canvas.height / 2 - canvasY;
-	            this.panBy(dx, dy);
-	        }
-	    }, {
-	        key: 'box',
-	        get: function get() {
-	            var minX = this.C2W_X(0);
-	            var minY = this.C2W_Y(this.canvas.height);
-	            var maxX = this.C2W_X(this.canvas.width);
-	            var maxY = this.C2W_Y(0);
-	
-	            return new _flattenJs2.default.Box(minX, minY, maxX, maxY);
-	        }
-	    }]);
-	
-	    return Stage;
-	}(createjs.Stage);
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.reducer = undefined;
-	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Created by alexanderbol on 13/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
-	
-	// import {Stage} from './models/stage';
-	// import {Layer} from './models/layer';
-	
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _redux = __webpack_require__(19);
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _layers = __webpack_require__(5);
-	
-	var _parser = __webpack_require__(40);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	var unitsList = [{
-	    name: "pixels",
-	    decimals: 0,
-	    divisor: 1
-	}, {
-	    name: "inch",
-	    decimals: 7,
-	    divisor: 10160000
-	}, {
-	    name: "mm",
-	    decimals: 6,
-	    divisor: 400000
-	}];
-	
-	var defaultAppState = {
-	    title: "Debug Viewer",
-	    units: "pixels",
-	    decimals: 0,
-	    divisor: 1,
-	    bg: "#F1F1F1",
-	    hoveredShape: null,
-	    parser: new _parser.Parser(),
-	    widthOn: true,
-	    displayVertices: false,
-	    displayLabels: true,
-	    measurePointsActive: false,
-	    measureShapesActive: false,
-	    measureShapesFirstClick: true,
-	    firstMeasuredShape: null,
-	    secondMeasuredShape: null,
-	    firstMeasuredLayer: null,
-	    secondMeasuredLayer: null,
-	    distance: undefined,
-	    shortestSegment: null
-	};
-	
-	var defaultMouseState = {
-	    x: 0,
-	    y: 0,
-	    startX: undefined,
-	    startY: undefined
-	};
-	
-	function app() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultAppState;
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case ActionTypes.STAGE_UPDATED:
-	            return state;
-	        case ActionTypes.TOGGLE_UNITS_CLICKED:
-	            var curUnitsId = unitsList.findIndex(function (units) {
-	                return state.units === units.name;
-	            });
-	            var newUnits = unitsList[(curUnitsId + 1) % 3];
-	            return Object.assign({}, state, {
-	                units: newUnits.name,
-	                decimals: newUnits.decimals,
-	                divisor: newUnits.divisor
-	            });
-	        case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
-	            return Object.assign({}, state, {
-	                hoveredShape: state.measureShapesActive ? action.shape : null
-	            });
-	        case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
-	            return Object.assign({}, state, {
-	                hoveredShape: null
-	            });
-	        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
-	            if (!state.measureShapesActive) {
-	                return state;
-	            }
-	            // measureShapesActive
-	
-	            if (state.measureShapesFirstClick) {
-	                return Object.assign({}, state, {
-	                    firstMeasuredShape: action.shape,
-	                    firstMeasuredLayer: action.layer,
-	                    secondMeasuredShape: null,
-	                    secondMeasuredLayer: null,
-	                    measureShapesFirstClick: false,
-	                    distance: undefined,
-	                    shortestSegment: null
-	                });
-	            } else {
-	                // second click
-	                if (action.shape === state.firstMeasuredShape) {
-	                    return state; // second click on the same shape
-	                }
-	
-	                var shape1 = state.firstMeasuredShape.geom;
-	                var shape2 = action.shape.geom;
-	                var _ref = [],
-	                    distance = _ref[0],
-	                    shortestSegment = _ref[1];
-	
-	                if (shape1 instanceof _flattenJs2.default.Polygon && shape2 instanceof _flattenJs2.default.Polygon) {
-	                    var _Flatten$Distance$pol = _flattenJs2.default.Distance.polygon2polygon(shape1, shape2);
-	
-	                    var _Flatten$Distance$pol2 = _slicedToArray(_Flatten$Distance$pol, 2);
-	
-	                    distance = _Flatten$Distance$pol2[0];
-	                    shortestSegment = _Flatten$Distance$pol2[1];
-	                } else {
-	                    var _Flatten$Distance$dis = _flattenJs2.default.Distance.distance(shape1, shape2);
-	
-	                    var _Flatten$Distance$dis2 = _slicedToArray(_Flatten$Distance$dis, 2);
-	
-	                    distance = _Flatten$Distance$dis2[0];
-	                    shortestSegment = _Flatten$Distance$dis2[1];
-	                }
-	
-	                return Object.assign({}, state, {
-	                    secondMeasuredShape: action.shape,
-	                    secondMeasuredLayer: action.layer,
-	                    measureShapesFirstClick: true,
-	                    distance: distance,
-	                    shortestSegment: shortestSegment
-	                });
-	            }
-	        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
-	            return Object.assign({}, state, {
-	                measurePointsActive: false,
-	                measureShapesActive: false,
-	                firstMeasuredShape: null,
-	                firstMeasuredLayer: null,
-	                secondMeasuredShape: null,
-	                secondMeasuredLayer: null,
-	                distance: undefined,
-	                shortestSegment: null
-	            });
-	        case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
-	            return Object.assign({}, state, {
-	                widthOn: !state.widthOn,
-	                displayVertices: state.widthOn ? state.displayVertices : false
-	            });
-	        case ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED:
-	            if (state.displayVertices) {
-	                return Object.assign({}, state, {
-	                    displayVertices: false
-	                });
-	            } else {
-	                return Object.assign({}, state, {
-	                    widthOn: false,
-	                    displayVertices: true
-	                });
-	            }
-	
-	        case ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED:
-	            return Object.assign({}, state, {
-	                displayLabels: !state.displayLabels
-	            });
-	
-	        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
-	            return Object.assign({}, state, {
-	                measurePointsActive: true,
-	                measureShapesActive: false,
-	                firstMeasuredShape: null,
-	                firstMeasuredLayer: null,
-	                secondMeasuredShape: null,
-	                secondMeasuredLayer: null,
-	                distance: undefined,
-	                shortestSegment: null
-	            });
-	        case ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED:
-	            return Object.assign({}, state, {
-	                measurePointsActive: false,
-	                measureShapesActive: true,
-	                firstMeasuredShape: null,
-	                firstMeasuredLayer: null,
-	                secondMeasuredShape: null,
-	                secondMeasuredLayer: null,
-	                distance: undefined,
-	                shortestSegment: null
-	            });
-	        case ActionTypes.LAYER_LIST_PANEL_PRESSED:
-	            return state; // only to cause refresh of layers list component
-	        default:
-	            return state;
-	    }
-	}
-	
-	function layers() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	    var action = arguments[1];
-	
-	    var curLayer = state.find(function (layer) {
-	        return layer.affected;
-	    });
-	    var curLayerId = state.findIndex(function (layer) {
-	        return layer.affected;
-	    });
-	
-	    switch (action.type) {
-	        /*
-	        case ActionTypes.NEW_STAGE_CREATED:
-	            return [...state, action.layer];
-	            */
-	
-	        case ActionTypes.ADD_LAYER_PRESSED:
-	            return [].concat(_toConsumableArray(state), [action.layer]);
-	
-	        case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
-	            var color = "";
-	            if (!action.layer.displayed) {
-	                color = _layers.Layers.getNextColor(state);
-	                if (color === "") return; // no free colors
-	            }
-	            return state.map(function (layer) {
-	                if (layer !== action.layer) {
-	                    // if action.layer will be undisplayed,
-	                    // it cannot become affected, then
-	                    // keep affected on this layer
-	                    if (action.layer.displayed) {
-	                        return layer;
-	                    } else {
-	                        return layer.setAffected(false);
-	                    }
-	                } else {
-	                    var newLayer = layer.toggleDisplayed(color);
-	                    newLayer.affected = newLayer.displayed;
-	                    return newLayer;
-	                }
-	                // return layer.toggleDisplayed(color);
-	            });
-	
-	        case ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED:
-	            return state.map(function (layer) {
-	                if (layer !== action.layer) {
-	                    return layer.setAffected(false);
-	                } else {
-	                    return layer.setAffected(!layer.affected);
-	                }
-	            });
-	
-	        case ActionTypes.NEW_SHAPE_PASTED:
-	            return state.map(function (layer) {
-	                if (layer.affected) {
-	                    return layer.add(action.shape);
-	                } else {
-	                    return layer;
-	                }
-	            });
-	
-	        case ActionTypes.TOGGLE_WATCH_EXPAND_CLICKED:
-	            return state.map(function (layer) {
-	                if (layer.affected) {
-	                    return layer.toggleExpanded(action.shape);
-	                } else {
-	                    return layer;
-	                }
-	            });
-	
-	        case ActionTypes.EDIT_LAYER_NAME_PRESSED:
-	            return state.map(function (layer) {
-	                if (layer !== action.layer) {
-	                    return layer;
-	                }
-	                return Object.assign({}, layer, {
-	                    edited: true
-	                });
-	            });
-	
-	        case ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED:
-	            if (curLayerId === state.length - 1) {
-	                return state;
-	            } else {
-	
-	                var nextLayer = state[curLayerId + 1];
-	
-	                return state.map(function (layer) {
-	                    if (layer === curLayer) {
-	                        var newCurLayer = layer.toggleDisplayed("");
-	                        newCurLayer.affected = false;
-	                        return newCurLayer;
-	                    } else if (layer === nextLayer) {
-	                        var _color = curLayer.color;
-	                        var newNextLayer = layer.toggleDisplayed(_color);
-	                        newNextLayer.affected = true;
-	                        return newNextLayer;
-	                    } else {
-	                        return layer;
-	                    }
-	                });
-	            }
-	
-	        case ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED:
-	            if (curLayerId === 0) {
-	                return state;
-	            } else {
-	                var _nextLayer = state[curLayerId - 1];
-	
-	                return state.map(function (layer) {
-	                    if (layer === curLayer) {
-	                        var newCurLayer = layer.toggleDisplayed("");
-	                        newCurLayer.affected = false;
-	                        return newCurLayer;
-	                    } else if (layer === _nextLayer) {
-	                        var newNextLayer = layer.toggleDisplayed(curLayer.color);
-	                        newNextLayer.displayed = true;
-	                        newNextLayer.affected = true;
-	                        return newNextLayer;
-	                    } else {
-	                        return layer;
-	                    }
-	                });
-	            }
-	
-	        // case ActionTypes.MOUSE_MOVED_ON_STAGE:
-	        //     if (action.dx !== undefined && action.dy !== undefined) {
-	        //         return state.map( layer =>
-	        //             layer.setTransform(action.stage.origin, action.stage.zoomFactor))
-	        //     }
-	        //     else {
-	        //         return state;
-	        //     }
-	
-	        // case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
-	        // case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
-	        //     return state.map(layer =>
-	        //         layer.setTransform(action.stage.origin, action.stage.zoomFactor));
-	
-	        default:
-	            return state;
-	    }
-	}
-	
-	function stage() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case ActionTypes.NEW_STAGE_CREATED:
-	            return action.stage;
-	
-	        default:
-	            return state;
-	    }
-	}
-	
-	function mouse() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultMouseState;
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case ActionTypes.MOUSE_MOVED_ON_STAGE:
-	            return Object.assign({}, state, {
-	                x: action.x,
-	                y: action.y
-	            });
-	        case ActionTypes.MOUSE_DOWN_ON_STAGE:
-	            return Object.assign({}, state, {
-	                startX: action.x,
-	                startY: action.y
-	            });
-	        case ActionTypes.MOUSE_UP_ON_STAGE:
-	            return Object.assign({}, state, {
-	                startX: undefined,
-	                startY: undefined
-	            });
-	        default:
-	            return state;
-	    }
-	}
-	
-	var reducer = exports.reducer = (0, _redux.combineReducers)({
-	    app: app,
-	    layers: layers,
-	    stage: stage,
-	    mouse: mouse
-	});
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.MeasurePointsTool = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(4);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import createjs from 'easel-js';
-	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
-	
-	var MeasurePointsTool = exports.MeasurePointsTool = function (_Component) {
-	    _inherits(MeasurePointsTool, _Component);
-	
-	    function MeasurePointsTool() {
-	        _classCallCheck(this, MeasurePointsTool);
-	
-	        var _this = _possibleConstructorReturn(this, (MeasurePointsTool.__proto__ || Object.getPrototypeOf(MeasurePointsTool)).call(this));
-	
-	        _this.handleMouseMove = _this.handleMouseMove.bind(_this);
-	        _this.handleMouseDown = _this.handleMouseDown.bind(_this);
-	        _this.handleMouseUp = _this.handleMouseUp.bind(_this);
-	
-	        _this.handleMouseWheel = _this.handleMouseWheel.bind(_this);
-	        _this.handleMouseWheelFox = _this.handleMouseWheelFox.bind(_this);
-	
-	        _this.startX = undefined;
-	        _this.startY = undefined;
-	        _this.endX = undefined;
-	        _this.endY = undefined;
-	        _this.measureStarted = false;
-	        return _this;
-	    }
-	
-	    _createClass(MeasurePointsTool, [{
-	        key: 'handleMouseDown',
-	        value: function handleMouseDown(event) {
-	            event.preventDefault();
-	
-	            var canvas = this.refs.measureCanvas;
-	            var stage = this.props.stage;
-	
-	            canvas.width = canvas.width;
-	
-	            var coordX = event.offsetX || event.originalEvent.layerX; // layerX for Firefox
-	            var coordY = event.offsetY || event.originalEvent.layerY; // layery for Firefox
-	
-	            if (this.measureStarted) {
-	                // second click - clear measurement
-	                this.startX = undefined;
-	                this.startY = undefined;
-	                this.endX = undefined;
-	                this.endY = undefined;
-	                this.measureStarted = false;
-	                canvas.style.cursor = "auto";
-	            } else {
-	                // first click - start measurment
-	                this.startX = stage.C2W_X(coordX);
-	                this.startY = stage.C2W_Y(coordY);
-	                this.measureStarted = true;
-	                canvas.style.cursor = "crosshair";
-	            }
-	        }
-	    }, {
-	        key: 'handleMouseMove',
-	        value: function handleMouseMove(event) {
-	            var stage = this.props.stage;
-	
-	            var coordX = event.offsetX /*|| event.originalEvent ? event.originalEvent.layerX : undefined*/; // layerX for Firefox
-	            var coordY = event.offsetY /*|| event.originalEvent ? event.originalEvent.layerY : undefined*/; // layerY for Firefox
-	
-	            if (this.measureStarted) {
-	                this.endX = stage.C2W_X(coordX);
-	                this.endY = stage.C2W_Y(coordY);
-	
-	                this.draw();
-	            }
-	        }
-	    }, {
-	        key: 'handleMouseUp',
-	        value: function handleMouseUp(event) {}
-	    }, {
-	        key: 'handleMouseWheel',
-	        value: function handleMouseWheel(event) {
-	            event.preventDefault();
-	
-	            var delta = event.detail || event.wheelDelta;
-	            if (delta !== 0) {
-	                this.props.onMouseWheelMove(event.offsetX, event.offsetY, delta);
-	            }
-	        }
-	    }, {
-	        key: 'handleMouseWheelFox',
-	        value: function handleMouseWheelFox(event) {
-	            event.preventDefault();
-	
-	            if (event.detail !== 0) {
-	                this.props.onMousewheelMove(event.layerX, event.layerY, -event.detail);
-	            }
-	        }
-	    }, {
-	        key: 'draw',
-	        value: function draw() {
-	            var canvas = this.refs.measureCanvas;
-	            var context = canvas.getContext('2d');
-	            var stage = this.props.stage;
-	
-	            canvas.width = canvas.width;
-	
-	            // Draw rectangle
-	            var pllX = Math.min(stage.W2C_X(this.startX), stage.W2C_X(this.endX));
-	            var pllY = Math.min(stage.W2C_Y(this.startY), stage.W2C_Y(this.endY));
-	            var width = Math.abs(stage.W2C_Scalar(this.startX - this.endX));
-	            var height = Math.abs(stage.W2C_Scalar(this.startY - this.endY));
-	
-	            context.beginPath();
-	            context.rect(pllX, pllY, width, height);
-	
-	            // Draw segment
-	            context.moveTo(stage.W2C_X(this.startX), stage.W2C_Y(this.startY));
-	            context.lineTo(stage.W2C_X(this.endX), stage.W2C_Y(this.endY));
-	
-	            context.lineWidth = 1;
-	            context.strokeStyle = 'black';
-	            context.stroke();
-	
-	            // Draw text
-	            var textX = void 0,
-	                textY = void 0,
-	                textHeight = void 0,
-	                textWidth = void 0;
-	            var backX = void 0,
-	                backY = void 0; // background rectangle
-	            var text = this.measurement();
-	
-	            context.font = "12pt Arial";
-	
-	            textHeight = 12; /* font size*/
-	            textWidth = context.measureText(text).width;
-	
-	            // Rectangle to the right of current point, text aligned left
-	            if (Math.abs(stage.W2C_X(this.endX) - pllX) <= 2) {
-	                context.textAlign = "left";
-	                textX = pllX + 3;
-	                backX = pllX;
-	            }
-	            // Rectangle to the left of current point, text aligned right
-	            else {
-	                    context.textAlign = "right";
-	                    textX = pllX + width - 3;
-	                    backX = textX - textWidth - 3;
-	                }
-	
-	            if (Math.abs(stage.W2C_Y(this.endY) - pllY) <= 2) {
-	                textY = pllY - 3;
-	            } else {
-	                textY = pllY + height + textHeight + 3;
-	            }
-	            backY = textY - textHeight - 3;
-	
-	            context.fillStyle = 'white';
-	            context.globalAlpha = 0.4;
-	            context.fillRect(backX, backY, textWidth + 6, textHeight + 6);
-	
-	            context.fillStyle = "black";
-	            context.globalAlpha = 1;
-	            context.fillText(this.measurement(), textX, textY);
-	        }
-	    }, {
-	        key: 'measurement',
-	        value: function measurement() {
-	            var dx = this.endX - this.startX;
-	            var dy = this.endY - this.startY;
-	            var dist = Math.sqrt(dx * dx + dy * dy);
-	            var message = "DX=" + this.format(dx) + ",DY=" + this.format(dy) + ",D=" + this.format(dist);
-	            return message;
-	        }
-	    }, {
-	        key: 'format',
-	        value: function format(num) {
-	            return (num / this.props.divisor).toFixed(this.props.decimals);
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            // this.dispatch = this.props.store.dispatch;
-	            // this.setState(this.props.store.getState());
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var canvas = this.refs.measureCanvas;
-	            canvas.addEventListener("mousedown", this.handleMouseDown);
-	            canvas.addEventListener("mousemove", this.handleMouseMove);
-	            canvas.addEventListener("mouseup", this.handleMouseUp);
-	
-	            canvas.addEventListener("mousewheel", this.handleMouseWheel);
-	            canvas.addEventListener("DOMMouseScroll", this.handleMouseWheelFox);
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            if (this.measureStarted) {
-	                this.draw();
-	            }
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            var canvas = this.refs.measureCanvas;
-	            canvas.width = canvas.width;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var mainCanvas = this.props.stage.canvas;
-	            var width = mainCanvas.width;
-	            var height = mainCanvas.height;
-	            var top = mainCanvas.offsetTop;
-	            var left = mainCanvas.offsetLeft;
-	            return _react2.default.createElement('canvas', { tabIndex: '1', ref: 'measureCanvas', id: 'measurePoints',
-	                width: width,
-	                height: height,
-	                style: { position: 'absolute', top: top, left: left }
-	            });
-	        }
-	    }]);
-
-	    return MeasurePointsTool;
-	}(_react.Component);
-
-/***/ },
-/* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.MeasureShapesTool = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _easeljsNEXTCombined = __webpack_require__(7);
-	
-	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
-	
-	__webpack_require__(4);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import createjs from 'easel-js';
-	
-	
-	var MeasureShapesTool = exports.MeasureShapesTool = function (_Component) {
-	    _inherits(MeasureShapesTool, _Component);
-	
-	    function MeasureShapesTool(params) {
-	        _classCallCheck(this, MeasureShapesTool);
-	
-	        var _this = _possibleConstructorReturn(this, (MeasureShapesTool.__proto__ || Object.getPrototypeOf(MeasureShapesTool)).call(this));
-	
-	        _this.segment = undefined;
-	        return _this;
-	    }
-	
-	    _createClass(MeasureShapesTool, [{
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            if (this.props.firstMeasuredShape && this.props.secondMeasuredShape && this.props.firstMeasuredLayer.displayed && this.props.secondMeasuredLayer.displayed) {
-	
-	                if (this.props.shortestSegment && this.props.stage) {
-	                    var shortest_segment = this.props.shortestSegment;
-	
-	                    if (!this.segment) {
-	                        this.segment = new createjs.Shape();
-	                        this.props.stage.addChild(this.segment);
-	                    }
-	                    this.segment.graphics.clear();
-	                    this.segment.graphics = shortest_segment.graphics();
-	                }
-	            } else {
-	                if (this.segment) {
-	                    this.segment.graphics.clear();
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return null;
-	        }
-	    }]);
-
-	    return MeasureShapesTool;
-	}(_react.Component);
-
-/***/ },
-/* 46 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.PolygonTool = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _easeljsNEXTCombined = __webpack_require__(7);
-	
-	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
-	
-	__webpack_require__(10);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 19/06/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	var PolygonTool = exports.PolygonTool = function (_Component) {
-	    _inherits(PolygonTool, _Component);
-	
-	    function PolygonTool(params) {
-	        _classCallCheck(this, PolygonTool);
-	
-	        var _this = _possibleConstructorReturn(this, (PolygonTool.__proto__ || Object.getPrototypeOf(PolygonTool)).call(this));
-	
-	        _this.shape = new createjs.Shape();
-	        params.stage.addChild(_this.shape);
-	
-	        _this.vertexShapes = [];
-	        _this.labelShape = undefined;
-	
-	        var _iteratorNormalCompletion = true;
-	        var _didIteratorError = false;
-	        var _iteratorError = undefined;
-	
-	        try {
-	            for (var _iterator = params.polygon.geom.vertices[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                var vertex = _step.value;
-	
-	                var vertexShape = new createjs.Shape();
-	                vertexShape.geom = vertex; // augment Shape with geom struct
-	                params.stage.addChild(vertexShape);
-	                _this.vertexShapes.push(vertexShape);
-	            }
-	        } catch (err) {
-	            _didIteratorError = true;
-	            _iteratorError = err;
-	        } finally {
-	            try {
-	                if (!_iteratorNormalCompletion && _iterator.return) {
-	                    _iterator.return();
-	                }
-	            } finally {
-	                if (_didIteratorError) {
-	                    throw _iteratorError;
-	                }
-	            }
-	        }
-	
-	        if (params.polygon.label && params.polygon.label.trim() !== "") {
-	            var html = document.createElement('div');
-	            html.innerText = params.polygon.label;
-	            html.style.position = "absolute";
-	            html.style.top = 0;
-	            html.style.left = 0;
-	
-	            document.body.appendChild(html);
-	
-	            _this.labelShape = new createjs.DOMElement(html);
-	
-	            // let labelShape = new createjs.Text();
-	            // labelShape.text = params.polygon.label;
-	            // labelShape.textBaseline = "alphabetic";
-	
-	            _this.labelShape.geom = params.polygon.geom; // augment label Shape with geom struct
-	            params.stage.addChild(_this.labelShape);
-	        }
-	
-	        _this.state = {
-	            polygon: params.polygon,
-	            color: params.color,
-	            displayed: params.displayed,
-	            displayVertices: params.displayVertices,
-	            displayLabels: params.displayLabels,
-	            hovered: params.hovered,
-	            selected: params.selected,
-	            widthOn: params.widthOn,
-	            zoomFactor: params.stage.zoomFactor
-	        };
-	
-	        // this.handleMouseMove = this.handleMouseMove.bind(this);
-	        _this.handleMouseOver = _this.handleMouseOver.bind(_this);
-	        _this.handleMouseOut = _this.handleMouseOut.bind(_this);
-	        _this.handleClick = _this.handleClick.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(PolygonTool, [{
-	        key: 'equalState',
-	        value: function equalState(nextState) {
-	            var equal = true;
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-	
-	            try {
-	                for (var _iterator2 = Object.keys(nextState)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var key = _step2.value;
-	
-	                    if (nextState[key] !== this.state[key]) {
-	                        equal = false;
-	                        break;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	
-	            return equal;
-	        }
-	    }, {
-	        key: 'handleMouseOver',
-	        value: function handleMouseOver(event) {
-	            this.props.onMouseOver(this.props.polygon);
-	        }
-	    }, {
-	        key: 'handleMouseOut',
-	        value: function handleMouseOut(event) {
-	            this.props.onMouseOut();
-	        }
-	    }, {
-	        key: 'handleClick',
-	        value: function handleClick(event) {
-	            this.props.onClick(this.props.polygon, this.props.layer);
-	        }
-	    }, {
-	        key: 'redrawVertices',
-	        value: function redrawVertices(stroke, fill, alpha) {
-	            var stage = this.props.stage;
-	
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-	
-	            try {
-	                for (var _iterator3 = this.vertexShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var vertexShape = _step3.value;
-	
-	                    var vertex = vertexShape.geom;
-	                    if (vertexShape.graphics.isEmpty()) {
-	                        vertexShape.graphics = vertex.graphics({
-	                            stroke: stroke, // this.props.color,
-	                            fill: fill,
-	                            radius: 3. / (stage.zoomFactor * stage.resolution)
-	                        });
-	                    } else {
-	                        vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
-	                        vertexShape.graphics.fill.style = fill;
-	                    }
-	                    vertexShape.alpha = alpha;
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'redrawLabels',
-	        value: function redrawLabels(showLabel) {
-	            if (!this.labelShape) return;
-	
-	            var stage = this.props.stage;
-	
-	            this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
-	
-	            var box = this.props.polygon.geom.box;
-	            var point = { x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2 };
-	            var dx = 6. / (stage.zoomFactor * stage.resolution);
-	            var dy = 4. / (stage.zoomFactor * stage.resolution);
-	
-	            this.labelShape.htmlElement.style.font = "16px Arial";
-	            var unscale = 1. / (stage.zoomFactor * stage.resolution);
-	            var tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
-	            var ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
-	            this.labelShape.setTransform(tx, ty, unscale, -unscale);
-	        }
-	    }, {
-	        key: 'redraw',
-	        value: function redraw() {
-	            // Draw polygon
-	            var color = this.props.hovered || this.props.selected ? "black" : this.props.color;
-	            var alpha = this.props.hovered || this.props.selected ? 1.0 : 0.6;
-	            var widthOn = this.props.widthOn;
-	            var fill = widthOn && !this.props.displayVertices ? this.props.color : "white";
-	
-	            if (this.shape.graphics.isEmpty()) {
-	                this.shape.graphics = this.state.polygon.geom.graphics({
-	                    stroke: color,
-	                    fill: fill
-	                });
-	            } else {
-	                this.shape.graphics.stroke.style = color;
-	                this.shape.graphics.fill.style = fill;
-	            }
-	            this.shape.alpha = this.props.displayed ? alpha : 0.0;
-	
-	            // Draw vertices
-	            alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
-	            this.redrawVertices(color, color, alpha);
-	
-	            // Draw labels
-	            var showLabel = this.props.displayed && this.props.displayLabels;
-	            this.redrawLabels(showLabel);
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {}
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            this.shape.on("mouseover", this.handleMouseOver);
-	            this.shape.on("mouseout", this.handleMouseOut);
-	            this.shape.on("click", this.handleClick);
-	
-	            this.redraw();
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            // let redraw = (this.state.zoomFactor !== nextProps.zoomFactor &&
-	            //     nextProps.displayVertices);
-	
-	            this.setState({
-	                polygon: nextProps.polygon,
-	                color: nextProps.color,
-	                displayed: nextProps.displayed,
-	                displayVertices: nextProps.displayVertices,
-	                displayLabels: nextProps.displayLabels,
-	                hovered: nextProps.hovered,
-	                selected: nextProps.selected,
-	                widthOn: nextProps.widthOn,
-	                zoomFactor: nextProps.stage.zoomFactor
-	            });
-	        }
-	    }, {
-	        key: 'shouldComponentUpdate',
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            if (this.equalState(nextState)) {
-	                return false;
-	            }
-	            return true; // nextProps.polygon.parent.needToBeUpdated;
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            this.redraw();
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            this.vertices = undefined;
-	            this.shape.off("mouseover", this.handleMouseOver);
-	            this.shape.off("mouseout", this.handleMouseOut);
-	            this.shape.off("click", this.handleClick);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return null;
-	        }
-	    }]);
-
-	    return PolygonTool;
-	}(_react.Component);
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.SegmentTool = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _easeljsNEXTCombined = __webpack_require__(7);
-	
-	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
-	
-	var _flattenJs = __webpack_require__(2);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	__webpack_require__(10);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 19/06/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	var SegmentTool = exports.SegmentTool = function (_Component) {
-	    _inherits(SegmentTool, _Component);
-	
-	    function SegmentTool(params) {
-	        _classCallCheck(this, SegmentTool);
-	
-	        var _this = _possibleConstructorReturn(this, (SegmentTool.__proto__ || Object.getPrototypeOf(SegmentTool)).call(this));
-	
-	        _this.shape = new createjs.Shape();
-	        params.stage.addChild(_this.shape);
-	
-	        _this.vertexShapes = [];
-	        _this.labelShape = undefined;
-	
-	        if (params.model.geom instanceof _flattenJs2.default.Segment) {
-	            var segment = params.model.geom;
-	            var vertices = [segment.ps, segment.pe];
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = vertices[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var vertex = _step.value;
-	
-	                    var vertexShape = new createjs.Shape();
-	                    vertexShape.geom = vertex; // augment Shape with geom struct
-	                    params.stage.addChild(vertexShape);
-	                    _this.vertexShapes.push(vertexShape);
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	        } else if (params.model.geom instanceof _flattenJs2.default.Point) {
-	            var _vertexShape = new createjs.Shape();
-	            _vertexShape.geom = params.model.geom; // augment vertex Shape with geom struct
-	            params.stage.addChild(_vertexShape);
-	            _this.vertexShapes.push(_vertexShape);
-	        }
-	
-	        if (params.model.label && params.model.label.trim() !== "") {
-	            var html = document.createElement('div');
-	            html.innerText = params.model.label;
-	            html.style.position = "absolute";
-	            html.style.top = 0;
-	            html.style.left = 0;
-	
-	            document.body.appendChild(html);
-	
-	            _this.labelShape = new createjs.DOMElement(html);
-	
-	            // let labelShape = new createjs.Text();
-	            // labelShape.text = params.model.label;
-	            // labelShape.textBaseline = "alphabetic";
-	
-	            _this.labelShape.geom = params.model.geom; // augment label Shape with geom struct
-	            params.stage.addChild(_this.labelShape);
-	        }
-	
-	        _this.state = {
-	            model: params.model,
-	            color: params.color,
-	            displayed: params.displayed,
-	            displayVertices: params.displayVertices,
-	            displayLabels: params.displayLabels,
-	            hovered: params.hovered,
-	            selected: params.selected,
-	            widthOn: params.widthOn,
-	            zoomFactor: params.stage.zoomFactor
-	        };
-	
-	        // this.handleMouseMove = this.handleMouseMove.bind(this);
-	        _this.handleMouseOver = _this.handleMouseOver.bind(_this);
-	        _this.handleMouseOut = _this.handleMouseOut.bind(_this);
-	        _this.handleClick = _this.handleClick.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(SegmentTool, [{
-	        key: 'equalState',
-	        value: function equalState(nextState) {
-	            var equal = true;
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-	
-	            try {
-	                for (var _iterator2 = Object.keys(nextState)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var key = _step2.value;
-	
-	                    if (nextState[key] !== this.state[key]) {
-	                        equal = false;
-	                        break;
-	                    }
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	
-	            return equal;
-	        }
-	    }, {
-	        key: 'handleMouseOver',
-	        value: function handleMouseOver(event) {
-	            this.props.onMouseOver(this.props.model);
-	        }
-	    }, {
-	        key: 'handleMouseOut',
-	        value: function handleMouseOut(event) {
-	            this.props.onMouseOut();
-	        }
-	    }, {
-	        key: 'handleClick',
-	        value: function handleClick(event) {
-	            this.props.onClick(this.props.model, this.props.layer);
-	        }
-	    }, {
-	        key: 'redrawVertices',
-	        value: function redrawVertices(stroke, fill, alpha) {
-	            var stage = this.props.stage;
-	
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-	
-	            try {
-	                for (var _iterator3 = this.vertexShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var vertexShape = _step3.value;
-	
-	                    var vertex = vertexShape.geom;
-	
-	                    if (vertexShape.graphics.isEmpty()) {
-	                        vertexShape.graphics = vertex.graphics({
-	                            stroke: stroke, // this.props.color,
-	                            fill: fill,
-	                            radius: 3. / (stage.zoomFactor * stage.resolution)
-	                        });
-	                    } else {
-	                        vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
-	                        vertexShape.graphics.fill.style = fill;
-	                    }
-	                    vertexShape.alpha = alpha;
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	        }
-	    }, {
-	        key: 'redrawLabels',
-	        value: function redrawLabels(showLabel) {
-	            var stage = this.props.stage;
-	
-	            this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
-	
-	            var box = this.props.model.geom.box;
-	            var point = { x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2 };
-	            var dx = 6. / (stage.zoomFactor * stage.resolution);
-	            var dy = 16. / (stage.zoomFactor * stage.resolution);
-	
-	            this.labelShape.htmlElement.style.font = "16px Arial";
-	            var unscale = 1. / (stage.zoomFactor * stage.resolution);
-	            var tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
-	            var ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
-	            this.labelShape.setTransform(tx, ty, unscale, -unscale);
-	        }
-	    }, {
-	        key: 'redraw',
-	        value: function redraw() {
-	            // Draw polygon
-	            var color = this.props.hovered || this.props.selected ? "black" : this.props.color;
-	            var alpha = this.props.hovered || this.props.selected ? 1.0 : 0.6;
-	
-	            var stage = this.props.stage;
-	            var geom = this.props.model.geom;
-	
-	            var widthOn = this.props.widthOn;
-	
-	            this.shape.graphics.clear();
-	            this.shape.graphics = geom.graphics({
-	                stroke: color, // this.props.color,
-	                fill: widthOn && !this.props.displayVertices ? this.props.color : "white",
-	                radius: 3. / (stage.zoomFactor * stage.resolution)
-	            });
-	            this.shape.alpha = this.props.displayed ? alpha : 0.0;
-	
-	            // Draw vertices
-	            alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
-	            this.redrawVertices(color, color, alpha);
-	
-	            // Redraw labels
-	            var showLabel = this.props.displayed && this.props.displayLabels;
-	            this.redrawLabels(showLabel);
-	        }
-	    }, {
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {}
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            this.shape.on("mouseover", this.handleMouseOver);
-	            this.shape.on("mouseout", this.handleMouseOut);
-	            this.shape.on("click", this.handleClick);
-	
-	            this.redraw();
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(nextProps) {
-	            this.setState({
-	                model: nextProps.model,
-	                color: nextProps.color,
-	                displayed: nextProps.displayed,
-	                displayVertices: nextProps.displayVertices,
-	                displayLabels: nextProps.displayLabels,
-	                hovered: nextProps.hovered,
-	                selected: nextProps.selected,
-	                widthOn: nextProps.widthOn,
-	                zoomFactor: nextProps.stage.zoomFactor
-	            });
-	        }
-	    }, {
-	        key: 'shouldComponentUpdate',
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            if (this.equalState(nextState)) {
-	                return false;
-	            }
-	            return true; // nextProps.polygon.parent.needToBeUpdated;
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            this.redraw();
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            this.vertices = undefined;
-	            this.shape.off("mouseover", this.handleMouseOver);
-	            this.shape.off("mouseout", this.handleMouseOut);
-	            this.shape.off("click", this.handleClick);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return null;
-	        }
-	    }]);
-
-	    return SegmentTool;
-	}(_react.Component);
-
-/***/ },
-/* 48 */
-4,
-/* 49 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * @typechecks
-	 */
-	
-	var emptyFunction = __webpack_require__(8);
-	
-	/**
-	 * Upstream version of event listener. Does not take into account specific
-	 * nature of platform.
-	 */
-	var EventListener = {
-	  /**
-	   * Listen to DOM events during the bubble phase.
-	   *
-	   * @param {DOMEventTarget} target DOM element to register listener on.
-	   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
-	   * @param {function} callback Callback function.
-	   * @return {object} Object with a `remove` method.
-	   */
-	  listen: function listen(target, eventType, callback) {
-	    if (target.addEventListener) {
-	      target.addEventListener(eventType, callback, false);
-	      return {
-	        remove: function remove() {
-	          target.removeEventListener(eventType, callback, false);
-	        }
-	      };
-	    } else if (target.attachEvent) {
-	      target.attachEvent('on' + eventType, callback);
-	      return {
-	        remove: function remove() {
-	          target.detachEvent('on' + eventType, callback);
-	        }
-	      };
-	    }
-	  },
-	
-	  /**
-	   * Listen to DOM events during the capture phase.
-	   *
-	   * @param {DOMEventTarget} target DOM element to register listener on.
-	   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
-	   * @param {function} callback Callback function.
-	   * @return {object} Object with a `remove` method.
-	   */
-	  capture: function capture(target, eventType, callback) {
-	    if (target.addEventListener) {
-	      target.addEventListener(eventType, callback, true);
-	      return {
-	        remove: function remove() {
-	          target.removeEventListener(eventType, callback, true);
-	        }
-	      };
-	    } else {
-	      if (false) {
-	        console.error('Attempted to listen to events during the capture phase on a ' + 'browser that does not support the capture phase. Your application ' + 'will not receive some events.');
-	      }
-	      return {
-	        remove: emptyFunction
-	      };
-	    }
-	  },
-	
-	  registerDefault: function registerDefault() {}
-	};
-	
-	module.exports = EventListener;
-
-/***/ },
-/* 50 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-	
-	/**
-	 * Simple, lightweight module assisting with the detection and context of
-	 * Worker. Helps avoid circular dependencies and allows code to reason about
-	 * whether or not they are in a Worker, even if they never include the main
-	 * `ReactWorker` dependency.
-	 */
-	var ExecutionEnvironment = {
-	
-	  canUseDOM: canUseDOM,
-	
-	  canUseWorkers: typeof Worker !== 'undefined',
-	
-	  canUseEventListeners: canUseDOM && !!(window.addEventListener || window.attachEvent),
-	
-	  canUseViewport: canUseDOM && !!window.screen,
-	
-	  isInWorker: !canUseDOM // For now, this is true - might change in the future.
-	
-	};
-	
-	module.exports = ExecutionEnvironment;
-
-/***/ },
-/* 51 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * 
-	 */
-	
-	var isTextNode = __webpack_require__(55);
-	
-	/*eslint-disable no-bitwise */
-	
-	/**
-	 * Checks if a given DOM node contains or is another DOM node.
-	 */
-	function containsNode(outerNode, innerNode) {
-	  if (!outerNode || !innerNode) {
-	    return false;
-	  } else if (outerNode === innerNode) {
-	    return true;
-	  } else if (isTextNode(outerNode)) {
-	    return false;
-	  } else if (isTextNode(innerNode)) {
-	    return containsNode(outerNode, innerNode.parentNode);
-	  } else if ('contains' in outerNode) {
-	    return outerNode.contains(innerNode);
-	  } else if (outerNode.compareDocumentPosition) {
-	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
-	  } else {
-	    return false;
-	  }
-	}
-	
-	module.exports = containsNode;
-
-/***/ },
-/* 52 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	/**
-	 * @param {DOMElement} node input/textarea to focus
-	 */
-	
-	function focusNode(node) {
-	  // IE8 can throw "Can't move focus to the control because it is invisible,
-	  // not enabled, or of a type that does not accept the focus." for all kinds of
-	  // reasons that are too expensive and fragile to test.
-	  try {
-	    node.focus();
-	  } catch (e) {}
-	}
-	
-	module.exports = focusNode;
-
-/***/ },
-/* 53 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * @typechecks
-	 */
-	
-	/* eslint-disable fb-www/typeof-undefined */
-	
-	/**
-	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
-	 * not safe to call document.activeElement if there is nothing focused.
-	 *
-	 * The activeElement will be null only if the document or document body is not
-	 * yet defined.
-	 *
-	 * @param {?DOMDocument} doc Defaults to current document.
-	 * @return {?DOMElement}
-	 */
-	function getActiveElement(doc) /*?DOMElement*/{
-	  doc = doc || (typeof document !== 'undefined' ? document : undefined);
-	  if (typeof doc === 'undefined') {
-	    return null;
-	  }
-	  try {
-	    return doc.activeElement || doc.body;
-	  } catch (e) {
-	    return doc.body;
-	  }
-	}
-	
-	module.exports = getActiveElement;
-
-/***/ },
-/* 54 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * @typechecks
-	 */
-	
-	/**
-	 * @param {*} object The object to check.
-	 * @return {boolean} Whether or not the object is a DOM node.
-	 */
-	function isNode(object) {
-	  var doc = object ? object.ownerDocument || object : document;
-	  var defaultView = doc.defaultView || window;
-	  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
-	}
-	
-	module.exports = isNode;
-
-/***/ },
-/* 55 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * @typechecks
-	 */
-	
-	var isNode = __webpack_require__(54);
-	
-	/**
-	 * @param {*} object The object to check.
-	 * @return {boolean} Whether or not the object is a DOM text node.
-	 */
-	function isTextNode(object) {
-	  return isNode(object) && object.nodeType == 3;
-	}
-	
-	module.exports = isTextNode;
-
-/***/ },
-/* 56 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * @typechecks
-	 * 
-	 */
-	
-	/*eslint-disable no-self-compare */
-	
-	'use strict';
-	
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	
-	/**
-	 * inlined Object.is polyfill to avoid requiring consumers ship their own
-	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-	 */
-	function is(x, y) {
-	  // SameValue algorithm
-	  if (x === y) {
-	    // Steps 1-5, 7-10
-	    // Steps 6.b-6.e: +0 != -0
-	    // Added the nonzero y check to make Flow happy, but it is redundant
-	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-	  } else {
-	    // Step 6.a: NaN == NaN
-	    return x !== x && y !== y;
-	  }
-	}
-	
-	/**
-	 * Performs equality by iterating through keys on an object and returning false
-	 * when any key has values which are not strictly equal between the arguments.
-	 * Returns true when the values of all keys are strictly equal.
-	 */
-	function shallowEqual(objA, objB) {
-	  if (is(objA, objB)) {
-	    return true;
-	  }
-	
-	  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-	    return false;
-	  }
-	
-	  var keysA = Object.keys(objA);
-	  var keysB = Object.keys(objB);
-	
-	  if (keysA.length !== keysB.length) {
-	    return false;
-	  }
-	
-	  // Test for A's keys different from B.
-	  for (var i = 0; i < keysA.length; i++) {
-	    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-	      return false;
-	    }
-	  }
-	
-	  return true;
-	}
-	
-	module.exports = shallowEqual;
-
-/***/ },
-/* 57 */
-/***/ function(module, exports) {
-
-	/**
-	 * Created by Alex Bol on 4/1/2017.
-	 */
-	
-	let Interval = class Interval {
-	    constructor(low, high) {
-	        this.low = low;
-	        this.high = high;
-	    }
-	
-	    get max() {
-	        return this.high;
-	    }
-	
-	    interval(low, high) {
-	        return new Interval(low, high);
-	    }
-	
-	    clone() {
-	        return new Interval(this.low, this.high);
-	    }
-	
-	    less_than(other_interval) {
-	        return this.low < other_interval.low ||
-	            this.low == other_interval.low && this.high < other_interval.high;
-	    }
-	
-	    equal_to(other_interval) {
-	        return this.low == other_interval.low && this.high == other_interval.high;
-	    }
-	
-	    intersect(other_interval) {
-	        return !this.not_intersect(other_interval);
-	    }
-	
-	    not_intersect(other_interval) {
-	        return (this.high < other_interval.low || other_interval.high < this.low);
-	    }
-	
-	    output() {
-	        return [this.low, this.high];
-	    }
-	
-	    maximal_val(val1, val2) {
-	        return Math.max(val1, val2);
-	    }
-	
-	    val_less_than(val1, val2 ) {     // trait to compare max property with item ?
-	        return val1 < val2;
-	    }
-	};
-	
-	module.exports = Interval;
-
-/***/ },
-/* 58 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by Alex Bol on 4/1/2017.
-	 */
-	
-	'use strict';
-	
-	// let defaultTraits = require('../utils/numeric_traits');
-	let Interval = __webpack_require__(57);
-	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(13);
-	
-	let Node = class Node {
-	    constructor(key = undefined, value = undefined,
-	                left = null, right = null, parent = null, color = RB_TREE_COLOR_BLACK) {
-	        this.left = left;                     // reference to left child node
-	        this.right = right;                   // reference to right child node
-	        this.parent = parent;                 // reference to parent node
-	        this.color = color;
-	
-	        this.item = {key: key, value: value};   // key is supposed to be       instance of Interval
-	
-	        /* If not, this should by an array of two numbers */
-	        this.item.key == undefined;
-	        if (key && key instanceof Array && key.length == 2) {
-	            if (!Number.isNaN(key[0]) && !Number.isNaN(key[1])) {
-	                this.item.key = new Interval(Math.min(key[0], key[1]), Math.max(key[0], key[1]));
-	            }
-	        }
-	        this.max = this.item.key ? this.item.key.max : undefined;
-	    }
-	
-	    less_than(other_node) {
-	        return this.item.key.less_than(other_node.item.key);
-	    }
-	
-	    equal_to(other_node) {
-	        let value_equal = true;
-	        if (this.item.value && other_node.item.value) {
-	            value_equal = this.item.value.equal_to ? this.item.value.equal_to(other_node.item.value) :
-	                this.item.value == other_node.item.value;
-	        }
-	        return this.item.key.equal_to(other_node.item.key) && value_equal;
-	    }
-	
-	    intersect(other_node) {
-	        return this.item.key.intersect(other_node.item.key);
-	    }
-	
-	    copy_data(other_node) {
-	        this.item.key = other_node.item.key.clone();
-	        this.item.value = other_node.item.value;
-	    }
-	
-	    update_max() {
-	        // use key (Interval) max property instead of key.high
-	        this.max = this.item.key ? this.item.key.max : undefined;
-	        if (this.right && this.right.max) {
-	            let maximal_val = this.item.key.maximal_val;
-	            this.max = maximal_val(this.max, this.right.max);
-	        }
-	        if (this.left && this.left.max) {
-	            let maximal_val = this.item.key.maximal_val;
-	            this.max = maximal_val(this.max, this.left.max);
-	        }
-	    }
-	
-	    // Other_node does not intersect any node of left subtree, if this.left.max < other_node.item.key.low
-	    not_intersect_left_subtree(search_node) {
-	        let val_less_than = this.item.key.val_less_than;
-	        let high = this.left.max.high ? this.left.max.high : this.left.max;
-	        return val_less_than(high, search_node.item.key.low);
-	    }
-	
-	    // Other_node does not intersect right subtree if other_node.item.key.high < this.right.key.low
-	    not_intersect_right_subtree(search_node) {
-	        let val_less_than = this.item.key.val_less_than;
-	        let low = this.right.max.low ? this.right.max.low : this.right.item.key.low;
-	        return val_less_than(search_node.item.key.high, low);
-	    }
-	};
-	
-	module.exports = Node;
-	
-
-
-/***/ },
-/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23612,8 +17478,8 @@
 	 */
 	'use strict';
 	
-	let Node = __webpack_require__(58);
-	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(13);
+	let Node = __webpack_require__(59);
+	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(14);
 	
 	let nil_node = new Node();
 	
@@ -24141,10 +18007,6147 @@
 
 
 /***/ },
-/* 60 */
+/* 14 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by Alex Bol on 3/28/2017.
+	 */
+	
+	'use strict';
+	
+	module.exports = {
+	    RB_TREE_COLOR_RED: 0,
+	    RB_TREE_COLOR_BLACK: 1
+	};
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(82);
+	
+	/** Built-in value references. */
+	var Symbol = root.Symbol;
+	
+	module.exports = Symbol;
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGetTag = __webpack_require__(76),
+	    getPrototype = __webpack_require__(78),
+	    isObjectLike = __webpack_require__(83);
+	
+	/** `Object#toString` result references. */
+	var objectTag = '[object Object]';
+	
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype,
+	    objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Used to infer the `Object` constructor. */
+	var objectCtorString = funcToString.call(Object);
+	
+	/**
+	 * Checks if `value` is a plain object, that is, an object created by the
+	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.8.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 * }
+	 *
+	 * _.isPlainObject(new Foo);
+	 * // => false
+	 *
+	 * _.isPlainObject([1, 2, 3]);
+	 * // => false
+	 *
+	 * _.isPlainObject({ 'x': 0, 'y': 0 });
+	 * // => true
+	 *
+	 * _.isPlainObject(Object.create(null));
+	 * // => true
+	 */
+	function isPlainObject(value) {
+	  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
+	    return false;
+	  }
+	  var proto = getPrototype(value);
+	  if (proto === null) {
+	    return true;
+	  }
+	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+	  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+	    funcToString.call(Ctor) == objectCtorString;
+	}
+	
+	module.exports = isPlainObject;
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var asap = __webpack_require__(22);
+	
+	function noop() {}
+	
+	// States:
+	//
+	// 0 - pending
+	// 1 - fulfilled with _value
+	// 2 - rejected with _value
+	// 3 - adopted the state of another promise, _value
+	//
+	// once the state is no longer pending (0) it is immutable
+	
+	// All `_` prefixed properties will be reduced to `_{random number}`
+	// at build time to obfuscate them and discourage their use.
+	// We don't use symbols or Object.defineProperty to fully hide them
+	// because the performance isn't good enough.
+	
+	
+	// to avoid using try/catch inside critical functions, we
+	// extract them to here.
+	var LAST_ERROR = null;
+	var IS_ERROR = {};
+	function getThen(obj) {
+	  try {
+	    return obj.then;
+	  } catch (ex) {
+	    LAST_ERROR = ex;
+	    return IS_ERROR;
+	  }
+	}
+	
+	function tryCallOne(fn, a) {
+	  try {
+	    return fn(a);
+	  } catch (ex) {
+	    LAST_ERROR = ex;
+	    return IS_ERROR;
+	  }
+	}
+	function tryCallTwo(fn, a, b) {
+	  try {
+	    fn(a, b);
+	  } catch (ex) {
+	    LAST_ERROR = ex;
+	    return IS_ERROR;
+	  }
+	}
+	
+	module.exports = Promise;
+	
+	function Promise(fn) {
+	  if (typeof this !== 'object') {
+	    throw new TypeError('Promises must be constructed via new');
+	  }
+	  if (typeof fn !== 'function') {
+	    throw new TypeError('not a function');
+	  }
+	  this._45 = 0;
+	  this._81 = 0;
+	  this._65 = null;
+	  this._54 = null;
+	  if (fn === noop) return;
+	  doResolve(fn, this);
+	}
+	Promise._10 = null;
+	Promise._97 = null;
+	Promise._61 = noop;
+	
+	Promise.prototype.then = function(onFulfilled, onRejected) {
+	  if (this.constructor !== Promise) {
+	    return safeThen(this, onFulfilled, onRejected);
+	  }
+	  var res = new Promise(noop);
+	  handle(this, new Handler(onFulfilled, onRejected, res));
+	  return res;
+	};
+	
+	function safeThen(self, onFulfilled, onRejected) {
+	  return new self.constructor(function (resolve, reject) {
+	    var res = new Promise(noop);
+	    res.then(resolve, reject);
+	    handle(self, new Handler(onFulfilled, onRejected, res));
+	  });
+	};
+	function handle(self, deferred) {
+	  while (self._81 === 3) {
+	    self = self._65;
+	  }
+	  if (Promise._10) {
+	    Promise._10(self);
+	  }
+	  if (self._81 === 0) {
+	    if (self._45 === 0) {
+	      self._45 = 1;
+	      self._54 = deferred;
+	      return;
+	    }
+	    if (self._45 === 1) {
+	      self._45 = 2;
+	      self._54 = [self._54, deferred];
+	      return;
+	    }
+	    self._54.push(deferred);
+	    return;
+	  }
+	  handleResolved(self, deferred);
+	}
+	
+	function handleResolved(self, deferred) {
+	  asap(function() {
+	    var cb = self._81 === 1 ? deferred.onFulfilled : deferred.onRejected;
+	    if (cb === null) {
+	      if (self._81 === 1) {
+	        resolve(deferred.promise, self._65);
+	      } else {
+	        reject(deferred.promise, self._65);
+	      }
+	      return;
+	    }
+	    var ret = tryCallOne(cb, self._65);
+	    if (ret === IS_ERROR) {
+	      reject(deferred.promise, LAST_ERROR);
+	    } else {
+	      resolve(deferred.promise, ret);
+	    }
+	  });
+	}
+	function resolve(self, newValue) {
+	  // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+	  if (newValue === self) {
+	    return reject(
+	      self,
+	      new TypeError('A promise cannot be resolved with itself.')
+	    );
+	  }
+	  if (
+	    newValue &&
+	    (typeof newValue === 'object' || typeof newValue === 'function')
+	  ) {
+	    var then = getThen(newValue);
+	    if (then === IS_ERROR) {
+	      return reject(self, LAST_ERROR);
+	    }
+	    if (
+	      then === self.then &&
+	      newValue instanceof Promise
+	    ) {
+	      self._81 = 3;
+	      self._65 = newValue;
+	      finale(self);
+	      return;
+	    } else if (typeof then === 'function') {
+	      doResolve(then.bind(newValue), self);
+	      return;
+	    }
+	  }
+	  self._81 = 1;
+	  self._65 = newValue;
+	  finale(self);
+	}
+	
+	function reject(self, newValue) {
+	  self._81 = 2;
+	  self._65 = newValue;
+	  if (Promise._97) {
+	    Promise._97(self, newValue);
+	  }
+	  finale(self);
+	}
+	function finale(self) {
+	  if (self._45 === 1) {
+	    handle(self, self._54);
+	    self._54 = null;
+	  }
+	  if (self._45 === 2) {
+	    for (var i = 0; i < self._54.length; i++) {
+	      handle(self, self._54[i]);
+	    }
+	    self._54 = null;
+	  }
+	}
+	
+	function Handler(onFulfilled, onRejected, promise){
+	  this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
+	  this.onRejected = typeof onRejected === 'function' ? onRejected : null;
+	  this.promise = promise;
+	}
+	
+	/**
+	 * Take a potentially misbehaving resolver function and make sure
+	 * onFulfilled and onRejected are only called once.
+	 *
+	 * Makes no guarantees about asynchrony.
+	 */
+	function doResolve(fn, promise) {
+	  var done = false;
+	  var res = tryCallTwo(fn, function (value) {
+	    if (done) return;
+	    done = true;
+	    resolve(promise, value);
+	  }, function (reason) {
+	    if (done) return;
+	    done = true;
+	    reject(promise, reason);
+	  })
+	  if (!done && res === IS_ERROR) {
+	    done = true;
+	    reject(promise, LAST_ERROR);
+	  }
+	}
+
+
+/***/ },
+/* 18 */
 /***/ function(module, exports) {
 
 	"use strict";
+	
+	exports.__esModule = true;
+	exports["default"] = compose;
+	/**
+	 * Composes single-argument functions from right to left. The rightmost
+	 * function can take multiple arguments as it provides the signature for
+	 * the resulting composite function.
+	 *
+	 * @param {...Function} funcs The functions to compose.
+	 * @returns {Function} A function obtained by composing the argument functions
+	 * from right to left. For example, compose(f, g, h) is identical to doing
+	 * (...args) => f(g(h(...args))).
+	 */
+	
+	function compose() {
+	  for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key < _len; _key++) {
+	    funcs[_key] = arguments[_key];
+	  }
+	
+	  if (funcs.length === 0) {
+	    return function (arg) {
+	      return arg;
+	    };
+	  }
+	
+	  if (funcs.length === 1) {
+	    return funcs[0];
+	  }
+	
+	  return funcs.reduce(function (a, b) {
+	    return function () {
+	      return a(b.apply(undefined, arguments));
+	    };
+	  });
+	}
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports.ActionTypes = undefined;
+	exports['default'] = createStore;
+	
+	var _isPlainObject = __webpack_require__(16);
+	
+	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+	
+	var _symbolObservable = __webpack_require__(94);
+	
+	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	/**
+	 * These are private action types reserved by Redux.
+	 * For any unknown actions, you must return the current state.
+	 * If the current state is undefined, you must return the initial state.
+	 * Do not reference these action types directly in your code.
+	 */
+	var ActionTypes = exports.ActionTypes = {
+	  INIT: '@@redux/INIT'
+	
+	  /**
+	   * Creates a Redux store that holds the state tree.
+	   * The only way to change the data in the store is to call `dispatch()` on it.
+	   *
+	   * There should only be a single store in your app. To specify how different
+	   * parts of the state tree respond to actions, you may combine several reducers
+	   * into a single reducer function by using `combineReducers`.
+	   *
+	   * @param {Function} reducer A function that returns the next state tree, given
+	   * the current state tree and the action to handle.
+	   *
+	   * @param {any} [preloadedState] The initial state. You may optionally specify it
+	   * to hydrate the state from the server in universal apps, or to restore a
+	   * previously serialized user session.
+	   * If you use `combineReducers` to produce the root reducer function, this must be
+	   * an object with the same shape as `combineReducers` keys.
+	   *
+	   * @param {Function} [enhancer] The store enhancer. You may optionally specify it
+	   * to enhance the store with third-party capabilities such as middleware,
+	   * time travel, persistence, etc. The only store enhancer that ships with Redux
+	   * is `applyMiddleware()`.
+	   *
+	   * @returns {Store} A Redux store that lets you read the state, dispatch actions
+	   * and subscribe to changes.
+	   */
+	};function createStore(reducer, preloadedState, enhancer) {
+	  var _ref2;
+	
+	  if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
+	    enhancer = preloadedState;
+	    preloadedState = undefined;
+	  }
+	
+	  if (typeof enhancer !== 'undefined') {
+	    if (typeof enhancer !== 'function') {
+	      throw new Error('Expected the enhancer to be a function.');
+	    }
+	
+	    return enhancer(createStore)(reducer, preloadedState);
+	  }
+	
+	  if (typeof reducer !== 'function') {
+	    throw new Error('Expected the reducer to be a function.');
+	  }
+	
+	  var currentReducer = reducer;
+	  var currentState = preloadedState;
+	  var currentListeners = [];
+	  var nextListeners = currentListeners;
+	  var isDispatching = false;
+	
+	  function ensureCanMutateNextListeners() {
+	    if (nextListeners === currentListeners) {
+	      nextListeners = currentListeners.slice();
+	    }
+	  }
+	
+	  /**
+	   * Reads the state tree managed by the store.
+	   *
+	   * @returns {any} The current state tree of your application.
+	   */
+	  function getState() {
+	    return currentState;
+	  }
+	
+	  /**
+	   * Adds a change listener. It will be called any time an action is dispatched,
+	   * and some part of the state tree may potentially have changed. You may then
+	   * call `getState()` to read the current state tree inside the callback.
+	   *
+	   * You may call `dispatch()` from a change listener, with the following
+	   * caveats:
+	   *
+	   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
+	   * If you subscribe or unsubscribe while the listeners are being invoked, this
+	   * will not have any effect on the `dispatch()` that is currently in progress.
+	   * However, the next `dispatch()` call, whether nested or not, will use a more
+	   * recent snapshot of the subscription list.
+	   *
+	   * 2. The listener should not expect to see all state changes, as the state
+	   * might have been updated multiple times during a nested `dispatch()` before
+	   * the listener is called. It is, however, guaranteed that all subscribers
+	   * registered before the `dispatch()` started will be called with the latest
+	   * state by the time it exits.
+	   *
+	   * @param {Function} listener A callback to be invoked on every dispatch.
+	   * @returns {Function} A function to remove this change listener.
+	   */
+	  function subscribe(listener) {
+	    if (typeof listener !== 'function') {
+	      throw new Error('Expected listener to be a function.');
+	    }
+	
+	    var isSubscribed = true;
+	
+	    ensureCanMutateNextListeners();
+	    nextListeners.push(listener);
+	
+	    return function unsubscribe() {
+	      if (!isSubscribed) {
+	        return;
+	      }
+	
+	      isSubscribed = false;
+	
+	      ensureCanMutateNextListeners();
+	      var index = nextListeners.indexOf(listener);
+	      nextListeners.splice(index, 1);
+	    };
+	  }
+	
+	  /**
+	   * Dispatches an action. It is the only way to trigger a state change.
+	   *
+	   * The `reducer` function, used to create the store, will be called with the
+	   * current state tree and the given `action`. Its return value will
+	   * be considered the **next** state of the tree, and the change listeners
+	   * will be notified.
+	   *
+	   * The base implementation only supports plain object actions. If you want to
+	   * dispatch a Promise, an Observable, a thunk, or something else, you need to
+	   * wrap your store creating function into the corresponding middleware. For
+	   * example, see the documentation for the `redux-thunk` package. Even the
+	   * middleware will eventually dispatch plain object actions using this method.
+	   *
+	   * @param {Object} action A plain object representing “what changed”. It is
+	   * a good idea to keep actions serializable so you can record and replay user
+	   * sessions, or use the time travelling `redux-devtools`. An action must have
+	   * a `type` property which may not be `undefined`. It is a good idea to use
+	   * string constants for action types.
+	   *
+	   * @returns {Object} For convenience, the same action object you dispatched.
+	   *
+	   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
+	   * return something else (for example, a Promise you can await).
+	   */
+	  function dispatch(action) {
+	    if (!(0, _isPlainObject2['default'])(action)) {
+	      throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
+	    }
+	
+	    if (typeof action.type === 'undefined') {
+	      throw new Error('Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?');
+	    }
+	
+	    if (isDispatching) {
+	      throw new Error('Reducers may not dispatch actions.');
+	    }
+	
+	    try {
+	      isDispatching = true;
+	      currentState = currentReducer(currentState, action);
+	    } finally {
+	      isDispatching = false;
+	    }
+	
+	    var listeners = currentListeners = nextListeners;
+	    for (var i = 0; i < listeners.length; i++) {
+	      var listener = listeners[i];
+	      listener();
+	    }
+	
+	    return action;
+	  }
+	
+	  /**
+	   * Replaces the reducer currently used by the store to calculate the state.
+	   *
+	   * You might need this if your app implements code splitting and you want to
+	   * load some of the reducers dynamically. You might also need this if you
+	   * implement a hot reloading mechanism for Redux.
+	   *
+	   * @param {Function} nextReducer The reducer for the store to use instead.
+	   * @returns {void}
+	   */
+	  function replaceReducer(nextReducer) {
+	    if (typeof nextReducer !== 'function') {
+	      throw new Error('Expected the nextReducer to be a function.');
+	    }
+	
+	    currentReducer = nextReducer;
+	    dispatch({ type: ActionTypes.INIT });
+	  }
+	
+	  /**
+	   * Interoperability point for observable/reactive libraries.
+	   * @returns {observable} A minimal observable of state changes.
+	   * For more information, see the observable proposal:
+	   * https://github.com/tc39/proposal-observable
+	   */
+	  function observable() {
+	    var _ref;
+	
+	    var outerSubscribe = subscribe;
+	    return _ref = {
+	      /**
+	       * The minimal observable subscription method.
+	       * @param {Object} observer Any object that can be used as an observer.
+	       * The observer object should have a `next` method.
+	       * @returns {subscription} An object with an `unsubscribe` method that can
+	       * be used to unsubscribe the observable from the store, and prevent further
+	       * emission of values from the observable.
+	       */
+	      subscribe: function subscribe(observer) {
+	        if (typeof observer !== 'object') {
+	          throw new TypeError('Expected the observer to be an object.');
+	        }
+	
+	        function observeState() {
+	          if (observer.next) {
+	            observer.next(getState());
+	          }
+	        }
+	
+	        observeState();
+	        var unsubscribe = outerSubscribe(observeState);
+	        return { unsubscribe: unsubscribe };
+	      }
+	    }, _ref[_symbolObservable2['default']] = function () {
+	      return this;
+	    }, _ref;
+	  }
+	
+	  // When a store is created, an "INIT" action is dispatched so that every
+	  // reducer returns their initial state. This effectively populates
+	  // the initial state tree.
+	  dispatch({ type: ActionTypes.INIT });
+	
+	  return _ref2 = {
+	    dispatch: dispatch,
+	    subscribe: subscribe,
+	    getState: getState,
+	    replaceReducer: replaceReducer
+	  }, _ref2[_symbolObservable2['default']] = observable, _ref2;
+	}
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
+	
+	var _createStore = __webpack_require__(19);
+	
+	var _createStore2 = _interopRequireDefault(_createStore);
+	
+	var _combineReducers = __webpack_require__(93);
+	
+	var _combineReducers2 = _interopRequireDefault(_combineReducers);
+	
+	var _bindActionCreators = __webpack_require__(92);
+	
+	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
+	
+	var _applyMiddleware = __webpack_require__(91);
+	
+	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
+	
+	var _compose = __webpack_require__(18);
+	
+	var _compose2 = _interopRequireDefault(_compose);
+	
+	var _warning = __webpack_require__(21);
+	
+	var _warning2 = _interopRequireDefault(_warning);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	/*
+	* This is a dummy function to check if the function name has been altered by minification.
+	* If the function has been minified and NODE_ENV !== 'production', warn the user.
+	*/
+	function isCrushed() {}
+	
+	if (false) {
+	  (0, _warning2['default'])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
+	}
+	
+	exports.createStore = _createStore2['default'];
+	exports.combineReducers = _combineReducers2['default'];
+	exports.bindActionCreators = _bindActionCreators2['default'];
+	exports.applyMiddleware = _applyMiddleware2['default'];
+	exports.compose = _compose2['default'];
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports['default'] = warning;
+	/**
+	 * Prints a warning in the console if it exists.
+	 *
+	 * @param {String} message The warning message.
+	 * @returns {void}
+	 */
+	function warning(message) {
+	  /* eslint-disable no-console */
+	  if (typeof console !== 'undefined' && typeof console.error === 'function') {
+	    console.error(message);
+	  }
+	  /* eslint-enable no-console */
+	  try {
+	    // This error was thrown as a convenience so that if you enable
+	    // "break on all exceptions" in your console,
+	    // it would pause the execution at this line.
+	    throw new Error(message);
+	    /* eslint-disable no-empty */
+	  } catch (e) {}
+	  /* eslint-enable no-empty */
+	}
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+	
+	// Use the fastest means possible to execute a task in its own turn, with
+	// priority over other events including IO, animation, reflow, and redraw
+	// events in browsers.
+	//
+	// An exception thrown by a task will permanently interrupt the processing of
+	// subsequent tasks. The higher level `asap` function ensures that if an
+	// exception is thrown by a task, that the task queue will continue flushing as
+	// soon as possible, but if you use `rawAsap` directly, you are responsible to
+	// either ensure that no exceptions are thrown from your task, or to manually
+	// call `rawAsap.requestFlush` if an exception is thrown.
+	module.exports = rawAsap;
+	function rawAsap(task) {
+	    if (!queue.length) {
+	        requestFlush();
+	        flushing = true;
+	    }
+	    // Equivalent to push, but avoids a function call.
+	    queue[queue.length] = task;
+	}
+	
+	var queue = [];
+	// Once a flush has been requested, no further calls to `requestFlush` are
+	// necessary until the next `flush` completes.
+	var flushing = false;
+	// `requestFlush` is an implementation-specific method that attempts to kick
+	// off a `flush` event as quickly as possible. `flush` will attempt to exhaust
+	// the event queue before yielding to the browser's own event loop.
+	var requestFlush;
+	// The position of the next task to execute in the task queue. This is
+	// preserved between calls to `flush` so that it can be resumed if
+	// a task throws an exception.
+	var index = 0;
+	// If a task schedules additional tasks recursively, the task queue can grow
+	// unbounded. To prevent memory exhaustion, the task queue will periodically
+	// truncate already-completed tasks.
+	var capacity = 1024;
+	
+	// The flush function processes all tasks that have been scheduled with
+	// `rawAsap` unless and until one of those tasks throws an exception.
+	// If a task throws an exception, `flush` ensures that its state will remain
+	// consistent and will resume where it left off when called again.
+	// However, `flush` does not make any arrangements to be called again if an
+	// exception is thrown.
+	function flush() {
+	    while (index < queue.length) {
+	        var currentIndex = index;
+	        // Advance the index before calling the task. This ensures that we will
+	        // begin flushing on the next task the task throws an error.
+	        index = index + 1;
+	        queue[currentIndex].call();
+	        // Prevent leaking memory for long chains of recursive calls to `asap`.
+	        // If we call `asap` within tasks scheduled by `asap`, the queue will
+	        // grow, but to avoid an O(n) walk for every task we execute, we don't
+	        // shift tasks off the queue after they have been executed.
+	        // Instead, we periodically shift 1024 tasks off the queue.
+	        if (index > capacity) {
+	            // Manually shift all values starting at the index back to the
+	            // beginning of the queue.
+	            for (var scan = 0, newLength = queue.length - index; scan < newLength; scan++) {
+	                queue[scan] = queue[scan + index];
+	            }
+	            queue.length -= index;
+	            index = 0;
+	        }
+	    }
+	    queue.length = 0;
+	    index = 0;
+	    flushing = false;
+	}
+	
+	// `requestFlush` is implemented using a strategy based on data collected from
+	// every available SauceLabs Selenium web driver worker at time of writing.
+	// https://docs.google.com/spreadsheets/d/1mG-5UYGup5qxGdEMWkhP6BWCz053NUb2E1QoUTU16uA/edit#gid=783724593
+	
+	// Safari 6 and 6.1 for desktop, iPad, and iPhone are the only browsers that
+	// have WebKitMutationObserver but not un-prefixed MutationObserver.
+	// Must use `global` or `self` instead of `window` to work in both frames and web
+	// workers. `global` is a provision of Browserify, Mr, Mrs, or Mop.
+	
+	/* globals self */
+	var scope = typeof global !== "undefined" ? global : self;
+	var BrowserMutationObserver = scope.MutationObserver || scope.WebKitMutationObserver;
+	
+	// MutationObservers are desirable because they have high priority and work
+	// reliably everywhere they are implemented.
+	// They are implemented in all modern browsers.
+	//
+	// - Android 4-4.3
+	// - Chrome 26-34
+	// - Firefox 14-29
+	// - Internet Explorer 11
+	// - iPad Safari 6-7.1
+	// - iPhone Safari 7-7.1
+	// - Safari 6-7
+	if (typeof BrowserMutationObserver === "function") {
+	    requestFlush = makeRequestCallFromMutationObserver(flush);
+	
+	// MessageChannels are desirable because they give direct access to the HTML
+	// task queue, are implemented in Internet Explorer 10, Safari 5.0-1, and Opera
+	// 11-12, and in web workers in many engines.
+	// Although message channels yield to any queued rendering and IO tasks, they
+	// would be better than imposing the 4ms delay of timers.
+	// However, they do not work reliably in Internet Explorer or Safari.
+	
+	// Internet Explorer 10 is the only browser that has setImmediate but does
+	// not have MutationObservers.
+	// Although setImmediate yields to the browser's renderer, it would be
+	// preferrable to falling back to setTimeout since it does not have
+	// the minimum 4ms penalty.
+	// Unfortunately there appears to be a bug in Internet Explorer 10 Mobile (and
+	// Desktop to a lesser extent) that renders both setImmediate and
+	// MessageChannel useless for the purposes of ASAP.
+	// https://github.com/kriskowal/q/issues/396
+	
+	// Timers are implemented universally.
+	// We fall back to timers in workers in most engines, and in foreground
+	// contexts in the following browsers.
+	// However, note that even this simple case requires nuances to operate in a
+	// broad spectrum of browsers.
+	//
+	// - Firefox 3-13
+	// - Internet Explorer 6-9
+	// - iPad Safari 4.3
+	// - Lynx 2.8.7
+	} else {
+	    requestFlush = makeRequestCallFromTimer(flush);
+	}
+	
+	// `requestFlush` requests that the high priority event queue be flushed as
+	// soon as possible.
+	// This is useful to prevent an error thrown in a task from stalling the event
+	// queue if the exception handled by Node.js’s
+	// `process.on("uncaughtException")` or by a domain.
+	rawAsap.requestFlush = requestFlush;
+	
+	// To request a high priority event, we induce a mutation observer by toggling
+	// the text of a text node between "1" and "-1".
+	function makeRequestCallFromMutationObserver(callback) {
+	    var toggle = 1;
+	    var observer = new BrowserMutationObserver(callback);
+	    var node = document.createTextNode("");
+	    observer.observe(node, {characterData: true});
+	    return function requestCall() {
+	        toggle = -toggle;
+	        node.data = toggle;
+	    };
+	}
+	
+	// The message channel technique was discovered by Malte Ubl and was the
+	// original foundation for this library.
+	// http://www.nonblocking.io/2011/06/windownexttick.html
+	
+	// Safari 6.0.5 (at least) intermittently fails to create message ports on a
+	// page's first load. Thankfully, this version of Safari supports
+	// MutationObservers, so we don't need to fall back in that case.
+	
+	// function makeRequestCallFromMessageChannel(callback) {
+	//     var channel = new MessageChannel();
+	//     channel.port1.onmessage = callback;
+	//     return function requestCall() {
+	//         channel.port2.postMessage(0);
+	//     };
+	// }
+	
+	// For reasons explained above, we are also unable to use `setImmediate`
+	// under any circumstances.
+	// Even if we were, there is another bug in Internet Explorer 10.
+	// It is not sufficient to assign `setImmediate` to `requestFlush` because
+	// `setImmediate` must be called *by name* and therefore must be wrapped in a
+	// closure.
+	// Never forget.
+	
+	// function makeRequestCallFromSetImmediate(callback) {
+	//     return function requestCall() {
+	//         setImmediate(callback);
+	//     };
+	// }
+	
+	// Safari 6.0 has a problem where timers will get lost while the user is
+	// scrolling. This problem does not impact ASAP because Safari 6.0 supports
+	// mutation observers, so that implementation is used instead.
+	// However, if we ever elect to use timers in Safari, the prevalent work-around
+	// is to add a scroll event listener that calls for a flush.
+	
+	// `setTimeout` does not call the passed callback if the delay is less than
+	// approximately 7 in web workers in Firefox 8 through 18, and sometimes not
+	// even then.
+	
+	function makeRequestCallFromTimer(callback) {
+	    return function requestCall() {
+	        // We dispatch a timeout with a specified delay of 0 for engines that
+	        // can reliably accommodate that request. This will usually be snapped
+	        // to a 4 milisecond delay, but once we're flushing, there's no delay
+	        // between events.
+	        var timeoutHandle = setTimeout(handleTimer, 0);
+	        // However, since this timer gets frequently dropped in Firefox
+	        // workers, we enlist an interval handle that will try to fire
+	        // an event 20 times per second until it succeeds.
+	        var intervalHandle = setInterval(handleTimer, 50);
+	
+	        function handleTimer() {
+	            // Whichever timer succeeds will cancel both timers and
+	            // execute the callback.
+	            clearTimeout(timeoutHandle);
+	            clearInterval(intervalHandle);
+	            callback();
+	        }
+	    };
+	}
+	
+	// This is for `asap.js` only.
+	// Its name will be periodically randomized to break any code that depends on
+	// its existence.
+	rawAsap.makeRequestCallFromTimer = makeRequestCallFromTimer;
+	
+	// ASAP was originally a nextTick shim included in Q. This was factored out
+	// into this ASAP package. It was later adapted to RSVP which made further
+	// amendments. These decisions, particularly to marginalize MessageChannel and
+	// to capture the MutationObserver implementation in a closure, were integrated
+	// back into ASAP proper.
+	// https://github.com/tildeio/rsvp.js/blob/cddf7232546a9cf858524b75cde6f9edf72620a7/lib/rsvp/asap.js
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(4);
+	
+	var _headerComponent = __webpack_require__(25);
+	
+	var _mainComponent = __webpack_require__(29);
+	
+	var _layersListComponent = __webpack_require__(28);
+	
+	var _asideComponent = __webpack_require__(24);
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _model = __webpack_require__(6);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import logo from './logo.svg';
+	
+	
+	// import Flatten from 'flatten-js';
+	// import { Parser } from './models/parser';
+	// import { Layer } from './models/layer';
+	
+	// import { Shape } from './models/shape';
+	
+	
+	// let {Point} = Flatten;
+	
+	var App = function (_Component) {
+	    _inherits(App, _Component);
+	
+	    function App(props) {
+	        _classCallCheck(this, App);
+	
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	
+	        _this.state = _this.props.store.getState();
+	        _this.props.store.subscribe(function () {
+	            _this.setState(_this.props.store.getState());
+	        });
+	
+	        return _this;
+	    }
+	
+	    _createClass(App, [{
+	        key: 'handlePaste',
+	        value: function handlePaste(event) {
+	            var _this2 = this;
+	
+	            if (this.state.layers.length === 0) return;
+	
+	            var layer = this.state.layers.find(function (lay) {
+	                return lay.affected;
+	            });
+	            if (!layer) return;
+	
+	            var parser = this.state.app.parser;
+	            var dispatch = this.dispatch;
+	
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = event.clipboardData.items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var item = _step.value;
+	
+	                    item.getAsString(function (string) {
+	                        var poly = parser.parseToPolygon(string);
+	                        // TODO: add something like poly.valid()
+	                        if (poly.edges.size > 0 && poly.faces.size > 0) {
+	                            // let watch = parser.parseToWatchArray(string);
+	
+	                            // let shape = new Shape(poly, this.state.stage, {}, watch);
+	                            var shape = new _model.Model(poly);
+	
+	                            _this2.dispatch({
+	                                type: ActionTypes.NEW_SHAPE_PASTED,
+	                                shape: shape
+	                            });
+	
+	                            dispatch({
+	                                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                                shape: shape
+	                            });
+	                        }
+	                    });
+	
+	                    break;
+	                }
+	
+	                // let point = new Point(0, 0);
+	                // let seg1 = new Segment(new Point(-10, 0), new Point(10, 0));
+	                // let seg2 = new Segment(new Point(0, -10), new Point(0, 10));
+	
+	                // layer.add(point);
+	                // layer.add(seg1);
+	                // layer.add(seg2);
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.dispatch = this.props.store.dispatch;
+	            this.setState(this.props.store.getState());
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState(nextProps.store.getState());
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this3 = this;
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'App' },
+	                _react2.default.createElement(_headerComponent.HeaderComponent, this.props),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'App-body',
+	                        onPaste: function onPaste(e) {
+	                            return _this3.handlePaste(e);
+	                        } },
+	                    _react2.default.createElement(_mainComponent.MainComponent, this.props),
+	                    _react2.default.createElement(_layersListComponent.LayersListComponent, this.props),
+	                    _react2.default.createElement(_asideComponent.AsideComponent, this.props)
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return App;
+	}(_react.Component);
+	
+	exports.default = App;
+	
+	/*
+	 <div className="App">
+	 <div className="App-header">
+	 <h2>Debug Viewer</h2>
+	 </div>
+	
+	 </div>
+	*/
+	
+	/*
+	 <img src={logo} className="App-logo" alt="logo" />
+	 */
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.AsideComponent = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(4);
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _layers = __webpack_require__(5);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 06/05/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import { debug_str } from '../sample';
+	
+	
+	// import {Shape} from '../models/shape';
+	
+	var WatchElement = function (_Component) {
+	    _inherits(WatchElement, _Component);
+	
+	    function WatchElement() {
+	        _classCallCheck(this, WatchElement);
+	
+	        return _possibleConstructorReturn(this, (WatchElement.__proto__ || Object.getPrototypeOf(WatchElement)).apply(this, arguments));
+	    }
+	
+	    _createClass(WatchElement, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+	
+	            var watch = this.props.shape.watch;
+	            if (watch === undefined) return null;
+	            var expandedSign = this.props.shape.expanded ? '-' : '+';
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                this.props.shape.expanded ? watch.map(function (edgeWatch, index) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        {
+	                            key: index,
+	                            className: 'Watch-element-title'
+	                        },
+	                        _react2.default.createElement(
+	                            'div',
+	                            {
+	                                style: { flex: 1 },
+	                                onClick: function onClick(event) {
+	                                    return _this2.props.onToggleWatchExpandButtonClicked(_this2.props.shape);
+	                                } },
+	                            '-'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            {
+	                                title: edgeWatch,
+	                                onClick: function onClick(event) {
+	                                    return _this2.props.onSelectShapeClicked(_this2.props.shape);
+	                                } },
+	                            edgeWatch
+	                        )
+	                    );
+	                }) : _react2.default.createElement(
+	                    'div',
+	                    { className: 'Watch-element-title'
+	                    },
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            style: { flex: 1 },
+	                            onClick: function onClick(event) {
+	                                return _this2.props.onToggleWatchExpandButtonClicked(_this2.props.shape);
+	                            } },
+	                        expandedSign
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        {
+	                            title: watch[0],
+	                            onClick: function onClick(event) {
+	                                return _this2.props.onSelectShapeClicked(_this2.props.shape);
+	                            } },
+	                        watch[0]
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return WatchElement;
+	}(_react.Component);
+	
+	var AsideComponent = exports.AsideComponent = function (_Component2) {
+	    _inherits(AsideComponent, _Component2);
+	
+	    function AsideComponent() {
+	        _classCallCheck(this, AsideComponent);
+	
+	        var _this3 = _possibleConstructorReturn(this, (AsideComponent.__proto__ || Object.getPrototypeOf(AsideComponent)).call(this));
+	
+	        _this3.onToggleWatchExpandButtonClicked = _this3.onToggleWatchExpandButtonClicked.bind(_this3);
+	        _this3.onSelectShapeClicked = _this3.onSelectShapeClicked.bind(_this3);
+	        // this.addSamplePolygon = this.addSamplePolygon.bind(this);
+	        _this3.height = 0;
+	        return _this3;
+	    }
+	
+	    _createClass(AsideComponent, [{
+	        key: 'onToggleWatchExpandButtonClicked',
+	        value: function onToggleWatchExpandButtonClicked(shape) {
+	            if (!shape) return;
+	            this.dispatch({
+	                type: ActionTypes.TOGGLE_WATCH_EXPAND_CLICKED,
+	                shape: shape
+	            });
+	        }
+	    }, {
+	        key: 'onSelectShapeClicked',
+	        value: function onSelectShapeClicked(shape) {
+	            if (!shape) return;
+	            this.dispatch({
+	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                shape: shape
+	            });
+	        }
+	
+	        // addSamplePolygon() {
+	        //     let parser = this.state.app.parser;
+	        //     let poly = parser.parseToPolygon(debug_str);
+	        //     let watch = parser.parseToWatchArray(debug_str);
+	        //
+	        //     let shape = new Shape(poly, this.state.stage, {}, watch);
+	        //
+	        //     this.dispatch({
+	        //         type: ActionTypes.NEW_SHAPE_PASTED,
+	        //         shape: shape
+	        //     });
+	        //
+	        //     this.dispatch({
+	        //         type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	        //         shape: shape
+	        //     });
+	        // }
+	
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.dispatch = this.props.store.dispatch;
+	            this.setState(this.props.store.getState());
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState(nextProps.store.getState());
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            this.height = this.refs.aside.clientHeight;
+	            // let container = this.refs.watchContainer;
+	            // let parentHeight = container.parentElement.clientHeight;
+	            // container.style.maxHeight = 0.7*parentHeight;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this4 = this;
+	
+	            var layer = _layers.Layers.getAffected(this.state.layers);
+	            var shapes = layer ? [].concat(_toConsumableArray(layer.shapes)) : undefined;
+	            var title = layer ? layer.title : "";
+	            var watchContainerHeight = 0.75 * this.height;
+	            return _react2.default.createElement(
+	                'aside',
+	                { className: 'App-aside', ref: 'aside' },
+	                _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    'Info'
+	                ),
+	                _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    title
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: 'Watch-container',
+	                        style: { maxHeight: watchContainerHeight }
+	                    },
+	                    shapes ? shapes.map(function (shape, index) {
+	                        return _react2.default.createElement(WatchElement, {
+	                            key: index,
+	                            shape: shape,
+	                            onToggleWatchExpandButtonClicked: _this4.onToggleWatchExpandButtonClicked,
+	                            onSelectShapeClicked: _this4.onSelectShapeClicked
+	                        });
+	                    }) : null
+	                )
+	            );
+	        }
+	    }]);
+
+	    return AsideComponent;
+	}(_react.Component);
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.HeaderComponent = undefined;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(4);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Created by alexanderbol on 13/04/2017.
+	 */
+	
+	var HeaderComponent = exports.HeaderComponent = function HeaderComponent(props) {
+	    var state = props.store.getState();
+	    return _react2.default.createElement(
+	        'header',
+	        { className: 'App-header' },
+	        _react2.default.createElement(
+	            'h2',
+	            null,
+	            state.app.title
+	        )
+	    );
+	};
+	// import logo from './logo.svg';
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.LayerComponent = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	var _polygonTool = __webpack_require__(47);
+	
+	var _segmentTool = __webpack_require__(48);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LayerComponent = exports.LayerComponent = function (_Component) {
+	    _inherits(LayerComponent, _Component);
+	
+	    function LayerComponent(params) {
+	        _classCallCheck(this, LayerComponent);
+	
+	        var _this = _possibleConstructorReturn(this, (LayerComponent.__proto__ || Object.getPrototypeOf(LayerComponent)).call(this));
+	
+	        _this.state = {
+	            layer: params.layer,
+	            color: params.color,
+	            displayed: params.displayed,
+	            displayVertices: params.displayVertices,
+	            displayLabels: params.displayLabels,
+	            hovered: params.hovered,
+	            selected: params.selected,
+	            widthOn: params.widthOn,
+	            origin: params.stage.origin,
+	            zoomFactor: params.stage.zoomFactor,
+	            hoveredShape: params.hoveredShape,
+	            firstMeasuredShape: params.firstMeasuredShape,
+	            secondMeasuredShape: params.secondMeasuredShape
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(LayerComponent, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                layer: nextProps.layer,
+	                color: nextProps.color,
+	                displayed: nextProps.displayed,
+	                displayVertices: nextProps.displayVertices,
+	                displayLabels: nextProps.displayLabels,
+	                hovered: nextProps.hovered,
+	                selected: nextProps.selected,
+	                widthOn: nextProps.widthOn,
+	                origin: nextProps.stage.origin,
+	                zoomFactor: nextProps.stage.zoomFactor,
+	                hoveredShape: nextProps.hoveredShape,
+	                firstMeasuredShape: nextProps.firstMeasuredShape,
+	                secondMeasuredShape: nextProps.secondMeasuredShape
+	            });
+	        }
+	    }, {
+	        key: 'equalState',
+	        value: function equalState(nextState) {
+	            var equal = true;
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = Object.keys(nextState)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var key = _step.value;
+	
+	                    if (nextState[key] !== this.state[key]) {
+	                        equal = false;
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            return equal;
+	        }
+	    }, {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            if (this.equalState(nextState)) {
+	                return false;
+	            }
+	            return true;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+	
+	            return this.props.layer.shapes.map(function (shape, index) {
+	                if (shape.geom instanceof _flattenJs2.default.Polygon) {
+	                    return _react2.default.createElement(_polygonTool.PolygonTool, {
+	                        key: index,
+	                        stage: _this2.props.stage,
+	                        layer: _this2.state.layer,
+	                        polygon: shape,
+	                        displayed: _this2.state.layer.displayed,
+	                        hovered: shape === _this2.state.hoveredShape,
+	                        selected: shape === _this2.state.firstMeasuredShape || shape === _this2.state.secondMeasuredShape,
+	                        color: _this2.state.layer.color,
+	                        widthOn: _this2.state.widthOn,
+	                        displayVertices: _this2.state.displayVertices,
+	                        displayLabels: _this2.state.displayLabels,
+	                        onMouseOver: _this2.props.onMouseOver,
+	                        onMouseOut: _this2.props.onMouseOut,
+	                        onClick: _this2.props.onClick
+	                    });
+	                } else {
+	                    return _react2.default.createElement(_segmentTool.SegmentTool, {
+	                        key: index,
+	                        stage: _this2.props.stage,
+	                        layer: _this2.state.layer,
+	                        model: shape,
+	                        displayed: _this2.state.layer.displayed,
+	                        hovered: shape === _this2.state.hoveredShape,
+	                        selected: shape === _this2.state.firstMeasuredShape || shape === _this2.state.secondMeasuredShape,
+	                        color: _this2.state.layer.color,
+	                        widthOn: _this2.state.widthOn,
+	                        displayVertices: _this2.state.displayVertices,
+	                        displayLabels: _this2.state.displayLabels,
+	                        onMouseOver: _this2.props.onMouseOver,
+	                        onMouseOut: _this2.props.onMouseOut,
+	                        onClick: _this2.props.onClick
+	                    });
+	                }
+	            });
+	        }
+	    }]);
+
+	    return LayerComponent;
+	}(_react.Component);
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.LayerListElement = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(4);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import { ListGroupItem } from 'react-bootstrap';
+	
+	var LayerListElement = exports.LayerListElement = function (_Component) {
+	    _inherits(LayerListElement, _Component);
+	
+	    function LayerListElement() {
+	        _classCallCheck(this, LayerListElement);
+	
+	        return _possibleConstructorReturn(this, (LayerListElement.__proto__ || Object.getPrototypeOf(LayerListElement)).apply(this, arguments));
+	    }
+	
+	    _createClass(LayerListElement, [{
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (document.activeElement.nodeName === "CANVAS") return;
+	            var elem = this.refs.layerName;
+	            if (this.props.layer.affected) {
+	                elem.focus();
+	            }
+	
+	            // for (let shape of this.props.layer.shapes) {
+	            //     shape.alpha = this.props.layer.displayed ? 1 : 0;
+	            //     shape.redraw();
+	            // }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            // let style = this.props.layer.displayed ?
+	            //     styleSheet.displayed : styleSheet.undisplayed;
+	
+	            var displayed = this.props.layer.displayed ? "Layer-displayed" : "Layer-undisplayed";
+	            var color = displayed ? this.props.layer.color : "black";
+	            var alpha = this.props.layer.affected ? 1 : 0;
+	            return this.props.layer.edited ? _react2.default.createElement(
+	                'div',
+	                {
+	                    className: 'Layer ' + displayed,
+	                    onClick: this.props.onLayerClicked
+	                },
+	                _react2.default.createElement('input', { val: this.props.layer.name })
+	            ) : _react2.default.createElement(
+	                'li',
+	                {
+	                    className: 'Layer ' + displayed,
+	                    onClick: this.props.onLayerClicked,
+	                    onDoubleClick: this.props.onLayerDoubleClicked },
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        style: { flex: 2, marginRight: 3 },
+	                        onClick: this.props.onAffectedBoxClicked
+	                    },
+	                    _react2.default.createElement(
+	                        'h4',
+	                        { style: { opacity: alpha, color: color } },
+	                        'V'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'h4',
+	                    { ref: 'layerName',
+	                        style: { flex: 8, color: color },
+	                        title: this.props.layer.name,
+	                        tabIndex: '1'
+	                    },
+	                    this.props.layer.name
+	                )
+	            );
+	        }
+	    }]);
+
+	    return LayerListElement;
+	}(_react.Component);
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.LayersListComponent = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(4);
+	
+	var _layerListElement = __webpack_require__(27);
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _layers = __webpack_require__(5);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import { ListGroup } from 'react-bootstrap';
+	
+	
+	var LayersListComponent = exports.LayersListComponent = function (_Component) {
+	    _inherits(LayersListComponent, _Component);
+	
+	    function LayersListComponent() {
+	        _classCallCheck(this, LayersListComponent);
+	
+	        var _this = _possibleConstructorReturn(this, (LayersListComponent.__proto__ || Object.getPrototypeOf(LayersListComponent)).call(this));
+	
+	        _this.onLayerListClicked = _this.onLayerListClicked.bind(_this);
+	        _this.onLayerClicked = _this.onLayerClicked.bind(_this);
+	        _this.onLayerDoubleClicked = _this.onLayerDoubleClicked.bind(_this);
+	        _this.onAddLayerSelected = _this.onAddLayerSelected.bind(_this);
+	        _this.onAffectedBoxClicked = _this.onAffectedBoxClicked.bind(_this);
+	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
+	        _this.height = 0;
+	        return _this;
+	    }
+	
+	    _createClass(LayersListComponent, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.dispatch = this.props.store.dispatch;
+	            this.setState(this.props.store.getState());
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState(nextProps.store.getState());
+	        }
+	    }, {
+	        key: 'onLayerListClicked',
+	        value: function onLayerListClicked() {
+	            this.dispatch({
+	                type: ActionTypes.LAYER_LIST_PANEL_PRESSED
+	            });
+	        }
+	    }, {
+	        key: 'onLayerClicked',
+	        value: function onLayerClicked(layer) {
+	            this.dispatch({
+	                type: ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED,
+	                layer: layer
+	            });
+	        }
+	    }, {
+	        key: 'onLayerDoubleClicked',
+	        value: function onLayerDoubleClicked(layer) {
+	            // this.dispatch({
+	            //     type: ActionTypes.EDIT_LAYER_NAME_PRESSED,
+	            //     layer: layer
+	            // });
+	        }
+	    }, {
+	        key: 'onAffectedBoxClicked',
+	        value: function onAffectedBoxClicked(layer) {
+	            this.dispatch({
+	                type: ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED,
+	                layer: layer
+	            });
+	        }
+	    }, {
+	        key: 'onAddLayerSelected',
+	        value: function onAddLayerSelected() {
+	            var layer = _layers.Layers.newLayer(this.state.stage, this.state.layers);
+	
+	            this.dispatch({
+	                type: ActionTypes.ADD_LAYER_PRESSED,
+	                stage: this.state.stage,
+	                layer: layer
+	            });
+	        }
+	    }, {
+	        key: 'handleKeyDown',
+	        value: function handleKeyDown(e) {
+	            // e.stopPropagation();
+	            // e.preventDefault();
+	
+	            if (e.target.parentElement.parentElement && e.target.parentElement.parentElement.id && e.target.parentElement.parentElement.id === "layersList") {
+	
+	                switch (e.code) {
+	                    case "ArrowRight":
+	                    case "ArrowDown":
+	                        this.dispatch({
+	                            type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
+	                        });
+	                        break;
+	                    case "ArrowLeft":
+	                    case "ArrowUp":
+	                        this.dispatch({
+	                            type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
+	                        });
+	                        break;
+	                    /* tab does not work properly
+	                    case "Tab":
+	                    if (e.shiftKey) {
+	                        this.dispatch({
+	                            type: ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED
+	                        });
+	                    }
+	                    else {
+	                        this.dispatch({
+	                            type: ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED
+	                        });
+	                    }
+	                    break;
+	                    */
+	                    default:
+	                        break;
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            // Keyboard event
+	            // var _keydown = _.throttle(this.keydown, 100);
+	            document.addEventListener('keydown', this.handleKeyDown);
+	            // var _keyup = _.throttle(this.keyup, 500);
+	            // document.addEventListener('keyup', this.handleKeyUp);
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            this.height = this.refs.layersComponent.clientHeight;
+	            // let container = this.refs.watchContainer;
+	            // let parentHeight = container.parentElement.clientHeight;
+	            // container.style.maxHeight = 0.7*parentHeight;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+	
+	            var addLayer = _react2.default.createElement(
+	                'div',
+	                {
+	                    style: { padding: 4, backgroundColor: "lightgray" },
+	                    onClick: this.onAddLayerSelected },
+	                _react2.default.createElement(
+	                    'h5',
+	                    { style: { margin: 0 } },
+	                    'Add layer'
+	                )
+	            );
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'App-layers',
+	                    ref: 'layersComponent',
+	                    onClick: this.onLayerListClicked
+	                },
+	                _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    'Layers'
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { id: 'layersList',
+	                        style: { maxHeight: 0.82 * (this.height - 40), padding: 0, overflow: 'auto' } },
+	                    this.state.layers.map(function (layer) {
+	                        return _react2.default.createElement(_layerListElement.LayerListElement, {
+	                            onLayerClicked: function onLayerClicked() {
+	                                return _this2.onLayerClicked(layer);
+	                            },
+	                            onLayerDoubleClicked: function onLayerDoubleClicked() {
+	                                return _this2.onLayerDoubleClicked(layer);
+	                            },
+	                            onAffectedBoxClicked: function onAffectedBoxClicked() {
+	                                return _this2.onAffectedBoxClicked(layer);
+	                            },
+	                            key: layer.name,
+	                            layer: layer
+	                        });
+	                    })
+	                ),
+	                addLayer
+	            );
+	        }
+	    }]);
+
+	    return LayersListComponent;
+	}(_react.Component);
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.MainComponent = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(4);
+	
+	var _toolbarComponent = __webpack_require__(32);
+	
+	var _stageComponent = __webpack_require__(30);
+	
+	var _statusComponent = __webpack_require__(31);
+	
+	var _layerComponent = __webpack_require__(26);
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _layers = __webpack_require__(5);
+	
+	var _measurePointsTool = __webpack_require__(45);
+	
+	var _measureShapesTool = __webpack_require__(46);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import Flatten from 'flatten-js';
+	
+	
+	// import {PolygonTool} from '../tools/polygonTool';
+	// import {SegmentTool} from "../tools/segmentTool";
+	
+	
+	var MainComponent = exports.MainComponent = function (_Component) {
+	    _inherits(MainComponent, _Component);
+	
+	    function MainComponent() {
+	        _classCallCheck(this, MainComponent);
+	
+	        var _this = _possibleConstructorReturn(this, (MainComponent.__proto__ || Object.getPrototypeOf(MainComponent)).call(this));
+	
+	        _this.handleMouseMove = _this.handleMouseMove.bind(_this);
+	        _this.handleMouseDown = _this.handleMouseDown.bind(_this);
+	        _this.handleMouseUp = _this.handleMouseUp.bind(_this);
+	        _this.handleMouseWheelMove = _this.handleMouseWheelMove.bind(_this);
+	        _this.registerStage = _this.registerStage.bind(_this);
+	        _this.toggleUnits = _this.toggleUnits.bind(_this);
+	
+	        _this.onMouseRollOverShape = _this.onMouseRollOverShape.bind(_this);
+	        _this.onMouseRollOutShape = _this.onMouseRollOutShape.bind(_this);
+	        _this.onClickOnShape = _this.onClickOnShape.bind(_this);
+	
+	        _this.resizeStage = _this.resizeStage.bind(_this);
+	
+	        _this.handleFileSelect = _this.handleFileSelect.bind(_this);
+	        _this.setHomeView = _this.setHomeView.bind(_this);
+	        _this.toggleWidthMode = _this.toggleWidthMode.bind(_this);
+	        _this.toggleDisplayVertices = _this.toggleDisplayVertices.bind(_this);
+	        _this.toggleDisplayLabels = _this.toggleDisplayLabels.bind(_this);
+	
+	        _this.onMeasurePointsButtonPressed = _this.onMeasurePointsButtonPressed.bind(_this);
+	        _this.onMeasureBetweenShapesButtonPressed = _this.onMeasureBetweenShapesButtonPressed.bind(_this);
+	        _this.onPanByDragPressed = _this.onPanByDragPressed.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(MainComponent, [{
+	        key: 'registerStage',
+	        value: function registerStage(stage) {
+	            // let layer = Layers.newLayer(stage, this.state.layers);
+	            this.dispatch({
+	                type: ActionTypes.NEW_STAGE_CREATED,
+	                stage: stage
+	            });
+	        }
+	    }, {
+	        key: 'resizeStage',
+	        value: function resizeStage() {
+	            // alert("resized")
+	            this.dispatch({
+	                type: ActionTypes.STAGE_RESIZED,
+	                stage: this.state.stage
+	            });
+	        }
+	    }, {
+	        key: 'toggleUnits',
+	        value: function toggleUnits() {
+	            this.dispatch({
+	                type: ActionTypes.TOGGLE_UNITS_CLICKED
+	            });
+	        }
+	    }, {
+	        key: 'handleMouseMove',
+	        value: function handleMouseMove(stageX, stageY) {
+	            this.dispatch({
+	                type: ActionTypes.MOUSE_MOVED_ON_STAGE,
+	                stage: this.state.stage,
+	                x: stageX,
+	                y: stageY,
+	                dx: this.state.mouse.startX ? stageX - this.state.mouse.startX : undefined,
+	                dy: this.state.mouse.startY ? stageY - this.state.mouse.startY : undefined
+	            });
+	        }
+	    }, {
+	        key: 'handleMouseDown',
+	        value: function handleMouseDown(stageX, stageY) {
+	            // start pan stage
+	            this.dispatch({
+	                type: ActionTypes.MOUSE_DOWN_ON_STAGE,
+	                stage: this.state.stage,
+	                x: stageX,
+	                y: stageY
+	            });
+	        }
+	    }, {
+	        key: 'handleMouseUp',
+	        value: function handleMouseUp(stageX, stageY) {
+	            // stop pan stage
+	            // Patch bug in Firefox when dispatch is not fired
+	            this.state.stage.panByMouseStop();
+	            this.dispatch({
+	                type: ActionTypes.MOUSE_UP_ON_STAGE,
+	                state: this.state.stage,
+	                x: event.stageX,
+	                y: event.stageY
+	            });
+	        }
+	    }, {
+	        key: 'handleMouseWheelMove',
+	        value: function handleMouseWheelMove(stageX, stageY, delta) {
+	            if (delta !== 0) {
+	                this.dispatch({
+	                    type: ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE,
+	                    stage: this.state.stage,
+	                    x: stageX,
+	                    y: stageY,
+	                    delta: delta
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'onMouseRollOverShape',
+	        value: function onMouseRollOverShape(shape) {
+	            this.dispatch({
+	                type: ActionTypes.MOUSE_ROLL_OVER_SHAPE,
+	                shape: shape
+	            });
+	        }
+	    }, {
+	        key: 'onMouseRollOutShape',
+	        value: function onMouseRollOutShape() {
+	            this.dispatch({
+	                type: ActionTypes.MOUSE_ROLL_OUT_SHAPE
+	            });
+	        }
+	    }, {
+	        key: 'onClickOnShape',
+	        value: function onClickOnShape(shape, layer) {
+	            this.dispatch({
+	                type: ActionTypes.MOUSE_CLICKED_ON_SHAPE,
+	                shape: shape,
+	                layer: layer
+	            });
+	        }
+	    }, {
+	        key: 'handleFileSelect',
+	        value: function handleFileSelect(event) {
+	            if (!(File && FileReader && FileList)) return;
+	
+	            var files = event.target.files; // FileList object
+	
+	            this.dispatch({
+	                type: ActionTypes.FILENAME_LIST_SELECTED,
+	                files: files,
+	                stage: this.state.stage,
+	                layers: this.state.layers
+	            });
+	        }
+	    }, {
+	        key: 'setHomeView',
+	        value: function setHomeView() {
+	            var layer = _layers.Layers.getAffected(this.state.layers);
+	            if (!layer) return;
+	            // TODO: dispatch PAN_AND_ZOOM instead ?
+	            this.dispatch({
+	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                stage: this.state.stage,
+	                shape: layer
+	            });
+	        }
+	    }, {
+	        key: 'onPanByDragPressed',
+	        value: function onPanByDragPressed() {
+	            this.dispatch({
+	                type: ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED
+	            });
+	        }
+	    }, {
+	        key: 'toggleWidthMode',
+	        value: function toggleWidthMode() {
+	            this.dispatch({
+	                type: ActionTypes.TOGGLE_WIDTH_MODE_CLICKED,
+	                widthOn: this.state.app.widthOn
+	            });
+	        }
+	    }, {
+	        key: 'toggleDisplayVertices',
+	        value: function toggleDisplayVertices() {
+	            // if (this.state.app.widthOn)
+	            //     return;
+	            this.dispatch({
+	                type: ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED
+	            });
+	        }
+	    }, {
+	        key: 'toggleDisplayLabels',
+	        value: function toggleDisplayLabels() {
+	            this.dispatch({
+	                type: ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED
+	            });
+	        }
+	    }, {
+	        key: 'onMeasurePointsButtonPressed',
+	        value: function onMeasurePointsButtonPressed() {
+	            this.dispatch({
+	                type: ActionTypes.MEASURE_POINTS_BUTTON_PRESSED
+	            });
+	        }
+	    }, {
+	        key: 'onMeasureBetweenShapesButtonPressed',
+	        value: function onMeasureBetweenShapesButtonPressed() {
+	            this.dispatch({
+	                type: ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED
+	            });
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.dispatch = this.props.store.dispatch;
+	            this.setState(this.props.store.getState());
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            window.onresize = this.resizeStage;
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState(nextProps.store.getState());
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (this.state.stage.canvas && this.state.stage.canvas.getContext('2d')) {
+	
+	                var origin = this.state.stage.origin;
+	                var zoomFactor = this.state.stage.zoomFactor * this.state.stage.resolution;
+	                this.state.stage.setTransform(origin.x, origin.y, zoomFactor, -zoomFactor);
+	
+	                this.state.stage.update();
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+	
+	            return _react2.default.createElement(
+	                'main',
+	                { className: 'App-content' },
+	                _react2.default.createElement(_toolbarComponent.ToolbarComponent, {
+	                    onFileSelected: this.handleFileSelect,
+	                    onHomeButtonPressed: this.setHomeView,
+	                    onPanByDragPressed: this.onPanByDragPressed,
+	                    onMeasurePointsButtonPressed: this.onMeasurePointsButtonPressed,
+	                    onMeasureBetweenShapesButtonPressed: this.onMeasureBetweenShapesButtonPressed,
+	                    onToggleWidthModePressed: this.toggleWidthMode,
+	                    onToggleVerticesPressed: this.toggleDisplayVertices,
+	                    onToggleLabelsPressed: this.toggleDisplayLabels
+	                }),
+	                _react2.default.createElement(_stageComponent.StageComponent, {
+	                    stage: this.state.stage,
+	                    onStageCreated: this.registerStage,
+	                    onMouseDown: this.handleMouseDown,
+	                    onMouseMove: this.handleMouseMove,
+	                    onMouseUp: this.handleMouseUp,
+	                    onMouseWheelMove: this.handleMouseWheelMove,
+	                    onHomeKeyPressed: this.setHomeView,
+	                    onToggleWidthModePressed: this.toggleWidthMode,
+	                    onToggleDisplayVerticesPressed: this.toggleDisplayVertices
+	                }),
+	                this.state.layers.map(function (layer) {
+	                    return _react2.default.createElement(_layerComponent.LayerComponent, {
+	                        key: layer.name,
+	                        stage: _this2.state.stage,
+	                        layer: layer,
+	                        color: layer.color,
+	                        displayed: layer.displayed,
+	                        displayVertices: _this2.state.app.displayVertices,
+	                        displayLabels: _this2.state.app.displayLabels,
+	                        widthOn: _this2.state.app.widthOn,
+	                        hoveredShape: _this2.state.app.hoveredShape,
+	                        firstMeasuredShape: _this2.state.app.firstMeasuredShape,
+	                        secondMeasuredShape: _this2.state.app.secondMeasuredShape,
+	                        onMouseOver: _this2.onMouseRollOverShape,
+	                        onMouseOut: _this2.onMouseRollOutShape,
+	                        onClick: _this2.onClickOnShape
+	                    });
+	                }),
+	                this.state.app.measurePointsActive ? _react2.default.createElement(_measurePointsTool.MeasurePointsTool, {
+	                    stage: this.state.stage,
+	                    divisor: this.state.app.divisor,
+	                    decimals: this.state.app.decimals,
+	                    onMouseWheelMove: this.handleMouseWheelMove
+	                }) : null,
+	                this.state.app.measureShapesActive ? _react2.default.createElement(_measureShapesTool.MeasureShapesTool, {
+	                    stage: this.state.stage,
+	                    firstMeasuredShape: this.state.app.firstMeasuredShape,
+	                    secondMeasuredShape: this.state.app.secondMeasuredShape,
+	                    firstMeasuredLayer: this.state.app.firstMeasuredLayer,
+	                    secondMeasuredLayer: this.state.app.secondMeasuredLayer,
+	                    distance: this.state.app.distance,
+	                    shortestSegment: this.state.app.shortestSegment,
+	                    divisor: this.state.app.divisor,
+	                    decimals: this.state.app.decimals
+	                }) : null,
+	                _react2.default.createElement(_statusComponent.StatusComponent, {
+	                    stage: this.state.stage,
+	                    units: this.state.app.units,
+	                    divisor: this.state.app.divisor,
+	                    decimals: this.state.app.decimals,
+	                    distance: this.state.app.distance,
+	                    shortestSegment: this.state.app.shortestSegment,
+	                    coordX: this.state.mouse.x,
+	                    coordY: this.state.mouse.y,
+	                    onUnitClicked: this.toggleUnits
+	                })
+	            );
+	        }
+	    }]);
+
+	    return MainComponent;
+	}(_react.Component);
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.StageComponent = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(4);
+	
+	var _stage = __webpack_require__(43);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import createjs from 'easel-js';
+	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
+	
+	// import { LayerComponent } from '../components/layerComponent';
+	
+	
+	// import {PolygonTool} from '../tools/polygonTool';
+	
+	// import {Layer} from '../models/layer';
+	// import {Layers} from '../models/layers';
+	
+	// import * as ActionTypes from '../actions/action-types';
+	
+	var StageComponent = exports.StageComponent = function (_Component) {
+	    _inherits(StageComponent, _Component);
+	
+	    function StageComponent() {
+	        _classCallCheck(this, StageComponent);
+	
+	        var _this = _possibleConstructorReturn(this, (StageComponent.__proto__ || Object.getPrototypeOf(StageComponent)).call(this));
+	
+	        _this.handleMouseMove = _this.handleMouseMove.bind(_this);
+	        _this.handleMouseDown = _this.handleMouseDown.bind(_this);
+	        _this.handleMouseUp = _this.handleMouseUp.bind(_this);
+	        _this.handleMouseLeave = _this.handleMouseLeave.bind(_this);
+	        _this.handleMouseWheel = _this.handleMouseWheel.bind(_this);
+	        _this.handleMouseWheelFox = _this.handleMouseWheelFox.bind(_this);
+	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
+	        _this.handleKeyUp = _this.handleKeyUp.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(StageComponent, [{
+	        key: 'handleMouseMove',
+	        value: function handleMouseMove(event) {
+	            this.props.stage.canvas.focus();
+	            this.props.onMouseMove(event.stageX, event.stageY);
+	        }
+	    }, {
+	        key: 'handleMouseDown',
+	        value: function handleMouseDown(event) {
+	            this.props.onMouseDown(event.stageX, event.stageY);
+	        }
+	    }, {
+	        key: 'handleMouseUp',
+	        value: function handleMouseUp(event) {
+	            event.stopPropagation();
+	            event.preventDefault();
+	            this.props.onMouseUp(event.stageX, event.stageY);
+	        }
+	    }, {
+	        key: 'handleMouseLeave',
+	        value: function handleMouseLeave(event) {
+	            // nothing works except click
+	            this.props.stage.canvas.blur();
+	            document.body.focus();
+	        }
+	    }, {
+	        key: 'handleMouseWheel',
+	        value: function handleMouseWheel(event) {
+	            event.preventDefault();
+	
+	            var delta = event.detail || event.wheelDelta;
+	            if (delta !== 0) {
+	                this.props.onMouseWheelMove(event.offsetX, event.offsetY, delta);
+	            }
+	        }
+	    }, {
+	        key: 'handleMouseWheelFox',
+	        value: function handleMouseWheelFox(event) {
+	            event.preventDefault();
+	            if (event.detail !== 0) {
+	                this.props.onMousewheelMove(event.layerX, event.layerY, -event.detail);
+	            }
+	        }
+	    }, {
+	        key: 'handleKeyDown',
+	        value: function handleKeyDown(e) {
+	            // let ctrl = e.ctrlKey;
+	            if (e.target.id !== "mainCanvas") return;
+	            switch (e.code) {
+	                case "KeyH":
+	                    this.props.onHomeKeyPressed();
+	                    break;
+	
+	                case "KeyW":
+	                    this.props.onToggleWidthModePressed(); // toggle width On/Off in graphics model
+	                    break;
+	
+	                case "KeyE":
+	                    this.props.onToggleDisplayVerticesPressed(); // toggle vertices On/Off
+	                    break;
+	
+	                case "ArrowRight":
+	                    break;
+	                case "ArrowLeft":
+	                    break;
+	                case "ArrowUp":
+	                    break;
+	                case "ArrowDown":
+	                    break;
+	                default:
+	                    break;
+	            }
+	        }
+	    }, {
+	        key: 'handleKeyUp',
+	        value: function handleKeyUp(event) {}
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            // this.dispatch = this.props.store.dispatch;
+	            // this.setState(this.props.store.getState());
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var stage = new _stage.Stage(this.refs.canvas);
+	
+	            // stage.setClearColor("#F1F1F1");
+	
+	            stage.on("stagemousemove", this.handleMouseMove);
+	            stage.on("stagemousedown", this.handleMouseDown);
+	            stage.on("stagemouseup", this.handleMouseUp);
+	            stage.on("mouseleave", this.handleMouseLeave);
+	            stage.canvas.addEventListener("mousewheel", this.handleMouseWheel);
+	            stage.canvas.addEventListener("DOMMouseScroll", this.handleMouseWheelFox);
+	
+	            // Keyboard event
+	            // var _keydown = _.throttle(this.keydown, 100);
+	            document.addEventListener('keydown', this.handleKeyDown);
+	            // var _keyup = _.throttle(this.keyup, 500);
+	            document.addEventListener('keyup', this.handleKeyUp);
+	
+	            // var r = 50;
+	            // var graphics = new createjs.Graphics();
+	            // graphics.beginFill("red")
+	            //     .drawCircle(200,50, r)
+	            //     .endFill();
+	            //
+	            // var cached = new createjs.Shape(graphics);
+	            //
+	            // stage.addChild(cached);
+	            //
+	            // cached.x = 0;
+	            // cached.y = 0;
+	            //
+	            // cached.cache(200-r,50-r, r*2,r*2);
+	            //
+	            // stage.update();
+	
+	            this.props.onStageCreated(stage);
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            // if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
+	            // this.props.stage.update();
+	            // }
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'canvas',
+	                { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' },
+	                this.props.children
+	            );
+	        }
+	    }]);
+
+	    return StageComponent;
+	}(_react.Component);
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.StatusComponent = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/06/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	
+	// import '../App.css';
+	
+	var StatusComponent = exports.StatusComponent = function (_Component) {
+	    _inherits(StatusComponent, _Component);
+	
+	    function StatusComponent() {
+	        _classCallCheck(this, StatusComponent);
+	
+	        return _possibleConstructorReturn(this, (StatusComponent.__proto__ || Object.getPrototypeOf(StatusComponent)).apply(this, arguments));
+	    }
+	
+	    _createClass(StatusComponent, [{
+	        key: "measurement",
+	        value: function measurement() {
+	            var message = "";
+	            if (this.props.shortestSegment && this.props.distance) {
+	                var segment = this.props.shortestSegment;
+	                var dx = segment.end.x - segment.start.x;
+	                var dy = segment.end.y - segment.start.y;
+	                var dist = this.props.distance;
+	
+	                message = "DX=" + this.format(dx) + ",DY=" + this.format(dy) + ",D=" + this.format(dist);
+	            }
+	            return message;
+	        }
+	    }, {
+	        key: "format",
+	        value: function format(num) {
+	            return (num / this.props.divisor).toFixed(this.props.decimals);
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var stage = this.props.stage;
+	            var coordX = 0;
+	            var coordY = 0;
+	            if (stage) {
+	                coordX = this.format(stage.C2W_X(this.props.coordX));
+	                coordY = this.format(stage.C2W_Y(this.props.coordY));
+	            }
+	            var message = this.measurement();
+	
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "App-status-bar" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { style: { flex: 4, textAlign: "left", marginLeft: 10, padding: 5 } },
+	                    _react2.default.createElement(
+	                        "h5",
+	                        null,
+	                        "X: " + coordX + " Y: " + coordY
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { style: { flex: 6, textAlign: "left", marginLeft: 10, padding: 5 } },
+	                    _react2.default.createElement(
+	                        "h5",
+	                        null,
+	                        message
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "button",
+	                    {
+	                        style: { flex: 2, height: "50%", margin: 5, border: "1px", backgroundColor: "inherit" },
+	                        onClick: this.props.onUnitClicked
+	                    },
+	                    _react2.default.createElement(
+	                        "h3",
+	                        null,
+	                        "Units"
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "h5",
+	                    { style: { flex: 2, height: "50%", margin: 5 } },
+	                    this.props.units
+	                )
+	            );
+	        }
+	    }]);
+
+	    return StatusComponent;
+	}(_react.Component);
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.ToolbarComponent = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Browse = __webpack_require__(98);
+	
+	var _Browse2 = _interopRequireDefault(_Browse);
+	
+	var _homeIcon20x = __webpack_require__(103);
+	
+	var _homeIcon20x2 = _interopRequireDefault(_homeIcon20x);
+	
+	var _handDrag = __webpack_require__(102);
+	
+	var _handDrag2 = _interopRequireDefault(_handDrag);
+	
+	var _measureContour = __webpack_require__(105);
+	
+	var _measureContour2 = _interopRequireDefault(_measureContour);
+	
+	var _measurePoints = __webpack_require__(106);
+	
+	var _measurePoints2 = _interopRequireDefault(_measurePoints);
+	
+	var _WidthOn = __webpack_require__(100);
+	
+	var _WidthOn2 = _interopRequireDefault(_WidthOn);
+	
+	var _editContourVertextOnOff = __webpack_require__(101);
+	
+	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
+	
+	var _label_icon = __webpack_require__(104);
+	
+	var _label_icon2 = _interopRequireDefault(_label_icon);
+	
+	var _Setting = __webpack_require__(99);
+	
+	var _Setting2 = _interopRequireDefault(_Setting);
+	
+	var _About = __webpack_require__(97);
+	
+	var _About2 = _interopRequireDefault(_About);
+	
+	__webpack_require__(4);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import { ButtonToolbar, Button } from 'react-bootstrap';
+	// import logo from '../logo.svg';
+	
+	var ToolbarComponent = exports.ToolbarComponent = function (_Component) {
+	    _inherits(ToolbarComponent, _Component);
+	
+	    function ToolbarComponent() {
+	        _classCallCheck(this, ToolbarComponent);
+	
+	        var _this = _possibleConstructorReturn(this, (ToolbarComponent.__proto__ || Object.getPrototypeOf(ToolbarComponent)).call(this));
+	
+	        _this.openJobButtonClicked = _this.openJobButtonClicked.bind(_this);
+	        _this.notImplemented = _this.notImplemented.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(ToolbarComponent, [{
+	        key: 'openJobButtonClicked',
+	        value: function openJobButtonClicked() {
+	            document.getElementById("browseFiles").click();
+	        }
+	    }, {
+	        key: 'notImplemented',
+	        value: function notImplemented() {
+	            alert("Not implemented yet");
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'App-toolbar' },
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Open file', onClick: this.openJobButtonClicked },
+	                    _react2.default.createElement('img', { src: _Browse2.default, alt: 'open' })
+	                ),
+	                _react2.default.createElement('input', { style: { fontSize: 16, marginTop: 5, marginBottom: 5, display: "none" },
+	                    type: 'file', id: 'browseFiles', name: 'files[]', multiple: true,
+	                    onChange: this.props.onFileSelected
+	                }),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Zoom and pan to home view', onClick: this.props.onHomeButtonPressed },
+	                    _react2.default.createElement('img', { src: _homeIcon20x2.default, alt: 'home' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Pan by drag', onClick: this.props.onPanByDragPressed },
+	                    _react2.default.createElement('img', { src: _handDrag2.default, alt: 'panByDrag' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Measure distance between points', onClick: this.props.onMeasurePointsButtonPressed },
+	                    _react2.default.createElement('img', { src: _measurePoints2.default, alt: 'measurePoints' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Measure distance between shapes', onClick: this.props.onMeasureBetweenShapesButtonPressed },
+	                    _react2.default.createElement('img', { src: _measureContour2.default, alt: 'measureShapes' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Display solid or wire', onClick: this.props.onToggleWidthModePressed },
+	                    _react2.default.createElement('img', { src: _WidthOn2.default, alt: 'width' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Display vertices on/off', onClick: this.props.onToggleVerticesPressed },
+	                    _react2.default.createElement('img', { src: _editContourVertextOnOff2.default, alt: 'vertices' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Display labels on/off', onClick: this.props.onToggleLabelsPressed },
+	                    _react2.default.createElement('img', { src: _label_icon2.default, alt: 'labels' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'Settings', onClick: this.notImplemented },
+	                    _react2.default.createElement('img', { src: _Setting2.default, alt: 'setting' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { title: 'About', onClick: this.notImplemented },
+	                    _react2.default.createElement('img', { src: _About2.default, alt: 'about' })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return ToolbarComponent;
+	}(_react.Component);
+	
+	;
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(87);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _App = __webpack_require__(23);
+	
+	var _App2 = _interopRequireDefault(_App);
+	
+	__webpack_require__(49);
+	
+	var _redux = __webpack_require__(20);
+	
+	var _reducer = __webpack_require__(44);
+	
+	var _log = __webpack_require__(34);
+	
+	var _log2 = _interopRequireDefault(_log);
+	
+	var _readFiles = __webpack_require__(36);
+	
+	var _readFiles2 = _interopRequireDefault(_readFiles);
+	
+	var _test = __webpack_require__(38);
+	
+	var _test2 = _interopRequireDefault(_test);
+	
+	var _stageController = __webpack_require__(37);
+	
+	var _stageController2 = _interopRequireDefault(_stageController);
+	
+	var _matrixTest = __webpack_require__(35);
+	
+	var _matrixTest2 = _interopRequireDefault(_matrixTest);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _test2.default, _stageController2.default, _matrixTest2.default)));
+	// import demo from './middleware/demo';
+	
+	
+	// import 'bootstrap/dist/css/bootstrap.css';
+	// import 'bootstrap/dist/css/bootstrap-theme.css';
+	
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, { store: store }), document.getElementById('root'));
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	var log = function log(_ref) {
+	    var getState = _ref.getState,
+	        dispatch = _ref.dispatch;
+	    return function (next) {
+	        return function (action) {
+	
+	            if (action.type !== ActionTypes.MOUSE_MOVED_ON_STAGE) {
+	                console.log('ACTION: ' + action.type, action);
+	            }
+	
+	            next(action);
+	        };
+	    };
+	};
+	
+	exports.default = log;
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _layers = __webpack_require__(5);
+	
+	var _model = __webpack_require__(6);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var point = _flattenJs2.default.point,
+	    segment = _flattenJs2.default.segment,
+	    Polygon = _flattenJs2.default.Polygon;
+	
+	
+	function zoomHome(shape, stage) {
+	    var box = shape.box;
+	    var x = (box.xmin + box.xmax) / 2;
+	    var y = (box.ymin + box.ymax) / 2;
+	    stage.panToCoordinate(x, y);
+	    stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
+	}
+	
+	var matrix_test = function matrix_test(_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	        return function (action) {
+	
+	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+	                if (document.location.pathname === '/matrix_test') {
+	
+	                    var stage = action.stage;
+	                    var state = getState();
+	                    var layers = state.layers;
+	
+	                    var layer = _layers.Layers.newLayer(stage, layers);
+	                    layer.name = "demo1";
+	                    layer.title = "demo1";
+	
+	                    layer.add(new _model.Model(segment(-100, 0, 100, 0), {}, "segment1"));
+	                    layer.add(new _model.Model(segment(0, -100, 0, 50), {}, "segment 2"));
+	
+	                    var polygon = new Polygon();
+	
+	                    layer.add(new _model.Model(point(20, 20), {}, "ABC123"));
+	                    layer.add(new _model.Model(point(-50, 30), {}, "Boom boom"));
+	
+	                    polygon.addFace([segment(-500000, -500000, 500000, -500000), segment(500000, -500000, 100000, 100000), segment(100000, 100000, -100000, 100000), segment(-100000, 100000, -500000, -500000)]);
+	
+	                    // layer.add(new Model(polygon,{},"polygonchik"));
+	
+	                    zoomHome(layer, stage);
+	                    state.layers.push(layer);
+	                }
+	            }
+	            return next(action);
+	        };
+	    };
+	};
+	
+	exports.default = matrix_test;
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _layers = __webpack_require__(5);
+	
+	var _model = __webpack_require__(6);
+	
+	var _parserXML = __webpack_require__(42);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	// import { Shape } from '../models/shape';
+	var readFile = function readFile(file, stage, layers, dispatch) {
+	    if (!file.type.match('text.*')) return; // validate type is text
+	
+	    var reader = new FileReader();
+	
+	    // Closure to capture file information and parameters
+	    reader.onload = function (theFile, stage, layers, dispatch) {
+	        return function (event) {
+	            var string = event.target.result;
+	
+	            var job = (0, _parserXML.parseXML)(theFile.name, string);
+	            var layer = _layers.Layers.newLayer(stage, layers);
+	            if (theFile.name !== "") {
+	                layer.name = theFile.name;
+	            }
+	            layer.title = job.title;
+	
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = job.profiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var polygon = _step.value;
+	
+	                    if (polygon.edges.size > 0 && polygon.faces.size > 0) {
+	                        // let watch = undefined; //  parser.parseToWatchArray(string);
+	                        // let shape = new Shape(polygon, stage, polygon.style, watch);
+	                        var _shape = new _model.Model(polygon, undefined, polygon.label);
+	
+	                        layer.add(_shape);
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = job.materials[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var _polygon = _step2.value;
+	
+	                    if (_polygon.edges.size > 0 && _polygon.faces.size > 0) {
+	                        // let watch = undefined; //  parser.parseToWatchArray(string);
+	                        // let shape = new Shape(polygon, stage, polygon.style, watch);
+	                        var _shape2 = new _model.Model(_polygon, undefined, _polygon.label);
+	
+	                        layer.add(_shape2);
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = job.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var shape = _step3.value;
+	
+	                    var model = new _model.Model(shape, undefined, shape.label);
+	                    layer.add(model);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            layers.push(layer);
+	
+	            dispatch({
+	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                shape: layer
+	            });
+	        };
+	    }(file, stage, layers, dispatch);
+	
+	    reader.readAsText(file);
+	};
+	
+	var readFiles = function readFiles(_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	        return function (action) {
+	
+	            if (action.type !== ActionTypes.FILENAME_LIST_SELECTED) {
+	                return next(action);
+	            }
+	
+	            var stage = action.stage;
+	            var layers = action.layers;
+	
+	            // Load and parse files
+	            var _iteratorNormalCompletion4 = true;
+	            var _didIteratorError4 = false;
+	            var _iteratorError4 = undefined;
+	
+	            try {
+	                for (var _iterator4 = action.files[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	                    var file = _step4.value;
+	
+	                    readFile(file, stage, layers, dispatch);
+	                }
+	            } catch (err) {
+	                _didIteratorError4 = true;
+	                _iteratorError4 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                        _iterator4.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError4) {
+	                        throw _iteratorError4;
+	                    }
+	                }
+	            }
+	        };
+	    };
+	};
+	
+	exports.default = readFiles;
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	var stageController = function stageController(_ref) {
+	    var getState = _ref.getState,
+	        dispatch = _ref.dispatch;
+	    return function (next) {
+	        return function (action) {
+	
+	            // let state = getState();
+	            var stage = action.stage;
+	
+	            if (stage) {
+	                switch (action.type) {
+	                    case ActionTypes.STAGE_RESIZED:
+	                        stage.resize();
+	                        break;
+	
+	                    case ActionTypes.MOUSE_DOWN_ON_STAGE:
+	                        stage.panByMouseStart();
+	                        break;
+	
+	                    case ActionTypes.MOUSE_MOVED_ON_STAGE:
+	                        if (action.dx !== undefined && action.dy !== undefined) {
+	                            stage.panByMouseMove(action.dx, action.dy);
+	                        }
+	                        break;
+	
+	                    case ActionTypes.MOUSE_UP_ON_STAGE:
+	                        stage.panByMouseStop();
+	                        break;
+	
+	                    case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
+	                        var center = action.shape.center;
+	                        var box = action.shape.box;
+	                        stage.panToCoordinate(center.x, center.y);
+	                        stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
+	                        break;
+	
+	                    case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
+	                        var bIn = action.delta > 0;
+	                        // stage.zoomByMouse(action.x, action.y, bIn, 1 + Math.abs(action.delta)/100.);
+	                        stage.zoomByMouse(action.x, action.y, bIn, 1.2);
+	                        break;
+	
+	                    default:
+	                        break;
+	                }
+	            }
+	
+	            next(action);
+	        };
+	    };
+	};
+	
+	exports.default = stageController;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _layers = __webpack_require__(5);
+	
+	var _model = __webpack_require__(6);
+	
+	var _polygon = __webpack_require__(107);
+	
+	var _polygon2 = _interopRequireDefault(_polygon);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	// import { Shape } from '../models/shape';
+	var demo = function demo(_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	        return function (action) {
+	
+	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+	                if (document.location.pathname === '/test') {
+	                    // console.log(document.location.pathname);
+	                    // console.log(getState());
+	                    var str = _polygon2.default;
+	                    var text = atob(str.split(',')[1]);
+	
+	                    var stage = action.stage;
+	                    var state = getState();
+	                    var parser = state.app.parser;
+	                    var layers = state.layers;
+	
+	                    var polygon = parser.parseToPolygon(text);
+	
+	                    var layer = _layers.Layers.newLayer(stage, layers);
+	                    layer.name = "demo1";
+	                    layer.title = "demo1";
+	
+	                    var model = new _model.Model(polygon);
+	
+	                    var box = polygon.box;
+	                    var x = (box.xmin + box.xmax) / 2;
+	                    var y = (box.ymin + box.ymax) / 2;
+	
+	                    stage.panToCoordinate(x, y);
+	                    stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
+	
+	                    model.origin = stage.origin;
+	                    model.zoomFactor = stage.zoomFactor;
+	
+	                    // element.geomTransformed =
+	                    //     StageElement.transformPolygon(polygon, stage);
+	
+	                    layer.add(model);
+	
+	                    state.layers.push(layer);
+	
+	                    // dispatch({
+	                    //     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                    //     shape: layer
+	                    // })
+	                }
+	            }
+	            return next(action);
+	        };
+	    };
+	};
+	
+	// import { parseXML } from '../models/parserXML';
+	// import file1 from '../../public/test_xml_0.xml';
+	exports.default = demo;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Job = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Box = _flattenJs2.default.Box;
+	
+	var Job = exports.Job = function () {
+	    function Job() {
+	        _classCallCheck(this, Job);
+	
+	        this.filename = "";
+	        this.title = "";
+	        this.profiles = []; // array of FlattenJS Polygons
+	        this.materials = []; // array of FlattenJS Polygons
+	        this.shapes = []; // array of other FlattenJS shapes
+	    }
+	
+	    _createClass(Job, [{
+	        key: "box",
+	        get: function get() {
+	            var b = new Box();
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = this.profiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var shape = _step.value;
+	
+	                    b.merge(shape.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = this.materials[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var _shape = _step2.value;
+	
+	                    b.merge(_shape.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = this.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var _shape2 = _step3.value;
+	
+	                    b.merge(_shape2.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            return b;
+	        }
+	    }]);
+
+	    return Job;
+	}();
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Layer = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 17/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+	
+	// import { Shape } from '../models/shape';
+	
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	var _model = __webpack_require__(6);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Layer = exports.Layer = function () {
+	    function Layer(stage) {
+	        _classCallCheck(this, Layer);
+	
+	        // super();
+	        // cannot define Layer as extension of PlanarSet due to bug in compiler ?
+	        this.stage = stage;
+	        this.shapes = []; // new Flatten.PlanarSet();
+	        this.name = "";
+	        this.color = "";
+	        this.title = "";
+	        this.displayed = false;
+	        this.edited = false;
+	        this.affected = false;
+	    }
+	
+	    _createClass(Layer, [{
+	        key: 'clone',
+	        value: function clone() {
+	            var layer = new Layer(this.stage);
+	            return Object.assign(layer, this);
+	        }
+	    }, {
+	        key: 'add',
+	        value: function add(shape) {
+	            if (shape instanceof _model.Model) {
+	                this.shapes.push(shape); // add(shape)
+	            } else {
+	                var geom = shape;
+	                var newShape = new _model.Model(geom); // , this.stage);
+	                this.shapes.push(newShape); // add(newShape);
+	            }
+	            return this;
+	        }
+	    }, {
+	        key: 'toggleDisplayed',
+	        value: function toggleDisplayed(color) {
+	            var displayed = !this.displayed;
+	            return Object.assign(this.clone(), {
+	                displayed: displayed,
+	                color: color
+	            });
+	        }
+	    }, {
+	        key: 'setAffected',
+	        value: function setAffected(affected) {
+	            return Object.assign(this.clone(), {
+	                affected: affected
+	            });
+	        }
+	    }, {
+	        key: 'setAlpha',
+	        value: function setAlpha() {
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = this.shapes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var shape = _step.value;
+	
+	                    shape.alpha = this.displayed ? 1 : 0;
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            return this.shapes;
+	        }
+	    }, {
+	        key: 'toggleExpanded',
+	        value: function toggleExpanded(shapeToggle) {
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = this.shapes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var shape = _step2.value;
+	
+	                    if (shape === shapeToggle) {
+	                        shape.expanded = !shape.expanded;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            return this;
+	        }
+	    }, {
+	        key: 'box',
+	        get: function get() {
+	            var box = new _flattenJs2.default.Box();
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = this.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var shape = _step3.value;
+	
+	                    box = box.merge(shape.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            return box;
+	        }
+	    }, {
+	        key: 'center',
+	        get: function get() {
+	            var box = this.box;
+	            return new _flattenJs2.default.Point((box.xmin + box.xmax) / 2, (box.ymin + box.ymax) / 2);
+	        }
+	    }]);
+
+	    return Layer;
+	}();
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Parser = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 01/05/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Point = _flattenJs2.default.Point,
+	    Segment = _flattenJs2.default.Segment,
+	    Arc = _flattenJs2.default.Arc,
+	    Polygon = _flattenJs2.default.Polygon;
+	var vector = _flattenJs2.default.vector;
+	
+	/*
+	let debug_str = `+		[0]	{nrec=27 nalloc=27 h_ind_id=-1 ...} mat_cont_hdr_struc	mat_cont_struc
+	    +		[1]	{pmin=59146400,5973200 pmax=59606001,6438000} mat_cont_lim_struc	mat_cont_struc
+	+		[2]	{nedge=23 nalloc=25 ntop=2 ...} mat_cont_poly_struc	mat_cont_struc
+	+		[3]	{pmin=59146400,5973200 pmax=59606001,6438000} mat_cont_lim_struc	mat_cont_struc
+	+		[4]	{ps=59192738,6363124 pe=59216000,6372800 pc=59216000,6340000 cw=1} mat_curve_struc	mat_cont_struc
+	+		[5]	{ps=59216000,6372800 pe=59267652,6372800} mat_seg_struc	mat_cont_struc
+	+		[6]	{ps=59267652,6372800 pe=59267652,6307200 pc=59360000,6340000 cw=1} mat_curve_struc	mat_cont_struc
+	+		[7]	{ps=59267652,6307200 pe=59229586,6307200} mat_seg_struc	mat_cont_struc
+	+		[8]	{ps=59229586,6307200 pe=59212000,6289614} mat_seg_struc	mat_cont_struc
+	+		[9]	{ps=59212000,6289614 pe=59212000,6056386} mat_seg_struc	mat_cont_struc
+	+		[10]	{ps=59212000,6056386 pe=59229586,6038800} mat_seg_struc	mat_cont_struc
+	+		[11]	{ps=59229586,6038800 pe=59469614,6038800} mat_seg_struc	mat_cont_struc
+	+		[12]	{ps=59469614,6038800 pe=59487200,6056386} mat_seg_struc	mat_cont_struc
+	+		[13]	{ps=59487200,6056386 pe=59487200,6100500} mat_seg_struc	mat_cont_struc
+	+		[14]	{ps=59487200,6100500 pe=59434000,6180000 pc=59520000,6180000 cw=1} mat_curve_struc	mat_cont_struc
+	+		[15]	{ps=59434000,6180000 pe=59552800,6100500 pc=59520000,6180000 cw=1} mat_curve_struc	mat_cont_struc
+	+		[16]	{ps=59552800,6100500 pe=59552800,6042800} mat_seg_struc	mat_cont_struc
+	+		[17]	{ps=59552800,6042800 pe=59543124,6019538 pc=59520000,6042800 cw=1} mat_curve_struc	mat_cont_struc
+	+		[18]	{ps=59543124,6019538 pe=59506462,5982876} mat_seg_struc	mat_cont_struc
+	+		[19]	{ps=59506462,5982876 pe=59483200,5973200 pc=59483200,6006000 cw=1} mat_curve_struc	mat_cont_struc
+	+		[20]	{ps=59483200,5973200 pe=59216000,5973200} mat_seg_struc	mat_cont_struc
+	+		[21]	{ps=59216000,5973200 pe=59192738,5982876 pc=59216000,6006000 cw=1} mat_curve_struc	mat_cont_struc
+	+		[22]	{ps=59192738,5982876 pe=59156076,6019538} mat_seg_struc	mat_cont_struc
+	+		[23]	{ps=59156076,6019538 pe=59146400,6042800 pc=59179200,6042800 cw=1} mat_curve_struc	mat_cont_struc
+	+		[24]	{ps=59146400,6042800 pe=59146400,6303200} mat_seg_struc	mat_cont_struc
+	+		[25]	{ps=59146400,6303200 pe=59156076,6326462 pc=59179200,6303200 cw=1} mat_curve_struc	mat_cont_struc
+	+		[26]	{ps=59156076,6326462 pe=59192738,6363124} mat_seg_struc	mat_cont_struc
+	`;
+	*/
+	
+	var Parser = exports.Parser = function () {
+	    function Parser() {
+	        _classCallCheck(this, Parser);
+	    }
+	
+	    _createClass(Parser, [{
+	        key: 'parseToWatchArray',
+	        value: function parseToWatchArray(str) {
+	            var arrayOfLines = str.match(/[^\r\n]+/g);
+	            var watchArray = [];
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = arrayOfLines[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var line = _step.value;
+	
+	                    watchArray.push(line.substring(line.indexOf('{')));
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            return watchArray;
+	        }
+	    }, {
+	        key: 'parseToPolygon',
+	        value: function parseToPolygon(str) {
+	            var polygon = new Polygon();
+	            // let mulitystr = debug_str;
+	            var arrayOfLines = str.match(/[^\r\n]+/g);
+	
+	            for (var i = 0; i < arrayOfLines.length; i++) {
+	                var line = arrayOfLines[i];
+	                if (line.search('mat_cont_poly_struc') >= 0) {
+	                    var parenth = line.match(/\{([^)]+)\}/)[1]; // string inside {..}
+	                    var termArr = parenth.split(' '); // array of terms "attr=value"
+	                    var nedgesTerm = termArr[0]; // "nedge=nn"
+	                    var nedgesStr = nedgesTerm.split('=')[1];
+	                    var nedges = parseInt(nedgesStr, 10);
+	
+	                    // Create new face from next #nedges of segments and arcs
+	                    var edges = [];
+	                    for (var j = i + 2; j < i + 2 + nedges; j++) {
+	                        line = arrayOfLines[j];
+	                        var _parenth = line.match(/\{([^)]+)\}/)[1]; // string inside {..}
+	                        var _termArr = _parenth.split(' '); // array of terms "attr=value"
+	
+	                        if (line.search('mat_seg_struc') >= 0) {
+	                            var psArr = _termArr[0].split('=')[1].split(',');
+	                            var ps = new Point(parseInt(psArr[0], 10), parseInt(psArr[1], 10));
+	
+	                            var peArr = _termArr[1].split('=')[1].split(',');
+	                            var pe = new Point(parseInt(peArr[0], 10), parseInt(peArr[1], 10));
+	
+	                            edges.push(new Segment(ps, pe));
+	                        } else if (line.search('mat_curve_struc') >= 0) {
+	                            var _psArr = _termArr[0].split('=')[1].split(',');
+	                            var _ps = new Point(parseInt(_psArr[0], 10), parseInt(_psArr[1], 10));
+	
+	                            var _peArr = _termArr[1].split('=')[1].split(',');
+	                            var _pe = new Point(parseInt(_peArr[0], 10), parseInt(_peArr[1], 10));
+	
+	                            var pcArr = _termArr[2].split('=')[1].split(',');
+	                            var pc = new Point(parseInt(pcArr[0], 10), parseInt(pcArr[1], 10));
+	
+	                            var cwStr = _termArr[3].split('=')[1];
+	                            var counterClockwise = cwStr === '0' ? true : false;
+	
+	                            var startAngle = vector(pc, _ps).slope;
+	                            var endAngle = vector(pc, _pe).slope;
+	
+	                            var r = vector(pc, _ps).length;
+	
+	                            edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
+	                        }
+	                    }
+	                    polygon.addFace(edges);
+	                }
+	            }
+	            return polygon;
+	        }
+	    }]);
+
+	    return Parser;
+	}();
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.parseXML = parseXML;
+	
+	var _job = __webpack_require__(39);
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Point = _flattenJs2.default.Point,
+	    Segment = _flattenJs2.default.Segment,
+	    Arc = _flattenJs2.default.Arc,
+	    Polygon = _flattenJs2.default.Polygon;
+	var vector = _flattenJs2.default.vector;
+	
+	
+	function parseEdges(edgesXML) {
+	    var edges = [];
+	
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+	
+	    try {
+	        for (var _iterator = edgesXML[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	            var edge = _step.value;
+	
+	            var type = edge.getAttribute('type');
+	
+	            if (type === "segment") {
+	                var ps = new Point(parseInt(edge.getAttribute('xs'), 10), parseInt(edge.getAttribute('ys'), 10));
+	                var pe = new Point(parseInt(edge.getAttribute('xe'), 10), parseInt(edge.getAttribute('ye'), 10));
+	
+	                edges.push(new Segment(ps, pe));
+	            }
+	
+	            if (type === "curve") {
+	                var _ps = new Point(parseInt(edge.getAttribute('xs'), 10), parseInt(edge.getAttribute('ys'), 10));
+	                var _pe = new Point(parseInt(edge.getAttribute('xe'), 10), parseInt(edge.getAttribute('ye'), 10));
+	                var pc = new Point(parseInt(edge.getAttribute('xc'), 10), parseInt(edge.getAttribute('yc'), 10));
+	
+	                var counterClockwise = edge.getAttribute('cw') === 'no' ? true : false;
+	
+	                var startAngle = vector(pc, _ps).slope;
+	                var endAngle = vector(pc, _pe).slope;
+	
+	                var r = vector(pc, _ps).length;
+	
+	                edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
+	            }
+	        }
+	    } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	            }
+	        } finally {
+	            if (_didIteratorError) {
+	                throw _iteratorError;
+	            }
+	        }
+	    }
+	
+	    return edges;
+	}
+	
+	function parsePolygon(polygonsXML) {
+	    var polygon = new Polygon();
+	
+	    // let nedges = parseInt(profile.getAttribute("n_edges"), 10);
+	
+	    // Augment Flatten object with style
+	    var color = polygonsXML.getAttribute("color");
+	    polygon.style = {
+	        stroke: color || undefined,
+	        fill: color || undefined,
+	        alpha: 1.0
+	    };
+	
+	    // Augment Flatten object with label
+	    var label = polygonsXML.getAttribute("label");
+	    polygon.label = label;
+	
+	    // Add islands
+	    var islands = polygonsXML.getElementsByTagName('island');
+	    var _iteratorNormalCompletion2 = true;
+	    var _didIteratorError2 = false;
+	    var _iteratorError2 = undefined;
+	
+	    try {
+	        for (var _iterator2 = islands[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var island = _step2.value;
+	
+	            var edgesXML = island.getElementsByTagName('edge');
+	            polygon.addFace(parseEdges(edgesXML));
+	        }
+	
+	        // Add holes
+	    } catch (err) {
+	        _didIteratorError2 = true;
+	        _iteratorError2 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                _iterator2.return();
+	            }
+	        } finally {
+	            if (_didIteratorError2) {
+	                throw _iteratorError2;
+	            }
+	        }
+	    }
+	
+	    var holes = polygonsXML.getElementsByTagName('hole');
+	    var _iteratorNormalCompletion3 = true;
+	    var _didIteratorError3 = false;
+	    var _iteratorError3 = undefined;
+	
+	    try {
+	        for (var _iterator3 = holes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	            var hole = _step3.value;
+	
+	            var edgesXML = hole.getElementsByTagName('edge');
+	            polygon.addFace(parseEdges(edgesXML));
+	        }
+	    } catch (err) {
+	        _didIteratorError3 = true;
+	        _iteratorError3 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                _iterator3.return();
+	            }
+	        } finally {
+	            if (_didIteratorError3) {
+	                throw _iteratorError3;
+	            }
+	        }
+	    }
+	
+	    return polygon;
+	}
+	
+	function parseSegment(segmentXML) {
+	    var ps = new Point(parseInt(segmentXML.getAttribute('xs'), 10), parseInt(segmentXML.getAttribute('ys'), 10));
+	    var pe = new Point(parseInt(segmentXML.getAttribute('xe'), 10), parseInt(segmentXML.getAttribute('ye'), 10));
+	
+	    var segment = new Segment(ps, pe);
+	
+	    return segment;
+	}
+	
+	function parsePoint(pointXML) {
+	    var point = new Point(parseInt(pointXML.getAttribute('x'), 10), parseInt(pointXML.getAttribute('y'), 10));
+	
+	    // Augment Flatten object with label property
+	    var label = pointXML.getAttribute("label");
+	    point.label = label;
+	
+	    return point;
+	}
+	function parseXML(filename, str) {
+	    var job = new _job.Job();
+	
+	    job.filename = filename;
+	
+	    var parser = new DOMParser();
+	    var xmlDoc = parser.parseFromString(str, "text/xml");
+	
+	    // Parse document title
+	    var titles = xmlDoc.getElementsByTagName('title');
+	    if (titles && titles.length > 0) {
+	        job.title = titles[0].firstChild.nodeValue; // take the first title if more than one
+	    }
+	
+	    // Parse profiles and add polygons to the job
+	    var profilesXML = xmlDoc.getElementsByTagName('profile');
+	    var _iteratorNormalCompletion4 = true;
+	    var _didIteratorError4 = false;
+	    var _iteratorError4 = undefined;
+	
+	    try {
+	        for (var _iterator4 = profilesXML[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	            var profileXML = _step4.value;
+	
+	            var polygon = parsePolygon(profileXML);
+	            job.profiles.push(polygon);
+	        }
+	
+	        // Parse materials and add polygons to the job
+	    } catch (err) {
+	        _didIteratorError4 = true;
+	        _iteratorError4 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                _iterator4.return();
+	            }
+	        } finally {
+	            if (_didIteratorError4) {
+	                throw _iteratorError4;
+	            }
+	        }
+	    }
+	
+	    var materialXML = xmlDoc.getElementsByTagName('material');
+	    var _iteratorNormalCompletion5 = true;
+	    var _didIteratorError5 = false;
+	    var _iteratorError5 = undefined;
+	
+	    try {
+	        for (var _iterator5 = materialXML[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	            var shapeXML = _step5.value;
+	
+	            var polygon = parsePolygon(shapeXML);
+	            job.materials.push(polygon);
+	        }
+	
+	        // Parse segments
+	    } catch (err) {
+	        _didIteratorError5 = true;
+	        _iteratorError5 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion5 && _iterator5.return) {
+	                _iterator5.return();
+	            }
+	        } finally {
+	            if (_didIteratorError5) {
+	                throw _iteratorError5;
+	            }
+	        }
+	    }
+	
+	    var segmentsXML = xmlDoc.getElementsByTagName('segment');
+	    var _iteratorNormalCompletion6 = true;
+	    var _didIteratorError6 = false;
+	    var _iteratorError6 = undefined;
+	
+	    try {
+	        for (var _iterator6 = segmentsXML[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+	            var segmentXML = _step6.value;
+	
+	            var segment = parseSegment(segmentXML);
+	            job.shapes.push(segment);
+	        }
+	
+	        // Parse points
+	    } catch (err) {
+	        _didIteratorError6 = true;
+	        _iteratorError6 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion6 && _iterator6.return) {
+	                _iterator6.return();
+	            }
+	        } finally {
+	            if (_didIteratorError6) {
+	                throw _iteratorError6;
+	            }
+	        }
+	    }
+	
+	    var pointsXML = xmlDoc.getElementsByTagName('point');
+	    var _iteratorNormalCompletion7 = true;
+	    var _didIteratorError7 = false;
+	    var _iteratorError7 = undefined;
+	
+	    try {
+	        for (var _iterator7 = pointsXML[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+	            var pointXML = _step7.value;
+	
+	            var point = parsePoint(pointXML);
+	            job.shapes.push(point);
+	        }
+	    } catch (err) {
+	        _didIteratorError7 = true;
+	        _iteratorError7 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion7 && _iterator7.return) {
+	                _iterator7.return();
+	            }
+	        } finally {
+	            if (_didIteratorError7) {
+	                throw _iteratorError7;
+	            }
+	        }
+	    }
+	
+	    return job;
+	}
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Stage = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _easeljsNEXTCombined = __webpack_require__(7);
+	
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	// import createjs from 'easel-js';
+	
+	
+	// import { Shape } from '../models/shape';
+	
+	var Stage = exports.Stage = function (_createjs$Stage) {
+	    _inherits(Stage, _createjs$Stage);
+	
+	    function Stage(canvas) {
+	        _classCallCheck(this, Stage);
+	
+	        var _this = _possibleConstructorReturn(this, (Stage.__proto__ || Object.getPrototypeOf(Stage)).call(this, canvas));
+	
+	        createjs.Touch.enable(_this);
+	        _this.mouseMoveOutside = false; // true;
+	        _this.enableMouseOver(20);
+	
+	        if (_this.canvas.clientWidth > 0 && _this.canvas.clientHeight > 0) {
+	            _this.canvas.width = _this.canvas.clientWidth;
+	            _this.canvas.height = _this.canvas.clientHeight;
+	        }
+	        _this.origin = { x: _this.canvas.width / 2, y: _this.canvas.height / 2 };
+	        _this.oldOrigin = { x: undefined, y: undefined }; // used by pan
+	        _this.resolution = 0.00001; // MM 2 Pixels when zoomFactor = 1;
+	        _this.zoomFactor = 1.0;
+	        return _this;
+	    }
+	
+	    _createClass(Stage, [{
+	        key: 'clone',
+	        value: function clone() {
+	            var stage = new Stage(this.canvas);
+	            return Object.assign(stage, this);
+	        }
+	    }, {
+	        key: 'add',
+	        value: function add(shape) {
+	            this.addChild(shape);
+	            return this;
+	        }
+	    }, {
+	        key: 'scalingFactor',
+	        value: function scalingFactor() {
+	            return this.resolution * this.zoomFactor;
+	        }
+	    }, {
+	        key: 'C2W_Scalar',
+	        value: function C2W_Scalar(scalar) {
+	            return scalar / this.scalingFactor();
+	        }
+	    }, {
+	        key: 'W2C_Scalar',
+	        value: function W2C_Scalar(scalar) {
+	            return this.scalingFactor() * scalar;
+	        }
+	    }, {
+	        key: 'C2W_X',
+	        value: function C2W_X(canvasX) {
+	            return (canvasX - this.origin.x) / this.scalingFactor();
+	        }
+	    }, {
+	        key: 'C2W_Y',
+	        value: function C2W_Y(canvasY) {
+	            return (this.origin.y - canvasY) / this.scalingFactor();
+	        }
+	    }, {
+	        key: 'W2C_X',
+	        value: function W2C_X(worldX) {
+	            return this.scalingFactor() * worldX + this.origin.x;
+	        }
+	    }, {
+	        key: 'W2C_Y',
+	        value: function W2C_Y(worldY) {
+	            return this.origin.y - this.scalingFactor() * worldY;
+	        }
+	    }, {
+	        key: 'W2C',
+	        value: function W2C(point) {
+	            return { x: this.W2C_X(point.x), y: this.W2C_Y(point.y) };
+	        }
+	    }, {
+	        key: 'panTo',
+	        value: function panTo(newOrigin) {
+	            this.origin = { x: newOrigin.x, y: newOrigin.y };
+	        }
+	    }, {
+	        key: 'panBy',
+	        value: function panBy(deltaX, deltaY) {
+	            this.origin = {
+	                x: this.origin.x + deltaX,
+	                y: this.origin.y + deltaY
+	            };
+	        }
+	
+	        // zoom by 10% each time
+	
+	    }, {
+	        key: 'zoomIn',
+	        value: function zoomIn(ratio) {
+	            var curRatio = ratio || 1.1;
+	            this.zoomFactor = Math.min(10000000, curRatio * this.zoomFactor);
+	        }
+	    }, {
+	        key: 'zoomOut',
+	        value: function zoomOut(ratio) {
+	            var curRatio = ratio || 1.1;
+	            this.zoomFactor = Math.max(0.001, this.zoomFactor / curRatio);
+	        }
+	
+	        // ZoomIn/Out + "Focus follows mouse"
+	
+	    }, {
+	        key: 'zoom',
+	        value: function zoom(focusX, focusY, bIn, ratio) {
+	            var worldX = this.C2W_X(focusX); // world coordinate of mouse focus before zoom
+	            var worldY = this.C2W_Y(focusY);
+	
+	            bIn ? this.zoomIn(ratio) : this.zoomOut(ratio);
+	
+	            var newFocusX = this.W2C_X(worldX); // canvas coordinate after zoom
+	            var newFocusY = this.W2C_Y(worldY);
+	
+	            this.panBy(focusX - newFocusX, focusY - newFocusY);
+	
+	            return [newFocusX, newFocusY];
+	        }
+	    }, {
+	        key: 'zoomByMouse',
+	        value: function zoomByMouse(focusX, focusY, bIn, ratio) {
+	            this.zoom(focusX, focusY, bIn, ratio);
+	        }
+	    }, {
+	        key: 'zoomToLimits',
+	        value: function zoomToLimits(width, height) {
+	            var resolution = Math.min(this.canvas.width / (1.1 * width), this.canvas.height / (1.1 * height));
+	            var zoomFactor = resolution / this.resolution;
+	            var ratio = zoomFactor / this.zoomFactor;
+	            var bIn = true; //ratio > 1;
+	
+	            var focusX = this.canvas.width / 2;
+	            var focusY = this.canvas.height / 2;
+	            this.zoom(focusX, focusY, bIn, ratio);
+	        }
+	    }, {
+	        key: 'resize',
+	        value: function resize() {
+	            // this.origin.x = this.canvas.width / 2;
+	            // this.origin.y = this.canvas.height / 2;
+	            if (this.canvas.clientWidth > 0 && this.canvas.clientHeight > 0) {
+	                this.canvas.width = this.canvas.clientWidth;
+	                this.canvas.height = this.canvas.clientHeight;
+	            }
+	        }
+	
+	        // drawSomething() {
+	        //     let shape = new Shape();
+	        //     shape.graphics.beginFill('red').drawRect(0, 0, 20, 20);
+	        //     this.addChild(shape);
+	        //     this.update();
+	        // }
+	
+	    }, {
+	        key: 'panByMouseStart',
+	        value: function panByMouseStart() {
+	            this.oldOrigin.x = this.origin.x;
+	            this.oldOrigin.y = this.origin.y;
+	        }
+	    }, {
+	        key: 'panByMouseMove',
+	        value: function panByMouseMove(dx, dy) {
+	            if (dx !== undefined && dy !== undefined && this.oldOrigin.x !== undefined && this.oldOrigin.y !== undefined) {
+	                this.origin = {
+	                    x: this.oldOrigin.x + dx,
+	                    y: this.oldOrigin.y + dy
+	                };
+	            }
+	        }
+	    }, {
+	        key: 'panByMouseStop',
+	        value: function panByMouseStop() {
+	            this.oldOrigin.x = undefined;
+	            this.oldOrigin.y = undefined;
+	            this.tx = undefined;
+	            this.ty = undefined;
+	        }
+	    }, {
+	        key: 'panToCoordinate',
+	        value: function panToCoordinate(x, y) {
+	            var canvasX = this.W2C_X(x);
+	            var canvasY = this.W2C_Y(y);
+	
+	            var dx = this.canvas.width / 2 - canvasX;
+	            var dy = this.canvas.height / 2 - canvasY;
+	            this.panBy(dx, dy);
+	        }
+	    }, {
+	        key: 'box',
+	        get: function get() {
+	            var minX = this.C2W_X(0);
+	            var minY = this.C2W_Y(this.canvas.height);
+	            var maxX = this.C2W_X(this.canvas.width);
+	            var maxY = this.C2W_Y(0);
+	
+	            return new _flattenJs2.default.Box(minX, minY, maxX, maxY);
+	        }
+	    }]);
+	
+	    return Stage;
+	}(createjs.Stage);
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.reducer = undefined;
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Created by alexanderbol on 13/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+	
+	// import {Stage} from './models/stage';
+	// import {Layer} from './models/layer';
+	
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _redux = __webpack_require__(20);
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	var _layers = __webpack_require__(5);
+	
+	var _parser = __webpack_require__(41);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var unitsList = [{
+	    name: "pixels",
+	    decimals: 0,
+	    divisor: 1
+	}, {
+	    name: "inch",
+	    decimals: 7,
+	    divisor: 10160000
+	}, {
+	    name: "mm",
+	    decimals: 6,
+	    divisor: 400000
+	}];
+	
+	var defaultAppState = {
+	    title: "Debug Viewer",
+	    units: "pixels",
+	    decimals: 0,
+	    divisor: 1,
+	    bg: "#F1F1F1",
+	    hoveredShape: null,
+	    parser: new _parser.Parser(),
+	    widthOn: true,
+	    displayVertices: false,
+	    displayLabels: true,
+	    measurePointsActive: false,
+	    measureShapesActive: false,
+	    measureShapesFirstClick: true,
+	    firstMeasuredShape: null,
+	    secondMeasuredShape: null,
+	    firstMeasuredLayer: null,
+	    secondMeasuredLayer: null,
+	    distance: undefined,
+	    shortestSegment: null
+	};
+	
+	var defaultMouseState = {
+	    x: 0,
+	    y: 0,
+	    startX: undefined,
+	    startY: undefined
+	};
+	
+	function app() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultAppState;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ActionTypes.STAGE_UPDATED:
+	            return state;
+	        case ActionTypes.TOGGLE_UNITS_CLICKED:
+	            var curUnitsId = unitsList.findIndex(function (units) {
+	                return state.units === units.name;
+	            });
+	            var newUnits = unitsList[(curUnitsId + 1) % 3];
+	            return Object.assign({}, state, {
+	                units: newUnits.name,
+	                decimals: newUnits.decimals,
+	                divisor: newUnits.divisor
+	            });
+	        case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
+	            return Object.assign({}, state, {
+	                hoveredShape: state.measureShapesActive ? action.shape : null
+	            });
+	        case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
+	            return Object.assign({}, state, {
+	                hoveredShape: null
+	            });
+	        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
+	            if (!state.measureShapesActive) {
+	                return state;
+	            }
+	            // measureShapesActive
+	
+	            if (state.measureShapesFirstClick) {
+	                return Object.assign({}, state, {
+	                    firstMeasuredShape: action.shape,
+	                    firstMeasuredLayer: action.layer,
+	                    secondMeasuredShape: null,
+	                    secondMeasuredLayer: null,
+	                    measureShapesFirstClick: false,
+	                    distance: undefined,
+	                    shortestSegment: null
+	                });
+	            } else {
+	                // second click
+	                if (action.shape === state.firstMeasuredShape) {
+	                    return state; // second click on the same shape
+	                }
+	
+	                var shape1 = state.firstMeasuredShape.geom;
+	                var shape2 = action.shape.geom;
+	                var _ref = [],
+	                    distance = _ref[0],
+	                    shortestSegment = _ref[1];
+	                // if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
+	                //     [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
+	                // }
+	                // else {
+	
+	                // }
+	
+	
+	                var _Flatten$Distance$dis = _flattenJs2.default.Distance.distance(shape1, shape2);
+	
+	                var _Flatten$Distance$dis2 = _slicedToArray(_Flatten$Distance$dis, 2);
+	
+	                distance = _Flatten$Distance$dis2[0];
+	                shortestSegment = _Flatten$Distance$dis2[1];
+	                return Object.assign({}, state, {
+	                    secondMeasuredShape: action.shape,
+	                    secondMeasuredLayer: action.layer,
+	                    measureShapesFirstClick: true,
+	                    distance: distance,
+	                    shortestSegment: shortestSegment
+	                });
+	            }
+	        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
+	            return Object.assign({}, state, {
+	                measurePointsActive: false,
+	                measureShapesActive: false,
+	                firstMeasuredShape: null,
+	                firstMeasuredLayer: null,
+	                secondMeasuredShape: null,
+	                secondMeasuredLayer: null,
+	                distance: undefined,
+	                shortestSegment: null
+	            });
+	        case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
+	            return Object.assign({}, state, {
+	                widthOn: !state.widthOn,
+	                displayVertices: state.widthOn ? state.displayVertices : false
+	            });
+	        case ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED:
+	            if (state.displayVertices) {
+	                return Object.assign({}, state, {
+	                    displayVertices: false
+	                });
+	            } else {
+	                return Object.assign({}, state, {
+	                    widthOn: false,
+	                    displayVertices: true
+	                });
+	            }
+	
+	        case ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED:
+	            return Object.assign({}, state, {
+	                displayLabels: !state.displayLabels
+	            });
+	
+	        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
+	            return Object.assign({}, state, {
+	                measurePointsActive: true,
+	                measureShapesActive: false,
+	                firstMeasuredShape: null,
+	                firstMeasuredLayer: null,
+	                secondMeasuredShape: null,
+	                secondMeasuredLayer: null,
+	                distance: undefined,
+	                shortestSegment: null
+	            });
+	        case ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED:
+	            return Object.assign({}, state, {
+	                measurePointsActive: false,
+	                measureShapesActive: true,
+	                firstMeasuredShape: null,
+	                firstMeasuredLayer: null,
+	                secondMeasuredShape: null,
+	                secondMeasuredLayer: null,
+	                distance: undefined,
+	                shortestSegment: null
+	            });
+	        case ActionTypes.LAYER_LIST_PANEL_PRESSED:
+	            return state; // only to cause refresh of layers list component
+	        default:
+	            return state;
+	    }
+	}
+	
+	function layers() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
+	
+	    var curLayer = state.find(function (layer) {
+	        return layer.affected;
+	    });
+	    var curLayerId = state.findIndex(function (layer) {
+	        return layer.affected;
+	    });
+	
+	    switch (action.type) {
+	        /*
+	        case ActionTypes.NEW_STAGE_CREATED:
+	            return [...state, action.layer];
+	            */
+	
+	        case ActionTypes.ADD_LAYER_PRESSED:
+	            return [].concat(_toConsumableArray(state), [action.layer]);
+	
+	        case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
+	            var color = "";
+	            if (!action.layer.displayed) {
+	                color = _layers.Layers.getNextColor(state);
+	                if (color === "") return; // no free colors
+	            }
+	            return state.map(function (layer) {
+	                if (layer !== action.layer) {
+	                    // if action.layer will be undisplayed,
+	                    // it cannot become affected, then
+	                    // keep affected on this layer
+	                    if (action.layer.displayed) {
+	                        return layer;
+	                    } else {
+	                        return layer.setAffected(false);
+	                    }
+	                } else {
+	                    var newLayer = layer.toggleDisplayed(color);
+	                    newLayer.affected = newLayer.displayed;
+	                    return newLayer;
+	                }
+	                // return layer.toggleDisplayed(color);
+	            });
+	
+	        case ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED:
+	            return state.map(function (layer) {
+	                if (layer !== action.layer) {
+	                    return layer.setAffected(false);
+	                } else {
+	                    return layer.setAffected(!layer.affected);
+	                }
+	            });
+	
+	        case ActionTypes.NEW_SHAPE_PASTED:
+	            return state.map(function (layer) {
+	                if (layer.affected) {
+	                    return layer.add(action.shape);
+	                } else {
+	                    return layer;
+	                }
+	            });
+	
+	        case ActionTypes.TOGGLE_WATCH_EXPAND_CLICKED:
+	            return state.map(function (layer) {
+	                if (layer.affected) {
+	                    return layer.toggleExpanded(action.shape);
+	                } else {
+	                    return layer;
+	                }
+	            });
+	
+	        case ActionTypes.EDIT_LAYER_NAME_PRESSED:
+	            return state.map(function (layer) {
+	                if (layer !== action.layer) {
+	                    return layer;
+	                }
+	                return Object.assign({}, layer, {
+	                    edited: true
+	                });
+	            });
+	
+	        case ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED:
+	            if (curLayerId === state.length - 1) {
+	                return state;
+	            } else {
+	
+	                var nextLayer = state[curLayerId + 1];
+	
+	                return state.map(function (layer) {
+	                    if (layer === curLayer) {
+	                        var newCurLayer = layer.toggleDisplayed("");
+	                        newCurLayer.affected = false;
+	                        return newCurLayer;
+	                    } else if (layer === nextLayer) {
+	                        var _color = curLayer.color;
+	                        var newNextLayer = layer.toggleDisplayed(_color);
+	                        newNextLayer.affected = true;
+	                        return newNextLayer;
+	                    } else {
+	                        return layer;
+	                    }
+	                });
+	            }
+	
+	        case ActionTypes.LAYERS_LIST_ARROW_UP_PRESSED:
+	            if (curLayerId === 0) {
+	                return state;
+	            } else {
+	                var _nextLayer = state[curLayerId - 1];
+	
+	                return state.map(function (layer) {
+	                    if (layer === curLayer) {
+	                        var newCurLayer = layer.toggleDisplayed("");
+	                        newCurLayer.affected = false;
+	                        return newCurLayer;
+	                    } else if (layer === _nextLayer) {
+	                        var newNextLayer = layer.toggleDisplayed(curLayer.color);
+	                        newNextLayer.displayed = true;
+	                        newNextLayer.affected = true;
+	                        return newNextLayer;
+	                    } else {
+	                        return layer;
+	                    }
+	                });
+	            }
+	
+	        // case ActionTypes.MOUSE_MOVED_ON_STAGE:
+	        //     if (action.dx !== undefined && action.dy !== undefined) {
+	        //         return state.map( layer =>
+	        //             layer.setTransform(action.stage.origin, action.stage.zoomFactor))
+	        //     }
+	        //     else {
+	        //         return state;
+	        //     }
+	
+	        // case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
+	        // case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
+	        //     return state.map(layer =>
+	        //         layer.setTransform(action.stage.origin, action.stage.zoomFactor));
+	
+	        default:
+	            return state;
+	    }
+	}
+	
+	function stage() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ActionTypes.NEW_STAGE_CREATED:
+	            return action.stage;
+	
+	        default:
+	            return state;
+	    }
+	}
+	
+	function mouse() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultMouseState;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ActionTypes.MOUSE_MOVED_ON_STAGE:
+	            return Object.assign({}, state, {
+	                x: action.x,
+	                y: action.y
+	            });
+	        case ActionTypes.MOUSE_DOWN_ON_STAGE:
+	            return Object.assign({}, state, {
+	                startX: action.x,
+	                startY: action.y
+	            });
+	        case ActionTypes.MOUSE_UP_ON_STAGE:
+	            return Object.assign({}, state, {
+	                startX: undefined,
+	                startY: undefined
+	            });
+	        default:
+	            return state;
+	    }
+	}
+	
+	var reducer = exports.reducer = (0, _redux.combineReducers)({
+	    app: app,
+	    layers: layers,
+	    stage: stage,
+	    mouse: mouse
+	});
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.MeasurePointsTool = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(4);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import createjs from 'easel-js';
+	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
+	
+	var MeasurePointsTool = exports.MeasurePointsTool = function (_Component) {
+	    _inherits(MeasurePointsTool, _Component);
+	
+	    function MeasurePointsTool() {
+	        _classCallCheck(this, MeasurePointsTool);
+	
+	        var _this = _possibleConstructorReturn(this, (MeasurePointsTool.__proto__ || Object.getPrototypeOf(MeasurePointsTool)).call(this));
+	
+	        _this.handleMouseMove = _this.handleMouseMove.bind(_this);
+	        _this.handleMouseDown = _this.handleMouseDown.bind(_this);
+	        _this.handleMouseUp = _this.handleMouseUp.bind(_this);
+	
+	        _this.handleMouseWheel = _this.handleMouseWheel.bind(_this);
+	        _this.handleMouseWheelFox = _this.handleMouseWheelFox.bind(_this);
+	
+	        _this.startX = undefined;
+	        _this.startY = undefined;
+	        _this.endX = undefined;
+	        _this.endY = undefined;
+	        _this.measureStarted = false;
+	        return _this;
+	    }
+	
+	    _createClass(MeasurePointsTool, [{
+	        key: 'handleMouseDown',
+	        value: function handleMouseDown(event) {
+	            event.preventDefault();
+	
+	            var canvas = this.refs.measureCanvas;
+	            var stage = this.props.stage;
+	
+	            canvas.width = canvas.width;
+	
+	            var coordX = event.offsetX || event.originalEvent.layerX; // layerX for Firefox
+	            var coordY = event.offsetY || event.originalEvent.layerY; // layery for Firefox
+	
+	            if (this.measureStarted) {
+	                // second click - clear measurement
+	                this.startX = undefined;
+	                this.startY = undefined;
+	                this.endX = undefined;
+	                this.endY = undefined;
+	                this.measureStarted = false;
+	                canvas.style.cursor = "auto";
+	            } else {
+	                // first click - start measurment
+	                this.startX = stage.C2W_X(coordX);
+	                this.startY = stage.C2W_Y(coordY);
+	                this.measureStarted = true;
+	                canvas.style.cursor = "crosshair";
+	            }
+	        }
+	    }, {
+	        key: 'handleMouseMove',
+	        value: function handleMouseMove(event) {
+	            var stage = this.props.stage;
+	
+	            var coordX = event.offsetX /*|| event.originalEvent ? event.originalEvent.layerX : undefined*/; // layerX for Firefox
+	            var coordY = event.offsetY /*|| event.originalEvent ? event.originalEvent.layerY : undefined*/; // layerY for Firefox
+	
+	            if (this.measureStarted) {
+	                this.endX = stage.C2W_X(coordX);
+	                this.endY = stage.C2W_Y(coordY);
+	
+	                this.draw();
+	            }
+	        }
+	    }, {
+	        key: 'handleMouseUp',
+	        value: function handleMouseUp(event) {}
+	    }, {
+	        key: 'handleMouseWheel',
+	        value: function handleMouseWheel(event) {
+	            event.preventDefault();
+	
+	            var delta = event.detail || event.wheelDelta;
+	            if (delta !== 0) {
+	                this.props.onMouseWheelMove(event.offsetX, event.offsetY, delta);
+	            }
+	        }
+	    }, {
+	        key: 'handleMouseWheelFox',
+	        value: function handleMouseWheelFox(event) {
+	            event.preventDefault();
+	
+	            if (event.detail !== 0) {
+	                this.props.onMousewheelMove(event.layerX, event.layerY, -event.detail);
+	            }
+	        }
+	    }, {
+	        key: 'draw',
+	        value: function draw() {
+	            var canvas = this.refs.measureCanvas;
+	            var context = canvas.getContext('2d');
+	            var stage = this.props.stage;
+	
+	            canvas.width = canvas.width;
+	
+	            // Draw rectangle
+	            var pllX = Math.min(stage.W2C_X(this.startX), stage.W2C_X(this.endX));
+	            var pllY = Math.min(stage.W2C_Y(this.startY), stage.W2C_Y(this.endY));
+	            var width = Math.abs(stage.W2C_Scalar(this.startX - this.endX));
+	            var height = Math.abs(stage.W2C_Scalar(this.startY - this.endY));
+	
+	            context.beginPath();
+	            context.rect(pllX, pllY, width, height);
+	
+	            // Draw segment
+	            context.moveTo(stage.W2C_X(this.startX), stage.W2C_Y(this.startY));
+	            context.lineTo(stage.W2C_X(this.endX), stage.W2C_Y(this.endY));
+	
+	            context.lineWidth = 1;
+	            context.strokeStyle = 'black';
+	            context.stroke();
+	
+	            // Draw text
+	            var textX = void 0,
+	                textY = void 0,
+	                textHeight = void 0,
+	                textWidth = void 0;
+	            var backX = void 0,
+	                backY = void 0; // background rectangle
+	            var text = this.measurement();
+	
+	            context.font = "12pt Arial";
+	
+	            textHeight = 12; /* font size*/
+	            textWidth = context.measureText(text).width;
+	
+	            // Rectangle to the right of current point, text aligned left
+	            if (Math.abs(stage.W2C_X(this.endX) - pllX) <= 2) {
+	                context.textAlign = "left";
+	                textX = pllX + 3;
+	                backX = pllX;
+	            }
+	            // Rectangle to the left of current point, text aligned right
+	            else {
+	                    context.textAlign = "right";
+	                    textX = pllX + width - 3;
+	                    backX = textX - textWidth - 3;
+	                }
+	
+	            if (Math.abs(stage.W2C_Y(this.endY) - pllY) <= 2) {
+	                textY = pllY - 3;
+	            } else {
+	                textY = pllY + height + textHeight + 3;
+	            }
+	            backY = textY - textHeight - 3;
+	
+	            context.fillStyle = 'white';
+	            context.globalAlpha = 0.4;
+	            context.fillRect(backX, backY, textWidth + 6, textHeight + 6);
+	
+	            context.fillStyle = "black";
+	            context.globalAlpha = 1;
+	            context.fillText(this.measurement(), textX, textY);
+	        }
+	    }, {
+	        key: 'measurement',
+	        value: function measurement() {
+	            var dx = this.endX - this.startX;
+	            var dy = this.endY - this.startY;
+	            var dist = Math.sqrt(dx * dx + dy * dy);
+	            var message = "DX=" + this.format(dx) + ",DY=" + this.format(dy) + ",D=" + this.format(dist);
+	            return message;
+	        }
+	    }, {
+	        key: 'format',
+	        value: function format(num) {
+	            return (num / this.props.divisor).toFixed(this.props.decimals);
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            // this.dispatch = this.props.store.dispatch;
+	            // this.setState(this.props.store.getState());
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var canvas = this.refs.measureCanvas;
+	            canvas.addEventListener("mousedown", this.handleMouseDown);
+	            canvas.addEventListener("mousemove", this.handleMouseMove);
+	            canvas.addEventListener("mouseup", this.handleMouseUp);
+	
+	            canvas.addEventListener("mousewheel", this.handleMouseWheel);
+	            canvas.addEventListener("DOMMouseScroll", this.handleMouseWheelFox);
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (this.measureStarted) {
+	                this.draw();
+	            }
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var canvas = this.refs.measureCanvas;
+	            canvas.width = canvas.width;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var mainCanvas = this.props.stage.canvas;
+	            var width = mainCanvas.width;
+	            var height = mainCanvas.height;
+	            var top = mainCanvas.offsetTop;
+	            var left = mainCanvas.offsetLeft;
+	            return _react2.default.createElement('canvas', { tabIndex: '1', ref: 'measureCanvas', id: 'measurePoints',
+	                width: width,
+	                height: height,
+	                style: { position: 'absolute', top: top, left: left }
+	            });
+	        }
+	    }]);
+
+	    return MeasurePointsTool;
+	}(_react.Component);
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.MeasureShapesTool = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _easeljsNEXTCombined = __webpack_require__(7);
+	
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	__webpack_require__(4);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import createjs from 'easel-js';
+	
+	
+	var MeasureShapesTool = exports.MeasureShapesTool = function (_Component) {
+	    _inherits(MeasureShapesTool, _Component);
+	
+	    function MeasureShapesTool(params) {
+	        _classCallCheck(this, MeasureShapesTool);
+	
+	        var _this = _possibleConstructorReturn(this, (MeasureShapesTool.__proto__ || Object.getPrototypeOf(MeasureShapesTool)).call(this));
+	
+	        _this.segment = undefined;
+	        return _this;
+	    }
+	
+	    _createClass(MeasureShapesTool, [{
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (this.props.firstMeasuredShape && this.props.secondMeasuredShape && this.props.firstMeasuredLayer.displayed && this.props.secondMeasuredLayer.displayed) {
+	
+	                if (this.props.shortestSegment && this.props.stage) {
+	                    var shortest_segment = this.props.shortestSegment;
+	
+	                    if (!this.segment) {
+	                        this.segment = new createjs.Shape();
+	                        this.props.stage.addChild(this.segment);
+	                    }
+	                    this.segment.graphics.clear();
+	                    this.segment.graphics = shortest_segment.graphics();
+	                }
+	            } else {
+	                if (this.segment) {
+	                    this.segment.graphics.clear();
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return null;
+	        }
+	    }]);
+
+	    return MeasureShapesTool;
+	}(_react.Component);
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.PolygonTool = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _easeljsNEXTCombined = __webpack_require__(7);
+	
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	__webpack_require__(10);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 19/06/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	var PolygonTool = exports.PolygonTool = function (_Component) {
+	    _inherits(PolygonTool, _Component);
+	
+	    function PolygonTool(params) {
+	        _classCallCheck(this, PolygonTool);
+	
+	        var _this = _possibleConstructorReturn(this, (PolygonTool.__proto__ || Object.getPrototypeOf(PolygonTool)).call(this));
+	
+	        _this.shape = new createjs.Shape();
+	        params.stage.addChild(_this.shape);
+	
+	        _this.vertexShapes = [];
+	        _this.labelShape = undefined;
+	
+	        var _iteratorNormalCompletion = true;
+	        var _didIteratorError = false;
+	        var _iteratorError = undefined;
+	
+	        try {
+	            for (var _iterator = params.polygon.geom.vertices[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                var vertex = _step.value;
+	
+	                var vertexShape = new createjs.Shape();
+	                vertexShape.geom = vertex; // augment Shape with geom struct
+	                params.stage.addChild(vertexShape);
+	                _this.vertexShapes.push(vertexShape);
+	            }
+	        } catch (err) {
+	            _didIteratorError = true;
+	            _iteratorError = err;
+	        } finally {
+	            try {
+	                if (!_iteratorNormalCompletion && _iterator.return) {
+	                    _iterator.return();
+	                }
+	            } finally {
+	                if (_didIteratorError) {
+	                    throw _iteratorError;
+	                }
+	            }
+	        }
+	
+	        if (params.polygon.label && params.polygon.label.trim() !== "") {
+	            var html = document.createElement('div');
+	            html.innerText = params.polygon.label;
+	            html.style.position = "absolute";
+	            html.style.top = 0;
+	            html.style.left = 0;
+	
+	            document.body.appendChild(html);
+	
+	            _this.labelShape = new createjs.DOMElement(html);
+	
+	            // let labelShape = new createjs.Text();
+	            // labelShape.text = params.polygon.label;
+	            // labelShape.textBaseline = "alphabetic";
+	
+	            _this.labelShape.geom = params.polygon.geom; // augment label Shape with geom struct
+	            params.stage.addChild(_this.labelShape);
+	        }
+	
+	        _this.state = {
+	            polygon: params.polygon,
+	            color: params.color,
+	            displayed: params.displayed,
+	            displayVertices: params.displayVertices,
+	            displayLabels: params.displayLabels,
+	            hovered: params.hovered,
+	            selected: params.selected,
+	            widthOn: params.widthOn,
+	            zoomFactor: params.stage.zoomFactor
+	        };
+	
+	        // this.handleMouseMove = this.handleMouseMove.bind(this);
+	        _this.handleMouseOver = _this.handleMouseOver.bind(_this);
+	        _this.handleMouseOut = _this.handleMouseOut.bind(_this);
+	        _this.handleClick = _this.handleClick.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(PolygonTool, [{
+	        key: 'equalState',
+	        value: function equalState(nextState) {
+	            var equal = true;
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = Object.keys(nextState)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var key = _step2.value;
+	
+	                    if (nextState[key] !== this.state[key]) {
+	                        equal = false;
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            return equal;
+	        }
+	    }, {
+	        key: 'handleMouseOver',
+	        value: function handleMouseOver(event) {
+	            this.props.onMouseOver(this.props.polygon);
+	        }
+	    }, {
+	        key: 'handleMouseOut',
+	        value: function handleMouseOut(event) {
+	            this.props.onMouseOut();
+	        }
+	    }, {
+	        key: 'handleClick',
+	        value: function handleClick(event) {
+	            this.props.onClick(this.props.polygon, this.props.layer);
+	        }
+	    }, {
+	        key: 'redrawVertices',
+	        value: function redrawVertices(stroke, fill, alpha) {
+	            var stage = this.props.stage;
+	
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = this.vertexShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var vertexShape = _step3.value;
+	
+	                    var vertex = vertexShape.geom;
+	                    if (vertexShape.graphics.isEmpty()) {
+	                        vertexShape.graphics = vertex.graphics({
+	                            stroke: stroke, // this.props.color,
+	                            fill: fill,
+	                            radius: 3. / (stage.zoomFactor * stage.resolution)
+	                        });
+	                    } else {
+	                        vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
+	                        vertexShape.graphics.fill.style = fill;
+	                    }
+	                    vertexShape.alpha = alpha;
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'redrawLabels',
+	        value: function redrawLabels(showLabel) {
+	            if (!this.labelShape) return;
+	
+	            var stage = this.props.stage;
+	
+	            this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
+	
+	            var box = this.props.polygon.geom.box;
+	            var point = { x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2 };
+	            var dx = 6. / (stage.zoomFactor * stage.resolution);
+	            var dy = 4. / (stage.zoomFactor * stage.resolution);
+	
+	            this.labelShape.htmlElement.style.font = "16px Arial";
+	            var unscale = 1. / (stage.zoomFactor * stage.resolution);
+	            var tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
+	            var ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
+	            this.labelShape.setTransform(tx, ty, unscale, -unscale);
+	        }
+	    }, {
+	        key: 'redraw',
+	        value: function redraw() {
+	            // Draw polygon
+	            var color = this.props.hovered || this.props.selected ? "black" : this.props.color;
+	            var alpha = this.props.hovered || this.props.selected ? 1.0 : 0.6;
+	            var widthOn = this.props.widthOn;
+	            var fill = widthOn && !this.props.displayVertices ? this.props.color : "white";
+	
+	            if (this.shape.graphics.isEmpty()) {
+	                this.shape.graphics = this.state.polygon.geom.graphics({
+	                    stroke: color,
+	                    fill: fill
+	                });
+	            } else {
+	                this.shape.graphics.stroke.style = color;
+	                this.shape.graphics.fill.style = fill;
+	            }
+	            this.shape.alpha = this.props.displayed ? alpha : 0.0;
+	
+	            // Draw vertices
+	            alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
+	            this.redrawVertices(color, color, alpha);
+	
+	            // Draw labels
+	            var showLabel = this.props.displayed && this.props.displayLabels;
+	            this.redrawLabels(showLabel);
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {}
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.shape.on("mouseover", this.handleMouseOver);
+	            this.shape.on("mouseout", this.handleMouseOut);
+	            this.shape.on("click", this.handleClick);
+	
+	            this.redraw();
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            // let redraw = (this.state.zoomFactor !== nextProps.zoomFactor &&
+	            //     nextProps.displayVertices);
+	
+	            this.setState({
+	                polygon: nextProps.polygon,
+	                color: nextProps.color,
+	                displayed: nextProps.displayed,
+	                displayVertices: nextProps.displayVertices,
+	                displayLabels: nextProps.displayLabels,
+	                hovered: nextProps.hovered,
+	                selected: nextProps.selected,
+	                widthOn: nextProps.widthOn,
+	                zoomFactor: nextProps.stage.zoomFactor
+	            });
+	        }
+	    }, {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            if (this.equalState(nextState)) {
+	                return false;
+	            }
+	            return true; // nextProps.polygon.parent.needToBeUpdated;
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            this.redraw();
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            this.vertices = undefined;
+	            this.shape.off("mouseover", this.handleMouseOver);
+	            this.shape.off("mouseout", this.handleMouseOut);
+	            this.shape.off("click", this.handleClick);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return null;
+	        }
+	    }]);
+
+	    return PolygonTool;
+	}(_react.Component);
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.SegmentTool = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _easeljsNEXTCombined = __webpack_require__(7);
+	
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	var _flattenJs = __webpack_require__(2);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	__webpack_require__(10);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 19/06/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	var SegmentTool = exports.SegmentTool = function (_Component) {
+	    _inherits(SegmentTool, _Component);
+	
+	    function SegmentTool(params) {
+	        _classCallCheck(this, SegmentTool);
+	
+	        var _this = _possibleConstructorReturn(this, (SegmentTool.__proto__ || Object.getPrototypeOf(SegmentTool)).call(this));
+	
+	        _this.shape = new createjs.Shape();
+	        params.stage.addChild(_this.shape);
+	
+	        _this.vertexShapes = [];
+	        _this.labelShape = undefined;
+	
+	        if (params.model.geom instanceof _flattenJs2.default.Segment) {
+	            var segment = params.model.geom;
+	            var vertices = [segment.ps, segment.pe];
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = vertices[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var vertex = _step.value;
+	
+	                    var vertexShape = new createjs.Shape();
+	                    vertexShape.geom = vertex; // augment Shape with geom struct
+	                    params.stage.addChild(vertexShape);
+	                    _this.vertexShapes.push(vertexShape);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	        } else if (params.model.geom instanceof _flattenJs2.default.Point) {
+	            var _vertexShape = new createjs.Shape();
+	            _vertexShape.geom = params.model.geom; // augment vertex Shape with geom struct
+	            params.stage.addChild(_vertexShape);
+	            _this.vertexShapes.push(_vertexShape);
+	        }
+	
+	        if (params.model.label && params.model.label.trim() !== "") {
+	            var html = document.createElement('div');
+	            html.innerText = params.model.label;
+	            html.style.position = "absolute";
+	            html.style.top = 0;
+	            html.style.left = 0;
+	
+	            document.body.appendChild(html);
+	
+	            _this.labelShape = new createjs.DOMElement(html);
+	
+	            // let labelShape = new createjs.Text();
+	            // labelShape.text = params.model.label;
+	            // labelShape.textBaseline = "alphabetic";
+	
+	            _this.labelShape.geom = params.model.geom; // augment label Shape with geom struct
+	            params.stage.addChild(_this.labelShape);
+	        }
+	
+	        _this.state = {
+	            model: params.model,
+	            color: params.color,
+	            displayed: params.displayed,
+	            displayVertices: params.displayVertices,
+	            displayLabels: params.displayLabels,
+	            hovered: params.hovered,
+	            selected: params.selected,
+	            widthOn: params.widthOn,
+	            zoomFactor: params.stage.zoomFactor
+	        };
+	
+	        // this.handleMouseMove = this.handleMouseMove.bind(this);
+	        _this.handleMouseOver = _this.handleMouseOver.bind(_this);
+	        _this.handleMouseOut = _this.handleMouseOut.bind(_this);
+	        _this.handleClick = _this.handleClick.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(SegmentTool, [{
+	        key: 'equalState',
+	        value: function equalState(nextState) {
+	            var equal = true;
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = Object.keys(nextState)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var key = _step2.value;
+	
+	                    if (nextState[key] !== this.state[key]) {
+	                        equal = false;
+	                        break;
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            return equal;
+	        }
+	    }, {
+	        key: 'handleMouseOver',
+	        value: function handleMouseOver(event) {
+	            this.props.onMouseOver(this.props.model);
+	        }
+	    }, {
+	        key: 'handleMouseOut',
+	        value: function handleMouseOut(event) {
+	            this.props.onMouseOut();
+	        }
+	    }, {
+	        key: 'handleClick',
+	        value: function handleClick(event) {
+	            this.props.onClick(this.props.model, this.props.layer);
+	        }
+	    }, {
+	        key: 'redrawVertices',
+	        value: function redrawVertices(stroke, fill, alpha) {
+	            var stage = this.props.stage;
+	
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = this.vertexShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var vertexShape = _step3.value;
+	
+	                    var vertex = vertexShape.geom;
+	
+	                    if (vertexShape.graphics.isEmpty()) {
+	                        vertexShape.graphics = vertex.graphics({
+	                            stroke: stroke, // this.props.color,
+	                            fill: fill,
+	                            radius: 3. / (stage.zoomFactor * stage.resolution)
+	                        });
+	                    } else {
+	                        vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
+	                        vertexShape.graphics.fill.style = fill;
+	                    }
+	                    vertexShape.alpha = alpha;
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'redrawLabels',
+	        value: function redrawLabels(showLabel) {
+	            var stage = this.props.stage;
+	
+	            this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
+	
+	            var box = this.props.model.geom.box;
+	            var point = { x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2 };
+	            var dx = 6. / (stage.zoomFactor * stage.resolution);
+	            var dy = 16. / (stage.zoomFactor * stage.resolution);
+	
+	            this.labelShape.htmlElement.style.font = "16px Arial";
+	            var unscale = 1. / (stage.zoomFactor * stage.resolution);
+	            var tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
+	            var ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
+	            this.labelShape.setTransform(tx, ty, unscale, -unscale);
+	        }
+	    }, {
+	        key: 'redraw',
+	        value: function redraw() {
+	            // Draw polygon
+	            var color = this.props.hovered || this.props.selected ? "black" : this.props.color;
+	            var alpha = this.props.hovered || this.props.selected ? 1.0 : 0.6;
+	
+	            var stage = this.props.stage;
+	            var geom = this.props.model.geom;
+	
+	            var widthOn = this.props.widthOn;
+	
+	            this.shape.graphics.clear();
+	            this.shape.graphics = geom.graphics({
+	                stroke: color, // this.props.color,
+	                fill: widthOn && !this.props.displayVertices ? this.props.color : "white",
+	                radius: 3. / (stage.zoomFactor * stage.resolution)
+	            });
+	            this.shape.alpha = this.props.displayed ? alpha : 0.0;
+	
+	            // Draw vertices
+	            alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
+	            this.redrawVertices(color, color, alpha);
+	
+	            // Redraw labels
+	            var showLabel = this.props.displayed && this.props.displayLabels;
+	            this.redrawLabels(showLabel);
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {}
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.shape.on("mouseover", this.handleMouseOver);
+	            this.shape.on("mouseout", this.handleMouseOut);
+	            this.shape.on("click", this.handleClick);
+	
+	            this.redraw();
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            this.setState({
+	                model: nextProps.model,
+	                color: nextProps.color,
+	                displayed: nextProps.displayed,
+	                displayVertices: nextProps.displayVertices,
+	                displayLabels: nextProps.displayLabels,
+	                hovered: nextProps.hovered,
+	                selected: nextProps.selected,
+	                widthOn: nextProps.widthOn,
+	                zoomFactor: nextProps.stage.zoomFactor
+	            });
+	        }
+	    }, {
+	        key: 'shouldComponentUpdate',
+	        value: function shouldComponentUpdate(nextProps, nextState) {
+	            if (this.equalState(nextState)) {
+	                return false;
+	            }
+	            return true; // nextProps.polygon.parent.needToBeUpdated;
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            this.redraw();
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            this.vertices = undefined;
+	            this.shape.off("mouseover", this.handleMouseOver);
+	            this.shape.off("mouseout", this.handleMouseOut);
+	            this.shape.off("click", this.handleClick);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return null;
+	        }
+	    }]);
+
+	    return SegmentTool;
+	}(_react.Component);
+
+/***/ },
+/* 49 */
+4,
+/* 50 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 * @typechecks
+	 */
+	
+	var emptyFunction = __webpack_require__(8);
+	
+	/**
+	 * Upstream version of event listener. Does not take into account specific
+	 * nature of platform.
+	 */
+	var EventListener = {
+	  /**
+	   * Listen to DOM events during the bubble phase.
+	   *
+	   * @param {DOMEventTarget} target DOM element to register listener on.
+	   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+	   * @param {function} callback Callback function.
+	   * @return {object} Object with a `remove` method.
+	   */
+	  listen: function listen(target, eventType, callback) {
+	    if (target.addEventListener) {
+	      target.addEventListener(eventType, callback, false);
+	      return {
+	        remove: function remove() {
+	          target.removeEventListener(eventType, callback, false);
+	        }
+	      };
+	    } else if (target.attachEvent) {
+	      target.attachEvent('on' + eventType, callback);
+	      return {
+	        remove: function remove() {
+	          target.detachEvent('on' + eventType, callback);
+	        }
+	      };
+	    }
+	  },
+	
+	  /**
+	   * Listen to DOM events during the capture phase.
+	   *
+	   * @param {DOMEventTarget} target DOM element to register listener on.
+	   * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+	   * @param {function} callback Callback function.
+	   * @return {object} Object with a `remove` method.
+	   */
+	  capture: function capture(target, eventType, callback) {
+	    if (target.addEventListener) {
+	      target.addEventListener(eventType, callback, true);
+	      return {
+	        remove: function remove() {
+	          target.removeEventListener(eventType, callback, true);
+	        }
+	      };
+	    } else {
+	      if (false) {
+	        console.error('Attempted to listen to events during the capture phase on a ' + 'browser that does not support the capture phase. Your application ' + 'will not receive some events.');
+	      }
+	      return {
+	        remove: emptyFunction
+	      };
+	    }
+	  },
+	
+	  registerDefault: function registerDefault() {}
+	};
+	
+	module.exports = EventListener;
+
+/***/ },
+/* 51 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 */
+	
+	'use strict';
+	
+	var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+	
+	/**
+	 * Simple, lightweight module assisting with the detection and context of
+	 * Worker. Helps avoid circular dependencies and allows code to reason about
+	 * whether or not they are in a Worker, even if they never include the main
+	 * `ReactWorker` dependency.
+	 */
+	var ExecutionEnvironment = {
+	
+	  canUseDOM: canUseDOM,
+	
+	  canUseWorkers: typeof Worker !== 'undefined',
+	
+	  canUseEventListeners: canUseDOM && !!(window.addEventListener || window.attachEvent),
+	
+	  canUseViewport: canUseDOM && !!window.screen,
+	
+	  isInWorker: !canUseDOM // For now, this is true - might change in the future.
+	
+	};
+	
+	module.exports = ExecutionEnvironment;
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 * 
+	 */
+	
+	var isTextNode = __webpack_require__(56);
+	
+	/*eslint-disable no-bitwise */
+	
+	/**
+	 * Checks if a given DOM node contains or is another DOM node.
+	 */
+	function containsNode(outerNode, innerNode) {
+	  if (!outerNode || !innerNode) {
+	    return false;
+	  } else if (outerNode === innerNode) {
+	    return true;
+	  } else if (isTextNode(outerNode)) {
+	    return false;
+	  } else if (isTextNode(innerNode)) {
+	    return containsNode(outerNode, innerNode.parentNode);
+	  } else if ('contains' in outerNode) {
+	    return outerNode.contains(innerNode);
+	  } else if (outerNode.compareDocumentPosition) {
+	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
+	  } else {
+	    return false;
+	  }
+	}
+	
+	module.exports = containsNode;
+
+/***/ },
+/* 53 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 */
+	
+	'use strict';
+	
+	/**
+	 * @param {DOMElement} node input/textarea to focus
+	 */
+	
+	function focusNode(node) {
+	  // IE8 can throw "Can't move focus to the control because it is invisible,
+	  // not enabled, or of a type that does not accept the focus." for all kinds of
+	  // reasons that are too expensive and fragile to test.
+	  try {
+	    node.focus();
+	  } catch (e) {}
+	}
+	
+	module.exports = focusNode;
+
+/***/ },
+/* 54 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 * @typechecks
+	 */
+	
+	/* eslint-disable fb-www/typeof-undefined */
+	
+	/**
+	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
+	 * not safe to call document.activeElement if there is nothing focused.
+	 *
+	 * The activeElement will be null only if the document or document body is not
+	 * yet defined.
+	 *
+	 * @param {?DOMDocument} doc Defaults to current document.
+	 * @return {?DOMElement}
+	 */
+	function getActiveElement(doc) /*?DOMElement*/{
+	  doc = doc || (typeof document !== 'undefined' ? document : undefined);
+	  if (typeof doc === 'undefined') {
+	    return null;
+	  }
+	  try {
+	    return doc.activeElement || doc.body;
+	  } catch (e) {
+	    return doc.body;
+	  }
+	}
+	
+	module.exports = getActiveElement;
+
+/***/ },
+/* 55 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 * @typechecks
+	 */
+	
+	/**
+	 * @param {*} object The object to check.
+	 * @return {boolean} Whether or not the object is a DOM node.
+	 */
+	function isNode(object) {
+	  var doc = object ? object.ownerDocument || object : document;
+	  var defaultView = doc.defaultView || window;
+	  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
+	}
+	
+	module.exports = isNode;
+
+/***/ },
+/* 56 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 * @typechecks
+	 */
+	
+	var isNode = __webpack_require__(55);
+	
+	/**
+	 * @param {*} object The object to check.
+	 * @return {boolean} Whether or not the object is a DOM text node.
+	 */
+	function isTextNode(object) {
+	  return isNode(object) && object.nodeType == 3;
+	}
+	
+	module.exports = isTextNode;
+
+/***/ },
+/* 57 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 * @typechecks
+	 * 
+	 */
+	
+	/*eslint-disable no-self-compare */
+	
+	'use strict';
+	
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	
+	/**
+	 * inlined Object.is polyfill to avoid requiring consumers ship their own
+	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+	 */
+	function is(x, y) {
+	  // SameValue algorithm
+	  if (x === y) {
+	    // Steps 1-5, 7-10
+	    // Steps 6.b-6.e: +0 != -0
+	    // Added the nonzero y check to make Flow happy, but it is redundant
+	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+	  } else {
+	    // Step 6.a: NaN == NaN
+	    return x !== x && y !== y;
+	  }
+	}
+	
+	/**
+	 * Performs equality by iterating through keys on an object and returning false
+	 * when any key has values which are not strictly equal between the arguments.
+	 * Returns true when the values of all keys are strictly equal.
+	 */
+	function shallowEqual(objA, objB) {
+	  if (is(objA, objB)) {
+	    return true;
+	  }
+	
+	  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+	    return false;
+	  }
+	
+	  var keysA = Object.keys(objA);
+	  var keysB = Object.keys(objB);
+	
+	  if (keysA.length !== keysB.length) {
+	    return false;
+	  }
+	
+	  // Test for A's keys different from B.
+	  for (var i = 0; i < keysA.length; i++) {
+	    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+	      return false;
+	    }
+	  }
+	
+	  return true;
+	}
+	
+	module.exports = shallowEqual;
+
+/***/ },
+/* 58 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by Alex Bol on 4/1/2017.
+	 */
+	
+	let Interval = class Interval {
+	    constructor(low, high) {
+	        this.low = low;
+	        this.high = high;
+	    }
+	
+	    get max() {
+	        return this.high;
+	    }
+	
+	    interval(low, high) {
+	        return new Interval(low, high);
+	    }
+	
+	    clone() {
+	        return new Interval(this.low, this.high);
+	    }
+	
+	    less_than(other_interval) {
+	        return this.low < other_interval.low ||
+	            this.low == other_interval.low && this.high < other_interval.high;
+	    }
+	
+	    equal_to(other_interval) {
+	        return this.low == other_interval.low && this.high == other_interval.high;
+	    }
+	
+	    intersect(other_interval) {
+	        return !this.not_intersect(other_interval);
+	    }
+	
+	    not_intersect(other_interval) {
+	        return (this.high < other_interval.low || other_interval.high < this.low);
+	    }
+	
+	    output() {
+	        return [this.low, this.high];
+	    }
+	
+	    maximal_val(val1, val2) {
+	        return Math.max(val1, val2);
+	    }
+	
+	    val_less_than(val1, val2 ) {     // trait to compare max property with item ?
+	        return val1 < val2;
+	    }
+	};
+	
+	module.exports = Interval;
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by Alex Bol on 4/1/2017.
+	 */
+	
+	'use strict';
+	
+	// let defaultTraits = require('../utils/numeric_traits');
+	let Interval = __webpack_require__(58);
+	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(14);
+	
+	let Node = class Node {
+	    constructor(key = undefined, value = undefined,
+	                left = null, right = null, parent = null, color = RB_TREE_COLOR_BLACK) {
+	        this.left = left;                     // reference to left child node
+	        this.right = right;                   // reference to right child node
+	        this.parent = parent;                 // reference to parent node
+	        this.color = color;
+	
+	        this.item = {key: key, value: value};   // key is supposed to be       instance of Interval
+	
+	        /* If not, this should by an array of two numbers */
+	        if (key && key instanceof Array && key.length == 2) {
+	            if (!Number.isNaN(key[0]) && !Number.isNaN(key[1])) {
+	                this.item.key = new Interval(Math.min(key[0], key[1]), Math.max(key[0], key[1]));
+	            }
+	        }
+	        this.max = this.item.key ? this.item.key.max : undefined;
+	    }
+	
+	    isNil() {
+	        return (this.item.key === undefined && this.item.value === undefined &&
+	            this.left === null && this.right === null && this.color === RB_TREE_COLOR_BLACK);
+	    }
+	
+	    less_than(other_node) {
+	        return this.item.key.less_than(other_node.item.key);
+	    }
+	
+	    equal_to(other_node) {
+	        let value_equal = true;
+	        if (this.item.value && other_node.item.value) {
+	            value_equal = this.item.value.equal_to ? this.item.value.equal_to(other_node.item.value) :
+	                this.item.value == other_node.item.value;
+	        }
+	        return this.item.key.equal_to(other_node.item.key) && value_equal;
+	    }
+	
+	    intersect(other_node) {
+	        return this.item.key.intersect(other_node.item.key);
+	    }
+	
+	    copy_data(other_node) {
+	        this.item.key = other_node.item.key.clone();
+	        this.item.value = other_node.item.value;
+	    }
+	
+	    update_max() {
+	        // use key (Interval) max property instead of key.high
+	        this.max = this.item.key ? this.item.key.max : undefined;
+	        if (this.right && this.right.max) {
+	            let maximal_val = this.item.key.maximal_val;
+	            this.max = maximal_val(this.max, this.right.max);
+	        }
+	        if (this.left && this.left.max) {
+	            let maximal_val = this.item.key.maximal_val;
+	            this.max = maximal_val(this.max, this.left.max);
+	        }
+	    }
+	
+	    // Other_node does not intersect any node of left subtree, if this.left.max < other_node.item.key.low
+	    not_intersect_left_subtree(search_node) {
+	        let val_less_than = this.item.key.val_less_than;
+	        let high = this.left.max.high ? this.left.max.high : this.left.max;
+	        return val_less_than(high, search_node.item.key.low);
+	    }
+	
+	    // Other_node does not intersect right subtree if other_node.item.key.high < this.right.key.low
+	    not_intersect_right_subtree(search_node) {
+	        let val_less_than = this.item.key.val_less_than;
+	        let low = this.right.max.low ? this.right.max.low : this.right.item.key.low;
+	        return val_less_than(search_node.item.key.high, low);
+	    }
+	};
+	
+	module.exports = Node;
+	
+
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	let IntervalTree = __webpack_require__(13);
 	
 	module.exports = function(Flatten) {
 	    let {Polygon, Point, Segment, Arc, Circle, Line, Ray, Vector} = Flatten;
@@ -24159,7 +24162,7 @@
 	         * @returns {Number | Segment} - distance and shortest segment
 	         */
 	        static point2point(pt1, pt2) {
-	            return [pt1.distanceTo(pt2), new Segment(pt1, pt2)];
+	            return pt1.distanceTo(pt2);
 	        }
 	
 	        /**
@@ -24181,7 +24184,7 @@
 	         * @returns {Number | Segment} - distance and shortest segment
 	         */
 	        static point2circle(pt, circle) {
-	            let dist2center = pt.distanceTo(circle.center);
+	            let [dist2center, shortest_dist] = pt.distanceTo(circle.center);
 	            if (Flatten.Utils.EQ_0(dist2center)) {
 	                return [circle.r, new Segment(pt, circle.toArc().start)];
 	            }
@@ -24221,16 +24224,14 @@
 	                dist = Math.abs(v_unit.cross(v_ps2pt));
 	                /* dist = abs(v_unit x v_ps2pt) */
 	                closest_point = segment.start.translate(v_unit.multiply(v_unit.dot(v_ps2pt)));
+	                return [dist, new Segment(pt, closest_point)];
 	            }
 	            else if (start_sp < 0) {                             /* point is out of scope closer to ps */
-	                dist = pt.distanceTo(segment.start);
-	                closest_point = segment.start.clone();
+	                return pt.distanceTo(segment.start);
 	            }
 	            else {                                               /* point is out of scope closer to pe */
-	                dist = pt.distanceTo(segment.end);
-	                closest_point = segment.end.clone();
+	                return pt.distanceTo(segment.end);
 	            }
-	            return [dist, new Segment(pt, closest_point)];
 	        };
 	
 	        /**
@@ -24646,7 +24647,7 @@
 	         * @returns {Number | Segment} - distance and shortest segment
 	         */
 	        static polygon2polygon(polygon1, polygon2) {
-	            let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Segment()];
+	            let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Flatten.Segment()];
 	            for (let edge1 of polygon1.edges) {
 	                for (let edge2 of polygon2.edges) {
 	                    let [dist, shortest_segment] = edge1.shape.distanceTo(edge2.shape);
@@ -24654,6 +24655,123 @@
 	                        min_dist_and_segment = [dist, shortest_segment];
 	                    }
 	                }
+	            }
+	            return min_dist_and_segment;
+	        }
+	
+	        /**
+	         * Returns [mindist, maxdist] array of squared minimal and maximal distance between boxes
+	         * Minimal distance by x is
+	         *    (box2.xmin - box1.xmax), if box1 is left to box2
+	         *    (box1.xmin - box2.xmax), if box2 is left to box1
+	         *    0,                       if box1 and box2 are intersected by x
+	         * Minimal distance by y is defined in the same way
+	         *
+	         * Maximal distance is estimated as a sum of squared dimensions of the merged box
+	         *
+	         * @param box1
+	         * @param box2
+	         * @returns {Number | Number} - minimal and maximal distance
+	         */
+	        static box2box_minmax(box1, box2) {
+	            let mindist_x = Math.max( Math.max(box1.xmin - box2.xmax, 0), Math.max(box2.xmin - box1.xmax, 0) );
+	            let mindist_y = Math.max( Math.max(box1.ymin - box2.ymax, 0), Math.max(box2.ymin - box1.ymax, 0) );
+	            let mindist = mindist_x*mindist_x + mindist_y*mindist_y;
+	
+	            let box = box1.merge(box2);
+	            let dx = box.xmax - box.xmin;
+	            let dy = box.ymax - box.ymin;
+	            let maxdist = dx*dx + dy*dy;
+	
+	            return [mindist, maxdist];
+	        }
+	
+	        static minmax(shape1, shape2) {
+	            return Distance.box2box_minmax(shape1.box, shape2.box);
+	        }
+	
+	        static minmax_tree_process_level(shape, level, min_stop, tree) {
+	            // Calculate minmax distance to each shape in current level
+	            // Insert result in the interval tree for further processing if
+	            // mindist is less than min_stop dist, otherwise the shape is too far
+	            // update min_stop with maxdist, it will be the new stop distance
+	            let mindist, maxdist;
+	            for (let node of level) {
+	                [mindist, maxdist] = Distance.box2box_minmax(shape.box, node.max);
+	                if (Flatten.Utils.GT(mindist, min_stop))
+	                    continue;
+	                tree.insert([mindist, maxdist], node.item.value);
+	                if (Flatten.Utils.LT(maxdist, min_stop)) {
+	                    min_stop = maxdist;
+	                }
+	            }
+	
+	            if (level.length === 0)
+	                return;
+	
+	            // Calculate new level from left and right children of the current
+	            let new_level_left = level.map(node => node.left.isNil() ? undefined : node.left ).filter(node => node !== undefined);
+	            let new_level_right = level.map(node => node.right.isNil() ? undefined : node.right).filter(node => node !== undefined);
+	            let new_level = [...new_level_left, ...new_level_right];
+	
+	            min_stop = Distance.minmax_tree_process_level(shape, new_level, min_stop, tree);
+	            return min_stop;
+	        }
+	
+	        /**
+	         * Calculates sorted tree of [mindist, maxdist] intervals between query shape
+	         * and shapes of the planar set.
+	         * @param shape
+	         * @param set
+	         */
+	        static minmax_tree(shape, set, min_stop) {
+	            let tree = new IntervalTree();
+	            let level = [set.index.root];
+	            let squared_min_stop = min_stop < Number.POSITIVE_INFINITY ? min_stop*min_stop : Number.POSITIVE_INFINITY;
+	            squared_min_stop = Distance.minmax_tree_process_level(shape, level, squared_min_stop, tree);
+	            return tree;
+	        }
+	
+	        static minmax_tree_calc_distance(shape, node, min_dist_and_segment) {
+	            let min_dist_and_segment_new, stop;
+	            if (node != null && !node.isNil()) {
+	                [min_dist_and_segment_new, stop] = Distance.minmax_tree_calc_distance(shape, node.left, min_dist_and_segment);
+	
+	                if (stop) {
+	                    return [min_dist_and_segment_new, stop];
+	                }
+	
+	                if (Flatten.Utils.LT(min_dist_and_segment_new[0], Math.sqrt(node.item.key.low))) {
+	                    return [min_dist_and_segment_new, true];   // stop condition
+	                }
+	
+	                let [dist, shortest_segment] = Distance.distance(shape, node.item.value.shape);
+	                // console.log(dist)
+	                if (Flatten.Utils.LT(dist, min_dist_and_segment_new[0])) {
+	                    min_dist_and_segment_new = [dist, shortest_segment];
+	                }
+	
+	                [min_dist_and_segment_new, stop] = Distance.minmax_tree_calc_distance(shape, node.right, min_dist_and_segment_new);
+	
+	                return [min_dist_and_segment_new, stop];
+	            }
+	
+	            return [min_dist_and_segment, false];
+	        }
+	
+	        /**
+	         * Calculates distance between shape and Planar Set of shapes
+	         * @param shape
+	         * @param {PlanarSet} set
+	         * @param {Number} min_stop
+	         * @returns {*}
+	         */
+	        static shape2planarSet(shape, set, min_stop = Number.POSITIVE_INFINITY) {
+	            let min_dist_and_segment = [min_stop, new Flatten.Segment()];
+	            let stop = false;
+	            if (set instanceof Flatten.PlanarSet) {
+	                let tree = Distance.minmax_tree(shape, set, min_stop);
+	                [min_dist_and_segment, stop] = Distance.minmax_tree_calc_distance(shape, tree.root, min_dist_and_segment);
 	            }
 	            return min_dist_and_segment;
 	        }
@@ -24887,6 +25005,10 @@
 	            return this.pc.clone();
 	        }
 	
+	        get vertices() {
+	            return [this.start.clone(), this.end.clone()];
+	        }
+	
 	        /**
 	         * Get arc length
 	         * @returns {number}
@@ -24913,7 +25035,7 @@
 	         */
 	        contains(pt) {
 	            // first check if  point on circle (pc,r)
-	            if (!Flatten.Utils.EQ(this.pc.distanceTo(pt), this.r))
+	            if (!Flatten.Utils.EQ(this.pc.distanceTo(pt)[0], this.r))
 	                return false;
 	
 	            // point on circle
@@ -24983,6 +25105,11 @@
 	
 	            if (shape instanceof Flatten.Polygon) {
 	                let [dist, shortest_segment] = Distance.shape2polygon(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.PlanarSet) {
+	                let [dist, shortest_segment] = Distance.shape2planarSet(this, shape);
 	                return [dist, shortest_segment];
 	            }
 	        }
@@ -25416,7 +25543,7 @@
 	         * @returns {boolean}
 	         */
 	        contains(pt) {
-	            return Flatten.Utils.LE(pt.distanceTo(this.center), this.r);
+	            return Flatten.Utils.LE(pt.distanceTo(this.center)[0], this.r);
 	        }
 	
 	        /**
@@ -25491,6 +25618,11 @@
 	                let [distance, shortest_segment] = Distance.shape2polygon(this, shape);
 	                return [distance, shortest_segment];
 	            }
+	
+	            if (shape instanceof Flatten.PlanarSet) {
+	                let [dist, shortest_segment] = Distance.shape2planarSet(this, shape);
+	                return [dist, shortest_segment];
+	            }
 	        }
 	
 	        static intersectCirle2Circle(circle1, circle2) {
@@ -25515,7 +25647,7 @@
 	                return ip;
 	            }
 	
-	            let dist = circle1.pc.distanceTo(circle2.pc);
+	            let dist = circle1.pc.distanceTo(circle2.pc)[0];
 	
 	            if (Flatten.Utils.GT(dist, r1 + r2))               // circles too far, no intersections
 	                return ip;
@@ -26108,7 +26240,7 @@
 	        static intersectLine2Circle(line, circle) {
 	            let ip = [];
 	            let prj = circle.pc.projectionOn(line);            // projection of circle center on line
-	            let dist = circle.pc.distanceTo(prj);              // distance from circle center to projection
+	            let dist = circle.pc.distanceTo(prj)[0];              // distance from circle center to projection
 	
 	            if (Flatten.Utils.EQ(dist, circle.r)) {            // line tangent to circle - return single intersection point
 	                ip.push(prj);
@@ -26233,6 +26365,10 @@
 	            return new Flatten.Point(this.x, this.y);
 	        }
 	
+	        get vertices() {
+	            return [this.clone()];
+	        }
+	
 	        /**
 	         * Returns true if points are equal up to DP_TOL tolerance
 	         * @param {Point} pt
@@ -26328,35 +26464,35 @@
 	            if (shape instanceof Point) {
 	                let dx = shape.x - this.x;
 	                let dy = shape.y - this.y;
-	                return Math.sqrt(dx*dx + dy*dy);
+	                return [Math.sqrt(dx*dx + dy*dy), new Flatten.Segment(this, shape)];
 	            }
 	
 	            if (shape instanceof Flatten.Line) {
-	                // let [dist,closest_point] = shape.distanceToPoint(this);
-	                let [dist, ...rest] = Distance.point2line(this, shape);
-	                return dist;
-	                // let vec = new Flatten.Vector(this, this.projectionOn(shape));
-	                // return vec.length;
+	                return Distance.point2line(this, shape);
 	            }
 	
 	            if (shape instanceof Flatten.Circle) {
-	                let [dist, ...rest] = Distance.point2circle(this, shape);
-	                return dist;
+	                return Distance.point2circle(this, shape);
 	            }
 	
 	            if (shape instanceof Flatten.Segment) {
-	                let [dist, ...rest] = Distance.point2segment(this, shape);
-	                return dist;
+	                return Distance.point2segment(this, shape);
 	            }
 	
 	            if (shape instanceof Flatten.Arc) {
-	                let [dist, ...rest] = Distance.point2arc(this, shape);
-	                return dist;
+	                // let [dist, ...rest] = Distance.point2arc(this, shape);
+	                // return dist;
+	                return Distance.point2arc(this, shape);
 	            }
 	
 	            if (shape instanceof Flatten.Polygon) {
-	                let [dist, ...rest] = Distance.point2polygon(this, shape);
-	                return dist;
+	                // let [dist, ...rest] = Distance.point2polygon(this, shape);
+	                // return dist;
+	                return Distance.point2polygon(this, shape);
+	            }
+	
+	            if (shape instanceof Flatten.PlanarSet) {
+	                return Distance.shape2planarSet(this, shape);
 	            }
 	        }
 	
@@ -26554,11 +26690,12 @@
 	                return [dist, shortest_segment];
 	            }
 	
-	            /* this method is slow */
+	            /* this method is bit faster */
 	            if (shape instanceof  Flatten.Polygon) {
 	                let min_dist_and_segment = [Number.POSITIVE_INFINITY, new Flatten.Segment()];
 	                for (let edge of this.edges) {
-	                    let [dist, shortest_segment] = Distance.shape2polygon(edge.shape, shape);
+	                    // let [dist, shortest_segment] = Distance.shape2polygon(edge.shape, shape);
+	                    let [dist, shortest_segment] = Distance.shape2planarSet(edge.shape, shape.edges);
 	                    if (Flatten.Utils.LT(dist, min_dist_and_segment[0])) {
 	                        min_dist_and_segment = [dist, shortest_segment];
 	                    }
@@ -26807,12 +26944,16 @@
 	            return this.pe;
 	        }
 	
+	        get vertices() {
+	            return [this.ps.clone(), this.pe.clone()];
+	        }
+	
 	        /**
 	         * Length of a segment
 	         * @returns {number}
 	         */
 	        get length() {
-	            return this.start.distanceTo(this.end);
+	            return this.start.distanceTo(this.end)[0];
 	        }
 	
 	        /**
@@ -26905,6 +27046,11 @@
 	
 	            if (shape instanceof Flatten.Polygon) {
 	                let [dist, shortest_segment] = Distance.shape2polygon(this, shape);
+	                return [dist, shortest_segment];
+	            }
+	
+	            if (shape instanceof Flatten.PlanarSet) {
+	                let [dist, shortest_segment] = Distance.shape2planarSet(this, shape);
 	                return [dist, shortest_segment];
 	            }
 	        }
@@ -27260,7 +27406,7 @@
 	
 	// require("babel-polyfill");
 	
-	let IntervalTree = __webpack_require__(59);
+	let IntervalTree = __webpack_require__(13);
 	
 	module.exports = function(Flatten) {
 	    /**
@@ -27417,7 +27563,7 @@
 /* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(14),
+	var Symbol = __webpack_require__(15),
 	    getRawTag = __webpack_require__(79),
 	    objectToString = __webpack_require__(80);
 	
@@ -27474,7 +27620,7 @@
 /* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(14);
+	var Symbol = __webpack_require__(15);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -27629,7 +27775,7 @@
 	
 	//This file contains the ES6 extensions to the core Promises/A+ API
 	
-	var Promise = __webpack_require__(16);
+	var Promise = __webpack_require__(17);
 	
 	module.exports = Promise;
 	
@@ -27740,7 +27886,7 @@
 
 	'use strict';
 	
-	var Promise = __webpack_require__(16);
+	var Promise = __webpack_require__(17);
 	
 	var DEFAULT_WHITELIST = [
 	  ReferenceError,
@@ -27866,7 +28012,7 @@
 	 LICENSE file in the root directory of this source tree.
 	 Modernizr 3.0.0pre (Custom Build) | MIT
 	*/
-	'use strict';var aa=__webpack_require__(1);__webpack_require__(12);var l=__webpack_require__(50),n=__webpack_require__(9),ba=__webpack_require__(49),ca=__webpack_require__(8),da=__webpack_require__(11),ea=__webpack_require__(56),fa=__webpack_require__(51),ha=__webpack_require__(52),ia=__webpack_require__(53);
+	'use strict';var aa=__webpack_require__(1);__webpack_require__(12);var l=__webpack_require__(51),n=__webpack_require__(9),ba=__webpack_require__(50),ca=__webpack_require__(8),da=__webpack_require__(11),ea=__webpack_require__(57),fa=__webpack_require__(52),ha=__webpack_require__(53),ia=__webpack_require__(54);
 	function w(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:w("227");
 	function ja(a){switch(a){case "svg":return"http://www.w3.org/2000/svg";case "math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}
 	var ka={Namespaces:{html:"http://www.w3.org/1999/xhtml",mathml:"http://www.w3.org/1998/Math/MathML",svg:"http://www.w3.org/2000/svg"},getIntrinsicNamespace:ja,getChildNamespace:function(a,b){return null==a||"http://www.w3.org/1999/xhtml"===a?ja(b):"http://www.w3.org/2000/svg"===a&&"foreignObject"===b?"http://www.w3.org/1999/xhtml":a}},la=null,oa={};
@@ -28695,7 +28841,7 @@
 	
 	exports['default'] = applyMiddleware;
 	
-	var _compose = __webpack_require__(17);
+	var _compose = __webpack_require__(18);
 	
 	var _compose2 = _interopRequireDefault(_compose);
 	
@@ -28811,13 +28957,13 @@
 	exports.__esModule = true;
 	exports['default'] = combineReducers;
 	
-	var _createStore = __webpack_require__(18);
+	var _createStore = __webpack_require__(19);
 	
-	var _isPlainObject = __webpack_require__(15);
+	var _isPlainObject = __webpack_require__(16);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _warning = __webpack_require__(20);
+	var _warning = __webpack_require__(21);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -29104,4 +29250,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.3aa0212a.js.map
+//# sourceMappingURL=main.1db89596.js.map
