@@ -10,8 +10,9 @@ import Flatten from 'flatten-js';
 // import {Stage} from './models/stage';
 // import {Layer} from './models/layer';
 import {Layers} from './models/layers';
-import { Parser } from './models/parser';
-const unitsList=[
+import {Parser} from './models/parser';
+
+const unitsList = [
     {
         name: "pixels",
         decimals: 0,
@@ -63,7 +64,7 @@ function app(state = defaultAppState, action) {
             return state;
         case ActionTypes.TOGGLE_UNITS_CLICKED:
             let curUnitsId = unitsList.findIndex(units => state.units === units.name);
-            let newUnits = unitsList[ (curUnitsId + 1) % 3];
+            let newUnits = unitsList[(curUnitsId + 1) % 3];
             return Object.assign({}, state, {
                 units: newUnits.name,
                 decimals: newUnits.decimals,
@@ -71,11 +72,11 @@ function app(state = defaultAppState, action) {
             });
         case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
             return Object.assign({}, state, {
-                hoveredShape: state.measureShapesActive? action.shape : null
+                hoveredShape: state.measureShapesActive ? action.shape : null
             });
         case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
             return Object.assign({}, state, {
-                hoveredShape:null
+                hoveredShape: null
             });
         case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
             if (!state.measureShapesActive) {
@@ -102,12 +103,12 @@ function app(state = defaultAppState, action) {
                 let shape1 = state.firstMeasuredShape.geom;
                 let shape2 = action.shape.geom;
                 let [distance, shortestSegment] = [];
-                if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
-                    [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
-                }
-                else {
+                // if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
+                //     [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
+                // }
+                // else {
                     [distance, shortestSegment] = Flatten.Distance.distance(shape1, shape2);
-                }
+                // }
 
 
                 return Object.assign({}, state, {
