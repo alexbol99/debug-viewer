@@ -123,6 +123,7 @@ function app(state = defaultAppState, action) {
             return Object.assign({}, state, {
                 measurePointsActive: false,
                 measureShapesActive: false,
+                measureShapesFirstClick: true,
                 firstMeasuredShape: null,
                 firstMeasuredLayer: null,
                 secondMeasuredShape: null,
@@ -157,6 +158,7 @@ function app(state = defaultAppState, action) {
             return Object.assign({}, state, {
                 measurePointsActive: true,
                 measureShapesActive: false,
+                measureShapesFirstClick: true,
                 firstMeasuredShape: null,
                 firstMeasuredLayer: null,
                 secondMeasuredShape: null,
@@ -168,6 +170,7 @@ function app(state = defaultAppState, action) {
             return Object.assign({}, state, {
                 measurePointsActive: false,
                 measureShapesActive: true,
+                measureShapesFirstClick: true,
                 firstMeasuredShape: null,
                 firstMeasuredLayer: null,
                 secondMeasuredShape: null,
