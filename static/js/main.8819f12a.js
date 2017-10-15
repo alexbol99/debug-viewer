@@ -22428,6 +22428,7 @@
 	            return Object.assign({}, state, {
 	                measurePointsActive: false,
 	                measureShapesActive: false,
+	                measureShapesFirstClick: true,
 	                firstMeasuredShape: null,
 	                firstMeasuredLayer: null,
 	                secondMeasuredShape: null,
@@ -22461,6 +22462,7 @@
 	            return Object.assign({}, state, {
 	                measurePointsActive: true,
 	                measureShapesActive: false,
+	                measureShapesFirstClick: true,
 	                firstMeasuredShape: null,
 	                firstMeasuredLayer: null,
 	                secondMeasuredShape: null,
@@ -22472,6 +22474,7 @@
 	            return Object.assign({}, state, {
 	                measurePointsActive: false,
 	                measureShapesActive: true,
+	                measureShapesFirstClick: true,
 	                firstMeasuredShape: null,
 	                firstMeasuredLayer: null,
 	                secondMeasuredShape: null,
@@ -24700,7 +24703,12 @@
 	                [mindist, maxdist] = Distance.box2box_minmax(shape.box, node.max);
 	                if (Flatten.Utils.GT(mindist, min_stop))
 	                    continue;
-	                tree.insert([mindist, maxdist], node.item.value);
+	                if (node.item.value instanceof Flatten.Edge) {
+	                    tree.insert([mindist, maxdist], node.item.value.shape);
+	                }
+	                else {
+	                    tree.insert([mindist, maxdist], node.item.value);
+	                }
 	                if (Flatten.Utils.LT(maxdist, min_stop)) {
 	                    min_stop = maxdist;
 	                }
@@ -24745,7 +24753,7 @@
 	                    return [min_dist_and_segment_new, true];   // stop condition
 	                }
 	
-	                let [dist, shortest_segment] = Distance.distance(shape, node.item.value.shape);
+	                let [dist, shortest_segment] = Distance.distance(shape, node.item.value);
 	                // console.log(dist)
 	                if (Flatten.Utils.LT(dist, min_dist_and_segment_new[0])) {
 	                    min_dist_and_segment_new = [dist, shortest_segment];
@@ -29250,4 +29258,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.1db89596.js.map
+//# sourceMappingURL=main.8819f12a.js.map
