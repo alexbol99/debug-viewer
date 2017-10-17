@@ -102,7 +102,7 @@ function app(state = defaultAppState, action) {
 
                 let shape1 = state.firstMeasuredShape.geom;
                 let shape2 = action.shape.geom;
-                let [distance, shortestSegment] = [];
+                let distance, shortestSegment;
                 // if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
                 //     [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
                 // }
