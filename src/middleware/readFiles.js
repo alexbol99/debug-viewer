@@ -3,9 +3,10 @@ import { Layers } from '../models/layers';
 // import { Shape } from '../models/shape';
 import { Model } from "../models/model";
 import { parseXML } from '../models/parserXML';
+import { parseODB } from "../models/parserODB";
 
 const readFile = (file, stage, layers, dispatch) => {
-    if (!file.type.match('text.*')) return;   // validate type is text
+    if (file.type !== "" && !file.type.match('text.*')) return;   // validate type is text
 
     let reader = new FileReader();
 
@@ -14,7 +15,15 @@ const readFile = (file, stage, layers, dispatch) => {
         return (event) => {
             let string = event.target.result;
 
-            let job = parseXML(theFile.name, string);
+            let namesplitted = theFile.name.split('.');
+            let extension = namesplitted[namesplitted.length-1];
+            let job;
+            if (extension === 'xml') {
+                job = parseXML(theFile.name, string);
+            }
+            else {
+                job = parseODB(theFile.name, string);
+            }
             let layer = Layers.newLayer(stage, layers);
             if (theFile.name !== "") {
                 layer.name = theFile.name;
