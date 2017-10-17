@@ -21715,6 +21715,9 @@
 	                            var startAngle = vector(pc, _ps).slope;
 	                            var endAngle = vector(pc, _pe).slope;
 	
+	                            if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	                                endAngle += 2 * Math.PI;
+	                            }
 	                            var r = vector(pc, _ps).length;
 	
 	                            edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
@@ -29400,4 +29403,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.2bae96fa.js.map
+//# sourceMappingURL=main.9d32a252.js.map
