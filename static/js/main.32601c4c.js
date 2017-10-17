@@ -20583,11 +20583,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(
-	                'canvas',
-	                { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' },
-	                this.props.children
-	            );
+	            return _react2.default.createElement('canvas', { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' });
 	        }
 	    }]);
 
@@ -21789,12 +21785,13 @@
 	                pc = new Point(toPixels(terms[3]), toPixels(terms[4]));
 	
 	                var cwStr = terms[5];
-	                var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW;
+	                var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
 	
 	                var startAngle = vector(pc, ps).slope;
 	                var endAngle = vector(pc, pe).slope;
 	                if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
 	                    endAngle += 2 * Math.PI;
+	                    counterClockwise = true;
 	                }
 	                var r = vector(pc, ps).length;
 	
@@ -29405,4 +29402,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.ab1ec11b.js.map
+//# sourceMappingURL=main.32601c4c.js.map
