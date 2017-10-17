@@ -93,6 +93,9 @@ export class Parser {
                         let startAngle = vector(pc,ps).slope;
                         let endAngle = vector(pc, pe).slope;
 
+                        if (Flatten.Utils.EQ(startAngle, endAngle)) {
+                            endAngle += 2*Math.PI;
+                        }
                         let r = vector(pc, ps).length;
 
                         edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
