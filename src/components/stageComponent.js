@@ -157,7 +157,6 @@ export class StageComponent extends Component {
     render() {
         return (
             <canvas tabIndex="1" ref="canvas" id="mainCanvas" className="App-canvas">
-                {this.props.children}
             </canvas>
         )
     }

@@ -34,12 +34,13 @@ function parsePolygon(lines, start) {
                 pc = new Point( toPixels(terms[3]), toPixels(terms[4]) );
 
                 let cwStr = terms[5];
-                let counterClockwise = cwStr === 'Y' ? Flatten.CW : Flatten.CCW;
+                let counterClockwise = cwStr === 'Y' ? Flatten.CW : Flatten.CCW; /* sic ! */
 
                 let startAngle = vector(pc,ps).slope;
                 let endAngle = vector(pc, pe).slope;
                 if (Flatten.Utils.EQ(startAngle, endAngle)) {
                     endAngle += 2*Math.PI;
+                    counterClockwise = true;
                 }
                 let r = vector(pc, ps).length;
 
