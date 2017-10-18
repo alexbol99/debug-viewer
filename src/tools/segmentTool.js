@@ -117,6 +117,8 @@ export class SegmentTool extends Component {
     }
 
     redrawLabels(showLabel) {
+        if (!this.labelShape) return;
+
         let stage = this.props.stage;
 
         this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";

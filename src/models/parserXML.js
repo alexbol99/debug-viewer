@@ -76,6 +76,10 @@ function parseSegment(segmentXML) {
 
     let segment = new Segment(ps, pe);
 
+    // Augment Flatten object with label property
+    let label = segmentXML.getAttribute("label");
+    segment.label = label;
+
     return segment;
 }
 
