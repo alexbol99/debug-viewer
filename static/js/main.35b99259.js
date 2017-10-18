@@ -22013,6 +22013,10 @@
 	
 	    var segment = new Segment(ps, pe);
 	
+	    // Augment Flatten object with label property
+	    var label = segmentXML.getAttribute("label");
+	    segment.label = label;
+	
 	    return segment;
 	}
 	
@@ -23668,6 +23672,8 @@
 	    }, {
 	        key: 'redrawLabels',
 	        value: function redrawLabels(showLabel) {
+	            if (!this.labelShape) return;
+	
 	            var stage = this.props.stage;
 	
 	            this.labelShape.htmlElement.style.display = showLabel ? "block" : "none";
@@ -29402,4 +29408,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.32601c4c.js.map
+//# sourceMappingURL=main.35b99259.js.map
