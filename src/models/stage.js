@@ -19,6 +19,7 @@ export class Stage extends createjs.Stage {
         if (this.canvas.clientWidth > 0 && this.canvas.clientHeight > 0) {
             this.canvas.width = this.canvas.clientWidth;
             this.canvas.height = this.canvas.clientHeight;
+            // this.updateViewport(this.canvas.width, this.canvas.height);
         }
         this.origin = {x: this.canvas.width / 2, y: this.canvas.height / 2};
         this.oldOrigin = {x: undefined, y: undefined};   // used by pan

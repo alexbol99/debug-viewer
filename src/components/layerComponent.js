@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import Flatten from 'flatten-js';
-import {PolygonTool} from '../tools/polygonTool';
-import {SegmentTool} from "../tools/segmentTool";
+// import Flatten from 'flatten-js';
+import {ShapeComponent} from '../tools/shapeComponent';
 
 export class LayerComponent extends Component {
     constructor(params) {
@@ -61,53 +60,27 @@ export class LayerComponent extends Component {
 
     render() {
         return (
-            this.props.layer.shapes.map((shape, index) => {
-                if (shape.geom instanceof Flatten.Polygon) {
-                    return (
-                        <PolygonTool
-                            key={index}
-                            stage={this.props.stage}
-                            layer={this.state.layer}
-                            polygon={shape}
-                            displayed={this.state.layer.displayed}
-                            hovered={shape === this.state.hoveredShape}
-                            selected={
-                                shape === this.state.firstMeasuredShape ||
-                                shape === this.state.secondMeasuredShape
-                            }
-                            color={this.state.layer.color}
-                            widthOn={this.state.widthOn}
-                            displayVertices={this.state.displayVertices}
-                            displayLabels={this.state.displayLabels}
-                            onMouseOver={this.props.onMouseOver}
-                            onMouseOut={this.props.onMouseOut}
-                            onClick={this.props.onClick}
-                        />)
-                }
-                else {
-                    return (
-                        <SegmentTool
-                            key={index}
-                            stage={this.props.stage}
-                            layer={this.state.layer}
-                            model={shape}
-                            displayed={this.state.layer.displayed}
-                            hovered={shape === this.state.hoveredShape}
-                            selected={
-                                shape === this.state.firstMeasuredShape ||
-                                shape === this.state.secondMeasuredShape
-                            }
-                            color={this.state.layer.color}
-                            widthOn={this.state.widthOn}
-                            displayVertices={this.state.displayVertices}
-                            displayLabels={this.state.displayLabels}
-                            onMouseOver={this.props.onMouseOver}
-                            onMouseOut={this.props.onMouseOut}
-                            onClick={this.props.onClick}
-                        />
-                    )
-                }
-            })
+            this.props.layer.shapes.map((shape, index) =>
+                <ShapeComponent
+                    key={index}
+                    stage={this.props.stage}
+                    layer={this.state.layer}
+                    model={shape}
+                    displayed={this.state.layer.displayed}
+                    hovered={shape === this.state.hoveredShape}
+                    selected={
+                        shape === this.state.firstMeasuredShape ||
+                        shape === this.state.secondMeasuredShape
+                    }
+                    color={this.state.layer.color}
+                    widthOn={this.state.widthOn}
+                    displayVertices={this.state.displayVertices}
+                    displayLabels={this.state.displayLabels}
+                    onMouseOver={this.props.onMouseOver}
+                    onMouseOut={this.props.onMouseOut}
+                    onClick={this.props.onClick}
+                />
+            )
         )
     }
 }

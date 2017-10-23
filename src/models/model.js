@@ -1,9 +1,3 @@
-import Flatten from 'flatten-js';
-
-// import createjs from 'easel-js';
-// import * as createjs from '../../public/easeljs-NEXT.combined.js';
-
-// let {Point, Segment, Line, Circle, Arc, Vector, Polygon} = Flatten;
 
 let defaultStyle = {
     strokeStyle: 1,
@@ -12,11 +6,7 @@ let defaultStyle = {
     alpha: 1.0
 };
 
-/* Class Model represents data model that
-will be rendered to Stage canvas.
-  Rendering method will get this element as props
-and perform graphics recalculation this element is a new element
- */
+/* Class Model represents data model that will be added to layer */
 export class Model {
     constructor(geom = undefined, style = undefined, label = "") {
         this.geom = geom;
@@ -32,7 +22,7 @@ export class Model {
     get box() {
         return this.geom.box;
     }
-
+/*
     static transformPoint(pt, stage) {
         return new Flatten.Point(stage.W2C_X(pt.x), stage.W2C_Y(pt.y));
     }
@@ -83,4 +73,5 @@ export class Model {
         }
         return newPolygon;
     }
+*/
 }

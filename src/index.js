@@ -15,13 +15,15 @@ import readFiles from './middleware/readFiles';
 import test from './middleware/test';
 import stageController from './middleware/stageController';
 import matrix_test from './middleware/matrix-test';
+// import webgl_test from './middleware/webgl-test';
 
 const store = createStore(reducer, compose(applyMiddleware(
     log,
     readFiles,
     test,
     stageController,
-    matrix_test
+    matrix_test/*,
+    webgl_test*/
 )));
 
 ReactDOM.render(

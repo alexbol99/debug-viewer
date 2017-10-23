@@ -3,19 +3,10 @@
  */
 
 import React, {Component} from 'react';
-// import createjs from 'easel-js';
 // import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
 import '../App.css';
-
-// import { LayerComponent } from '../components/layerComponent';
 import {Stage} from '../models/stage';
-// import {PolygonTool} from '../tools/polygonTool';
-
-// import {Layer} from '../models/layer';
-// import {Layers} from '../models/layers';
-
-// import * as ActionTypes from '../actions/action-types';
 
 export class StageComponent extends Component {
     constructor() {
@@ -109,7 +100,8 @@ export class StageComponent extends Component {
     componentDidMount() {
         let stage = new Stage(this.refs.canvas);
 
-        // stage.setClearColor("#F1F1F1");
+        // stage.setClearColor("#FFFFFF");
+        // stage.update();
 
         stage.on("stagemousemove", this.handleMouseMove);
         stage.on("stagemousedown", this.handleMouseDown);
@@ -123,23 +115,6 @@ export class StageComponent extends Component {
         document.addEventListener('keydown', this.handleKeyDown);
         // var _keyup = _.throttle(this.keyup, 500);
         document.addEventListener('keyup', this.handleKeyUp);
-
-        // var r = 50;
-        // var graphics = new createjs.Graphics();
-        // graphics.beginFill("red")
-        //     .drawCircle(200,50, r)
-        //     .endFill();
-        //
-        // var cached = new createjs.Shape(graphics);
-        //
-        // stage.addChild(cached);
-        //
-        // cached.x = 0;
-        // cached.y = 0;
-        //
-        // cached.cache(200-r,50-r, r*2,r*2);
-        //
-        // stage.update();
 
         this.props.onStageCreated(stage);
     }
@@ -158,6 +133,6 @@ export class StageComponent extends Component {
         return (
             <canvas tabIndex="1" ref="canvas" id="mainCanvas" className="App-canvas">
             </canvas>
-        )
+    )
     }
 }

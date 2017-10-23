@@ -4,10 +4,9 @@
 
 import {Component} from 'react';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
-import Flatten from 'flatten-js';
 import '../models/graphics';
 
-export class SegmentTool extends Component {
+export class ShapeComponent extends Component {
     constructor(params) {
         super();
 
@@ -17,19 +16,9 @@ export class SegmentTool extends Component {
         this.vertexShapes = [];
         this.labelShape = undefined;
 
-        if (params.model.geom instanceof Flatten.Segment) {
-            let segment = params.model.geom;
-            let vertices = [segment.ps, segment.pe];
-            for (let vertex of vertices) {
-                let vertexShape = new createjs.Shape();
-                vertexShape.geom = vertex;   // augment Shape with geom struct
-                params.stage.addChild(vertexShape);
-                this.vertexShapes.push(vertexShape);
-            }
-        }
-        else if (params.model.geom instanceof Flatten.Point) {
+        for (let vertex of params.model.geom.vertices) {
             let vertexShape = new createjs.Shape();
-            vertexShape.geom = params.model.geom;   // augment vertex Shape with geom struct
+            vertexShape.geom = vertex;   // augment Shape with geom struct
             params.stage.addChild(vertexShape);
             this.vertexShapes.push(vertexShape);
         }
@@ -44,10 +33,6 @@ export class SegmentTool extends Component {
             document.body.appendChild(html);
 
             this.labelShape = new createjs.DOMElement(html);
-
-            // let labelShape = new createjs.Text();
-            // labelShape.text = params.model.label;
-            // labelShape.textBaseline = "alphabetic";
 
             this.labelShape.geom = params.model.geom;     // augment label Shape with geom struct
             params.stage.addChild(this.labelShape);
@@ -100,7 +85,6 @@ export class SegmentTool extends Component {
 
         for (let vertexShape of this.vertexShapes) {
             let vertex = vertexShape.geom;
-
             if (vertexShape.graphics.isEmpty()) {
                 vertexShape.graphics = vertex.graphics({
                     stroke: stroke,     // this.props.color,
@@ -126,38 +110,48 @@ export class SegmentTool extends Component {
         let box = this.props.model.geom.box;
         let point = {x: (box.xmin + box.xmax) / 2, y: (box.ymin + box.ymax) / 2};
         let dx = 6. / (stage.zoomFactor * stage.resolution);
-        let dy = 16. / (stage.zoomFactor * stage.resolution);
+        let dy = 4. / (stage.zoomFactor * stage.resolution);
 
         this.labelShape.htmlElement.style.font = "16px Arial";
         let unscale = 1. / (stage.zoomFactor * stage.resolution);
         let tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
         let ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
         this.labelShape.setTransform(tx, ty, unscale, -unscale);
+
     }
 
     redraw() {
-        // Draw polygon
+        // Draw shape
         let color = (this.props.hovered || this.props.selected) ? "black" : this.props.color;
         let alpha = (this.props.hovered || this.props.selected) ? 1.0 : 0.6;
+        let widthOn = this.props.widthOn;
+        let fill = (widthOn && !this.props.displayVertices) ? this.props.color : "white";
 
         let stage = this.props.stage;
-        let geom = this.props.model.geom;
 
-        let widthOn = this.props.widthOn;
-
-        this.shape.graphics.clear();
-        this.shape.graphics = geom.graphics({
-            stroke: color,     // this.props.color,
-            fill: (widthOn && !this.props.displayVertices) ? this.props.color : "white",
-            radius: 3./(stage.zoomFactor*stage.resolution)
-        });
+        if (this.shape.graphics.isEmpty()) {
+            this.shape.graphics = this.state.model.geom.graphics({
+                stroke: color,
+                fill: fill,
+                radius: 3. / (stage.zoomFactor * stage.resolution)
+            });
+        }
+        else {
+            if (this.shape.graphics.stroke) this.shape.graphics.stroke.style = color;
+            if (this.shape.graphics.fill) this.shape.graphics.fill.style = fill;
+            if (this.shape.graphics.circle) this.shape.graphics.circle.radius =
+                3. / (stage.zoomFactor * stage.resolution);
+        }
         this.shape.alpha = this.props.displayed ? alpha : 0.0;
+
+        // let box = this.state.polygon.geom.box;
+        // this.shape.cache(box.xmin, box.ymin, box.xmax - box.xmin, box.ymax - box.ymin);
 
         // Draw vertices
         alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
         this.redrawVertices(color, color, alpha);
 
-        // Redraw labels
+        // Draw labels
         let showLabel = this.props.displayed && this.props.displayLabels;
         this.redrawLabels(showLabel);
     }
@@ -166,14 +160,17 @@ export class SegmentTool extends Component {
     }
 
     componentDidMount() {
-        this.shape.on("mouseover",this.handleMouseOver);
-        this.shape.on("mouseout",this.handleMouseOut);
-        this.shape.on("click",this.handleClick);
+        this.shape.on("mouseover", this.handleMouseOver);
+        this.shape.on("mouseout", this.handleMouseOut);
+        this.shape.on("click", this.handleClick);
 
         this.redraw();
     }
 
     componentWillReceiveProps(nextProps) {
+        // let redraw = (this.state.zoomFactor !== nextProps.zoomFactor &&
+        //     nextProps.displayVertices);
+
         this.setState({
             model: nextProps.model,
             color: nextProps.color,
@@ -200,8 +197,8 @@ export class SegmentTool extends Component {
 
     componentWillUnmount() {
         this.vertices = undefined;
-        this.shape.off("mouseover",this.handleMouseOver);
-        this.shape.off("mouseout",this.handleMouseOut);
+        this.shape.off("mouseover", this.handleMouseOver);
+        this.shape.off("mouseout", this.handleMouseOut);
         this.shape.off("click", this.handleClick);
     }
 
