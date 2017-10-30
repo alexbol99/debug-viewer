@@ -23299,9 +23299,11 @@
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            this.shape.on("mouseover", this.handleMouseOver);
-	            this.shape.on("mouseout", this.handleMouseOut);
-	            this.shape.on("click", this.handleClick);
+	            // this.shape.on("mouseover", this.handleMouseOver);
+	            // this.shape.on("mouseout", this.handleMouseOut);
+	            // this.shape.on("click", this.handleClick);
+	
+	            this.shape.mouseEnabled = false;
 	
 	            this.redraw();
 	        }
@@ -28980,4 +28982,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.2f0f3340.js.map
+//# sourceMappingURL=main.ff7df3d6.js.map
