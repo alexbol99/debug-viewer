@@ -6,22 +6,24 @@ import {Component} from 'react';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 import '../models/graphics';
 
-export class ShapeComponent extends Component {
+export class ImageComponent extends Component {
     constructor(params) {
         super();
 
-        this.shape = new createjs.Shape();
-        params.stage.addChild(this.shape);
+        this.bitmap = new createjs.Bitmap(params.model.geom.uri);
+        params.stage.addChild(this.bitmap);
 
-        this.vertexShapes = [];
+        // let ratio = this.bitmap.image.naturalWidth/this.bitmap.image.naturalHeight;
+        // let width = params.model.geom.width;
+        // this.scaleX = width/this.bitmap.image.naturalWidth;
+        // this.scaleY = width/(this.bitmap.image.naturalHeight*ratio);
+        // this.tx = 0; // stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
+        // this.ty = 0; // -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
+        //
+        // this.bitmap.regX = this.bitmap.image.naturalWidth/2;
+        // this.bitmap.regY = this.bitmap.image.naturalHeight/2;
+
         this.labelShape = undefined;
-
-        for (let vertex of params.model.geom.vertices) {
-            let vertexShape = new createjs.Shape();
-            vertexShape.geom = vertex;   // augment Shape with geom struct
-            params.stage.addChild(vertexShape);
-            this.vertexShapes.push(vertexShape);
-        }
 
         if (params.model.label && params.model.label.trim() !== "") {
             var html = document.createElement('div');
@@ -42,7 +44,6 @@ export class ShapeComponent extends Component {
             model: params.model,
             color: params.color,
             displayed: params.displayed,
-            displayVertices: params.displayVertices,
             displayLabels: params.displayLabels,
             hovered: params.hovered,
             selected: params.selected,
@@ -80,26 +81,6 @@ export class ShapeComponent extends Component {
         this.props.onClick(this.props.model, this.props.layer);
     }
 
-    redrawVertices(stroke, fill, alpha) {
-        let stage = this.props.stage;
-
-        for (let vertexShape of this.vertexShapes) {
-            let vertex = vertexShape.geom;
-            if (vertexShape.graphics.isEmpty()) {
-                vertexShape.graphics = vertex.graphics({
-                    stroke: stroke,     // this.props.color,
-                    fill: fill,
-                    radius: 3. / (stage.zoomFactor * stage.resolution)
-                });
-            }
-            else {
-                vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
-                vertexShape.graphics.fill.style = fill;
-            }
-            vertexShape.alpha = alpha;
-        }
-    }
-
     redrawLabels(showLabel) {
         if (!this.labelShape) return;
 
@@ -122,34 +103,43 @@ export class ShapeComponent extends Component {
 
     redraw() {
         // Draw shape
-        let color = (this.props.hovered || this.props.selected) ? "black" : this.props.color;
-        let alpha = (this.props.hovered || this.props.selected) ? 1.0 : 0.6;
-        let widthOn = this.props.widthOn;
-        let fill = (widthOn && !this.props.displayVertices) ? this.props.color : "white";
+        // let color = (this.props.hovered || this.props.selected) ? "black" : this.props.color;
+        let alpha = 0.5; // (this.props.hovered || this.props.selected) ? 1.0 : 0.6;
+        // let widthOn = this.props.widthOn;
+        // let fill = (widthOn && !this.props.displayVertices) ? this.props.color : "white";
+        //
+        // let stage = this.props.stage;
+        //
+        // if (this.shape.graphics.isEmpty()) {
+        //     this.shape.graphics = this.state.model.geom.graphics({
+        //         stroke: color,
+        //         fill: fill,
+        //         radius: 3. / (stage.zoomFactor * stage.resolution)
+        //     });
+        // }
+        // else {
+        //     if (this.shape.graphics.stroke) this.shape.graphics.stroke.style = color;
+        //     if (this.shape.graphics.fill) this.shape.graphics.fill.style = fill;
+        //     if (this.shape.graphics.circle) this.shape.graphics.circle.radius =
+        //         3. / (stage.zoomFactor * stage.resolution);
+        // }
+        this.bitmap.alpha = this.props.displayed ? alpha : 0.0;
 
-        let stage = this.props.stage;
+        let width = this.props.model.geom.width;
 
-        if (this.shape.graphics.isEmpty()) {
-            this.shape.graphics = this.state.model.geom.graphics({
-                stroke: color,
-                fill: fill,
-                radius: 3. / (stage.zoomFactor * stage.resolution)
-            });
-        }
-        else {
-            if (this.shape.graphics.stroke) this.shape.graphics.stroke.style = color;
-            if (this.shape.graphics.fill) this.shape.graphics.fill.style = fill;
-            if (this.shape.graphics.circle) this.shape.graphics.circle.radius =
-                3. / (stage.zoomFactor * stage.resolution);
-        }
-        this.shape.alpha = this.props.displayed ? alpha : 0.0;
+        let ratio = this.bitmap.image.naturalWidth/this.bitmap.image.naturalHeight;
+        let scaleX = width/this.bitmap.image.naturalWidth; // 1. / (stage.zoomFactor * stage.resolution);
+        let scaleY = width/(this.bitmap.image.naturalHeight*ratio);
+        let tx = this.props.model.geom.center.x; // stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
+        let ty = this.props.model.geom.center.y; // -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
+
+        this.bitmap.setTransform(tx, ty, scaleX, -scaleY);
+
+        this.bitmap.regX = this.bitmap.image.naturalWidth/2;
+        this.bitmap.regY = this.bitmap.image.naturalHeight/2;
 
         // let box = this.state.polygon.geom.box;
         // this.shape.cache(box.xmin, box.ymin, box.xmax - box.xmin, box.ymax - box.ymin);
-
-        // Draw vertices
-        alpha = this.props.displayed && this.props.displayVertices ? 1.0 : 0.0;
-        this.redrawVertices(color, color, alpha);
 
         // Draw labels
         let showLabel = this.props.displayed && this.props.displayLabels;
@@ -160,9 +150,9 @@ export class ShapeComponent extends Component {
     }
 
     componentDidMount() {
-        this.shape.on("mouseover", this.handleMouseOver);
-        this.shape.on("mouseout", this.handleMouseOut);
-        this.shape.on("click", this.handleClick);
+        this.bitmap.on("mouseover", this.handleMouseOver);
+        this.bitmap.on("mouseout", this.handleMouseOut);
+        this.bitmap.on("click", this.handleClick);
 
         // this.shape.mouseEnabled = false;
 
@@ -177,7 +167,6 @@ export class ShapeComponent extends Component {
             model: nextProps.model,
             color: nextProps.color,
             displayed: nextProps.displayed,
-            displayVertices: nextProps.displayVertices,
             displayLabels: nextProps.displayLabels,
             hovered: nextProps.hovered,
             selected: nextProps.selected,
@@ -198,10 +187,9 @@ export class ShapeComponent extends Component {
     }
 
     componentWillUnmount() {
-        this.vertices = undefined;
-        this.shape.off("mouseover", this.handleMouseOver);
-        this.shape.off("mouseout", this.handleMouseOut);
-        this.shape.off("click", this.handleClick);
+        this.bitmap.off("mouseover", this.handleMouseOver);
+        this.bitmap.off("mouseout", this.handleMouseOut);
+        this.bitmap.off("click", this.handleClick);
     }
 
     render() {
