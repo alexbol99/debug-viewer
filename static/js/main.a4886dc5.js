@@ -17216,7 +17216,7 @@
 	
 	Point.prototype.graphics = function (style) {
 	    var radius = style && style.radius ? style.radius : 3;
-	    var fill = style && style.fill ? style.fill : "red";
+	    var fill = style && style.fill ? style.fill : "#FF0303";
 	    var graphics = new createjs.Graphics();
 	    graphics.fill = graphics.beginFill(fill).command;
 	    graphics.circle = graphics.drawCircle(this.x, this.y, radius).command;
@@ -29353,4 +29353,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.2027e022.js.map
+//# sourceMappingURL=main.a4886dc5.js.map
