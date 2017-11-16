@@ -5,6 +5,7 @@
 import {Component} from 'react';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 import '../models/graphics';
+import Utils from '../utils';
 
 export class ShapeComponent extends Component {
     constructor(params) {
@@ -38,34 +39,10 @@ export class ShapeComponent extends Component {
             params.stage.addChild(this.labelShape);
         }
 
-        this.state = {
-            model: params.model,
-            color: params.color,
-            displayed: params.displayed,
-            displayVertices: params.displayVertices,
-            displayLabels: params.displayLabels,
-            hovered: params.hovered,
-            selected: params.selected,
-            widthOn: params.widthOn,
-            zoomFactor: params.stage.zoomFactor
-        };
-
-
         // this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
         this.handleClick = this.handleClick.bind(this);
-    }
-
-    equalState(nextState) {
-        let equal = true;
-        for (let key of Object.keys(nextState)) {
-            if (nextState[key] !== this.state[key]) {
-                equal = false;
-                break;
-            }
-        }
-        return equal;
     }
 
     handleMouseOver(event) {
@@ -130,7 +107,7 @@ export class ShapeComponent extends Component {
         let stage = this.props.stage;
 
         if (this.shape.graphics.isEmpty()) {
-            this.shape.graphics = this.state.model.geom.graphics({
+            this.shape.graphics = this.props.model.geom.graphics({
                 stroke: color,
                 fill: fill,
                 radius: 3. / (stage.zoomFactor * stage.resolution)
@@ -144,7 +121,7 @@ export class ShapeComponent extends Component {
         }
         this.shape.alpha = this.props.displayed ? alpha : 0.0;
 
-        // let box = this.state.polygon.geom.box;
+        // let box = this.props.polygon.geom.box;
         // this.shape.cache(box.xmin, box.ymin, box.xmax - box.xmin, box.ymax - box.ymin);
 
         // Draw vertices
@@ -154,9 +131,6 @@ export class ShapeComponent extends Component {
         // Draw labels
         let showLabel = this.props.displayed && this.props.displayLabels;
         this.redrawLabels(showLabel);
-    }
-
-    componentWillMount() {
     }
 
     componentDidMount() {
@@ -169,28 +143,11 @@ export class ShapeComponent extends Component {
         this.redraw();
     }
 
-    componentWillReceiveProps(nextProps) {
-        // let redraw = (this.state.zoomFactor !== nextProps.zoomFactor &&
-        //     nextProps.displayVertices);
-
-        this.setState({
-            model: nextProps.model,
-            color: nextProps.color,
-            displayed: nextProps.displayed,
-            displayVertices: nextProps.displayVertices,
-            displayLabels: nextProps.displayLabels,
-            hovered: nextProps.hovered,
-            selected: nextProps.selected,
-            widthOn: nextProps.widthOn,
-            zoomFactor: nextProps.stage.zoomFactor
-        })
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.equalState(nextState)) {
+        if (Utils.is_equal(this.props, nextProps)) {
             return false;
         }
-        return true;  // nextProps.polygon.parent.needToBeUpdated;
+        return true;
     }
 
     componentDidUpdate() {

@@ -1,59 +1,11 @@
 import React, {Component} from 'react';
-// import Flatten from 'flatten-js';
-import {ShapeComponent} from '../tools/shapeComponent';
-import {ImageComponent} from "../tools/imageComponent";
+import {ShapeComponent} from './shapeComponent';
+import {ImageComponent} from "./imageComponent";
+import Utils from "../utils";
 
 export class LayerComponent extends Component {
-    constructor(params) {
-        super();
-        this.state = {
-            layer: params.layer,
-            color: params.color,
-            displayed: params.displayed,
-            displayVertices: params.displayVertices,
-            displayLabels: params.displayLabels,
-            hovered: params.hovered,
-            selected: params.selected,
-            widthOn: params.widthOn,
-            origin: params.stage.origin,
-            zoomFactor: params.stage.zoomFactor,
-            hoveredShape: params.hoveredShape,
-            firstMeasuredShape: params.firstMeasuredShape,
-            secondMeasuredShape: params.secondMeasuredShape
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            layer: nextProps.layer,
-            color: nextProps.color,
-            displayed: nextProps.displayed,
-            displayVertices: nextProps.displayVertices,
-            displayLabels: nextProps.displayLabels,
-            hovered: nextProps.hovered,
-            selected: nextProps.selected,
-            widthOn: nextProps.widthOn,
-            origin: nextProps.stage.origin,
-            zoomFactor: nextProps.stage.zoomFactor,
-            hoveredShape: nextProps.hoveredShape,
-            firstMeasuredShape: nextProps.firstMeasuredShape,
-            secondMeasuredShape: nextProps.secondMeasuredShape
-        })
-    }
-
-    equalState(nextState) {
-        let equal = true;
-        for (let key of Object.keys(nextState)) {
-            if (nextState[key] !== this.state[key]) {
-                equal = false;
-                break;
-            }
-        }
-        return equal;
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.equalState(nextState)) {
+        if (Utils.is_equal(this.props, nextProps)) {
             return false;
         }
         return true;
@@ -66,17 +18,18 @@ export class LayerComponent extends Component {
                     <ImageComponent
                         key={index}
                         stage={this.props.stage}
-                        layer={this.state.layer}
+                        layer={this.props.layer}
                         model={shape}
-                        displayed={this.state.layer.displayed}
-                        hovered={shape === this.state.hoveredShape}
+                        displayed={this.props.layer.displayed}
+                        hovered={shape === this.props.hoveredShape}
                         selected={
-                            shape === this.state.firstMeasuredShape ||
-                            shape === this.state.secondMeasuredShape
+                            shape === this.props.firstMeasuredShape ||
+                            shape === this.props.secondMeasuredShape
                         }
-                        color={this.state.layer.color}
-                        widthOn={this.state.widthOn}
-                        displayLabels={this.state.displayLabels}
+                        color={this.props.layer.color}
+                        widthOn={this.props.widthOn}
+                        displayLabels={this.props.displayLabels}
+                        zoomFactor={this.props.zoomFactor}
                         onMouseOver={this.props.onMouseOver}
                         onMouseOut={this.props.onMouseOut}
                         onClick={this.props.onClick}
@@ -85,18 +38,19 @@ export class LayerComponent extends Component {
                     <ShapeComponent
                         key={index}
                         stage={this.props.stage}
-                        layer={this.state.layer}
+                        layer={this.props.layer}
                         model={shape}
-                        displayed={this.state.layer.displayed}
-                        hovered={shape === this.state.hoveredShape}
+                        displayed={this.props.layer.displayed}
+                        hovered={shape === this.props.hoveredShape}
                         selected={
-                            shape === this.state.firstMeasuredShape ||
-                            shape === this.state.secondMeasuredShape
+                            shape === this.props.firstMeasuredShape ||
+                            shape === this.props.secondMeasuredShape
                         }
-                        color={this.state.layer.color}
-                        widthOn={this.state.widthOn}
-                        displayVertices={this.state.displayVertices}
-                        displayLabels={this.state.displayLabels}
+                        color={this.props.layer.color}
+                        widthOn={this.props.widthOn}
+                        displayVertices={this.props.displayVertices}
+                        displayLabels={this.props.displayLabels}
+                        zoomFactor={this.props.zoomFactor}
                         onMouseOver={this.props.onMouseOver}
                         onMouseOut={this.props.onMouseOut}
                         onClick={this.props.onClick}

@@ -48,7 +48,10 @@ const defaultAppState = {
     firstMeasuredLayer: null,
     secondMeasuredLayer: null,
     distance: undefined,
-    shortestSegment: null
+    shortestSegment: null,
+    zoomFactor: undefined,
+    originX: undefined,
+    originY: undefined
 };
 
 const defaultMouseState = {
@@ -60,8 +63,19 @@ const defaultMouseState = {
 
 function app(state = defaultAppState, action) {
     switch (action.type) {
-        case ActionTypes.STAGE_UPDATED:
-            return state;
+        case ActionTypes.NEW_STAGE_CREATED:
+        case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
+        case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
+            return Object.assign({}, state, {
+                zoomFactor: action.stage.zoomFactor * action.stage.resolution,
+                originX: action.stage.origin.x,
+                originY: action.stage.origin.y
+            });
+        case ActionTypes.MOUSE_MOVED_ON_STAGE:
+            return Object.assign({}, state, {
+                originX: action.stage.origin.x,
+                originY: action.stage.origin.y
+            });
         case ActionTypes.TOGGLE_UNITS_CLICKED:
             let curUnitsId = unitsList.findIndex(units => state.units === units.name);
             let newUnits = unitsList[(curUnitsId + 1) % 3];
@@ -107,7 +121,7 @@ function app(state = defaultAppState, action) {
                 //     [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
                 // }
                 // else {
-                    [distance, shortestSegment] = Flatten.Distance.distance(shape1, shape2);
+                [distance, shortestSegment] = Flatten.Distance.distance(shape1, shape2);
                 // }
 
 
@@ -315,20 +329,6 @@ function layers(state = [], action) {
                     }
                 });
             }
-
-        // case ActionTypes.MOUSE_MOVED_ON_STAGE:
-        //     if (action.dx !== undefined && action.dy !== undefined) {
-        //         return state.map( layer =>
-        //             layer.setTransform(action.stage.origin, action.stage.zoomFactor))
-        //     }
-        //     else {
-        //         return state;
-        //     }
-
-        // case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
-        // case ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE:
-        //     return state.map(layer =>
-        //         layer.setTransform(action.stage.origin, action.stage.zoomFactor));
 
         default:
             return state;

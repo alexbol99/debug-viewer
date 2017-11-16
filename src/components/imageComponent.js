@@ -5,6 +5,7 @@
 import {Component} from 'react';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 import '../models/graphics';
+import Utils from '../utils';
 
 export class ImageComponent extends Component {
     constructor(params) {
@@ -12,16 +13,6 @@ export class ImageComponent extends Component {
 
         this.bitmap = new createjs.Bitmap(params.model.geom.uri);
         params.stage.addChild(this.bitmap);
-
-        // let ratio = this.bitmap.image.naturalWidth/this.bitmap.image.naturalHeight;
-        // let width = params.model.geom.width;
-        // this.scaleX = width/this.bitmap.image.naturalWidth;
-        // this.scaleY = width/(this.bitmap.image.naturalHeight*ratio);
-        // this.tx = 0; // stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
-        // this.ty = 0; // -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
-        //
-        // this.bitmap.regX = this.bitmap.image.naturalWidth/2;
-        // this.bitmap.regY = this.bitmap.image.naturalHeight/2;
 
         this.labelShape = undefined;
 
@@ -40,33 +31,11 @@ export class ImageComponent extends Component {
             params.stage.addChild(this.labelShape);
         }
 
-        this.state = {
-            model: params.model,
-            color: params.color,
-            displayed: params.displayed,
-            displayLabels: params.displayLabels,
-            hovered: params.hovered,
-            selected: params.selected,
-            widthOn: params.widthOn,
-            zoomFactor: params.stage.zoomFactor
-        };
-
 
         // this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
         this.handleClick = this.handleClick.bind(this);
-    }
-
-    equalState(nextState) {
-        let equal = true;
-        for (let key of Object.keys(nextState)) {
-            if (nextState[key] !== this.state[key]) {
-                equal = false;
-                break;
-            }
-        }
-        return equal;
     }
 
     handleMouseOver(event) {
@@ -103,26 +72,9 @@ export class ImageComponent extends Component {
 
     redraw() {
         // Draw shape
-        // let color = (this.props.hovered || this.props.selected) ? "black" : this.props.color;
+
         let alpha = 0.5; // (this.props.hovered || this.props.selected) ? 1.0 : 0.6;
-        // let widthOn = this.props.widthOn;
-        // let fill = (widthOn && !this.props.displayVertices) ? this.props.color : "white";
-        //
-        // let stage = this.props.stage;
-        //
-        // if (this.shape.graphics.isEmpty()) {
-        //     this.shape.graphics = this.state.model.geom.graphics({
-        //         stroke: color,
-        //         fill: fill,
-        //         radius: 3. / (stage.zoomFactor * stage.resolution)
-        //     });
-        // }
-        // else {
-        //     if (this.shape.graphics.stroke) this.shape.graphics.stroke.style = color;
-        //     if (this.shape.graphics.fill) this.shape.graphics.fill.style = fill;
-        //     if (this.shape.graphics.circle) this.shape.graphics.circle.radius =
-        //         3. / (stage.zoomFactor * stage.resolution);
-        // }
+
         this.bitmap.alpha = this.props.displayed ? alpha : 0.0;
 
         let width = this.props.model.geom.width;
@@ -146,9 +98,6 @@ export class ImageComponent extends Component {
         this.redrawLabels(showLabel);
     }
 
-    componentWillMount() {
-    }
-
     componentDidMount() {
         this.bitmap.on("mouseover", this.handleMouseOver);
         this.bitmap.on("mouseout", this.handleMouseOut);
@@ -159,27 +108,12 @@ export class ImageComponent extends Component {
         this.redraw();
     }
 
-    componentWillReceiveProps(nextProps) {
-        // let redraw = (this.state.zoomFactor !== nextProps.zoomFactor &&
-        //     nextProps.displayVertices);
-
-        this.setState({
-            model: nextProps.model,
-            color: nextProps.color,
-            displayed: nextProps.displayed,
-            displayLabels: nextProps.displayLabels,
-            hovered: nextProps.hovered,
-            selected: nextProps.selected,
-            widthOn: nextProps.widthOn,
-            zoomFactor: nextProps.stage.zoomFactor
-        })
-    }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.equalState(nextState)) {
+        if (Utils.is_equal(this.props, nextProps)) {
             return false;
         }
-        return true;  // nextProps.polygon.parent.needToBeUpdated;
+        return true;
     }
 
     componentDidUpdate() {
