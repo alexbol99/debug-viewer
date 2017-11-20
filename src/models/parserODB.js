@@ -5,9 +5,12 @@ let {Point, Segment, Arc, Polygon} = Flatten;
 let { vector } = Flatten;
 
 const inch2pixels = 10160000;
-
-function toPixels(str) {
+const mils2pixels = 10160;
+function InchToPixels(str) {
     return Math.round(Number(str)*inch2pixels,0);
+}
+function MilsToPixels(str) {
+    return Math.round(Number(str)*mils2pixels,0);
 }
 
 function parsePolygon(lines, start) {
@@ -15,7 +18,7 @@ function parsePolygon(lines, start) {
     let i = start;
     let line = lines[i];
     let terms = line.split(' ');
-    let ps = new Point( toPixels(terms[1]), toPixels(terms[2]) );
+    let ps = new Point( InchToPixels(terms[1]), InchToPixels(terms[2]) );
     let pe;
     let pc;
     let end_of_face = false;
@@ -24,14 +27,14 @@ function parsePolygon(lines, start) {
         terms = line.split(' ');
         switch (terms[0]) {
             case 'OS':
-                pe = new Point( toPixels(terms[1]), toPixels(terms[2]) );
+                pe = new Point( InchToPixels(terms[1]), InchToPixels(terms[2]) );
                 shapes.push( new Segment(ps, pe));
 
                 ps = pe.clone();
                 break;
             case 'OC':
-                pe = new Point( toPixels(terms[1]), toPixels(terms[2]) );
-                pc = new Point( toPixels(terms[3]), toPixels(terms[4]) );
+                pe = new Point( InchToPixels(terms[1]), InchToPixels(terms[2]) );
+                pc = new Point( InchToPixels(terms[3]), InchToPixels(terms[4]) );
 
                 let cwStr = terms[5];
                 let counterClockwise = cwStr === 'Y' ? Flatten.CW : Flatten.CCW; /* sic ! */
@@ -63,6 +66,43 @@ function parsePolygon(lines, start) {
     return shapes;
 }
 
+function parseLine(str, apertures) {
+    let terms = str.split(' ');
+    let ps = new Point( InchToPixels(terms[1]), InchToPixels(terms[2]) );
+    let pe = new Point( InchToPixels(terms[3]), InchToPixels(terms[4]) );
+    let segment = new Segment(ps, pe);
+    let ap_key = Number(terms[5]);
+    let ap_value = apertures[ap_key];
+    segment.aperture = ap_value;     // augmentation
+    return segment;
+}
+
+function parseArc(str, apertures) {
+    let terms = str.split(' ');
+    let ps = new Point( InchToPixels(terms[1]), InchToPixels(terms[2]) );
+    let pe = new Point( InchToPixels(terms[3]), InchToPixels(terms[4]) );
+    let pc = new Point( InchToPixels(terms[5]), InchToPixels(terms[6]) );
+
+    let cwStr = terms[10];
+    let counterClockwise = cwStr === 'Y' ? Flatten.CW : Flatten.CCW; /* sic ! */
+
+    let startAngle = vector(pc,ps).slope;
+    let endAngle = vector(pc, pe).slope;
+    if (Flatten.Utils.EQ(startAngle, endAngle)) {
+        endAngle += 2*Math.PI;
+        counterClockwise = true;
+    }
+    let r = vector(pc, ps).length;
+
+    let arc = new Arc(pc, r, startAngle, endAngle, counterClockwise);
+
+    let ap_key = Number(terms[7]);
+    let ap_value = apertures[ap_key];
+    arc.aperture = ap_value;     // augmentation
+
+    return arc;
+}
+
 export function parseODB(filename, str) {
     let job = new Job();
     job.filename = filename;
@@ -70,9 +110,18 @@ export function parseODB(filename, str) {
     let arrayOfLines = str.match(/[^\r\n]+/g);
     let polygon;
 
+    let apertures = [];
+
     for (let i=0; i < arrayOfLines.length; i++) {
         let line = arrayOfLines[i];
         let terms = line.split(' ');
+
+        if (terms[0].substr(0,1) === '$') {
+            let ap_key = Number(terms[0].substr(1));
+            let ap_value = MilsToPixels(terms[1].substr(1));
+            apertures[ap_key] = ap_value;
+            continue;
+        }
 
         switch (terms[0]) {
             case 'S':                  // surface started
@@ -89,6 +138,14 @@ export function parseODB(filename, str) {
                 break;
             case 'SE':     // surface ended
                 job.shapes.push(polygon);
+                break;
+            case 'L':                  // line
+                let odbLine = parseLine(line, apertures);
+                job.shapes.push(odbLine);
+                break;
+            case 'A':                  // Arc
+                let odbArc = parseArc(line, apertures);
+                job.shapes.push(odbArc);
                 break;
             default:
                 break;

@@ -51,7 +51,7 @@ export class CanvasComponent extends Component {
     handleMouseWheelFox(event) {
         event.preventDefault();
         if (event.detail !== 0) {
-            this.props.onMousewheelMove(event.layerX, event.layerY, -event.detail);
+            this.props.onMouseWheelMove(event.layerX, event.layerY, -event.detail);
         }
     }
 

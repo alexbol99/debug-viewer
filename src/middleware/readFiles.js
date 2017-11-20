@@ -112,7 +112,7 @@ const readFile = (file, stage, layers, dispatch) => {
 
     let reader = new FileReader();
 
-    if (file.type.match('text.*') || file.name === "features") {
+    if (file.type.match('text.*') || file.name.match('features*')) {
         readAsText(reader, file, stage, layers, dispatch);
     }
 

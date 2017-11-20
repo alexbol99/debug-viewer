@@ -3,7 +3,7 @@ import * as ActionTypes from '../actions/action-types';
 import { Layers } from '../models/layers';
 import { Model } from "../models/model";
 
-let {point, segment, Polygon} = Flatten;
+let {point, segment, arc, Polygon} = Flatten;
 
 function zoomHome(shape, stage) {
     let box = shape.box;
@@ -26,8 +26,16 @@ const matrix_test = ({ dispatch, getState }) => next => action => {
             layer.name = "demo1";
             layer.title = "demo1";
 
-            layer.add( new Model(segment(-100, 0, 100, 0), {}, "segment1"));
-            layer.add( new Model(segment(0, -100, 0, 50), {}, "segment 2"));
+            let s1 = segment(-100, 0, 100, 0);
+            let s2 = segment(0, -100, 0, 50);
+            s1.aperture = 10;
+            s2.aperture = 20;
+
+            layer.add( new Model(s1, {}, "segment1"));
+            layer.add( new Model(s2, {}, "segment 2"));
+
+            let a = arc(point(0,0), 50, 0, Math.PI/4, Flatten.CCW);
+            layer.add( new Model(a) );
 
             let polygon = new Polygon();
 

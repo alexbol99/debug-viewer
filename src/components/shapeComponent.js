@@ -20,6 +20,7 @@ export class ShapeComponent extends Component {
         for (let vertex of params.model.geom.vertices) {
             let vertexShape = new createjs.Shape();
             vertexShape.geom = vertex;   // augment Shape with geom struct
+            vertexShape.mouseEnabled = false;
             params.stage.addChild(vertexShape);
             this.vertexShapes.push(vertexShape);
         }
@@ -99,19 +100,33 @@ export class ShapeComponent extends Component {
 
     redraw() {
         // Draw shape
+        let stage = this.props.stage;
         let color = (this.props.hovered || this.props.selected) ? "black" : this.props.color;
         let alpha = (this.props.hovered || this.props.selected) ? 1.0 : 0.6;
         let widthOn = this.props.widthOn;
-        let fill = (widthOn && !this.props.displayVertices) ? this.props.color : "white";
 
-        let stage = this.props.stage;
+        let strokeStyle = this.props.model.geom.aperture ? this.props.model.geom.aperture : undefined;
+        let fill = (widthOn && !this.props.displayVertices) ? this.props.color : "white";
 
         if (this.shape.graphics.isEmpty()) {
             this.shape.graphics = this.props.model.geom.graphics({
+                strokeStyle: strokeStyle,
+                ignoreScale: false,
                 stroke: color,
                 fill: fill,
                 radius: 3. / (stage.zoomFactor * stage.resolution)
             });
+
+            // this.skeletonShape = new createjs.Shape();
+            // this.skeletonShape.graphics = this.props.model.geom.graphics({
+            //     strokeStyle: 1,
+            //     ignoreScale: true,
+            //     stroke: color,
+            //     fill: fill,
+            //     radius: 3. / (stage.zoomFactor * stage.resolution)
+            // });
+            // this.skeletonShape.alpha = 1;
+            // this.props.stage.addChild(this.skeletonShape);
         }
         else {
             if (this.shape.graphics.stroke) this.shape.graphics.stroke.style = color;

@@ -17,10 +17,11 @@ Point.prototype.graphics = function(style) {
 
 Segment.prototype.graphics = function(style) {
     let graphics = new createjs.Graphics();
-    let strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+    let strokeStyle = style && style.strokeStyle !== undefined ? style.strokeStyle : 2;
+    let ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
     let stroke = style && style.stroke ? style.stroke : "black";
     return graphics
-        .setStrokeStyle(strokeStyle,0,0,10,true)
+        .setStrokeStyle(strokeStyle,1,0,10,ignoreScale)
         .beginStroke(stroke)
         .moveTo(this.ps.x, this.ps.y)
         .lineTo(this.pe.x, this.pe.y)
@@ -28,15 +29,16 @@ Segment.prototype.graphics = function(style) {
 };
 
 Arc.prototype.graphics = function(style) {
-    let startAngle = 2 * Math.PI - this.startAngle;
-    let endAngle =  2 * Math.PI - this.endAngle;
+    // let startAngle = 2 * Math.PI - this.startAngle;
+    // let endAngle =  2 * Math.PI - this.endAngle;
     let graphics = new createjs.Graphics();
     let strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+    let ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
     let stroke = style && style.stroke ? style.stroke : "black";
     return graphics
-        .setStrokeStyle(strokeStyle)
+        .setStrokeStyle(strokeStyle,1,0,10,ignoreScale)
         .beginStroke(stroke)
-        .arc(this.pc.x, this.pc.y, this.r, startAngle, endAngle, this.counterClockwise)
+        .arc(this.pc.x, this.pc.y, this.r, this.startAngle, this.endAngle, !this.counterClockwise)
         .endStroke();
 };
 

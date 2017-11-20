@@ -117,7 +117,7 @@ export class AsideComponent extends Component {
 
     render() {
         let layer = Layers.getAffected(this.state.layers);
-        let shapes = layer ? [...layer.shapes] : undefined;
+        // let shapes = layer ? [...layer.shapes] : undefined;
         let title = layer ? layer.title : "";
         let watchContainerHeight = 0.75*this.height;
         return (
@@ -129,17 +129,17 @@ export class AsideComponent extends Component {
                     className="Watch-container"
                     style={{maxHeight:watchContainerHeight}}
                 >
-                    {
-                        shapes ?
-                            shapes.map((shape, index) =>
-                                <WatchElement
-                                    key={index}
-                                    shape={shape}
-                                    onToggleWatchExpandButtonClicked={this.onToggleWatchExpandButtonClicked}
-                                    onSelectShapeClicked={this.onSelectShapeClicked}
-                                />
-                            ) : null
-                    }
+                    {/*{*/}
+                        {/*shapes ?*/}
+                            {/*shapes.map((shape, index) =>*/}
+                                {/*<WatchElement*/}
+                                    {/*key={index}*/}
+                                    {/*shape={shape}*/}
+                                    {/*onToggleWatchExpandButtonClicked={this.onToggleWatchExpandButtonClicked}*/}
+                                    {/*onSelectShapeClicked={this.onSelectShapeClicked}*/}
+                                {/*/>*/}
+                            {/*) : null*/}
+                    {/*}*/}
                 </div>
                 {/*<button className="Aside-add-sample-polygon"*/}
                      {/*onClick={this.addSamplePolygon}*/}
