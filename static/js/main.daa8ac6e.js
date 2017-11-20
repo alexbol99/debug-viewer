@@ -17271,18 +17271,20 @@
 	
 	Segment.prototype.graphics = function (style) {
 	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+	    var strokeStyle = style && style.strokeStyle !== undefined ? style.strokeStyle : 2;
+	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
 	    var stroke = style && style.stroke ? style.stroke : "black";
-	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).moveTo(this.ps.x, this.ps.y).lineTo(this.pe.x, this.pe.y).endStroke();
+	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).moveTo(this.ps.x, this.ps.y).lineTo(this.pe.x, this.pe.y).endStroke();
 	};
 	
 	Arc.prototype.graphics = function (style) {
-	    var startAngle = 2 * Math.PI - this.startAngle;
-	    var endAngle = 2 * Math.PI - this.endAngle;
+	    // let startAngle = 2 * Math.PI - this.startAngle;
+	    // let endAngle =  2 * Math.PI - this.endAngle;
 	    var graphics = new createjs.Graphics();
 	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
 	    var stroke = style && style.stroke ? style.stroke : "black";
-	    return graphics.setStrokeStyle(strokeStyle).beginStroke(stroke).arc(this.pc.x, this.pc.y, this.r, startAngle, endAngle, this.counterClockwise).endStroke();
+	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).arc(this.pc.x, this.pc.y, this.r, this.startAngle, this.endAngle, !this.counterClockwise).endStroke();
 	};
 	
 	Circle.prototype.graphics = function (style) {
@@ -19267,8 +19269,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -19432,10 +19432,8 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this4 = this;
-	
 	            var layer = _layers.Layers.getAffected(this.state.layers);
-	            var shapes = layer ? [].concat(_toConsumableArray(layer.shapes)) : undefined;
+	            // let shapes = layer ? [...layer.shapes] : undefined;
 	            var title = layer ? layer.title : "";
 	            var watchContainerHeight = 0.75 * this.height;
 	            return _react2.default.createElement(
@@ -19451,21 +19449,10 @@
 	                    null,
 	                    title
 	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    {
-	                        className: 'Watch-container',
-	                        style: { maxHeight: watchContainerHeight }
-	                    },
-	                    shapes ? shapes.map(function (shape, index) {
-	                        return _react2.default.createElement(WatchElement, {
-	                            key: index,
-	                            shape: shape,
-	                            onToggleWatchExpandButtonClicked: _this4.onToggleWatchExpandButtonClicked,
-	                            onSelectShapeClicked: _this4.onSelectShapeClicked
-	                        });
-	                    }) : null
-	                )
+	                _react2.default.createElement('div', {
+	                    className: 'Watch-container',
+	                    style: { maxHeight: watchContainerHeight }
+	                })
 	            );
 	        }
 	    }]);
@@ -19563,7 +19550,7 @@
 	        value: function handleMouseWheelFox(event) {
 	            event.preventDefault();
 	            if (event.detail !== 0) {
-	                this.props.onMousewheelMove(event.layerX, event.layerY, -event.detail);
+	                this.props.onMouseWheelMove(event.layerX, event.layerY, -event.detail);
 	            }
 	        }
 	    }, {
@@ -20685,6 +20672,7 @@
 	
 	                var vertexShape = new createjs.Shape();
 	                vertexShape.geom = vertex; // augment Shape with geom struct
+	                vertexShape.mouseEnabled = false;
 	                params.stage.addChild(vertexShape);
 	                _this.vertexShapes.push(vertexShape);
 	            }
@@ -20805,19 +20793,33 @@
 	        key: 'redraw',
 	        value: function redraw() {
 	            // Draw shape
+	            var stage = this.props.stage;
 	            var color = this.props.hovered || this.props.selected ? "black" : this.props.color;
 	            var alpha = this.props.hovered || this.props.selected ? 1.0 : 0.6;
 	            var widthOn = this.props.widthOn;
-	            var fill = widthOn && !this.props.displayVertices ? this.props.color : "white";
 	
-	            var stage = this.props.stage;
+	            var strokeStyle = this.props.model.geom.aperture ? this.props.model.geom.aperture : undefined;
+	            var fill = widthOn && !this.props.displayVertices ? this.props.color : "white";
 	
 	            if (this.shape.graphics.isEmpty()) {
 	                this.shape.graphics = this.props.model.geom.graphics({
+	                    strokeStyle: strokeStyle,
+	                    ignoreScale: false,
 	                    stroke: color,
 	                    fill: fill,
 	                    radius: 3. / (stage.zoomFactor * stage.resolution)
 	                });
+	
+	                // this.skeletonShape = new createjs.Shape();
+	                // this.skeletonShape.graphics = this.props.model.geom.graphics({
+	                //     strokeStyle: 1,
+	                //     ignoreScale: true,
+	                //     stroke: color,
+	                //     fill: fill,
+	                //     radius: 3. / (stage.zoomFactor * stage.resolution)
+	                // });
+	                // this.skeletonShape.alpha = 1;
+	                // this.props.stage.addChild(this.skeletonShape);
 	            } else {
 	                if (this.shape.graphics.stroke) this.shape.graphics.stroke.style = color;
 	                if (this.shape.graphics.fill) this.shape.graphics.fill.style = fill;
@@ -21367,6 +21369,7 @@
 	
 	var point = _flattenJs2.default.point,
 	    segment = _flattenJs2.default.segment,
+	    arc = _flattenJs2.default.arc,
 	    Polygon = _flattenJs2.default.Polygon;
 	
 	
@@ -21395,8 +21398,16 @@
 	                    layer.name = "demo1";
 	                    layer.title = "demo1";
 	
-	                    layer.add(new _model.Model(segment(-100, 0, 100, 0), {}, "segment1"));
-	                    layer.add(new _model.Model(segment(0, -100, 0, 50), {}, "segment 2"));
+	                    var s1 = segment(-100, 0, 100, 0);
+	                    var s2 = segment(0, -100, 0, 50);
+	                    s1.aperture = 10;
+	                    s2.aperture = 20;
+	
+	                    layer.add(new _model.Model(s1, {}, "segment1"));
+	                    layer.add(new _model.Model(s2, {}, "segment 2"));
+	
+	                    var a = arc(point(0, 0), 50, 0, Math.PI / 4, _flattenJs2.default.CCW);
+	                    layer.add(new _model.Model(a));
 	
 	                    var polygon = new Polygon();
 	
@@ -21609,7 +21620,7 @@
 	
 	    var reader = new FileReader();
 	
-	    if (file.type.match('text.*') || file.name === "features") {
+	    if (file.type.match('text.*') || file.name.match('features*')) {
 	        readAsText(reader, file, stage, layers, dispatch);
 	    } else if (file.type.match('image.*')) {
 	        readAsImage(reader, file, stage, layers, dispatch);
@@ -22232,9 +22243,12 @@
 	
 	
 	var inch2pixels = 10160000;
-	
-	function toPixels(str) {
+	var mils2pixels = 10160;
+	function InchToPixels(str) {
 	    return Math.round(Number(str) * inch2pixels, 0);
+	}
+	function MilsToPixels(str) {
+	    return Math.round(Number(str) * mils2pixels, 0);
 	}
 	
 	function parsePolygon(lines, start) {
@@ -22242,7 +22256,7 @@
 	    var i = start;
 	    var line = lines[i];
 	    var terms = line.split(' ');
-	    var ps = new Point(toPixels(terms[1]), toPixels(terms[2]));
+	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
 	    var pe = void 0;
 	    var pc = void 0;
 	    var end_of_face = false;
@@ -22251,14 +22265,14 @@
 	        terms = line.split(' ');
 	        switch (terms[0]) {
 	            case 'OS':
-	                pe = new Point(toPixels(terms[1]), toPixels(terms[2]));
+	                pe = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
 	                shapes.push(new Segment(ps, pe));
 	
 	                ps = pe.clone();
 	                break;
 	            case 'OC':
-	                pe = new Point(toPixels(terms[1]), toPixels(terms[2]));
-	                pc = new Point(toPixels(terms[3]), toPixels(terms[4]));
+	                pe = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
+	                pc = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
 	
 	                var cwStr = terms[5];
 	                var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
@@ -22290,6 +22304,43 @@
 	    return shapes;
 	}
 	
+	function parseLine(str, apertures) {
+	    var terms = str.split(' ');
+	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
+	    var pe = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
+	    var segment = new Segment(ps, pe);
+	    var ap_key = Number(terms[5]);
+	    var ap_value = apertures[ap_key];
+	    segment.aperture = ap_value; // augmentation
+	    return segment;
+	}
+	
+	function parseArc(str, apertures) {
+	    var terms = str.split(' ');
+	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
+	    var pe = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
+	    var pc = new Point(InchToPixels(terms[5]), InchToPixels(terms[6]));
+	
+	    var cwStr = terms[10];
+	    var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
+	
+	    var startAngle = vector(pc, ps).slope;
+	    var endAngle = vector(pc, pe).slope;
+	    if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	        endAngle += 2 * Math.PI;
+	        counterClockwise = true;
+	    }
+	    var r = vector(pc, ps).length;
+	
+	    var arc = new Arc(pc, r, startAngle, endAngle, counterClockwise);
+	
+	    var ap_key = Number(terms[7]);
+	    var ap_value = apertures[ap_key];
+	    arc.aperture = ap_value; // augmentation
+	
+	    return arc;
+	}
+	
 	function parseODB(filename, str) {
 	    var job = new _job.Job();
 	    job.filename = filename;
@@ -22297,9 +22348,18 @@
 	    var arrayOfLines = str.match(/[^\r\n]+/g);
 	    var polygon = void 0;
 	
+	    var apertures = [];
+	
 	    for (var i = 0; i < arrayOfLines.length; i++) {
 	        var line = arrayOfLines[i];
 	        var terms = line.split(' ');
+	
+	        if (terms[0].substr(0, 1) === '$') {
+	            var ap_key = Number(terms[0].substr(1));
+	            var ap_value = MilsToPixels(terms[1].substr(1));
+	            apertures[ap_key] = ap_value;
+	            continue;
+	        }
 	
 	        switch (terms[0]) {
 	            case 'S':
@@ -22319,6 +22379,16 @@
 	            case 'SE':
 	                // surface ended
 	                job.shapes.push(polygon);
+	                break;
+	            case 'L':
+	                // line
+	                var odbLine = parseLine(line, apertures);
+	                job.shapes.push(odbLine);
+	                break;
+	            case 'A':
+	                // Arc
+	                var odbArc = parseArc(line, apertures);
+	                job.shapes.push(odbArc);
 	                break;
 	            default:
 	                break;
@@ -22684,6 +22754,7 @@
 	
 	        createjs.Touch.enable(_this);
 	        _this.mouseMoveOutside = false; // true;
+	        // this.enableDOMEvents(false);
 	        _this.enableMouseOver(20);
 	
 	        if (_this.canvas.clientWidth > 0 && _this.canvas.clientHeight > 0) {
@@ -29245,4 +29316,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.373a4890.js.map
+//# sourceMappingURL=main.daa8ac6e.js.map
