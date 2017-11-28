@@ -352,7 +352,7 @@
 	    _createClass(Model, [{
 	        key: "clone",
 	        value: function clone() {
-	            var model = new Model(this.geom, this.style);
+	            var model = new Model(this.geom, this.style, this.label);
 	            return Object.assign(model, this);
 	        }
 	    }, {
@@ -19143,23 +19143,23 @@
 	                    var item = _step.value;
 	
 	                    item.getAsString(function (string) {
-	                        var poly = parser.parseToPolygon(string);
+	                        var shapesArray = parser.parse(string);
 	                        // TODO: add something like poly.valid()
-	                        if (poly.edges.size > 0 && poly.faces.size > 0) {
+	                        if (shapesArray.length > 0) {
 	                            // let watch = parser.parseToWatchArray(string);
 	
 	                            // let shape = new Shape(poly, this.state.stage, {}, watch);
-	                            var shape = new _model.Model(poly);
+	                            // let shape = new Model(poly);
 	
 	                            _this2.dispatch({
 	                                type: ActionTypes.NEW_SHAPE_PASTED,
-	                                shape: shape
+	                                shapesArray: shapesArray
 	                            });
 	
-	                            dispatch({
-	                                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                                shape: shape
-	                            });
+	                            // dispatch({
+	                            //     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                            //     shape: shape
+	                            // });
 	                        }
 	                    });
 	
@@ -20268,15 +20268,6 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 	
-	// import Flatten from 'flatten-js';
-	
-	// import {LayerComponent} from "./layerComponent";
-	
-	
-	// import {PolygonTool} from '../tools/polygonTool';
-	// import {SegmentTool} from "../tools/segmentTool";
-	
-	
 	var MainComponent = exports.MainComponent = function (_Component) {
 	    _inherits(MainComponent, _Component);
 	
@@ -20804,7 +20795,7 @@
 	            if (this.shape.graphics.isEmpty()) {
 	                this.shape.graphics = this.props.model.geom.graphics({
 	                    strokeStyle: strokeStyle,
-	                    ignoreScale: false,
+	                    ignoreScale: true,
 	                    stroke: color,
 	                    fill: fill,
 	                    radius: 3. / (stage.zoomFactor * stage.resolution)
@@ -21400,10 +21391,10 @@
 	
 	                    var s1 = segment(-100, 0, 100, 0);
 	                    var s2 = segment(0, -100, 0, 50);
-	                    s1.aperture = 10;
-	                    s2.aperture = 20;
+	                    // s1.aperture = 10;
+	                    // s2.aperture = 20;
 	
-	                    layer.add(new _model.Model(s1, {}, "segment1"));
+	                    layer.add(new _model.Model(s1, {}, "segment 1"));
 	                    layer.add(new _model.Model(s2, {}, "segment 2"));
 	
 	                    var a = arc(point(0, 0), 50, 0, Math.PI / 4, _flattenJs2.default.CCW);
@@ -21883,9 +21874,39 @@
 	                this.shapes.push(shape); // add(shape)
 	            } else {
 	                var geom = shape;
-	                var newShape = new _model.Model(geom); // , this.stage);
+	                var newShape = new _model.Model(geom, {}, shape.label); // , this.stage);
 	                this.shapes.push(newShape); // add(newShape);
 	            }
+	            return this;
+	        }
+	    }, {
+	        key: 'addShapesArray',
+	        value: function addShapesArray(shapes) {
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = shapes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var shape = _step.value;
+	
+	                    this.add(shape);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
 	            return this;
 	        }
 	    }, {
@@ -21907,36 +21928,6 @@
 	    }, {
 	        key: 'setAlpha',
 	        value: function setAlpha() {
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = this.shapes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var shape = _step.value;
-	
-	                    shape.alpha = this.displayed ? 1 : 0;
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            return this.shapes;
-	        }
-	    }, {
-	        key: 'toggleExpanded',
-	        value: function toggleExpanded(shapeToggle) {
 	            var _iteratorNormalCompletion2 = true;
 	            var _didIteratorError2 = false;
 	            var _iteratorError2 = undefined;
@@ -21945,9 +21936,7 @@
 	                for (var _iterator2 = this.shapes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	                    var shape = _step2.value;
 	
-	                    if (shape === shapeToggle) {
-	                        shape.expanded = !shape.expanded;
-	                    }
+	                    shape.alpha = this.displayed ? 1 : 0;
 	                }
 	            } catch (err) {
 	                _didIteratorError2 = true;
@@ -21964,12 +21953,11 @@
 	                }
 	            }
 	
-	            return this;
+	            return this.shapes;
 	        }
 	    }, {
-	        key: 'box',
-	        get: function get() {
-	            var box = new _flattenJs2.default.Box();
+	        key: 'toggleExpanded',
+	        value: function toggleExpanded(shapeToggle) {
 	            var _iteratorNormalCompletion3 = true;
 	            var _didIteratorError3 = false;
 	            var _iteratorError3 = undefined;
@@ -21978,7 +21966,9 @@
 	                for (var _iterator3 = this.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
 	                    var shape = _step3.value;
 	
-	                    box = box.merge(shape.box);
+	                    if (shape === shapeToggle) {
+	                        shape.expanded = !shape.expanded;
+	                    }
 	                }
 	            } catch (err) {
 	                _didIteratorError3 = true;
@@ -21991,6 +21981,37 @@
 	                } finally {
 	                    if (_didIteratorError3) {
 	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            return this;
+	        }
+	    }, {
+	        key: 'box',
+	        get: function get() {
+	            var box = new _flattenJs2.default.Box();
+	            var _iteratorNormalCompletion4 = true;
+	            var _didIteratorError4 = false;
+	            var _iteratorError4 = undefined;
+	
+	            try {
+	                for (var _iterator4 = this.shapes[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	                    var shape = _step4.value;
+	
+	                    box = box.merge(shape.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError4 = true;
+	                _iteratorError4 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                        _iterator4.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError4) {
+	                        throw _iteratorError4;
 	                    }
 	                }
 	            }
@@ -22152,6 +22173,48 @@
 	            return watchArray;
 	        }
 	    }, {
+	        key: 'parseToSegment',
+	        value: function parseToSegment(line) {
+	            var parenth = line.match(/\{([^)]+)\}/)[1]; // string inside {..}
+	            var termArr = parenth.split(' '); // array of terms "attr=value"
+	
+	            var psArr = termArr[0].split('=')[1].split(',');
+	            var ps = new Point(parseInt(psArr[0], 10), parseInt(psArr[1], 10));
+	
+	            var peArr = termArr[1].split('=')[1].split(',');
+	            var pe = new Point(parseInt(peArr[0], 10), parseInt(peArr[1], 10));
+	
+	            return new Segment(ps, pe);
+	        }
+	    }, {
+	        key: 'parseToArc',
+	        value: function parseToArc(line) {
+	            var parenth = line.match(/\{([^)]+)\}/)[1]; // string inside {..}
+	            var termArr = parenth.split(' '); // array of terms "attr=value"
+	
+	            var psArr = termArr[0].split('=')[1].split(',');
+	            var ps = new Point(parseInt(psArr[0], 10), parseInt(psArr[1], 10));
+	
+	            var peArr = termArr[1].split('=')[1].split(',');
+	            var pe = new Point(parseInt(peArr[0], 10), parseInt(peArr[1], 10));
+	
+	            var pcArr = termArr[2].split('=')[1].split(',');
+	            var pc = new Point(parseInt(pcArr[0], 10), parseInt(pcArr[1], 10));
+	
+	            var cwStr = termArr[3].split('=')[1];
+	            var counterClockwise = cwStr === '0' ? true : false;
+	
+	            var startAngle = vector(pc, ps).slope;
+	            var endAngle = vector(pc, pe).slope;
+	
+	            if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	                endAngle += 2 * Math.PI;
+	            }
+	            var r = vector(pc, ps).length;
+	
+	            return new Arc(pc, r, startAngle, endAngle, counterClockwise);
+	        }
+	    }, {
 	        key: 'parseToPolygon',
 	        value: function parseToPolygon(str) {
 	            var polygon = new Polygon();
@@ -22175,41 +22238,147 @@
 	                        var _termArr = _parenth.split(' '); // array of terms "attr=value"
 	
 	                        if (line.search('mat_seg_struc') >= 0) {
-	                            var psArr = _termArr[0].split('=')[1].split(',');
-	                            var ps = new Point(parseInt(psArr[0], 10), parseInt(psArr[1], 10));
+	                            var segment = this.parseToSegment(line);
+	                            edges.push(segment);
 	
-	                            var peArr = _termArr[1].split('=')[1].split(',');
-	                            var pe = new Point(parseInt(peArr[0], 10), parseInt(peArr[1], 10));
-	
-	                            edges.push(new Segment(ps, pe));
+	                            // let psArr = termArr[0].split('=')[1].split(',');
+	                            // let ps = new Point(parseInt(psArr[0],10), parseInt(psArr[1],10));
+	                            //
+	                            // let peArr = termArr[1].split('=')[1].split(',');
+	                            // let pe = new Point(parseInt(peArr[0],10), parseInt(peArr[1],10));
+	                            //
+	                            // edges.push(new Segment(ps, pe));
 	                        } else if (line.search('mat_curve_struc') >= 0) {
-	                            var _psArr = _termArr[0].split('=')[1].split(',');
-	                            var _ps = new Point(parseInt(_psArr[0], 10), parseInt(_psArr[1], 10));
+	                            var arc = this.parseToArc(line);
+	                            edges.push(arc);
 	
-	                            var _peArr = _termArr[1].split('=')[1].split(',');
-	                            var _pe = new Point(parseInt(_peArr[0], 10), parseInt(_peArr[1], 10));
-	
-	                            var pcArr = _termArr[2].split('=')[1].split(',');
-	                            var pc = new Point(parseInt(pcArr[0], 10), parseInt(pcArr[1], 10));
-	
-	                            var cwStr = _termArr[3].split('=')[1];
-	                            var counterClockwise = cwStr === '0' ? true : false;
-	
-	                            var startAngle = vector(pc, _ps).slope;
-	                            var endAngle = vector(pc, _pe).slope;
-	
-	                            if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
-	                                endAngle += 2 * Math.PI;
-	                            }
-	                            var r = vector(pc, _ps).length;
-	
-	                            edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
+	                            // let psArr = termArr[0].split('=')[1].split(',');
+	                            // let ps = new Point(parseInt(psArr[0],10), parseInt(psArr[1],10));
+	                            //
+	                            // let peArr = termArr[1].split('=')[1].split(',');
+	                            // let pe = new Point(parseInt(peArr[0],10), parseInt(peArr[1],10));
+	                            //
+	                            // let pcArr = termArr[2].split('=')[1].split(',');
+	                            // let pc = new Point(parseInt(pcArr[0],10), parseInt(pcArr[1],10));
+	                            //
+	                            // let cwStr = termArr[3].split('=')[1];
+	                            // let counterClockwise = cwStr === '0' ? true : false;
+	                            //
+	                            // let startAngle = vector(pc,ps).slope;
+	                            // let endAngle = vector(pc, pe).slope;
+	                            //
+	                            // if (Flatten.Utils.EQ(startAngle, endAngle)) {
+	                            //     endAngle += 2*Math.PI;
+	                            // }
+	                            // let r = vector(pc, ps).length;
+	                            //
+	                            // edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
 	                        }
 	                    }
 	                    polygon.addFace(edges);
 	                }
 	            }
 	            return polygon;
+	        }
+	    }, {
+	        key: 'parseToPoints',
+	        value: function parseToPoints(str) {
+	            var points = [];
+	            var arrayOfLines = str.match(/[^\r\n]+/g);
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = arrayOfLines[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var line = _step2.value;
+	
+	                    if (line.search('point_struc') >= 0) {
+	                        var parenth = line.match(/\{([^)]+)\}/)[1]; // string inside {..}
+	                        var pointArr = parenth.split('=')[1].split(',');
+	                        var point = new Point(parseInt(pointArr[0], 10), parseInt(pointArr[1], 10));
+	                        point.label = line.split(/\s+/)[1];
+	                        points.push(point);
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            return points;
+	        }
+	    }, {
+	        key: 'parseToSegmentsArcs',
+	        value: function parseToSegmentsArcs(str) {
+	            var shapes = [];
+	            var arrayOfLines = str.match(/[^\r\n]+/g);
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = arrayOfLines[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var line = _step3.value;
+	
+	                    var parenth = line.match(/\{([^)]+)\}/)[1]; // string inside {..}
+	                    var termArr = parenth.split(' '); // array of terms "attr=value"
+	
+	                    if (line.search('mat_seg_struc') >= 0) {
+	                        var segment = this.parseToSegment(line);
+	                        shapes.push(segment);
+	                    } else if (line.search('mat_curve_struc') >= 0) {
+	                        var arc = this.parseToArc(line);
+	                        shapes.push(arc);
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            return shapes;
+	        }
+	    }, {
+	        key: 'parse',
+	        value: function parse(str) {
+	            /* try polygon */
+	            var polygon = this.parseToPolygon(str);
+	            if (polygon.edges.size > 0 && polygon.faces.size > 0) {
+	                return [polygon];
+	            }
+	
+	            /* try array of points */
+	            var points = this.parseToPoints(str);
+	            if (points.length > 0) {
+	                return points;
+	            }
+	
+	            /* try array of segments and arcs */
+	            var shapes = this.parseToSegmentsArcs(str);
+	            if (shapes.length > 0) {
+	                return shapes;
+	            }
 	        }
 	    }]);
 
@@ -23241,7 +23410,7 @@
 	        case ActionTypes.NEW_SHAPE_PASTED:
 	            return state.map(function (layer) {
 	                if (layer.affected) {
-	                    return layer.add(action.shape);
+	                    return layer.addShapesArray(action.shapesArray);
 	                } else {
 	                    return layer;
 	                }
@@ -29316,4 +29485,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.daa8ac6e.js.map
+//# sourceMappingURL=main.d50eecd0.js.map
