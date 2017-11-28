@@ -251,7 +251,7 @@ function layers(state = [], action) {
         case ActionTypes.NEW_SHAPE_PASTED:
             return state.map((layer) => {
                 if (layer.affected) {
-                    return layer.add(action.shape);
+                    return layer.addShapesArray(action.shapesArray);
                 }
                 else {
                     return layer;

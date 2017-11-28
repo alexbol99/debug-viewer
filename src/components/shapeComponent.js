@@ -111,7 +111,7 @@ export class ShapeComponent extends Component {
         if (this.shape.graphics.isEmpty()) {
             this.shape.graphics = this.props.model.geom.graphics({
                 strokeStyle: strokeStyle,
-                ignoreScale: false,
+                ignoreScale: true,
                 stroke: color,
                 fill: fill,
                 radius: 3. / (stage.zoomFactor * stage.resolution)

@@ -4,18 +4,13 @@
 
 import React, {Component} from 'react';
 import '../App.css';
-// import Flatten from 'flatten-js';
 import {ToolbarComponent} from './toolbarComponent';
 import {CanvasComponent} from './canvasComponent';
 import {StatusComponent} from './statusComponent';
-// import {LayerComponent} from "./layerComponent";
 import {StageComponent} from "./stageComponent";
 
 import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
-
-// import {PolygonTool} from '../tools/polygonTool';
-// import {SegmentTool} from "../tools/segmentTool";
 import {MeasurePointsTool} from '../tools/measurePointsTool';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 

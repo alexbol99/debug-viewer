@@ -31,8 +31,15 @@ export class Layer {
         }
         else {
             let geom = shape;
-            let newShape = new Model(geom) // , this.stage);
+            let newShape = new Model(geom, {}, shape.label) // , this.stage);
             this.shapes.push(newShape);     // add(newShape);
+        }
+        return this;
+    }
+
+    addShapesArray(shapes) {
+        for (let shape of shapes) {
+            this.add(shape);
         }
         return this;
     }

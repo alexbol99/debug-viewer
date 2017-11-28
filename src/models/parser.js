@@ -47,6 +47,46 @@ export class Parser {
         return watchArray;
     }
 
+    parseToSegment(line) {
+        let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
+        let termArr = parenth.split(' ');             // array of terms "attr=value"
+
+        let psArr = termArr[0].split('=')[1].split(',');
+        let ps = new Point(parseInt(psArr[0],10), parseInt(psArr[1],10));
+
+        let peArr = termArr[1].split('=')[1].split(',');
+        let pe = new Point(parseInt(peArr[0],10), parseInt(peArr[1],10));
+
+        return new Segment(ps, pe);
+    }
+
+    parseToArc(line) {
+        let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
+        let termArr = parenth.split(' ');             // array of terms "attr=value"
+
+        let psArr = termArr[0].split('=')[1].split(',');
+        let ps = new Point(parseInt(psArr[0],10), parseInt(psArr[1],10));
+
+        let peArr = termArr[1].split('=')[1].split(',');
+        let pe = new Point(parseInt(peArr[0],10), parseInt(peArr[1],10));
+
+        let pcArr = termArr[2].split('=')[1].split(',');
+        let pc = new Point(parseInt(pcArr[0],10), parseInt(pcArr[1],10));
+
+        let cwStr = termArr[3].split('=')[1];
+        let counterClockwise = cwStr === '0' ? true : false;
+
+        let startAngle = vector(pc,ps).slope;
+        let endAngle = vector(pc, pe).slope;
+
+        if (Flatten.Utils.EQ(startAngle, endAngle)) {
+            endAngle += 2*Math.PI;
+        }
+        let r = vector(pc, ps).length;
+
+        return new Arc(pc, r, startAngle, endAngle, counterClockwise);
+    }
+
     parseToPolygon(str) {
         let polygon = new Polygon();
         // let mulitystr = debug_str;
@@ -69,42 +109,102 @@ export class Parser {
                     let termArr = parenth.split(' ');             // array of terms "attr=value"
 
                     if (line.search('mat_seg_struc') >= 0) {
-                        let psArr = termArr[0].split('=')[1].split(',');
-                        let ps = new Point(parseInt(psArr[0],10), parseInt(psArr[1],10));
+                        let segment = this.parseToSegment(line);
+                        edges.push(segment);
 
-                        let peArr = termArr[1].split('=')[1].split(',');
-                        let pe = new Point(parseInt(peArr[0],10), parseInt(peArr[1],10));
-
-                        edges.push(new Segment(ps, pe));
+                        // let psArr = termArr[0].split('=')[1].split(',');
+                        // let ps = new Point(parseInt(psArr[0],10), parseInt(psArr[1],10));
+                        //
+                        // let peArr = termArr[1].split('=')[1].split(',');
+                        // let pe = new Point(parseInt(peArr[0],10), parseInt(peArr[1],10));
+                        //
+                        // edges.push(new Segment(ps, pe));
                     }
                     else if (line.search('mat_curve_struc') >= 0) {
-                        let psArr = termArr[0].split('=')[1].split(',');
-                        let ps = new Point(parseInt(psArr[0],10), parseInt(psArr[1],10));
+                        let arc = this.parseToArc(line);
+                        edges.push(arc);
 
-                        let peArr = termArr[1].split('=')[1].split(',');
-                        let pe = new Point(parseInt(peArr[0],10), parseInt(peArr[1],10));
-
-                        let pcArr = termArr[2].split('=')[1].split(',');
-                        let pc = new Point(parseInt(pcArr[0],10), parseInt(pcArr[1],10));
-
-                        let cwStr = termArr[3].split('=')[1];
-                        let counterClockwise = cwStr === '0' ? true : false;
-
-                        let startAngle = vector(pc,ps).slope;
-                        let endAngle = vector(pc, pe).slope;
-
-                        if (Flatten.Utils.EQ(startAngle, endAngle)) {
-                            endAngle += 2*Math.PI;
-                        }
-                        let r = vector(pc, ps).length;
-
-                        edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
+                        // let psArr = termArr[0].split('=')[1].split(',');
+                        // let ps = new Point(parseInt(psArr[0],10), parseInt(psArr[1],10));
+                        //
+                        // let peArr = termArr[1].split('=')[1].split(',');
+                        // let pe = new Point(parseInt(peArr[0],10), parseInt(peArr[1],10));
+                        //
+                        // let pcArr = termArr[2].split('=')[1].split(',');
+                        // let pc = new Point(parseInt(pcArr[0],10), parseInt(pcArr[1],10));
+                        //
+                        // let cwStr = termArr[3].split('=')[1];
+                        // let counterClockwise = cwStr === '0' ? true : false;
+                        //
+                        // let startAngle = vector(pc,ps).slope;
+                        // let endAngle = vector(pc, pe).slope;
+                        //
+                        // if (Flatten.Utils.EQ(startAngle, endAngle)) {
+                        //     endAngle += 2*Math.PI;
+                        // }
+                        // let r = vector(pc, ps).length;
+                        //
+                        // edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
                     }
                 }
                 polygon.addFace(edges);
             }
         }
         return polygon;
+    }
+
+    parseToPoints(str) {
+        let points = [];
+        let arrayOfLines = str.match(/[^\r\n]+/g);
+        for (let line of arrayOfLines) {
+            if (line.search('point_struc') >= 0) {
+                let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
+                let pointArr = parenth.split('=')[1].split(',');
+                let point = new Point(parseInt(pointArr[0],10), parseInt(pointArr[1],10));
+                point.label = line.split(/\s+/)[1];
+                points.push(point);
+            }
+        }
+        return points;
+    }
+
+    parseToSegmentsArcs(str) {
+        let shapes = [];
+        let arrayOfLines = str.match(/[^\r\n]+/g);
+        for (let line of arrayOfLines) {
+            let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
+            let termArr = parenth.split(' ');             // array of terms "attr=value"
+
+            if (line.search('mat_seg_struc') >= 0) {
+                let segment = this.parseToSegment(line);
+                shapes.push(segment);
+            }
+            else if (line.search('mat_curve_struc') >= 0) {
+                let arc = this.parseToArc(line);
+                shapes.push(arc);
+            }
+        }
+        return shapes;
+    }
+
+    parse(str) {
+        /* try polygon */
+        let polygon = this.parseToPolygon(str);
+        if (polygon.edges.size > 0 && polygon.faces.size > 0) {
+            return [polygon];
+        }
+
+        /* try array of points */
+        let points = this.parseToPoints(str);
+        if (points.length > 0) {
+            return points;
+        }
+
+        /* try array of segments and arcs */
+        let shapes = this.parseToSegmentsArcs(str);
+        if (shapes.length > 0) {
+            return shapes;
+        }
     }
 }
 

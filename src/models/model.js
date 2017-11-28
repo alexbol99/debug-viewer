@@ -15,7 +15,7 @@ export class Model {
     }
 
     clone() {
-        let model = new Model(this.geom, this.style);
+        let model = new Model(this.geom, this.style, this.label);
         return Object.assign(model, this);
     }
 

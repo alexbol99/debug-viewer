@@ -44,28 +44,28 @@ const webgl_test = ({ dispatch, getState }) => next => action => {
             // shape.cache(pc.x-r,pc.y-r, r*2,r*2);
 
             // stage.update();
-            // layer.add( new Model(point(0,0)) );
-            // layer.add( new Model(point(100,0)) );
-            // layer.add( new Model(point(0,100)) );
-            // layer.add( new Model(point(-100,0)) );
-            // layer.add( new Model(point(0,-100)) );
-            //
-            // layer.add( new Model(circle(point(50,50), 50)) );
-            //
-            // layer.add( new Model(segment(-100, 0, 100, 0), {}, "segment1"));
-            // layer.add( new Model(segment(0, -100, 0, 50), {}, "segment 2"));
-            //
-            // layer.add( new Model(point(20,20),{},"ABC123") );
-            // layer.add( new Model(point(-50,30),{},"Boom boom") );
+            layer.add( new Model(point(0,0)) );
+            layer.add( new Model(point(100,0)) );
+            layer.add( new Model(point(0,100)) );
+            layer.add( new Model(point(-100,0)) );
+            layer.add( new Model(point(0,-100)) );
 
-            let polygon = new Polygon();
-            polygon.addFace( [
-                segment(-5000,-5000, 5000, -5000),
-                segment(5000, -5000, 10000, 10000),
-                segment(10000,10000, -10000, 10000),
-                segment(-10000,10000, -5000, -5000)
-            ]);
-            layer.add(polygon);
+            layer.add( new Model(circle(point(50,50), 50)) );
+
+            layer.add( new Model(segment(-100, 0, 100, 0), {}, "segment1"));
+            layer.add( new Model(segment(0, -100, 0, 50), {}, "segment 2"));
+
+            layer.add( new Model(point(20,20),{},"ABC123") );
+            layer.add( new Model(point(-50,30),{},"Boom boom") );
+
+            // let polygon = new Polygon();
+            // polygon.addFace( [
+            //     segment(-5000,-5000, 5000, -5000),
+            //     segment(5000, -5000, 10000, 10000),
+            //     segment(10000,10000, -10000, 10000),
+            //     segment(-10000,10000, -5000, -5000)
+            // ]);
+            // layer.add(polygon);
 
             zoomHome(layer, stage);
             state.layers.push(layer);

@@ -28,10 +28,10 @@ const matrix_test = ({ dispatch, getState }) => next => action => {
 
             let s1 = segment(-100, 0, 100, 0);
             let s2 = segment(0, -100, 0, 50);
-            s1.aperture = 10;
-            s2.aperture = 20;
+            // s1.aperture = 10;
+            // s2.aperture = 20;
 
-            layer.add( new Model(s1, {}, "segment1"));
+            layer.add( new Model(s1, {}, "segment 1"));
             layer.add( new Model(s2, {}, "segment 2"));
 
             let a = arc(point(0,0), 50, 0, Math.PI/4, Flatten.CCW);
