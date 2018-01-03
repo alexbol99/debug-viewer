@@ -9,6 +9,7 @@ import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
 // import {Shape} from '../models/shape';
 
+/*
 class WatchElement extends Component {
     render() {
         let watch = this.props.shape.watch;
@@ -55,6 +56,7 @@ class WatchElement extends Component {
         )
     }
 }
+*/
 
 export class AsideComponent extends Component {
     constructor() {

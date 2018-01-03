@@ -192,6 +192,21 @@ function app(state = defaultAppState, action) {
                 distance: undefined,
                 shortestSegment: null
             });
+        case ActionTypes.MOUSE_DOWN_ON_STAGE:
+            if (state.hoveredShape) {
+                return state
+            }
+            else {
+                return Object.assign({}, state, {
+                    measureShapesFirstClick: true,
+                    firstMeasuredShape: null,
+                    firstMeasuredLayer: null,
+                    secondMeasuredShape: null,
+                    secondMeasuredLayer: null,
+                    distance: undefined,
+                    shortestSegment: null
+                });
+            }
         case ActionTypes.LAYER_LIST_PANEL_PRESSED:
             return state;  // only to cause refresh of layers list component
         default:

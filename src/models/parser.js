@@ -105,8 +105,8 @@ export class Parser {
                 let edges = [];
                 for (let j=i+2; j < i+2+nedges; j++) {
                     line = arrayOfLines[j];
-                    let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
-                    let termArr = parenth.split(' ');             // array of terms "attr=value"
+                    // let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
+                    // let termArr = parenth.split(' ');             // array of terms "attr=value"
 
                     if (line.search('mat_seg_struc') >= 0) {
                         let segment = this.parseToSegment(line);
@@ -172,9 +172,6 @@ export class Parser {
         let shapes = [];
         let arrayOfLines = str.match(/[^\r\n]+/g);
         for (let line of arrayOfLines) {
-            let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
-            let termArr = parenth.split(' ');             // array of terms "attr=value"
-
             if (line.search('mat_seg_struc') >= 0) {
                 let segment = this.parseToSegment(line);
                 shapes.push(segment);

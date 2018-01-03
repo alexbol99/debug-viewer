@@ -14,7 +14,7 @@ import * as ActionTypes from './actions/action-types';
 // import { Layer } from './models/layer';
 
 // import { Shape } from './models/shape';
-import { Model } from "./models/model";
+// import { Model } from "./models/model";
 
 // let {Point} = Flatten;
 
@@ -34,7 +34,6 @@ class App extends Component {
         if (!layer) return;
 
         let parser = this.state.app.parser;
-        let dispatch = this.dispatch;
 
         for (let item of event.clipboardData.items) {
             item.getAsString( (string) => {
@@ -72,7 +71,7 @@ class App extends Component {
     }
 
     componentWillMount() {
-        this.dispatch = this.props.store.dispatch;
+        // this.dispatch = this.props.store.dispatch;
         this.setState(this.props.store.getState());
     }
 
@@ -87,7 +86,11 @@ class App extends Component {
                 <div className="App-body"
                      onPaste={(e) => this.handlePaste(e)}>
                     <MainComponent {... this.props } />
-                    <LayersListComponent {... this.props} />
+                    <LayersListComponent
+                        dispatch={this.props.store.dispatch}
+                        stage={this.state.stage}
+                        layers={this.state.layers}
+                    />
                     <AsideComponent {... this.props} />
                 </div>
             </div>

@@ -3,17 +3,13 @@
  */
 
 import React, {Component} from 'react';
-
-// import { ListGroup } from 'react-bootstrap';
 import '../App.css';
-
 import {LayerListElement} from './layerListElement';
-
 import * as ActionTypes from '../actions/action-types';
 import { Layers } from '../models/layers';
 
 export class LayersListComponent extends Component {
-    constructor() {
+    constructor(param) {
         super();
         this.onLayerListClicked = this.onLayerListClicked.bind(this);
         this.onLayerClicked = this.onLayerClicked.bind(this);
@@ -22,15 +18,7 @@ export class LayersListComponent extends Component {
         this.onAffectedBoxClicked = this.onAffectedBoxClicked.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.height = 0;
-    }
-
-    componentWillMount() {
-        this.dispatch = this.props.store.dispatch;
-        this.setState(this.props.store.getState());
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState(nextProps.store.getState());
+        this.dispatch = param.dispatch;
     }
 
     onLayerListClicked() {
@@ -61,11 +49,11 @@ export class LayersListComponent extends Component {
     }
 
     onAddLayerSelected() {
-        let layer = Layers.newLayer(this.state.stage, this.state.layers);
+        let layer = Layers.newLayer(this.props.stage, this.props.layers);
 
         this.dispatch({
             type: ActionTypes.ADD_LAYER_PRESSED,
-            stage: this.state.stage,
+            stage: this.props.stage,
             layer: layer
         })
     }
@@ -136,6 +124,19 @@ export class LayersListComponent extends Component {
                 <h5 style={{margin:0}}>Add layer</h5>
             </div>)
 
+        let layers = this.props.layers.slice();
+        layers.sort( function(l1, l2) {
+            let name1 = l1.name.toUpperCase();
+            let name2 = l2.name.toUpperCase();
+            if (name1 < name2) {
+                return -1;
+            }
+            if (name1 > name2) {
+                return 1;
+            }
+            return 0;
+        });
+
         return (
             <div className="App-layers"
                  ref="layersComponent"
@@ -144,7 +145,7 @@ export class LayersListComponent extends Component {
                 <h5>Layers</h5>
                 <ul id="layersList"
                     style={{maxHeight:0.82*(this.height-40),padding:0,overflow:'auto'}}>
-                { this.state.layers.map((layer) =>
+                { layers.map((layer) =>
                     <LayerListElement
                         onLayerClicked={() => this.onLayerClicked(layer)}
                         onLayerDoubleClicked={() => this.onLayerDoubleClicked(layer)}
