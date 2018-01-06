@@ -211,6 +211,59 @@
           align-items: center;
 }
 
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
+
+.modal {
+  background-color: rgba(0,0,0,0.2);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.App-modal-popup {
+  background-color: rgba(240, 240, 240, 1.0);
+  padding: 1.2em;
+  border-color: rgba(147, 128, 108, 0.1);
+  border-width: 0.1em;
+  border-top-width: 2.4em;
+  border-style: solid;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.App-modal-popup input, label, textarea {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+
+.App-modal-popup input, textarea {
+  font-size: 12px;
+  border: none;
+  padding: 0.2em;
+}
+
+.App-modal-popup button {
+  float: right;
+  height: 24px;
+  border-radius: 5px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
 @media (min-width: 768px) {
   .HolyGrail-body {
     -webkit-box-orient: horizontal;
@@ -245,9 +298,9 @@
 html,body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: "Times New Roman";
   width:100%;
   height:100%;
 }
 
-/*# sourceMappingURL=main.9b681f18.css.map*/
+/*# sourceMappingURL=main.e74a30e4.css.map*/
