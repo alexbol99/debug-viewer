@@ -3,11 +3,9 @@
  */
 
 import React, { Component } from 'react';
-
-// import { ListGroupItem } from 'react-bootstrap';
-
-import '../App.css';
-
+import '../../public/styles/App.css';
+import {Modal} from "../components/modalPopupComponent";
+import {LayerEditForm} from "../forms/layerEditForm";
 
 export class LayerListElement extends Component {
     componentDidUpdate() {
@@ -17,11 +15,6 @@ export class LayerListElement extends Component {
         if (this.props.layer.affected) {
             elem.focus();
         }
-
-        // for (let shape of this.props.layer.shapes) {
-        //     shape.alpha = this.props.layer.displayed ? 1 : 0;
-        //     shape.redraw();
-        // }
     }
 
     render() {
@@ -31,7 +24,46 @@ export class LayerListElement extends Component {
         let displayed = this.props.layer.displayed ? "Layer-displayed" : "Layer-undisplayed"
         let color = displayed ? this.props.layer.color : "black";
         let alpha = this.props.layer.affected ? 1 : 0;
-        return this.props.layer.edited ? (
+        return [
+            <li key={1}
+                className={`Layer ${displayed}`}
+                onClick={this.props.onLayerClicked}
+                onDoubleClick={this.props.onLayerDoubleClicked}>
+
+                <div
+                    style={{flex: 2, marginRight: 3}}
+                    onClick={this.props.onAffectedBoxClicked}
+                >
+                    <h4 style={{
+                        opacity: alpha, color: color, border: "1px solid black",
+                        width: 16, cursor: "default"
+                    }}>
+                        ✓
+                    </h4>
+                </div>
+
+                <h4 ref="layerName"
+                    style={{flex: 8, color: color}}
+                    title={this.props.layer.name}
+                    tabIndex='1'
+                >
+                    {this.props.layer.name}
+                </h4>
+
+            </li>,
+            this.props.layer.edited ? (
+            <Modal key={2}>
+                <LayerEditForm
+                    layer={this.props.layer}
+                    onSubmitLayerEditForm={this.props.onSubmitLayerEditForm}
+                    onEscapeLayerEditForm={this.props.onEscapeLayerEditForm}
+                />
+            </Modal>) : null]
+    }
+}
+/*
+this.props.layer.edited ? (
+
             <div
                 className={`Layer ${displayed}`}
                 onClick={this.props.onLayerClicked}
@@ -39,31 +71,4 @@ export class LayerListElement extends Component {
                 <input val={this.props.layer.name}/>
             </div>
         ) : (
-                <li
-                    className={`Layer ${displayed}`}
-                    onClick={this.props.onLayerClicked}
-                    onDoubleClick={this.props.onLayerDoubleClicked}>
-
-                    <div
-                        style={{flex: 2, marginRight: 3}}
-                        onClick={this.props.onAffectedBoxClicked}
-                    >
-                        <h4 style={{opacity: alpha, color: color}}>
-                        V
-                        </h4>
-                    </div>
-
-                    <h4 ref="layerName"
-                        style={{flex:8, color: color}}
-                        title={this.props.layer.name}
-                        tabIndex='1'
-                    >
-                        {this.props.layer.name}
-                    </h4>
-
-                </li>
-            )
-
-
-    }
-}
+ */

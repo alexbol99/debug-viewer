@@ -51,7 +51,8 @@ const defaultAppState = {
     shortestSegment: null,
     zoomFactor: undefined,
     originX: undefined,
-    originY: undefined
+    originY: undefined,
+    showModal: false
 };
 
 const defaultMouseState = {
@@ -283,15 +284,34 @@ function layers(state = [], action) {
                 }
             });
 
-        case ActionTypes.EDIT_LAYER_NAME_PRESSED:
+        case ActionTypes.OPEN_LAYER_EDIT_FORM_PRESSED:
             return state.map((layer) => {
                 if (layer !== action.layer) {
                     return layer;
                 }
-                return Object.assign({}, layer, {
-                    edited: true,
-                })
+                else {
+                    return layer.setEdited(true);
+                }
+            });
 
+        case ActionTypes.SUBMIT_LAYER_EDIT_FORM_PRESSED:
+            return state.map((layer) => {
+                if (layer !== action.layer) {
+                    return layer;
+                }
+                else {
+                    return layer.setNameAndTitle(action.newLayer.name, action.newLayer.title);
+                }
+            });
+
+        case ActionTypes.ESCAPE_LAYER_EDIT_FORM_PRESSED:
+            return state.map((layer) => {
+                if (layer !== action.layer) {
+                    return layer;
+                }
+                else {
+                    return layer.setEdited(false);
+                }
             });
 
         case ActionTypes.LAYERS_LIST_ARROW_DOWN_PRESSED:

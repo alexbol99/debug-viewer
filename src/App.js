@@ -1,22 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 // import logo from './logo.svg';
-import './App.css';
+import '../public/styles/App.css';
 
-import { HeaderComponent } from './components/headerComponent';
-import { MainComponent } from './components/mainComponent';
-import { LayersListComponent } from './components/layersListComponent';
-import { AsideComponent } from './components/asideComponent';
+import {HeaderComponent} from './components/headerComponent';
+import {MainComponent} from './components/mainComponent';
+import {LayersListComponent} from './components/layersListComponent';
+import {AsideComponent} from './components/asideComponent';
 
 import * as ActionTypes from './actions/action-types';
-
-// import Flatten from 'flatten-js';
-// import { Parser } from './models/parser';
-// import { Layer } from './models/layer';
-
-// import { Shape } from './models/shape';
-// import { Model } from "./models/model";
-
-// let {Point} = Flatten;
 
 class App extends Component {
     constructor(props) {
@@ -25,49 +16,14 @@ class App extends Component {
         this.props.store.subscribe(() => {
             this.setState(this.props.store.getState());
         });
-
+        this.handlePaste = this.handlePaste.bind(this);
     }
+
     handlePaste(event) {
-        if (this.state.layers.length === 0) return;
-
-        let layer = this.state.layers.find((lay) => lay.affected);
-        if (!layer) return;
-
-        let parser = this.state.app.parser;
-
-        for (let item of event.clipboardData.items) {
-            item.getAsString( (string) => {
-                let shapesArray = parser.parse(string);
-                // TODO: add something like poly.valid()
-                if (shapesArray.length > 0) {
-                    // let watch = parser.parseToWatchArray(string);
-
-                    // let shape = new Shape(poly, this.state.stage, {}, watch);
-                    // let shape = new Model(poly);
-
-                    this.dispatch({
-                        type: ActionTypes.NEW_SHAPE_PASTED,
-                        shapesArray: shapesArray
-                    });
-
-                    // dispatch({
-                    //     type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-                    //     shape: shape
-                    // });
-                }
-
-            });
-
-            break;
-        }
-
-            // let point = new Point(0, 0);
-            // let seg1 = new Segment(new Point(-10, 0), new Point(10, 0));
-            // let seg2 = new Segment(new Point(0, -10), new Point(0, 10));
-
-            // layer.add(point);
-            // layer.add(seg1);
-            // layer.add(seg2);
+        this.props.store.dispatch({
+            type: ActionTypes.DATA_FROM_BUFFER_PASTED,
+            data: event.clipboardData
+        });
     }
 
     componentWillMount() {
@@ -82,16 +38,15 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <HeaderComponent {... this.props } />
-                <div className="App-body"
-                     onPaste={(e) => this.handlePaste(e)}>
-                    <MainComponent {... this.props } />
+                <HeaderComponent {...this.props} />
+                <div className="App-body" onPaste={this.handlePaste}>
+                    <MainComponent {...this.props} />
                     <LayersListComponent
                         dispatch={this.props.store.dispatch}
                         stage={this.state.stage}
                         layers={this.state.layers}
                     />
-                    <AsideComponent {... this.props} />
+                    <AsideComponent {...this.props} />
                 </div>
             </div>
         );

@@ -73,6 +73,22 @@ export class Layer {
             });
     }
 
+    setEdited(edited) {
+        return Object.assign(this.clone(),
+            {
+                edited : edited
+            });
+    }
+
+    setNameAndTitle(name,title) {
+        return Object.assign(this.clone(),
+            {
+                name : name,
+                title: title,
+                edited: false
+            });
+    }
+
     setAlpha() {
         for(let shape of this.shapes) {
             shape.alpha = this.displayed ? 1 : 0;

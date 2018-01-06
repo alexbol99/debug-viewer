@@ -18,7 +18,7 @@ import label from '../../public/icons/label_icon.png';
 import setting from '../../public/icons/Setting.png';
 import about from '../../public/icons/About.png';
 
-import '../App.css';
+import '../../public/styles/App.css';
 
 export class ToolbarComponent extends Component {
     constructor() {

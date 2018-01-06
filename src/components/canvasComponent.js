@@ -5,7 +5,7 @@
 import React, {Component} from 'react';
 // import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
-import '../App.css';
+import '../../public/styles/App.css';
 import {Stage} from '../models/stage';
 
 export class CanvasComponent extends Component {

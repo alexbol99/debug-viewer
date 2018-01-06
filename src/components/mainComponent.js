@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import '../App.css';
+import '../../public/styles/App.css';
 import {ToolbarComponent} from './toolbarComponent';
 import {CanvasComponent} from './canvasComponent';
 import {StatusComponent} from './statusComponent';
@@ -327,6 +327,7 @@ export class MainComponent extends Component {
                     coordY={this.state.mouse.y}
                     onUnitClicked={this.toggleUnits}
                 />
+
             </main>
         )
     }

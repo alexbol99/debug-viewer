@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import '../App.css';
+import '../../public/styles/App.css';
 import {LayerListElement} from './layerListElement';
 import * as ActionTypes from '../actions/action-types';
 import { Layers } from '../models/layers';
@@ -14,6 +14,8 @@ export class LayersListComponent extends Component {
         this.onLayerListClicked = this.onLayerListClicked.bind(this);
         this.onLayerClicked = this.onLayerClicked.bind(this);
         this.onLayerDoubleClicked = this.onLayerDoubleClicked.bind(this);
+        this.onSubmitLayerEditForm = this.onSubmitLayerEditForm.bind(this);
+        this.onEscapeLayerEditForm = this.onEscapeLayerEditForm.bind(this);
         this.onAddLayerSelected = this.onAddLayerSelected.bind(this);
         this.onAffectedBoxClicked = this.onAffectedBoxClicked.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -35,10 +37,25 @@ export class LayersListComponent extends Component {
     }
 
     onLayerDoubleClicked(layer) {
-        // this.dispatch({
-        //     type: ActionTypes.EDIT_LAYER_NAME_PRESSED,
-        //     layer: layer
-        // });
+        this.dispatch({
+            type: ActionTypes.OPEN_LAYER_EDIT_FORM_PRESSED,
+            layer: layer
+        });
+    }
+
+    onSubmitLayerEditForm(layer, newLayer) {
+        this.dispatch({
+            type: ActionTypes.SUBMIT_LAYER_EDIT_FORM_PRESSED,
+            layer: layer,
+            newLayer: newLayer
+        });
+    };
+
+    onEscapeLayerEditForm(layer) {
+        this.dispatch({
+            type: ActionTypes.ESCAPE_LAYER_EDIT_FORM_PRESSED,
+            layer: layer
+        });
     }
 
     onAffectedBoxClicked(layer) {
@@ -150,6 +167,8 @@ export class LayersListComponent extends Component {
                         onLayerClicked={() => this.onLayerClicked(layer)}
                         onLayerDoubleClicked={() => this.onLayerDoubleClicked(layer)}
                         onAffectedBoxClicked={() => this.onAffectedBoxClicked(layer)}
+                        onSubmitLayerEditForm={this.onSubmitLayerEditForm}
+                        onEscapeLayerEditForm={this.onEscapeLayerEditForm}
                         key={layer.name}
                         layer={layer}
                     />)

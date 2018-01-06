@@ -6,7 +6,7 @@ import {Component} from 'react';
 // import createjs from 'easel-js';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
-import '../App.css';
+import '../../public/styles/App.css';
 export class MeasureShapesTool extends Component {
     constructor(params) {
         super();

@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 // import createjs from 'easel-js';
 // import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
-import '../App.css';
+import '../../public/styles/App.css';
 
 export class MeasurePointsTool extends Component {
     constructor() {

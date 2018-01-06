@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import '../App.css';
+import '../../public/styles/App.css';
 import * as ActionTypes from '../actions/action-types';
 // import { debug_str } from '../sample';
 import {Layers} from '../models/layers';
