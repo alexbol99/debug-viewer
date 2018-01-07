@@ -5,16 +5,16 @@
 import React, {Component} from 'react';
 import FontAwesome from 'react-fontawesome';
 
-import open from '../../public/icons/Browse.png';
-import home from '../../public/icons/homeIcon20x20.png';
-import pan from '../../public/icons/handDrag20.png';
+// import open from '../../public/icons/Browse.png';
+// import home from '../../public/icons/homeIcon20x20.png';
+// import pan from '../../public/icons/handDrag20.png';
 import measureShapes from '../../public/icons/measureContour.png';
 import measurePoints from '../../public/icons/measurePoints.png';
 import width from '../../public/icons/WidthOn.png';
 import vertices from '../../public/icons/editContourVertextOnOff.png';
-import label from '../../public/icons/label_icon.png';
-import setting from '../../public/icons/Setting.png';
-import about from '../../public/icons/About.png';
+// import label from '../../public/icons/label_icon.png';
+// import setting from '../../public/icons/Setting.png';
+// import about from '../../public/icons/About.png';
 
 import '../../public/styles/App.css';
 
