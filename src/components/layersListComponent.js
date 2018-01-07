@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react';
 import '../../public/styles/App.css';
+import {LayerListToolbarComponent} from "./layerListToolbarComponent";
 import {LayerListElement} from './layerListElement';
 import * as ActionTypes from '../actions/action-types';
 import { Layers } from '../models/layers';
@@ -16,7 +17,12 @@ export class LayersListComponent extends Component {
         this.onLayerDoubleClicked = this.onLayerDoubleClicked.bind(this);
         this.onSubmitLayerEditForm = this.onSubmitLayerEditForm.bind(this);
         this.onEscapeLayerEditForm = this.onEscapeLayerEditForm.bind(this);
+
         this.onAddLayerSelected = this.onAddLayerSelected.bind(this);
+        this.onEditLayerSelected = this.onEditLayerSelected.bind(this);
+        this.onDeleteLayerSelected = this.onDeleteLayerSelected.bind(this);
+        this.onSortLayersSelected = this.onSortLayersSelected.bind(this);
+
         this.onAffectedBoxClicked = this.onAffectedBoxClicked.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.height = 0;
@@ -73,6 +79,34 @@ export class LayersListComponent extends Component {
             stage: this.props.stage,
             layer: layer
         })
+    }
+
+    onEditLayerSelected() {
+        let layer = Layers.getAffected(this.props.layers);
+        if (!layer) return;
+
+        this.dispatch({
+            type: ActionTypes.OPEN_LAYER_EDIT_FORM_PRESSED,
+            layer: layer
+        });
+    }
+
+    onDeleteLayerSelected() {
+        let layer = Layers.getAffected(this.props.layers);
+        if (!layer) return;
+
+        this.dispatch({
+            type: ActionTypes.DELETE_LAYER_BUTTON_PRESSED,
+            layers: this.props.layers,
+            layer: layer
+        });
+    }
+
+    onSortLayersSelected() {
+        this.dispatch({
+            type: ActionTypes.SORT_LAYERS_BUTTON_PRESSED,
+            layers: this.props.layers
+        });
     }
 
     handleKeyDown(e) {
@@ -134,35 +168,41 @@ export class LayersListComponent extends Component {
     }
 
     render() {
-        let addLayer =
-            (<div
-                style={{padding:4, backgroundColor: "lightgray"}}
-                onClick={this.onAddLayerSelected}>
-                <h5 style={{margin:0}}>Add layer</h5>
-            </div>)
+        // let addLayer =
+        //     (<div
+        //         style={{padding:4, backgroundColor: "lightgray"}}
+        //         onClick={this.onAddLayerSelected}>
+        //         <h5 style={{margin:0}}>Add layer</h5>
+        //     </div>)
 
-        let layers = this.props.layers.slice();
-        layers.sort( function(l1, l2) {
-            let name1 = l1.name.toUpperCase();
-            let name2 = l2.name.toUpperCase();
-            if (name1 < name2) {
-                return -1;
-            }
-            if (name1 > name2) {
-                return 1;
-            }
-            return 0;
-        });
+        // let layers = this.props.layers.slice();
+        // layers.sort( function(l1, l2) {
+        //     let name1 = l1.name.toUpperCase();
+        //     let name2 = l2.name.toUpperCase();
+        //     if (name1 < name2) {
+        //         return -1;
+        //     }
+        //     if (name1 > name2) {
+        //         return 1;
+        //     }
+        //     return 0;
+        // });
 
         return (
             <div className="App-layers"
                  ref="layersComponent"
                  onClick={this.onLayerListClicked}
             >
-                <h5>Layers</h5>
+                {/*<h5>Layers</h5>*/}
+                <LayerListToolbarComponent
+                    onAddLayerButtonClicked={this.onAddLayerSelected}
+                    onEditLayerButtonClicked={this.onEditLayerSelected}
+                    onDeleteLayerButtonClicked={this.onDeleteLayerSelected}
+                    onSortLayersButtonClicked={this.onSortLayersSelected}
+                />
                 <ul id="layersList"
                     style={{maxHeight:0.82*(this.height-40),padding:0,overflow:'auto'}}>
-                { layers.map((layer) =>
+                { this.props.layers.map((layer) =>
                     <LayerListElement
                         onLayerClicked={() => this.onLayerClicked(layer)}
                         onLayerDoubleClicked={() => this.onLayerDoubleClicked(layer)}
@@ -174,7 +214,7 @@ export class LayersListComponent extends Component {
                     />)
                 }
                 </ul>
-                {addLayer}
+                {/*{addLayer}*/}
             </div>
         )
 

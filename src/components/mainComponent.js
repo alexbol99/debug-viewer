@@ -13,6 +13,8 @@ import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
 import {MeasurePointsTool} from '../tools/measurePointsTool';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
+import {Modal} from "../components/modalPopupComponent";
+import {AboutPopup} from "../forms/aboutPopup";
 
 export class MainComponent extends Component {
     constructor() {
@@ -35,6 +37,8 @@ export class MainComponent extends Component {
         this.toggleWidthMode = this.toggleWidthMode.bind(this);
         this.toggleDisplayVertices = this.toggleDisplayVertices.bind(this);
         this.toggleDisplayLabels = this.toggleDisplayLabels.bind(this);
+        this.showAboutPopup = this.showAboutPopup.bind(this);
+        this.closeAboutPopup = this.closeAboutPopup.bind(this);
 
         this.onMeasurePointsButtonPressed = this.onMeasurePointsButtonPressed.bind(this);
         this.onMeasureBetweenShapesButtonPressed = this.onMeasureBetweenShapesButtonPressed.bind(this);
@@ -185,6 +189,17 @@ export class MainComponent extends Component {
         })
     }
 
+    showAboutPopup() {
+        this.dispatch({
+            type: ActionTypes.SHOW_ABOUT_POPUP_BUTTON_PRESSED
+        })
+    }
+    closeAboutPopup(event) {
+        this.props.store.dispatch({
+            type: ActionTypes.CLOSE_ABOUT_POPUP_BUTTON_PRESSED
+        })
+    }
+
     onMeasurePointsButtonPressed() {
         this.dispatch({
             type: ActionTypes.MEASURE_POINTS_BUTTON_PRESSED
@@ -262,6 +277,7 @@ export class MainComponent extends Component {
                     onToggleWidthModePressed={this.toggleWidthMode}
                     onToggleVerticesPressed={this.toggleDisplayVertices}
                     onToggleLabelsPressed={this.toggleDisplayLabels}
+                    onShowAboutPopupPressed={this.showAboutPopup}
                 />
 
                 <CanvasComponent
@@ -327,6 +343,17 @@ export class MainComponent extends Component {
                     coordY={this.state.mouse.y}
                     onUnitClicked={this.toggleUnits}
                 />
+
+                {this.state.app.showAboutPopup ? (
+                    <Modal>
+                        <AboutPopup
+                            title={this.state.app.title}
+                            version={this.state.app.version}
+                            build={this.state.app.build}
+                            onCloseAboutPopupPressed={this.closeAboutPopup}
+                        />
+                    </Modal>
+                ) : null}
 
             </main>
         )

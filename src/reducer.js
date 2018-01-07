@@ -31,6 +31,8 @@ const unitsList = [
 
 const defaultAppState = {
     title: "Debug Viewer",
+    version: "1.0",
+    build: "",
     units: "pixels",
     decimals: 0,
     divisor: 1,
@@ -52,7 +54,7 @@ const defaultAppState = {
     zoomFactor: undefined,
     originX: undefined,
     originY: undefined,
-    showModal: false
+    showAboutPopup: false
 };
 
 const defaultMouseState = {
@@ -169,6 +171,15 @@ function app(state = defaultAppState, action) {
                 displayLabels: !state.displayLabels
             });
 
+        case ActionTypes.SHOW_ABOUT_POPUP_BUTTON_PRESSED:
+            return Object.assign({}, state, {
+                showAboutPopup: true
+            });
+        case ActionTypes.CLOSE_ABOUT_POPUP_BUTTON_PRESSED:
+            return Object.assign({}, state, {
+                showAboutPopup: false
+            });
+
         case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
             return Object.assign({}, state, {
                 measurePointsActive: true,
@@ -227,6 +238,12 @@ function layers(state = [], action) {
 
         case ActionTypes.ADD_LAYER_PRESSED:
             return [...state, action.layer];
+
+        case ActionTypes.DELETE_LAYER_BUTTON_PRESSED:
+            return Layers.delete(action.layers, action.layer);
+
+        case ActionTypes.SORT_LAYERS_BUTTON_PRESSED:
+            return Layers.sort(action.layers);
 
         case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
             let color = "";

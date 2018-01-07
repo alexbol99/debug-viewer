@@ -3,9 +3,7 @@
  */
 
 import React, {Component} from 'react';
-
-// import { ButtonToolbar, Button } from 'react-bootstrap';
-// import logo from '../logo.svg';
+import FontAwesome from 'react-fontawesome';
 
 import open from '../../public/icons/Browse.png';
 import home from '../../public/icons/homeIcon20x20.png';
@@ -40,7 +38,12 @@ export class ToolbarComponent extends Component {
             <div className="App-toolbar">
                 {/*<h4>Toolbar</h4>*/}
                 <button title="Open file" onClick={this.openJobButtonClicked}>
-                    <img src={open} alt="open" />
+                    {/*<img src={open} alt="open" />*/}
+                    <FontAwesome
+                        name='folder-open-o'
+                        size='2x'
+                        style={{color:"grey"}}
+                    />
                 </button>
 
                 <input style={{fontSize: 16, marginTop: 5, marginBottom: 5, display: "none"}}
@@ -49,10 +52,20 @@ export class ToolbarComponent extends Component {
                 />
 
                 <button title="Zoom and pan to home view" onClick={this.props.onHomeButtonPressed}>
-                    <img src={home} alt="home" />
+                    {/*<img src={home} alt="home" />*/}
+                    <FontAwesome
+                        name='home'
+                        size='2x'
+                        style={{color:"grey"}}
+                    />
                 </button>
                 <button title="Pan by drag" onClick={this.props.onPanByDragPressed}>
-                    <img src={pan} alt="panByDrag" />
+                    {/*<img src={pan} alt="panByDrag" />*/}
+                    <FontAwesome
+                        name='hand-paper-o'
+                        size='2x'
+                        style={{color:"grey"}}
+                    />
                 </button>
                 <button title="Measure distance between points" onClick={this.props.onMeasurePointsButtonPressed}>
                     <img src={measurePoints} alt="measurePoints" />
@@ -67,13 +80,23 @@ export class ToolbarComponent extends Component {
                     <img src={vertices} alt="vertices" />
                 </button>
                 <button title="Display labels on/off" onClick={this.props.onToggleLabelsPressed}>
-                    <img src={label} alt="labels" />
+                    {/*<img src={label} alt="labels" />*/}
+                    <FontAwesome
+                        name='tag'
+                        size='2x'
+                        style={{color:"grey"}}
+                    />
                 </button>
-                <button title="Settings" onClick={this.notImplemented}>
-                    <img src={setting} alt="setting" />
-                </button>
-                <button title="About" onClick={this.notImplemented}>
-                    <img src={about} alt="about" />
+                {/*<button title="Settings" onClick={this.notImplemented}>*/}
+                    {/*<img src={setting} alt="setting" />*/}
+                {/*</button>*/}
+                <button title="About" onClick={this.props.onShowAboutPopupPressed}>
+                    {/*<img src={about} alt="about" />*/}
+                    <FontAwesome
+                        name='info'
+                        size='2x'
+                        style={{color:"grey"}}
+                    />
                 </button>
             </div>
         )

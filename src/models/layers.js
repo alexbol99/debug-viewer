@@ -73,4 +73,26 @@ export class Layers {
         }
         return color;
     }
+
+    static delete(layers, layer) {
+        // let index = layers.findIndex((l) => l === layer);
+        let newLayers = layers.filter(l => l !== layer);
+        return newLayers;
+    }
+
+    static sort(layers) {
+        let newLayers = layers.slice();
+        newLayers.sort( function(l1, l2) {
+            let name1 = l1.name.toUpperCase();
+            let name2 = l2.name.toUpperCase();
+            if (name1 < name2) {
+                return -1;
+            }
+            if (name1 > name2) {
+                return 1;
+            }
+            return 0;
+        });
+        return newLayers;
+    }
 }
