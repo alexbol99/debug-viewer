@@ -21706,9 +21706,7 @@
 	            _react2.default.createElement(
 	                'h4',
 	                null,
-	                'Build #',
-	                props.build,
-	                '  07/01/2018'
+	                'Build 9811fd55  07/01/2018'
 	            ),
 	            _react2.default.createElement(
 	                'button',
@@ -30304,4 +30302,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.9811fd55.js.map
+//# sourceMappingURL=main.3330b654.js.map
