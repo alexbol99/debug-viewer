@@ -21809,7 +21809,7 @@
 	                    'button',
 	                    { title: 'Pan by drag', onClick: this.props.onPanByDragPressed },
 	                    _react2.default.createElement(_reactFontawesome2.default, {
-	                        name: 'hand-paper-o',
+	                        name: 'arrows',
 	                        size: '2x',
 	                        style: { color: "grey" }
 	                    })
@@ -30337,4 +30337,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.09dee328.js.map
+//# sourceMappingURL=main.e39dae48.js.map
