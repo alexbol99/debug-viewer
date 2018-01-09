@@ -21448,10 +21448,39 @@
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
-	            this.vertices = undefined;
 	            this.shape.off("mouseover", this.handleMouseOver);
 	            this.shape.off("mouseout", this.handleMouseOut);
 	            this.shape.off("click", this.handleClick);
+	            this.props.stage.removeChild(this.shape);
+	            this.shape.graphics.clear();
+	            this.props.stage.removeChild(this.labelShape);
+	            this.labelShape = undefined;
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = this.vertexShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var vertexShape = _step3.value;
+	
+	                    this.props.stage.removeChild(vertexShape);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            this.vertexShapes = [];
 	        }
 	    }, {
 	        key: 'render',
@@ -30308,4 +30337,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.63fa422f.js.map
+//# sourceMappingURL=main.0f24db95.js.map
