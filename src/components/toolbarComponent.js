@@ -62,7 +62,7 @@ export class ToolbarComponent extends Component {
                 <button title="Pan by drag" onClick={this.props.onPanByDragPressed}>
                     {/*<img src={pan} alt="panByDrag" />*/}
                     <FontAwesome
-                        name='hand-paper-o'
+                        name='arrows'
                         size='2x'
                         style={{color:"grey"}}
                     />
