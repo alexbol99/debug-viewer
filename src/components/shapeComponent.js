@@ -170,10 +170,17 @@ export class ShapeComponent extends Component {
     }
 
     componentWillUnmount() {
-        this.vertices = undefined;
         this.shape.off("mouseover", this.handleMouseOver);
         this.shape.off("mouseout", this.handleMouseOut);
         this.shape.off("click", this.handleClick);
+        this.props.stage.removeChild(this.shape);
+        this.shape.graphics.clear();
+        this.props.stage.removeChild(this.labelShape);
+        this.labelShape = undefined;
+        for (let vertexShape of this.vertexShapes) {
+            this.props.stage.removeChild(vertexShape);
+        }
+        this.vertexShapes = [];
     }
 
     render() {
