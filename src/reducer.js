@@ -37,24 +37,27 @@ const defaultAppState = {
     decimals: 0,
     divisor: 1,
     bg: "#F1F1F1",
-    hoveredShape: null,
     parser: new Parser(),
     widthOn: true,
     displayVertices: false,
     displayLabels: true,
     measurePointsActive: false,
+    zoomFactor: undefined,
+    originX: undefined,
+    originY: undefined,
+    showAboutPopup: false
+};
+
+const defaultMeasureShapesTool = {
     measureShapesActive: false,
     measureShapesFirstClick: true,
+    hoveredShape: null,
     firstMeasuredShape: null,
     secondMeasuredShape: null,
     firstMeasuredLayer: null,
     secondMeasuredLayer: null,
     distance: undefined,
-    shortestSegment: null,
-    zoomFactor: undefined,
-    originX: undefined,
-    originY: undefined,
-    showAboutPopup: false
+    shortestSegment: null
 };
 
 const defaultMouseState = {
@@ -86,67 +89,6 @@ function app(state = defaultAppState, action) {
                 units: newUnits.name,
                 decimals: newUnits.decimals,
                 divisor: newUnits.divisor
-            });
-        case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
-            return Object.assign({}, state, {
-                hoveredShape: state.measureShapesActive ? action.shape : null
-            });
-        case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
-            return Object.assign({}, state, {
-                hoveredShape: null
-            });
-        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
-            if (!state.measureShapesActive) {
-                return state;
-            }
-            // measureShapesActive
-
-            if (state.measureShapesFirstClick) {
-                return Object.assign({}, state, {
-                    firstMeasuredShape: action.shape,
-                    firstMeasuredLayer: action.layer,
-                    secondMeasuredShape: null,
-                    secondMeasuredLayer: null,
-                    measureShapesFirstClick: false,
-                    distance: undefined,
-                    shortestSegment: null
-                })
-            }
-            else {    // second click
-                if (action.shape === state.firstMeasuredShape) {
-                    return state;  // second click on the same shape
-                }
-
-                let shape1 = state.firstMeasuredShape.geom;
-                let shape2 = action.shape.geom;
-                let distance, shortestSegment;
-                // if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
-                //     [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
-                // }
-                // else {
-                [distance, shortestSegment] = Flatten.Distance.distance(shape1, shape2);
-                // }
-
-
-                return Object.assign({}, state, {
-                    secondMeasuredShape: action.shape,
-                    secondMeasuredLayer: action.layer,
-                    measureShapesFirstClick: true,
-                    distance: distance,
-                    shortestSegment: shortestSegment
-                });
-            }
-        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
-            return Object.assign({}, state, {
-                measurePointsActive: false,
-                measureShapesActive: false,
-                measureShapesFirstClick: true,
-                firstMeasuredShape: null,
-                firstMeasuredLayer: null,
-                secondMeasuredShape: null,
-                secondMeasuredLayer: null,
-                distance: undefined,
-                shortestSegment: null
             });
         case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
             return Object.assign({}, state, {
@@ -182,27 +124,11 @@ function app(state = defaultAppState, action) {
 
         case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
             return Object.assign({}, state, {
-                measurePointsActive: true,
-                measureShapesActive: false,
-                measureShapesFirstClick: true,
-                firstMeasuredShape: null,
-                firstMeasuredLayer: null,
-                secondMeasuredShape: null,
-                secondMeasuredLayer: null,
-                distance: undefined,
-                shortestSegment: null
+                measurePointsActive: true
             });
         case ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED:
             return Object.assign({}, state, {
-                measurePointsActive: false,
-                measureShapesActive: true,
-                measureShapesFirstClick: true,
-                firstMeasuredShape: null,
-                firstMeasuredLayer: null,
-                secondMeasuredShape: null,
-                secondMeasuredLayer: null,
-                distance: undefined,
-                shortestSegment: null
+                measurePointsActive: false
             });
         case ActionTypes.MOUSE_DOWN_ON_STAGE:
             if (state.hoveredShape) {
@@ -397,6 +323,87 @@ function stage(state = null, action) {
     }
 }
 
+function measureShapesTool(state = defaultMeasureShapesTool, action) {
+    switch (action.type) {
+        case ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED:
+            return Object.assign({}, defaultMeasureShapesTool, {
+                measureShapesActive: true
+            });
+            case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
+            return Object.assign({}, defaultMeasureShapesTool);
+
+        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
+            return Object.assign({}, defaultMeasureShapesTool);
+
+        case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
+            return Object.assign({}, state, {
+                hoveredShape: state.measureShapesActive ? action.shape : null
+            });
+        case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
+            return Object.assign({}, state, {
+                hoveredShape: null
+            });
+        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
+            if (!state.measureShapesActive) {
+                return state;
+            }
+            // measureShapesActive
+
+            if (state.measureShapesFirstClick) {
+                return Object.assign({}, state, {
+                    firstMeasuredShape: action.shape,
+                    firstMeasuredLayer: action.layer,
+                    secondMeasuredShape: null,
+                    secondMeasuredLayer: null,
+                    measureShapesFirstClick: false,
+                    distance: undefined,
+                    shortestSegment: null
+                })
+            }
+            else {    // second click
+                if (action.shape === state.firstMeasuredShape) {
+                    return state;  // second click on the same shape
+                }
+
+                let shape1 = state.firstMeasuredShape.geom;
+                let shape2 = action.shape.geom;
+                let distance, shortestSegment;
+                // if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
+                //     [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
+                // }
+                // else {
+                [distance, shortestSegment] = Flatten.Distance.distance(shape1, shape2);
+                // }
+
+
+                return Object.assign({}, state, {
+                    secondMeasuredShape: action.shape,
+                    secondMeasuredLayer: action.layer,
+                    measureShapesFirstClick: true,
+                    distance: distance,
+                    shortestSegment: shortestSegment
+                });
+            }
+        case ActionTypes.MOUSE_DOWN_ON_STAGE:
+            if (state.hoveredShape) {
+                return state
+            }
+            else {
+                return Object.assign({}, state, {
+                    measureShapesFirstClick: true,
+                    firstMeasuredShape: null,
+                    firstMeasuredLayer: null,
+                    secondMeasuredShape: null,
+                    secondMeasuredLayer: null,
+                    distance: undefined,
+                    shortestSegment: null
+                });
+            }
+        default:
+            return state;
+    }
+}
+
 function mouse(state = defaultMouseState, action) {
     switch (action.type) {
         case ActionTypes.MOUSE_MOVED_ON_STAGE:
@@ -419,9 +426,11 @@ function mouse(state = defaultMouseState, action) {
     }
 }
 
+
 export let reducer = combineReducers({
     app,
     layers,
     stage,
+    measureShapesTool,
     mouse
 });

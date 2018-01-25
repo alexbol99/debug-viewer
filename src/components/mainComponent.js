@@ -12,7 +12,7 @@ import {StageComponent} from "./stageComponent";
 import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
 import {MeasurePointsTool} from '../tools/measurePointsTool';
-import {MeasureShapesTool} from "../tools/measureShapesTool";
+//import {MeasureShapesTool} from "../tools/measureShapesTool";
 import {Modal} from "../components/modalPopupComponent";
 import {AboutPopup} from "../forms/aboutPopup";
 
@@ -295,12 +295,16 @@ export class MainComponent extends Component {
                     displayVertices={this.state.app.displayVertices}
                     displayLabels={this.state.app.displayLabels}
                     widthOn={this.state.app.widthOn}
-                    hoveredShape={this.state.app.hoveredShape}
-                    firstMeasuredShape={this.state.app.firstMeasuredShape}
-                    secondMeasuredShape={this.state.app.secondMeasuredShape}
                     zoomFactor={this.state.app.zoomFactor}
                     originX={this.state.app.originX}
                     originY={this.state.app.originY}
+                    hoveredShape={this.state.measureShapesTool.hoveredShape}
+                    firstMeasuredShape={this.state.measureShapesTool.firstMeasuredShape}
+                    secondMeasuredShape={this.state.measureShapesTool.secondMeasuredShape}
+                    firstMeasuredLayer={this.state.measureShapesTool.firstMeasuredLayer}
+                    secondMeasuredLayer={this.state.measureShapesTool.secondMeasuredLayer}
+                    distance={this.state.measureShapesTool.distance}
+                    shortestSegment={this.state.measureShapesTool.shortestSegment}
                     onMouseOver={this.onMouseRollOverShape}
                     onMouseOut={this.onMouseRollOutShape}
                     onClick={this.onClickOnShape}
@@ -313,21 +317,6 @@ export class MainComponent extends Component {
                             divisor={this.state.app.divisor}
                             decimals={this.state.app.decimals}
                             onMouseWheelMove={this.handleMouseWheelMove}
-                        />
-                    ) : null
-                }
-                {
-                    this.state.app.measureShapesActive ? (
-                        <MeasureShapesTool
-                            stage={this.state.stage}
-                            firstMeasuredShape={this.state.app.firstMeasuredShape}
-                            secondMeasuredShape={this.state.app.secondMeasuredShape}
-                            firstMeasuredLayer={this.state.app.firstMeasuredLayer}
-                            secondMeasuredLayer={this.state.app.secondMeasuredLayer}
-                            distance={this.state.app.distance}
-                            shortestSegment={this.state.app.shortestSegment}
-                            divisor={this.state.app.divisor}
-                            decimals={this.state.app.decimals}
                         />
                     ) : null
                 }

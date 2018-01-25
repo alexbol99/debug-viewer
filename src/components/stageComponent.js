@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {LayerComponent} from './layerComponent';
+import {MeasureShapesTool} from "../tools/measureShapesTool";
 import Utils from "../utils";
 
 export class StageComponent extends Component {
@@ -22,8 +23,7 @@ export class StageComponent extends Component {
     }
 
     render() {
-        return (
-            this.props.layers.map((layer) =>
+        let layerComponents = this.props.layers.map((layer) =>
                 <LayerComponent
                     key={layer.name}
                     stage={this.props.stage}
@@ -41,7 +41,23 @@ export class StageComponent extends Component {
                     onMouseOut={this.props.onMouseOut}
                     onClick={this.props.onClick}
                 />
-            )
-        )
+            );
+        let measureShapesTool = this.props.distance && this.props.shortestSegment ? (
+            <MeasureShapesTool
+                key="MeasureShapesTool"
+                stage={this.props.stage}
+                firstMeasuredShape={this.props.firstMeasuredShape}
+                secondMeasuredShape={this.props.secondMeasuredShape}
+                firstMeasuredLayer={this.props.firstMeasuredLayer}
+                secondMeasuredLayer={this.props.secondMeasuredLayer}
+                distance={this.props.distance}
+                shortestSegment={this.props.shortestSegment}
+            />
+        ) : null;
+
+        let components = [...layerComponents, measureShapesTool];
+
+        return components;
+
     }
 }

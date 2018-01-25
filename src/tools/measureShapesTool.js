@@ -10,32 +10,34 @@ import '../../public/styles/App.css';
 export class MeasureShapesTool extends Component {
     constructor(params) {
         super();
-        this.segment = undefined;
+        this.segment = new createjs.Shape();
+        params.stage.addChild(this.segment);
     }
+    draw() {
+        if (this.props.shortestSegment) {
 
+            this.segment.graphics = this.props.shortestSegment.graphics();
+        }
+    }
+    componentDidMount() {
+        this.draw();
+    }
     componentDidUpdate() {
+        this.segment.graphics.clear();
         if (this.props.firstMeasuredShape && this.props.secondMeasuredShape &&
             this.props.firstMeasuredLayer.displayed &&
             this.props.secondMeasuredLayer.displayed) {
 
-            if (this.props.shortestSegment && this.props.stage) {
-                let shortest_segment = this.props.shortestSegment;
-
-                if (!this.segment) {
-                    this.segment = new createjs.Shape();
-                    this.props.stage.addChild(this.segment);
-                }
-                this.segment.graphics.clear();
-                this.segment.graphics = shortest_segment.graphics();
-            }
-        }
-        else {
-            if (this.segment) {
-                this.segment.graphics.clear();
-            }
+            this.draw();
         }
     }
 
+    componentWillUnmount() {
+        if (this.segment) {
+            this.props.stage.removeChild(this.segment);
+            this.segment.graphics.clear();
+        }
+    }
     render() {
         return null
     }
