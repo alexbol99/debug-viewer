@@ -67,7 +67,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(102);
+	__webpack_require__(104);
 	module.exports = __webpack_require__(45);
 
 
@@ -78,7 +78,7 @@
 	'use strict';
 	
 	if (true) {
-	  module.exports = __webpack_require__(104);
+	  module.exports = __webpack_require__(106);
 	} else {
 	  module.exports = require('./cjs/react.development.js');
 	}
@@ -153,6 +153,11 @@
 	var SHOW_ABOUT_POPUP_BUTTON_PRESSED = exports.SHOW_ABOUT_POPUP_BUTTON_PRESSED = "SHOW_ABOUT_POPUP_BUTTON_PRESSED";
 	
 	var CLOSE_ABOUT_POPUP_BUTTON_PRESSED = exports.CLOSE_ABOUT_POPUP_BUTTON_PRESSED = "CLOSE_ABOUT_POPUP_BUTTON_PRESSED";
+	
+	/** AABB Distance Measurement Demo **/
+	var AABB_DEMO_URI = exports.AABB_DEMO_URI = "AABB_DEMO_URI";
+	var AABB_DEMO_NEXT_DIST_STEP = exports.AABB_DEMO_NEXT_DIST_STEP = "AABB_DEMO_NEXT_DIST_STEP";
+	var AABB_TREE_NEXT_LEVEL = exports.AABB_TREE_NEXT_LEVEL = "AABB_TREE_NEXT_LEVEL";
 
 /***/ },
 /* 4 */
@@ -164,8 +169,8 @@
 	'use strict';
 	// require("babel-polyfill");
 	
-	let Utils = __webpack_require__(86);
-	let Errors = __webpack_require__(85);
+	let Utils = __webpack_require__(88);
+	let Errors = __webpack_require__(87);
 	
 	/**
 	 * FlattenJS - library for 2d geometry
@@ -190,20 +195,20 @@
 	
 	let f = new Flatten();
 	
+	__webpack_require__(86)(f);
+	__webpack_require__(81)(f);
+	__webpack_require__(85)(f);
+	__webpack_require__(80)(f);
+	__webpack_require__(77)(f);
 	__webpack_require__(84)(f);
+	__webpack_require__(75)(f);
+	__webpack_require__(76)(f);
+	__webpack_require__(78)(f);
 	__webpack_require__(79)(f);
 	__webpack_require__(83)(f);
-	__webpack_require__(78)(f);
-	__webpack_require__(75)(f);
+	__webpack_require__(74)(f);
 	__webpack_require__(82)(f);
 	__webpack_require__(73)(f);
-	__webpack_require__(74)(f);
-	__webpack_require__(76)(f);
-	__webpack_require__(77)(f);
-	__webpack_require__(81)(f);
-	__webpack_require__(72)(f);
-	__webpack_require__(80)(f);
-	__webpack_require__(71)(f);
 	
 	// f.Point.inject(f.Distance);
 	
@@ -225,7 +230,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 20/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _layer = __webpack_require__(52);
+	var _layer = __webpack_require__(53);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -16991,6 +16996,93 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	var Utils = {
+	    is_equal: function is_equal(obj1, obj2) {
+	        var equal = true;
+	        var _iteratorNormalCompletion = true;
+	        var _didIteratorError = false;
+	        var _iteratorError = undefined;
+	
+	        try {
+	            for (var _iterator = Object.keys(obj2)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                var key = _step.value;
+	
+	                if (obj2[key] !== obj1[key]) {
+	                    equal = false;
+	                    break;
+	                }
+	            }
+	        } catch (err) {
+	            _didIteratorError = true;
+	            _iteratorError = err;
+	        } finally {
+	            try {
+	                if (!_iteratorNormalCompletion && _iterator.return) {
+	                    _iterator.return();
+	                }
+	            } finally {
+	                if (_didIteratorError) {
+	                    throw _iteratorError;
+	                }
+	            }
+	        }
+	
+	        return equal;
+	    }
+	};
+	
+	exports.default = Utils;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 * 
+	 */
+	
+	function makeEmptyFunction(arg) {
+	  return function () {
+	    return arg;
+	  };
+	}
+	
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	var emptyFunction = function emptyFunction() {};
+	
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function () {
+	  return this;
+	};
+	emptyFunction.thatReturnsArgument = function (arg) {
+	  return arg;
+	};
+	
+	module.exports = emptyFunction;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -17088,93 +17180,6 @@
 	}();
 
 /***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var Utils = {
-	    is_equal: function is_equal(obj1, obj2) {
-	        var equal = true;
-	        var _iteratorNormalCompletion = true;
-	        var _didIteratorError = false;
-	        var _iteratorError = undefined;
-	
-	        try {
-	            for (var _iterator = Object.keys(obj2)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                var key = _step.value;
-	
-	                if (obj2[key] !== obj1[key]) {
-	                    equal = false;
-	                    break;
-	                }
-	            }
-	        } catch (err) {
-	            _didIteratorError = true;
-	            _iteratorError = err;
-	        } finally {
-	            try {
-	                if (!_iteratorNormalCompletion && _iterator.return) {
-	                    _iterator.return();
-	                }
-	            } finally {
-	                if (_didIteratorError) {
-	                    throw _iteratorError;
-	                }
-	            }
-	        }
-	
-	        return equal;
-	    }
-	};
-	
-	exports.default = Utils;
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * 
-	 */
-	
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-	
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	var emptyFunction = function emptyFunction() {};
-	
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-	
-	module.exports = emptyFunction;
-
-/***/ },
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -17234,648 +17239,6 @@
 
 /***/ },
 /* 11 */
-/***/ function(module, exports) {
-
-	/*
-	object-assign
-	(c) Sindre Sorhus
-	@license MIT
-	*/
-	
-	'use strict';
-	/* eslint-disable no-unused-vars */
-	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-	
-	function toObject(val) {
-		if (val === null || val === undefined) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-	
-		return Object(val);
-	}
-	
-	function shouldUseNative() {
-		try {
-			if (!Object.assign) {
-				return false;
-			}
-	
-			// Detect buggy property enumeration order in older V8 versions.
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-			test1[5] = 'de';
-			if (Object.getOwnPropertyNames(test1)[0] === '5') {
-				return false;
-			}
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test2 = {};
-			for (var i = 0; i < 10; i++) {
-				test2['_' + String.fromCharCode(i)] = i;
-			}
-			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-				return test2[n];
-			});
-			if (order2.join('') !== '0123456789') {
-				return false;
-			}
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test3 = {};
-			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-				test3[letter] = letter;
-			});
-			if (Object.keys(Object.assign({}, test3)).join('') !==
-					'abcdefghijklmnopqrst') {
-				return false;
-			}
-	
-			return true;
-		} catch (err) {
-			// We don't expect any of the above to throw, but better to be safe.
-			return false;
-		}
-	}
-	
-	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-		var from;
-		var to = toObject(target);
-		var symbols;
-	
-		for (var s = 1; s < arguments.length; s++) {
-			from = Object(arguments[s]);
-	
-			for (var key in from) {
-				if (hasOwnProperty.call(from, key)) {
-					to[key] = from[key];
-				}
-			}
-	
-			if (getOwnPropertySymbols) {
-				symbols = getOwnPropertySymbols(from);
-				for (var i = 0; i < symbols.length; i++) {
-					if (propIsEnumerable.call(from, symbols[i])) {
-						to[symbols[i]] = from[symbols[i]];
-					}
-				}
-			}
-		}
-	
-		return to;
-	};
-
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Modal = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _reactDom = __webpack_require__(22);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	__webpack_require__(2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var modalRoot = document.getElementById('modal-root');
-	
-	// A Modal component that is an abstraction around the portal API.
-	
-	var Modal = exports.Modal = function (_Component) {
-	    _inherits(Modal, _Component);
-	
-	    function Modal(props) {
-	        _classCallCheck(this, Modal);
-	
-	        // Create a div that we'll render the modal into. Because each
-	        // Modal component has its own element, we can render multiple
-	        // modal components into the modal container.
-	        var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
-	
-	        _this.el = document.createElement('div');
-	        return _this;
-	    }
-	
-	    _createClass(Modal, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            // Append the element into the DOM on mount. We'll render
-	            // into the modal container element (see the HTML tab).
-	            modalRoot.appendChild(this.el);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            // Remove the element from the DOM when we unmount
-	            modalRoot.removeChild(this.el);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            // Use a portal to render the children into the element
-	            return _reactDom2.default.createPortal(
-	            // Any valid React child: JSX, strings, arrays, etc.
-	            this.props.children,
-	            // A DOM element
-	            this.el);
-	        }
-	    }]);
-
-	    return Modal;
-	}(_react.Component);
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _flattenJs = __webpack_require__(4);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _easeljsNEXTCombined = __webpack_require__(6);
-	
-	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Point = _flattenJs2.default.Point,
-	    Segment = _flattenJs2.default.Segment,
-	    Circle = _flattenJs2.default.Circle,
-	    Arc = _flattenJs2.default.Arc,
-	    Polygon = _flattenJs2.default.Polygon;
-	
-	/* Provide conversion methods from FlattenJS objects to CreateJS Graphics */
-	
-	Point.prototype.graphics = function (style) {
-	    var radius = style && style.radius ? style.radius : 3;
-	    var fill = style && style.fill ? style.fill : "#FF0303";
-	    var graphics = new createjs.Graphics();
-	    graphics.fill = graphics.beginFill(fill).command;
-	    graphics.circle = graphics.drawCircle(this.x, this.y, radius).command;
-	    return graphics;
-	};
-	
-	Segment.prototype.graphics = function (style) {
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle !== undefined ? style.strokeStyle : 2;
-	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
-	    var stroke = style && style.stroke ? style.stroke : "black";
-	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).moveTo(this.ps.x, this.ps.y).lineTo(this.pe.x, this.pe.y).endStroke();
-	};
-	
-	Arc.prototype.graphics = function (style) {
-	    // let startAngle = 2 * Math.PI - this.startAngle;
-	    // let endAngle =  2 * Math.PI - this.endAngle;
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
-	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
-	    var stroke = style && style.stroke ? style.stroke : "black";
-	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).arc(this.pc.x, this.pc.y, this.r, this.startAngle, this.endAngle, !this.counterClockwise).endStroke();
-	};
-	
-	Circle.prototype.graphics = function (style) {
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
-	    var stroke = style && style.stroke ? style.stroke : "black";
-	    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
-	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).drawCircle(this.pc.x, this.pc.y, this.r).endStroke();
-	};
-	
-	function setGraphicsEdgeSegment(graphics, segment) {
-	    graphics.lineTo(segment.pe.x, segment.pe.y);
-	}
-	
-	function setGraphicsEdgeArc(graphics, arc) {
-	    // let startAngle = 2 * Math.PI - arc.startAngle;
-	    // let endAngle = 2 * Math.PI - arc.endAngle;
-	    graphics.arc(arc.pc.x, arc.pc.y, arc.r, arc.startAngle, arc.endAngle, !arc.counterClockwise);
-	}
-	
-	function setGraphicsEdge(graphics, edge) {
-	    if (edge.shape instanceof Segment) {
-	        setGraphicsEdgeSegment(graphics, edge.shape);
-	    } else if (edge.shape instanceof Arc) {
-	        setGraphicsEdgeArc(graphics, edge.shape);
-	    }
-	}
-	
-	function setGraphicsFace(graphics, face) {
-	    var ps = face.first.start;
-	    graphics.moveTo(ps.x, ps.y);
-	
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-	
-	    try {
-	        for (var _iterator = face[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var edge = _step.value;
-	
-	            setGraphicsEdge(graphics, edge);
-	        }
-	    } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion && _iterator.return) {
-	                _iterator.return();
-	            }
-	        } finally {
-	            if (_didIteratorError) {
-	                throw _iteratorError;
-	            }
-	        }
-	    }
-	}
-	
-	Polygon.prototype.graphics = function (style) {
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
-	    var stroke = style && style.stroke ? style.stroke : "#FF0303";
-	    var fill = style && style.fill ? style.fill : "#FF0303";
-	    graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true);
-	    graphics.stroke = graphics.beginStroke(stroke).command;
-	    graphics.fill = graphics.beginFill(fill).command;
-	
-	    var _iteratorNormalCompletion2 = true;
-	    var _didIteratorError2 = false;
-	    var _iteratorError2 = undefined;
-	
-	    try {
-	        for (var _iterator2 = this.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var face = _step2.value;
-	
-	            setGraphicsFace(graphics, face);
-	        }
-	    } catch (err) {
-	        _didIteratorError2 = true;
-	        _iteratorError2 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                _iterator2.return();
-	            }
-	        } finally {
-	            if (_didIteratorError2) {
-	                throw _iteratorError2;
-	            }
-	        }
-	    }
-	
-	    graphics.endStroke();
-	    return graphics;
-	};
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Job = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _flattenJs = __webpack_require__(4);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Box = _flattenJs2.default.Box;
-	
-	var Job = exports.Job = function () {
-	    function Job() {
-	        _classCallCheck(this, Job);
-	
-	        this.filename = "";
-	        this.title = "";
-	        this.profiles = []; // array of FlattenJS Polygons
-	        this.materials = []; // array of FlattenJS Polygons
-	        this.shapes = []; // array of other FlattenJS shapes
-	    }
-	
-	    _createClass(Job, [{
-	        key: "box",
-	        get: function get() {
-	            var b = new Box();
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = this.profiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var shape = _step.value;
-	
-	                    b.merge(shape.box);
-	                }
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
-	            }
-	
-	            var _iteratorNormalCompletion2 = true;
-	            var _didIteratorError2 = false;
-	            var _iteratorError2 = undefined;
-	
-	            try {
-	                for (var _iterator2 = this.materials[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var _shape = _step2.value;
-	
-	                    b.merge(_shape.box);
-	                }
-	            } catch (err) {
-	                _didIteratorError2 = true;
-	                _iteratorError2 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                        _iterator2.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError2) {
-	                        throw _iteratorError2;
-	                    }
-	                }
-	            }
-	
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-	
-	            try {
-	                for (var _iterator3 = this.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var _shape2 = _step3.value;
-	
-	                    b.merge(_shape2.box);
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	
-	            return b;
-	        }
-	    }]);
-
-	    return Job;
-	}();
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.parseODB = parseODB;
-	
-	var _job = __webpack_require__(14);
-	
-	var _flattenJs = __webpack_require__(4);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Point = _flattenJs2.default.Point,
-	    Segment = _flattenJs2.default.Segment,
-	    Arc = _flattenJs2.default.Arc,
-	    Polygon = _flattenJs2.default.Polygon;
-	var vector = _flattenJs2.default.vector;
-	
-	
-	var inch2pixels = 10160000;
-	var mils2pixels = 10160;
-	function InchToPixels(str) {
-	    return Math.round(Number(str) * inch2pixels, 0);
-	}
-	function MilsToPixels(str) {
-	    return Math.round(Number(str) * mils2pixels, 0);
-	}
-	
-	function parsePolygon(lines, start) {
-	    var shapes = [];
-	    var i = start;
-	    var line = lines[i];
-	    var terms = line.split(' ');
-	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
-	    var pe = void 0;
-	    var pc = void 0;
-	    var end_of_face = false;
-	    while (true) {
-	        line = lines[i];
-	        terms = line.split(' ');
-	        switch (terms[0]) {
-	            case 'OS':
-	                pe = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
-	                shapes.push(new Segment(ps, pe));
-	
-	                ps = pe.clone();
-	                break;
-	            case 'OC':
-	                pe = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
-	                pc = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
-	
-	                var cwStr = terms[5];
-	                var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
-	
-	                var startAngle = vector(pc, ps).slope;
-	                var endAngle = vector(pc, pe).slope;
-	                if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
-	                    endAngle += 2 * Math.PI;
-	                    counterClockwise = true;
-	                }
-	                var r = vector(pc, ps).length;
-	
-	                shapes.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
-	
-	                ps = pe.clone();
-	                break;
-	            case 'OE':
-	                end_of_face = true;
-	                break;
-	            default:
-	                break;
-	        }
-	        if (end_of_face) {
-	            break;
-	        }
-	
-	        i++;
-	    }
-	    return shapes;
-	}
-	
-	function parseLine(str, apertures) {
-	    var terms = str.split(' ');
-	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
-	    var pe = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
-	    var segment = new Segment(ps, pe);
-	    var ap_key = Number(terms[5]);
-	    var ap_value = apertures[ap_key];
-	    segment.aperture = ap_value; // augmentation
-	    return segment;
-	}
-	
-	function parseArc(str, apertures) {
-	    var terms = str.split(' ');
-	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
-	    var pe = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
-	    var pc = new Point(InchToPixels(terms[5]), InchToPixels(terms[6]));
-	
-	    var cwStr = terms[10];
-	    var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
-	
-	    var startAngle = vector(pc, ps).slope;
-	    var endAngle = vector(pc, pe).slope;
-	    if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
-	        endAngle += 2 * Math.PI;
-	        counterClockwise = true;
-	    }
-	    var r = vector(pc, ps).length;
-	
-	    var arc = new Arc(pc, r, startAngle, endAngle, counterClockwise);
-	
-	    var ap_key = Number(terms[7]);
-	    var ap_value = apertures[ap_key];
-	    arc.aperture = ap_value; // augmentation
-	
-	    return arc;
-	}
-	
-	function parseODB(filename, str) {
-	    var job = new _job.Job();
-	    job.filename = filename;
-	
-	    var arrayOfLines = str.match(/[^\r\n]+/g);
-	    var polygon = void 0;
-	
-	    var apertures = [];
-	
-	    for (var i = 0; i < arrayOfLines.length; i++) {
-	        var line = arrayOfLines[i];
-	        var terms = line.split(' ');
-	
-	        if (terms[0].substr(0, 1) === '$') {
-	            var ap_key = Number(terms[0].substr(1));
-	            var ap_value = MilsToPixels(terms[1].substr(1));
-	            apertures[ap_key] = ap_value;
-	            continue;
-	        }
-	
-	        switch (terms[0]) {
-	            case 'S':
-	                // surface started
-	                polygon = new Polygon();
-	                var termArr = line.split(' ');
-	                var polarity = termArr[1]; // consider later
-	                polygon.polarity = polarity;
-	                break;
-	            case 'OB':
-	                // polygon started
-	                var start = i;
-	                var shapes = parsePolygon(arrayOfLines, start);
-	                polygon.addFace(shapes);
-	                i = start + shapes.length + 1;
-	                break;
-	            case 'SE':
-	                // surface ended
-	                job.shapes.push(polygon);
-	                break;
-	            case 'L':
-	                // line
-	                var odbLine = parseLine(line, apertures);
-	                job.shapes.push(odbLine);
-	                break;
-	            case 'A':
-	                // Arc
-	                var odbArc = parseArc(line, apertures);
-	                job.shapes.push(odbArc);
-	                break;
-	            default:
-	                break;
-	        }
-	    }
-	    return job;
-	}
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	var emptyObject = {};
-	
-	if (false) {
-	  Object.freeze(emptyObject);
-	}
-	
-	module.exports = emptyObject;
-
-/***/ },
-/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -17883,7 +17246,7 @@
 	 */
 	'use strict';
 	
-	let Node = __webpack_require__(70);
+	let Node = __webpack_require__(72);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(18);
 	
 	let nil_node = new Node();
@@ -18412,6 +17775,657 @@
 
 
 /***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
+	
+	'use strict';
+	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+	
+	function toObject(val) {
+		if (val === null || val === undefined) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+	
+		return Object(val);
+	}
+	
+	function shouldUseNative() {
+		try {
+			if (!Object.assign) {
+				return false;
+			}
+	
+			// Detect buggy property enumeration order in older V8 versions.
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+			test1[5] = 'de';
+			if (Object.getOwnPropertyNames(test1)[0] === '5') {
+				return false;
+			}
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+			var test2 = {};
+			for (var i = 0; i < 10; i++) {
+				test2['_' + String.fromCharCode(i)] = i;
+			}
+			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+				return test2[n];
+			});
+			if (order2.join('') !== '0123456789') {
+				return false;
+			}
+	
+			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+			var test3 = {};
+			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+				test3[letter] = letter;
+			});
+			if (Object.keys(Object.assign({}, test3)).join('') !==
+					'abcdefghijklmnopqrst') {
+				return false;
+			}
+	
+			return true;
+		} catch (err) {
+			// We don't expect any of the above to throw, but better to be safe.
+			return false;
+		}
+	}
+	
+	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+		var from;
+		var to = toObject(target);
+		var symbols;
+	
+		for (var s = 1; s < arguments.length; s++) {
+			from = Object(arguments[s]);
+	
+			for (var key in from) {
+				if (hasOwnProperty.call(from, key)) {
+					to[key] = from[key];
+				}
+			}
+	
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
+				for (var i = 0; i < symbols.length; i++) {
+					if (propIsEnumerable.call(from, symbols[i])) {
+						to[symbols[i]] = from[symbols[i]];
+					}
+				}
+			}
+		}
+	
+		return to;
+	};
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Modal = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _reactDom = __webpack_require__(22);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	__webpack_require__(2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var modalRoot = document.getElementById('modal-root');
+	
+	// A Modal component that is an abstraction around the portal API.
+	
+	var Modal = exports.Modal = function (_Component) {
+	    _inherits(Modal, _Component);
+	
+	    function Modal(props) {
+	        _classCallCheck(this, Modal);
+	
+	        // Create a div that we'll render the modal into. Because each
+	        // Modal component has its own element, we can render multiple
+	        // modal components into the modal container.
+	        var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
+	
+	        _this.el = document.createElement('div');
+	        return _this;
+	    }
+	
+	    _createClass(Modal, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            // Append the element into the DOM on mount. We'll render
+	            // into the modal container element (see the HTML tab).
+	            modalRoot.appendChild(this.el);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            // Remove the element from the DOM when we unmount
+	            modalRoot.removeChild(this.el);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            // Use a portal to render the children into the element
+	            return _reactDom2.default.createPortal(
+	            // Any valid React child: JSX, strings, arrays, etc.
+	            this.props.children,
+	            // A DOM element
+	            this.el);
+	        }
+	    }]);
+
+	    return Modal;
+	}(_react.Component);
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _flattenJs = __webpack_require__(4);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	var _easeljsNEXTCombined = __webpack_require__(6);
+	
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Point = _flattenJs2.default.Point,
+	    Segment = _flattenJs2.default.Segment,
+	    Circle = _flattenJs2.default.Circle,
+	    Arc = _flattenJs2.default.Arc,
+	    Polygon = _flattenJs2.default.Polygon,
+	    Box = _flattenJs2.default.Box;
+	
+	/* Provide conversion methods from FlattenJS objects to CreateJS Graphics */
+	
+	Point.prototype.graphics = function (style) {
+	    var radius = style && style.radius ? style.radius : 3;
+	    var fill = style && style.fill ? style.fill : "#FF0303";
+	    var graphics = new createjs.Graphics();
+	    graphics.fill = graphics.beginFill(fill).command;
+	    graphics.circle = graphics.drawCircle(this.x, this.y, radius).command;
+	    return graphics;
+	};
+	
+	Segment.prototype.graphics = function (style) {
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle !== undefined ? style.strokeStyle : 2;
+	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
+	    var stroke = style && style.stroke ? style.stroke : "black";
+	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).moveTo(this.ps.x, this.ps.y).lineTo(this.pe.x, this.pe.y).endStroke();
+	};
+	
+	Arc.prototype.graphics = function (style) {
+	    // let startAngle = 2 * Math.PI - this.startAngle;
+	    // let endAngle =  2 * Math.PI - this.endAngle;
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
+	    var stroke = style && style.stroke ? style.stroke : "black";
+	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).arc(this.pc.x, this.pc.y, this.r, this.startAngle, this.endAngle, !this.counterClockwise).endStroke();
+	};
+	
+	Circle.prototype.graphics = function (style) {
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+	    var stroke = style && style.stroke ? style.stroke : "black";
+	    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
+	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).drawCircle(this.pc.x, this.pc.y, this.r).endStroke();
+	};
+	
+	Box.prototype.graphics = function (style) {
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
+	    var stroke = style && style.stroke ? style.stroke : "black";
+	    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
+	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).drawRect(this.xmin, this.ymin, this.xmax - this.xmin, this.ymax - this.ymin);
+	};
+	
+	function setGraphicsEdgeSegment(graphics, segment) {
+	    graphics.lineTo(segment.pe.x, segment.pe.y);
+	}
+	
+	function setGraphicsEdgeArc(graphics, arc) {
+	    // let startAngle = 2 * Math.PI - arc.startAngle;
+	    // let endAngle = 2 * Math.PI - arc.endAngle;
+	    graphics.arc(arc.pc.x, arc.pc.y, arc.r, arc.startAngle, arc.endAngle, !arc.counterClockwise);
+	}
+	
+	function setGraphicsEdge(graphics, edge) {
+	    if (edge.shape instanceof Segment) {
+	        setGraphicsEdgeSegment(graphics, edge.shape);
+	    } else if (edge.shape instanceof Arc) {
+	        setGraphicsEdgeArc(graphics, edge.shape);
+	    }
+	}
+	
+	function setGraphicsFace(graphics, face) {
+	    var ps = face.first.start;
+	    graphics.moveTo(ps.x, ps.y);
+	
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+	
+	    try {
+	        for (var _iterator = face[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	            var edge = _step.value;
+	
+	            setGraphicsEdge(graphics, edge);
+	        }
+	    } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	            }
+	        } finally {
+	            if (_didIteratorError) {
+	                throw _iteratorError;
+	            }
+	        }
+	    }
+	}
+	
+	Polygon.prototype.graphics = function (style) {
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
+	    var stroke = style && style.stroke ? style.stroke : "#FF0303";
+	    var fill = style && style.fill ? style.fill : "#FF0303";
+	    graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true);
+	    graphics.stroke = graphics.beginStroke(stroke).command;
+	    graphics.fill = graphics.beginFill(fill).command;
+	
+	    var _iteratorNormalCompletion2 = true;
+	    var _didIteratorError2 = false;
+	    var _iteratorError2 = undefined;
+	
+	    try {
+	        for (var _iterator2 = this.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var face = _step2.value;
+	
+	            setGraphicsFace(graphics, face);
+	        }
+	    } catch (err) {
+	        _didIteratorError2 = true;
+	        _iteratorError2 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                _iterator2.return();
+	            }
+	        } finally {
+	            if (_didIteratorError2) {
+	                throw _iteratorError2;
+	            }
+	        }
+	    }
+	
+	    graphics.endStroke();
+	    return graphics;
+	};
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Job = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _flattenJs = __webpack_require__(4);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Box = _flattenJs2.default.Box;
+	
+	var Job = exports.Job = function () {
+	    function Job() {
+	        _classCallCheck(this, Job);
+	
+	        this.filename = "";
+	        this.title = "";
+	        this.profiles = []; // array of FlattenJS Polygons
+	        this.materials = []; // array of FlattenJS Polygons
+	        this.shapes = []; // array of other FlattenJS shapes
+	    }
+	
+	    _createClass(Job, [{
+	        key: "box",
+	        get: function get() {
+	            var b = new Box();
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = this.profiles[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var shape = _step.value;
+	
+	                    b.merge(shape.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = this.materials[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var _shape = _step2.value;
+	
+	                    b.merge(_shape.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = this.shapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var _shape2 = _step3.value;
+	
+	                    b.merge(_shape2.box);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            return b;
+	        }
+	    }]);
+
+	    return Job;
+	}();
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.parseODB = parseODB;
+	
+	var _job = __webpack_require__(15);
+	
+	var _flattenJs = __webpack_require__(4);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Point = _flattenJs2.default.Point,
+	    Segment = _flattenJs2.default.Segment,
+	    Arc = _flattenJs2.default.Arc,
+	    Polygon = _flattenJs2.default.Polygon;
+	var vector = _flattenJs2.default.vector;
+	
+	
+	var inch2pixels = 10160000;
+	var mils2pixels = 10160;
+	function InchToPixels(str) {
+	    return Math.round(Number(str) * inch2pixels, 0);
+	}
+	function MilsToPixels(str) {
+	    return Math.round(Number(str) * mils2pixels, 0);
+	}
+	
+	function parsePolygon(lines, start) {
+	    var shapes = [];
+	    var i = start;
+	    var line = lines[i];
+	    var terms = line.split(' ');
+	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
+	    var pe = void 0;
+	    var pc = void 0;
+	    var end_of_face = false;
+	    while (true) {
+	        line = lines[i];
+	        terms = line.split(' ');
+	        switch (terms[0]) {
+	            case 'OS':
+	                pe = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
+	                shapes.push(new Segment(ps, pe));
+	
+	                ps = pe.clone();
+	                break;
+	            case 'OC':
+	                pe = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
+	                pc = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
+	
+	                var cwStr = terms[5];
+	                var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
+	
+	                var startAngle = vector(pc, ps).slope;
+	                var endAngle = vector(pc, pe).slope;
+	                if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	                    endAngle += 2 * Math.PI;
+	                    counterClockwise = true;
+	                }
+	                var r = vector(pc, ps).length;
+	
+	                shapes.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
+	
+	                ps = pe.clone();
+	                break;
+	            case 'OE':
+	                end_of_face = true;
+	                break;
+	            default:
+	                break;
+	        }
+	        if (end_of_face) {
+	            break;
+	        }
+	
+	        i++;
+	    }
+	    return shapes;
+	}
+	
+	function parseLine(str, apertures) {
+	    var terms = str.split(' ');
+	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
+	    var pe = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
+	    var segment = new Segment(ps, pe);
+	    var ap_key = Number(terms[5]);
+	    var ap_value = apertures[ap_key];
+	    segment.aperture = ap_value; // augmentation
+	    return segment;
+	}
+	
+	function parseArc(str, apertures) {
+	    var terms = str.split(' ');
+	    var ps = new Point(InchToPixels(terms[1]), InchToPixels(terms[2]));
+	    var pe = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
+	    var pc = new Point(InchToPixels(terms[5]), InchToPixels(terms[6]));
+	
+	    var cwStr = terms[10];
+	    var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
+	
+	    var startAngle = vector(pc, ps).slope;
+	    var endAngle = vector(pc, pe).slope;
+	    if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	        endAngle += 2 * Math.PI;
+	        counterClockwise = true;
+	    }
+	    var r = vector(pc, ps).length;
+	
+	    var arc = new Arc(pc, r, startAngle, endAngle, counterClockwise);
+	
+	    var ap_key = Number(terms[7]);
+	    var ap_value = apertures[ap_key];
+	    arc.aperture = ap_value; // augmentation
+	
+	    return arc;
+	}
+	
+	function parseODB(filename, str) {
+	    var job = new _job.Job();
+	    job.filename = filename;
+	
+	    var arrayOfLines = str.match(/[^\r\n]+/g);
+	    var polygon = void 0;
+	
+	    var apertures = [];
+	
+	    for (var i = 0; i < arrayOfLines.length; i++) {
+	        var line = arrayOfLines[i];
+	        var terms = line.split(' ');
+	
+	        if (terms[0].substr(0, 1) === '$') {
+	            var ap_key = Number(terms[0].substr(1));
+	            var ap_value = MilsToPixels(terms[1].substr(1));
+	            apertures[ap_key] = ap_value;
+	            continue;
+	        }
+	
+	        switch (terms[0]) {
+	            case 'S':
+	                // surface started
+	                polygon = new Polygon();
+	                var termArr = line.split(' ');
+	                var polarity = termArr[1]; // consider later
+	                polygon.polarity = polarity;
+	                break;
+	            case 'OB':
+	                // polygon started
+	                var start = i;
+	                var shapes = parsePolygon(arrayOfLines, start);
+	                polygon.addFace(shapes);
+	                i = start + shapes.length + 1;
+	                break;
+	            case 'SE':
+	                // surface ended
+	                job.shapes.push(polygon);
+	                break;
+	            case 'L':
+	                // line
+	                var odbLine = parseLine(line, apertures);
+	                job.shapes.push(odbLine);
+	                break;
+	            case 'A':
+	                // Arc
+	                var odbArc = parseArc(line, apertures);
+	                job.shapes.push(odbArc);
+	                break;
+	            default:
+	                break;
+	        }
+	    }
+	    return job;
+	}
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2013-present, Facebook, Inc.
+	 *
+	 * This source code is licensed under the MIT license found in the
+	 * LICENSE file in the root directory of this source tree.
+	 *
+	 */
+	
+	'use strict';
+	
+	var emptyObject = {};
+	
+	if (false) {
+	  Object.freeze(emptyObject);
+	}
+	
+	module.exports = emptyObject;
+
+/***/ },
 /* 18 */
 /***/ function(module, exports) {
 
@@ -18430,7 +18444,7 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(93);
+	var root = __webpack_require__(95);
 	
 	/** Built-in value references. */
 	var Symbol = root.Symbol;
@@ -18442,9 +18456,9 @@
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(87),
-	    getPrototype = __webpack_require__(89),
-	    isObjectLike = __webpack_require__(94);
+	var baseGetTag = __webpack_require__(89),
+	    getPrototype = __webpack_require__(91),
+	    isObjectLike = __webpack_require__(96);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -18763,7 +18777,7 @@
 	  // DCE check should happen before ReactDOM bundle executes so that
 	  // DevTools can report bad minification during injection.
 	  checkDCE();
-	  module.exports = __webpack_require__(100);
+	  module.exports = __webpack_require__(102);
 	} else {
 	  module.exports = require('./cjs/react-dom.development.js');
 	}
@@ -18787,11 +18801,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(98);
+	var _propTypes = __webpack_require__(100);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _screenReaderStyles = __webpack_require__(101);
+	var _screenReaderStyles = __webpack_require__(103);
 	
 	var _screenReaderStyles2 = _interopRequireDefault(_screenReaderStyles);
 	
@@ -18970,7 +18984,7 @@
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _symbolObservable = __webpack_require__(108);
+	var _symbolObservable = __webpack_require__(110);
 	
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 	
@@ -19235,15 +19249,15 @@
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _combineReducers = __webpack_require__(107);
+	var _combineReducers = __webpack_require__(109);
 	
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 	
-	var _bindActionCreators = __webpack_require__(106);
+	var _bindActionCreators = __webpack_require__(108);
 	
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 	
-	var _applyMiddleware = __webpack_require__(105);
+	var _applyMiddleware = __webpack_require__(107);
 	
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 	
@@ -19862,7 +19876,7 @@
 	
 	__webpack_require__(2);
 	
-	var _stage = __webpack_require__(56);
+	var _stage = __webpack_require__(57);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20019,9 +20033,9 @@
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	__webpack_require__(13);
+	__webpack_require__(14);
 	
-	var _utils = __webpack_require__(8);
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -20198,7 +20212,7 @@
 	
 	var _imageComponent = __webpack_require__(33);
 	
-	var _utils = __webpack_require__(8);
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -20291,7 +20305,7 @@
 	
 	__webpack_require__(2);
 	
-	var _modalPopupComponent = __webpack_require__(12);
+	var _modalPopupComponent = __webpack_require__(13);
 	
 	var _layerEditForm = __webpack_require__(44);
 	
@@ -20813,11 +20827,9 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _measurePointsTool = __webpack_require__(58);
+	var _measurePointsTool = __webpack_require__(60);
 	
-	var _measureShapesTool = __webpack_require__(59);
-	
-	var _modalPopupComponent = __webpack_require__(12);
+	var _modalPopupComponent = __webpack_require__(13);
 	
 	var _aboutPopup = __webpack_require__(43);
 	
@@ -20832,6 +20844,9 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 17/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	//import {MeasureShapesTool} from "../tools/measureShapesTool";
+	
 	
 	var MainComponent = exports.MainComponent = function (_Component) {
 	    _inherits(MainComponent, _Component);
@@ -20868,6 +20883,9 @@
 	
 	        _this.handleKeyDown = _this.handleKeyDown.bind(_this);
 	        _this.handleKeyUp = _this.handleKeyUp.bind(_this);
+	
+	        _this.aabbToolNext = _this.aabbToolNext.bind(_this);
+	        _this.nextAabbDistStep = _this.nextAabbDistStep.bind(_this);
 	        return _this;
 	    }
 	
@@ -21073,7 +21091,9 @@
 	                    break;
 	
 	                case "ArrowRight":
+	                    this.nextAabbDistStep();
 	                    break;
+	
 	                case "ArrowLeft":
 	                    break;
 	                case "ArrowUp":
@@ -21087,6 +21107,20 @@
 	    }, {
 	        key: 'handleKeyUp',
 	        value: function handleKeyUp(event) {}
+	    }, {
+	        key: 'aabbToolNext',
+	        value: function aabbToolNext() {
+	            this.props.store.dispatch({
+	                type: ActionTypes.AABB_TREE_NEXT_LEVEL
+	            });
+	        }
+	    }, {
+	        key: 'nextAabbDistStep',
+	        value: function nextAabbDistStep() {
+	            this.props.store.dispatch({
+	                type: ActionTypes.AABB_DEMO_NEXT_DIST_STEP
+	            });
+	        }
 	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
@@ -21115,6 +21149,7 @@
 	                'main',
 	                { className: 'App-content' },
 	                _react2.default.createElement(_toolbarComponent.ToolbarComponent, {
+	                    aabbDemoToolActivated: this.state.aabbDemoTool.aabbDemoToolActivated,
 	                    onFileSelected: this.handleFileSelect,
 	                    onHomeButtonPressed: this.setHomeView,
 	                    onPanByDragPressed: this.onPanByDragPressed,
@@ -21123,7 +21158,8 @@
 	                    onToggleWidthModePressed: this.toggleWidthMode,
 	                    onToggleVerticesPressed: this.toggleDisplayVertices,
 	                    onToggleLabelsPressed: this.toggleDisplayLabels,
-	                    onShowAboutPopupPressed: this.showAboutPopup
+	                    onShowAboutPopupPressed: this.showAboutPopup,
+	                    onAabbToolNext: this.aabbToolNext
 	                }),
 	                _react2.default.createElement(_canvasComponent.CanvasComponent, {
 	                    stage: this.state.stage,
@@ -21139,12 +21175,21 @@
 	                    displayVertices: this.state.app.displayVertices,
 	                    displayLabels: this.state.app.displayLabels,
 	                    widthOn: this.state.app.widthOn,
-	                    hoveredShape: this.state.app.hoveredShape,
-	                    firstMeasuredShape: this.state.app.firstMeasuredShape,
-	                    secondMeasuredShape: this.state.app.secondMeasuredShape,
 	                    zoomFactor: this.state.app.zoomFactor,
 	                    originX: this.state.app.originX,
 	                    originY: this.state.app.originY,
+	                    hoveredShape: this.state.measureShapesTool.hoveredShape,
+	                    firstMeasuredShape: this.state.measureShapesTool.firstMeasuredShape,
+	                    secondMeasuredShape: this.state.measureShapesTool.secondMeasuredShape,
+	                    firstMeasuredLayer: this.state.measureShapesTool.firstMeasuredLayer,
+	                    secondMeasuredLayer: this.state.measureShapesTool.secondMeasuredLayer,
+	                    distance: this.state.measureShapesTool.distance,
+	                    shortestSegment: this.state.measureShapesTool.shortestSegment,
+	                    aabbDemoToolActivated: this.state.aabbDemoTool.aabbDemoToolActivated,
+	                    firstMeasuredShapeLevel: this.state.aabbDemoTool.firstMeasuredShapeLevel,
+	                    secondMeasuredShapeLevel: this.state.aabbDemoTool.secondMeasuredShapeLevel,
+	                    selectedEdgesTree: this.state.aabbDemoTool.tree,
+	                    minStop: this.state.aabbDemoTool.min_stop,
 	                    onMouseOver: this.onMouseRollOverShape,
 	                    onMouseOut: this.onMouseRollOutShape,
 	                    onClick: this.onClickOnShape
@@ -21155,24 +21200,13 @@
 	                    decimals: this.state.app.decimals,
 	                    onMouseWheelMove: this.handleMouseWheelMove
 	                }) : null,
-	                this.state.app.measureShapesActive ? _react2.default.createElement(_measureShapesTool.MeasureShapesTool, {
-	                    stage: this.state.stage,
-	                    firstMeasuredShape: this.state.app.firstMeasuredShape,
-	                    secondMeasuredShape: this.state.app.secondMeasuredShape,
-	                    firstMeasuredLayer: this.state.app.firstMeasuredLayer,
-	                    secondMeasuredLayer: this.state.app.secondMeasuredLayer,
-	                    distance: this.state.app.distance,
-	                    shortestSegment: this.state.app.shortestSegment,
-	                    divisor: this.state.app.divisor,
-	                    decimals: this.state.app.decimals
-	                }) : null,
 	                _react2.default.createElement(_statusComponent.StatusComponent, {
 	                    stage: this.state.stage,
 	                    units: this.state.app.units,
 	                    divisor: this.state.app.divisor,
 	                    decimals: this.state.app.decimals,
-	                    distance: this.state.app.distance,
-	                    shortestSegment: this.state.app.shortestSegment,
+	                    distance: this.state.measureShapesTool.distance,
+	                    shortestSegment: this.state.measureShapesTool.shortestSegment,
 	                    coordX: this.state.mouse.x,
 	                    coordY: this.state.mouse.y,
 	                    onUnitClicked: this.toggleUnits
@@ -21213,9 +21247,9 @@
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	__webpack_require__(13);
+	__webpack_require__(14);
 	
-	var _utils = __webpack_require__(8);
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -21244,6 +21278,9 @@
 	
 	        _this.vertexShapes = [];
 	        _this.labelShape = undefined;
+	
+	        // this.level = [params.model.geom.edges.index.root];
+	        // this.boxShapes = [];
 	
 	        var _iteratorNormalCompletion = true;
 	        var _didIteratorError = false;
@@ -21410,7 +21447,7 @@
 	            }
 	            this.shape.alpha = this.props.displayed ? alpha : 0.0;
 	
-	            // let box = this.props.polygon.geom.box;
+	            // let box = this.props.model.geom.box;
 	            // this.shape.cache(box.xmin, box.ymin, box.xmax - box.xmin, box.ymax - box.ymin);
 	
 	            // Draw vertices
@@ -21420,6 +21457,91 @@
 	            // Draw labels
 	            var showLabel = this.props.displayed && this.props.displayLabels;
 	            this.redrawLabels(showLabel);
+	
+	            // this.drawTree();
+	        }
+	    }, {
+	        key: 'drawTree',
+	        value: function drawTree() {
+	            // let poly = this.props.model.geom;
+	            // let root = poly.edges.index.root;
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = this.boxShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var shape = _step3.value;
+	
+	                    this.props.stage.removeChild(shape);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	
+	            this.boxShapes = [];
+	            // this.drawTreeLevel([root]);
+	            var newLevel = this.drawTreeLevel(this.level);
+	            this.level = newLevel;
+	        }
+	    }, {
+	        key: 'drawTreeLevel',
+	        value: function drawTreeLevel(level) {
+	            if (level.length === 0) return;
+	            var stage = this.props.stage;
+	            var newLevel = [];
+	            var _iteratorNormalCompletion4 = true;
+	            var _didIteratorError4 = false;
+	            var _iteratorError4 = undefined;
+	
+	            try {
+	                for (var _iterator4 = level[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	                    var node = _step4.value;
+	
+	                    var graphics = void 0;
+	                    if (node.max) {
+	                        graphics = node.max.graphics();
+	                    }
+	                    if (graphics) {
+	                        var shape = new createjs.Shape(graphics);
+	                        stage.addChild(shape);
+	                        this.boxShapes.push(shape);
+	                    }
+	                    if (node.left) {
+	                        newLevel.push(node.left);
+	                    }
+	                    if (node.right) {
+	                        newLevel.push(node.right);
+	                    }
+	                }
+	                // this.drawTreeLevel(newLevel);
+	            } catch (err) {
+	                _didIteratorError4 = true;
+	                _iteratorError4 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                        _iterator4.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError4) {
+	                        throw _iteratorError4;
+	                    }
+	                }
+	            }
+	
+	            return newLevel;
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -21455,27 +21577,27 @@
 	            this.shape.graphics.clear();
 	            this.props.stage.removeChild(this.labelShape);
 	            this.labelShape = undefined;
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
+	            var _iteratorNormalCompletion5 = true;
+	            var _didIteratorError5 = false;
+	            var _iteratorError5 = undefined;
 	
 	            try {
-	                for (var _iterator3 = this.vertexShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var vertexShape = _step3.value;
+	                for (var _iterator5 = this.vertexShapes[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	                    var vertexShape = _step5.value;
 	
 	                    this.props.stage.removeChild(vertexShape);
 	                }
 	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
+	                _didIteratorError5 = true;
+	                _iteratorError5 = err;
 	            } finally {
 	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
+	                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+	                        _iterator5.return();
 	                    }
 	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
+	                    if (_didIteratorError5) {
+	                        throw _iteratorError5;
 	                    }
 	                }
 	            }
@@ -21511,11 +21633,17 @@
 	
 	var _layerComponent = __webpack_require__(34);
 	
-	var _utils = __webpack_require__(8);
+	var _measureShapesTool = __webpack_require__(61);
+	
+	var _aabbDemoTool = __webpack_require__(59);
+	
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -21557,7 +21685,7 @@
 	        value: function render() {
 	            var _this2 = this;
 	
-	            return this.props.layers.map(function (layer) {
+	            var layerComponents = this.props.layers.map(function (layer) {
 	                return _react2.default.createElement(_layerComponent.LayerComponent, {
 	                    key: layer.name,
 	                    stage: _this2.props.stage,
@@ -21576,6 +21704,34 @@
 	                    onClick: _this2.props.onClick
 	                });
 	            });
+	            var measureShapesTool = this.props.distance && this.props.shortestSegment ? _react2.default.createElement(_measureShapesTool.MeasureShapesTool, {
+	                key: 'MeasureShapesTool',
+	                stage: this.props.stage,
+	                firstMeasuredShape: this.props.firstMeasuredShape,
+	                secondMeasuredShape: this.props.secondMeasuredShape,
+	                firstMeasuredLayer: this.props.firstMeasuredLayer,
+	                secondMeasuredLayer: this.props.secondMeasuredLayer,
+	                distance: this.props.distance,
+	                shortestSegment: this.props.shortestSegment
+	            }) : null;
+	
+	            var aabbDdemoTool = this.props.aabbDemoToolActivated ? _react2.default.createElement(_aabbDemoTool.AabbDemoTool, {
+	                key: 'AabbDemoTool',
+	                stage: this.props.stage,
+	                firstMeasuredShape: this.props.firstMeasuredShape,
+	                secondMeasuredShape: this.props.secondMeasuredShape,
+	                firstMeasuredLayer: this.props.firstMeasuredLayer,
+	                secondMeasuredLayer: this.props.secondMeasuredLayer,
+	                firstMeasuredShapeLevel: this.props.firstMeasuredShapeLevel,
+	                secondMeasuredShapeLevel: this.props.secondMeasuredShapeLevel,
+	                distance: this.props.distance,
+	                shortestSegment: this.props.shortestSegment,
+	                selectedEdgesTree: this.props.selectedEdgesTree,
+	                minStop: this.props.minStop
+	            }) : null;
+	            var components = [].concat(_toConsumableArray(layerComponents), [measureShapesTool, aabbDdemoTool]);
+	
+	            return components;
 	        }
 	    }]);
 
@@ -21718,19 +21874,19 @@
 	
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 	
-	var _measureContour = __webpack_require__(113);
+	var _measureContour = __webpack_require__(115);
 	
 	var _measureContour2 = _interopRequireDefault(_measureContour);
 	
-	var _measurePoints = __webpack_require__(114);
+	var _measurePoints = __webpack_require__(116);
 	
 	var _measurePoints2 = _interopRequireDefault(_measurePoints);
 	
-	var _WidthOn = __webpack_require__(111);
+	var _WidthOn = __webpack_require__(113);
 	
 	var _WidthOn2 = _interopRequireDefault(_WidthOn);
 	
-	var _editContourVertextOnOff = __webpack_require__(112);
+	var _editContourVertextOnOff = __webpack_require__(114);
 	
 	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
 	
@@ -21843,6 +21999,15 @@
 	                        style: { color: "grey" }
 	                    })
 	                ),
+	                this.props.aabbDemoToolActivated ? _react2.default.createElement(
+	                    'button',
+	                    { title: 'AABB Tree Demo', onClick: this.props.onAabbToolNext },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        name: 'tree',
+	                        size: '2x',
+	                        style: { color: "grey" }
+	                    })
+	                ) : null,
 	                _react2.default.createElement(
 	                    'button',
 	                    { title: 'About', onClick: this.props.onShowAboutPopupPressed },
@@ -22037,13 +22202,13 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	__webpack_require__(60);
+	__webpack_require__(62);
 	
 	var _redux = __webpack_require__(26);
 	
-	var _reducer = __webpack_require__(57);
+	var _reducer = __webpack_require__(58);
 	
-	var _log = __webpack_require__(47);
+	var _log = __webpack_require__(48);
 	
 	var _log2 = _interopRequireDefault(_log);
 	
@@ -22055,24 +22220,25 @@
 	
 	var _pasteData2 = _interopRequireDefault(_pasteData);
 	
-	var _demo = __webpack_require__(46);
-	
-	var _demo2 = _interopRequireDefault(_demo);
-	
 	var _stageController = __webpack_require__(51);
 	
 	var _stageController2 = _interopRequireDefault(_stageController);
 	
-	var _matrixTest = __webpack_require__(48);
+	var _demo = __webpack_require__(47);
 	
-	var _matrixTest2 = _interopRequireDefault(_matrixTest);
+	var _demo2 = _interopRequireDefault(_demo);
+	
+	var _aabb_demo = __webpack_require__(46);
+	
+	var _aabb_demo2 = _interopRequireDefault(_aabb_demo);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// import matrix_test from './middleware/matrix-test';
 	// import webgl_test from './middleware/webgl-test';
 	
 	// import about from './middleware/about';
-	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _pasteData2.default, _demo2.default, _stageController2.default, _matrixTest2.default)));
+	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _pasteData2.default, _demo2.default, _aabb_demo2.default, _stageController2.default)));
 	
 	_reactDom2.default.render(_react2.default.createElement(_App2.default, { store: store }), document.getElementById('root'));
 
@@ -22090,11 +22256,53 @@
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	// import { parseXML } from "../models/parserXML";
+	// import { Layers } from '../models/layers';
+	// import { Model } from "../models/model";
+	
+	// let {point, arc, segment, circle, Polygon} = Flatten;
+	
+	var aabb_demo = function aabb_demo(_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	        return function (action) {
+	
+	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+	                if (document.location.href.split('#')[1] === 'aabb_demo') {
+	                    dispatch({
+	                        type: ActionTypes.AABB_DEMO_URI
+	                    });
+	                }
+	            }
+	            return next(action);
+	        };
+	    };
+	};
+	
+	exports.default = aabb_demo;
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
 	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(7);
+	var _model = __webpack_require__(9);
 	
-	var _parserODB = __webpack_require__(15);
+	var _parserODB = __webpack_require__(16);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -22181,7 +22389,7 @@
 	exports.default = demo;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22212,94 +22420,6 @@
 	};
 	
 	exports.default = log;
-
-/***/ },
-/* 48 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _flattenJs = __webpack_require__(4);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _actionTypes = __webpack_require__(3);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _layers = __webpack_require__(5);
-	
-	var _model = __webpack_require__(7);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var point = _flattenJs2.default.point,
-	    segment = _flattenJs2.default.segment,
-	    arc = _flattenJs2.default.arc,
-	    Polygon = _flattenJs2.default.Polygon;
-	
-	
-	function zoomHome(shape, stage) {
-	    var box = shape.box;
-	    var x = (box.xmin + box.xmax) / 2;
-	    var y = (box.ymin + box.ymax) / 2;
-	    stage.panToCoordinate(x, y);
-	    stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
-	}
-	
-	var matrix_test = function matrix_test(_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	        return function (action) {
-	
-	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
-	                if (document.location.pathname === '/matrix_test') {
-	
-	                    var stage = action.stage;
-	                    var state = getState();
-	                    var layers = state.layers;
-	
-	                    var layer = _layers.Layers.newLayer(stage, layers);
-	                    layer.name = "demo1";
-	                    layer.title = "demo1";
-	
-	                    var s1 = segment(-100, 0, 100, 0);
-	                    var s2 = segment(0, -100, 0, 50);
-	                    // s1.aperture = 10;
-	                    // s2.aperture = 20;
-	
-	                    layer.add(new _model.Model(s1, {}, "segment 1"));
-	                    layer.add(new _model.Model(s2, {}, "segment 2"));
-	
-	                    var a = arc(point(0, 0), 50, 0, Math.PI / 4, _flattenJs2.default.CCW);
-	                    layer.add(new _model.Model(a));
-	
-	                    var polygon = new Polygon();
-	
-	                    layer.add(new _model.Model(point(20, 20), {}, "ABC123"));
-	                    layer.add(new _model.Model(point(-50, 30), {}, "Boom boom"));
-	
-	                    polygon.addFace([segment(-500000, -500000, 500000, -500000), segment(500000, -500000, 100000, 100000), segment(100000, 100000, -100000, 100000), segment(-100000, 100000, -500000, -500000)]);
-	
-	                    // layer.add(new Model(polygon,{},"polygonchik"));
-	
-	                    zoomHome(layer, stage);
-	                    state.layers.push(layer);
-	                }
-	            }
-	            return next(action);
-	        };
-	    };
-	};
-	
-	exports.default = matrix_test;
 
 /***/ },
 /* 49 */
@@ -22441,13 +22561,13 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(7);
+	var _model = __webpack_require__(9);
 	
-	var _parserXML = __webpack_require__(55);
+	var _parserXML = __webpack_require__(56);
 	
-	var _parserODB = __webpack_require__(15);
+	var _parserODB = __webpack_require__(16);
 	
-	var _parsePGM = __webpack_require__(53);
+	var _parsePGM = __webpack_require__(54);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -22746,6 +22866,235 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.Distance = undefined;
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 17/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+	
+	var _flattenJs = __webpack_require__(4);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Distance = exports.Distance = function () {
+	    function Distance() {
+	        _classCallCheck(this, Distance);
+	    }
+	
+	    _createClass(Distance, null, [{
+	        key: 'box2box_minmax',
+	
+	        /**
+	         }
+	         * Returns [mindist, maxdist] array of squared minimal and maximal distance between boxes
+	         * Minimal distance by x is
+	         *    (box2.xmin - box1.xmax), if box1 is left to box2
+	         *    (box1.xmin - box2.xmax), if box2 is left to box1
+	         *    0,                       if box1 and box2 are intersected by x
+	         * Minimal distance by y is defined in the same way
+	         *
+	         * Maximal distance is estimated as a sum of squared dimensions of the merged box
+	         *
+	         * @param box1
+	         * @param box2
+	         * @returns {Number | Number} - minimal and maximal distance
+	         */
+	        value: function box2box_minmax(box1, box2) {
+	            var mindist_x = Math.max(Math.max(box1.xmin - box2.xmax, 0), Math.max(box2.xmin - box1.xmax, 0));
+	            var mindist_y = Math.max(Math.max(box1.ymin - box2.ymax, 0), Math.max(box2.ymin - box1.ymax, 0));
+	            var mindist = mindist_x * mindist_x + mindist_y * mindist_y;
+	
+	            var box = box1.merge(box2);
+	            var dx = box.xmax - box.xmin;
+	            var dy = box.ymax - box.ymin;
+	            var maxdist = dx * dx + dy * dy;
+	
+	            return [mindist, maxdist];
+	        }
+	    }, {
+	        key: 'minmax_tree_process_level',
+	        value: function minmax_tree_process_level(shape, level, min_stop, tree) {
+	            // Calculate minmax distance to each shape in current level
+	            // Insert result into the interval tree for further processing
+	            // update min_stop with maxdist, it will be the new stop distance
+	            var mindist = void 0,
+	                maxdist = void 0;
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = level[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var node = _step.value;
+	
+	                    // [mindist, maxdist] = Distance.box2box_minmax(shape.box, node.max);
+	                    // if (Flatten.Utils.GT(mindist, min_stop))
+	                    //     continue;
+	
+	                    // Estimate min-max dist to the shape stored in the node.item, using node.item.key which is shape's box
+	
+	                    var _Distance$box2box_min3 = Distance.box2box_minmax(shape.box, node.item.key);
+	
+	                    var _Distance$box2box_min4 = _slicedToArray(_Distance$box2box_min3, 2);
+	
+	                    mindist = _Distance$box2box_min4[0];
+	                    maxdist = _Distance$box2box_min4[1];
+	
+	                    if (node.item.value instanceof _flattenJs2.default.Edge) {
+	                        tree.insert([mindist, maxdist], node.item.value.shape);
+	                    } else {
+	                        tree.insert([mindist, maxdist], node.item.value);
+	                    }
+	                    if (_flattenJs2.default.Utils.LT(maxdist, min_stop)) {
+	                        min_stop = maxdist; // this will be the new distance estimation
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            if (level.length === 0) return [min_stop, level, tree];
+	
+	            // Calculate new level from left and right children of the current
+	            var new_level_left = level.map(function (node) {
+	                return node.left.isNil() ? undefined : node.left;
+	            }).filter(function (node) {
+	                return node !== undefined;
+	            });
+	            var new_level_right = level.map(function (node) {
+	                return node.right.isNil() ? undefined : node.right;
+	            }).filter(function (node) {
+	                return node !== undefined;
+	            });
+	            // Merge left and right subtrees and leave only relevant subtrees
+	            var new_level = [].concat(_toConsumableArray(new_level_left), _toConsumableArray(new_level_right)).filter(function (node) {
+	                // Node subtree quick reject, node.max is a subtree box
+	                var _Distance$box2box_min = Distance.box2box_minmax(shape.box, node.max),
+	                    _Distance$box2box_min2 = _slicedToArray(_Distance$box2box_min, 2),
+	                    mindist = _Distance$box2box_min2[0],
+	                    maxdist = _Distance$box2box_min2[1];
+	
+	                return _flattenJs2.default.Utils.LE(mindist, min_stop);
+	            });
+	
+	            // min_stop = Distance.minmax_tree_process_level(shape, new_level, min_stop, tree);
+	            return [min_stop, new_level, tree];
+	        }
+	
+	        /**
+	         * Calculates sorted tree of [mindist, maxdist] intervals between query shape
+	         * and shapes of the planar set.
+	         * @param shape
+	         * @param set
+	         */
+	
+	    }, {
+	        key: 'minmax_tree',
+	        value: function minmax_tree(shape, set, min_stop) {
+	            var tree = new _flattenJs2.default.IntervalTree();
+	            var level = [set.index.root];
+	            var squared_min_stop = min_stop < Number.POSITIVE_INFINITY ? min_stop * min_stop : Number.POSITIVE_INFINITY;
+	            squared_min_stop = Distance.minmax_tree_process_level(shape, level, squared_min_stop, tree);
+	            return tree;
+	        }
+	    }, {
+	        key: 'minmax_tree_calc_distance',
+	        value: function minmax_tree_calc_distance(shape, node, min_dist_and_segment) {
+	            var min_dist_and_segment_new = void 0,
+	                stop = void 0;
+	            if (node != null && !node.isNil()) {
+	                var _Distance$minmax_tree = Distance.minmax_tree_calc_distance(shape, node.left, min_dist_and_segment);
+	
+	                var _Distance$minmax_tree2 = _slicedToArray(_Distance$minmax_tree, 2);
+	
+	                min_dist_and_segment_new = _Distance$minmax_tree2[0];
+	                stop = _Distance$minmax_tree2[1];
+	
+	
+	                if (stop) {
+	                    return [min_dist_and_segment_new, stop];
+	                }
+	
+	                if (_flattenJs2.default.Utils.LT(min_dist_and_segment_new[0], Math.sqrt(node.item.key.low))) {
+	                    return [min_dist_and_segment_new, true]; // stop condition
+	                }
+	
+	                var _Distance$distance = Distance.distance(shape, node.item.value),
+	                    _Distance$distance2 = _slicedToArray(_Distance$distance, 2),
+	                    dist = _Distance$distance2[0],
+	                    shortest_segment = _Distance$distance2[1];
+	                // console.log(dist)
+	
+	
+	                if (_flattenJs2.default.Utils.LT(dist, min_dist_and_segment_new[0])) {
+	                    min_dist_and_segment_new = [dist, shortest_segment];
+	                }
+	
+	                var _Distance$minmax_tree3 = Distance.minmax_tree_calc_distance(shape, node.right, min_dist_and_segment_new);
+	
+	                var _Distance$minmax_tree4 = _slicedToArray(_Distance$minmax_tree3, 2);
+	
+	                min_dist_and_segment_new = _Distance$minmax_tree4[0];
+	                stop = _Distance$minmax_tree4[1];
+	
+	
+	                return [min_dist_and_segment_new, stop];
+	            }
+	
+	            return [min_dist_and_segment, false];
+	        }
+	    }, {
+	        key: 'shape2planarSet',
+	        value: function shape2planarSet(shape, set) {
+	            var min_stop = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Number.POSITIVE_INFINITY;
+	
+	            var min_dist_and_segment = [min_stop, new _flattenJs2.default.Segment()];
+	            var stop = false;
+	            if (set instanceof _flattenJs2.default.PlanarSet) {
+	                var tree = Distance.minmax_tree(shape, set, min_stop);
+	
+	                var _Distance$minmax_tree5 = Distance.minmax_tree_calc_distance(shape, tree.root, min_dist_and_segment);
+	
+	                var _Distance$minmax_tree6 = _slicedToArray(_Distance$minmax_tree5, 2);
+	
+	                min_dist_and_segment = _Distance$minmax_tree6[0];
+	                stop = _Distance$minmax_tree6[1];
+	            }
+	            return min_dist_and_segment;
+	        }
+	    }]);
+
+	    return Distance;
+	}();
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.Layer = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
@@ -22759,7 +23108,7 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _model = __webpack_require__(7);
+	var _model = __webpack_require__(9);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22966,7 +23315,7 @@
 	}();
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23012,7 +23361,7 @@
 	}
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23319,7 +23668,7 @@
 	}();
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23329,7 +23678,7 @@
 	});
 	exports.parseXML = parseXML;
 	
-	var _job = __webpack_require__(14);
+	var _job = __webpack_require__(15);
 	
 	var _flattenJs = __webpack_require__(4);
 	
@@ -23629,7 +23978,7 @@
 	}
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23873,7 +24222,7 @@
 	}(createjs.Stage);
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23883,13 +24232,7 @@
 	});
 	exports.reducer = undefined;
 	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Created by alexanderbol on 13/04/2017.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
-	
-	// import {Stage} from './models/stage';
-	// import {Layer} from './models/layer';
-	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 	
 	var _actionTypes = __webpack_require__(3);
 	
@@ -23901,15 +24244,27 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
+	var _flattenIntervalTree = __webpack_require__(11);
+	
+	var _flattenIntervalTree2 = _interopRequireDefault(_flattenIntervalTree);
+	
 	var _layers = __webpack_require__(5);
 	
-	var _parser = __webpack_require__(54);
+	var _parser = __webpack_require__(55);
+	
+	var _distance = __webpack_require__(52);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
+	                                                                                                                                                                                                     * Created by alexanderbol on 13/04/2017.
+	                                                                                                                                                                                                     */
+	
+	// import {Stage} from './models/stage';
+	// import {Layer} from './models/layer';
+	
 	
 	var unitsList = [{
 	    name: "pixels",
@@ -23933,24 +24288,44 @@
 	    decimals: 0,
 	    divisor: 1,
 	    bg: "#F1F1F1",
-	    hoveredShape: null,
 	    parser: new _parser.Parser(),
 	    widthOn: true,
 	    displayVertices: false,
 	    displayLabels: true,
 	    measurePointsActive: false,
+	    zoomFactor: undefined,
+	    originX: undefined,
+	    originY: undefined,
+	    showAboutPopup: false
+	};
+	
+	var defaultMeasureShapesTool = {
 	    measureShapesActive: false,
 	    measureShapesFirstClick: true,
+	    hoveredShape: null,
+	    firstMeasuredShape: null,
+	    secondMeasuredShape: null,
+	    firstMeasuredLayer: null,
+	    secondMeasuredLayer: null,
+	    distance: undefined,
+	    shortestSegment: null
+	};
+	
+	var defaultAabbDemoToolState = {
+	    aabbDemoToolActivated: false,
+	    measureShapesActive: false,
+	    measureShapesFirstClick: true,
+	    hoveredShape: null,
 	    firstMeasuredShape: null,
 	    secondMeasuredShape: null,
 	    firstMeasuredLayer: null,
 	    secondMeasuredLayer: null,
 	    distance: undefined,
 	    shortestSegment: null,
-	    zoomFactor: undefined,
-	    originX: undefined,
-	    originY: undefined,
-	    showAboutPopup: false
+	    firstMeasuredShapeLevel: [],
+	    secondMeasuredShapeLevel: [],
+	    min_stop: Number.POSITIVE_INFINITY,
+	    tree: null
 	};
 	
 	var defaultMouseState = {
@@ -23988,74 +24363,6 @@
 	                decimals: newUnits.decimals,
 	                divisor: newUnits.divisor
 	            });
-	        case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
-	            return Object.assign({}, state, {
-	                hoveredShape: state.measureShapesActive ? action.shape : null
-	            });
-	        case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
-	            return Object.assign({}, state, {
-	                hoveredShape: null
-	            });
-	        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
-	            if (!state.measureShapesActive) {
-	                return state;
-	            }
-	            // measureShapesActive
-	
-	            if (state.measureShapesFirstClick) {
-	                return Object.assign({}, state, {
-	                    firstMeasuredShape: action.shape,
-	                    firstMeasuredLayer: action.layer,
-	                    secondMeasuredShape: null,
-	                    secondMeasuredLayer: null,
-	                    measureShapesFirstClick: false,
-	                    distance: undefined,
-	                    shortestSegment: null
-	                });
-	            } else {
-	                // second click
-	                if (action.shape === state.firstMeasuredShape) {
-	                    return state; // second click on the same shape
-	                }
-	
-	                var shape1 = state.firstMeasuredShape.geom;
-	                var shape2 = action.shape.geom;
-	                var distance = void 0,
-	                    shortestSegment = void 0;
-	                // if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
-	                //     [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
-	                // }
-	                // else {
-	
-	                // }
-	
-	
-	                var _Flatten$Distance$dis = _flattenJs2.default.Distance.distance(shape1, shape2);
-	
-	                var _Flatten$Distance$dis2 = _slicedToArray(_Flatten$Distance$dis, 2);
-	
-	                distance = _Flatten$Distance$dis2[0];
-	                shortestSegment = _Flatten$Distance$dis2[1];
-	                return Object.assign({}, state, {
-	                    secondMeasuredShape: action.shape,
-	                    secondMeasuredLayer: action.layer,
-	                    measureShapesFirstClick: true,
-	                    distance: distance,
-	                    shortestSegment: shortestSegment
-	                });
-	            }
-	        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
-	            return Object.assign({}, state, {
-	                measurePointsActive: false,
-	                measureShapesActive: false,
-	                measureShapesFirstClick: true,
-	                firstMeasuredShape: null,
-	                firstMeasuredLayer: null,
-	                secondMeasuredShape: null,
-	                secondMeasuredLayer: null,
-	                distance: undefined,
-	                shortestSegment: null
-	            });
 	        case ActionTypes.TOGGLE_WIDTH_MODE_CLICKED:
 	            return Object.assign({}, state, {
 	                widthOn: !state.widthOn,
@@ -24089,27 +24396,11 @@
 	
 	        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
 	            return Object.assign({}, state, {
-	                measurePointsActive: true,
-	                measureShapesActive: false,
-	                measureShapesFirstClick: true,
-	                firstMeasuredShape: null,
-	                firstMeasuredLayer: null,
-	                secondMeasuredShape: null,
-	                secondMeasuredLayer: null,
-	                distance: undefined,
-	                shortestSegment: null
+	                measurePointsActive: true
 	            });
 	        case ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED:
 	            return Object.assign({}, state, {
-	                measurePointsActive: false,
-	                measureShapesActive: true,
-	                measureShapesFirstClick: true,
-	                firstMeasuredShape: null,
-	                firstMeasuredLayer: null,
-	                secondMeasuredShape: null,
-	                secondMeasuredLayer: null,
-	                distance: undefined,
-	                shortestSegment: null
+	                measurePointsActive: false
 	            });
 	        case ActionTypes.MOUSE_DOWN_ON_STAGE:
 	            if (state.hoveredShape) {
@@ -24127,6 +24418,8 @@
 	            }
 	        case ActionTypes.LAYER_LIST_PANEL_PRESSED:
 	            return state; // only to cause refresh of layers list component
+	        case ActionTypes.AABB_TREE_NEXT_LEVEL:
+	            return state;
 	        default:
 	            return state;
 	    }
@@ -24299,6 +24592,251 @@
 	    }
 	}
 	
+	function measureShapesTool() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultMeasureShapesTool;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED:
+	            return Object.assign({}, defaultMeasureShapesTool, {
+	                measureShapesActive: true
+	            });
+	        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
+	            return Object.assign({}, defaultMeasureShapesTool);
+	
+	        case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
+	            return Object.assign({}, defaultMeasureShapesTool);
+	
+	        case ActionTypes.MOUSE_ROLL_OVER_SHAPE:
+	            return Object.assign({}, state, {
+	                hoveredShape: state.measureShapesActive ? action.shape : null
+	            });
+	        case ActionTypes.MOUSE_ROLL_OUT_SHAPE:
+	            return Object.assign({}, state, {
+	                hoveredShape: null
+	            });
+	        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
+	            if (!state.measureShapesActive) {
+	                return state;
+	            }
+	            // measureShapesActive
+	
+	            if (state.measureShapesFirstClick) {
+	                return Object.assign({}, state, {
+	                    firstMeasuredShape: action.shape,
+	                    firstMeasuredLayer: action.layer,
+	                    secondMeasuredShape: null,
+	                    secondMeasuredLayer: null,
+	                    measureShapesFirstClick: false,
+	                    distance: undefined,
+	                    shortestSegment: null
+	                });
+	            } else {
+	                // second click
+	                if (action.shape === state.firstMeasuredShape) {
+	                    return state; // second click on the same shape
+	                }
+	
+	                var shape1 = state.firstMeasuredShape.geom;
+	                var shape2 = action.shape.geom;
+	                var distance = void 0,
+	                    shortestSegment = void 0;
+	                // if (shape1 instanceof Flatten.Polygon && shape2 instanceof Flatten.Polygon) {
+	                //     [distance, shortestSegment] = Flatten.Distance.polygon2polygon(shape1, shape2);
+	                // }
+	                // else {
+	
+	                // }
+	
+	
+	                var _Flatten$Distance$dis = _flattenJs2.default.Distance.distance(shape1, shape2);
+	
+	                var _Flatten$Distance$dis2 = _slicedToArray(_Flatten$Distance$dis, 2);
+	
+	                distance = _Flatten$Distance$dis2[0];
+	                shortestSegment = _Flatten$Distance$dis2[1];
+	                return Object.assign({}, state, {
+	                    secondMeasuredShape: action.shape,
+	                    secondMeasuredLayer: action.layer,
+	                    measureShapesFirstClick: true,
+	                    distance: distance,
+	                    shortestSegment: shortestSegment
+	                });
+	            }
+	        case ActionTypes.MOUSE_DOWN_ON_STAGE:
+	            if (state.hoveredShape) {
+	                return state;
+	            } else {
+	                return Object.assign({}, state, {
+	                    measureShapesFirstClick: true,
+	                    firstMeasuredShape: null,
+	                    firstMeasuredLayer: null,
+	                    secondMeasuredShape: null,
+	                    secondMeasuredLayer: null,
+	                    distance: undefined,
+	                    shortestSegment: null
+	                });
+	            }
+	        default:
+	            return state;
+	    }
+	}
+	
+	function aabbDemoTool() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultAabbDemoToolState;
+	    var action = arguments[1];
+	
+	    var firstShapeNewLevel = [];
+	    var secondShapeNewLevel = [];
+	    var level = [];
+	    var min_stop = Number.POSITIVE_INFINITY;
+	    var tree = null;
+	
+	    switch (action.type) {
+	        case ActionTypes.AABB_DEMO_URI:
+	            return Object.assign({}, state, {
+	                aabbDemoToolActivated: true
+	            });
+	        case ActionTypes.AABB_TREE_NEXT_LEVEL:
+	            {
+	                if (state.firstMeasuredShape) {
+	                    if (state.firstMeasuredShapeLevel.length === 0) {
+	                        firstShapeNewLevel = [state.firstMeasuredShape.geom.edges.index.root];
+	                    } else {
+	                        firstShapeNewLevel = [];
+	                        var _iteratorNormalCompletion = true;
+	                        var _didIteratorError = false;
+	                        var _iteratorError = undefined;
+	
+	                        try {
+	                            for (var _iterator = state.firstMeasuredShapeLevel[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                                var node = _step.value;
+	
+	                                if (!node.left.isNil()) {
+	                                    firstShapeNewLevel.push(node.left);
+	                                }
+	                                if (!node.right.isNil()) {
+	                                    firstShapeNewLevel.push(node.right);
+	                                }
+	                            }
+	                        } catch (err) {
+	                            _didIteratorError = true;
+	                            _iteratorError = err;
+	                        } finally {
+	                            try {
+	                                if (!_iteratorNormalCompletion && _iterator.return) {
+	                                    _iterator.return();
+	                                }
+	                            } finally {
+	                                if (_didIteratorError) {
+	                                    throw _iteratorError;
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	                if (state.secondMeasuredShape) {
+	                    if (state.secondMeasuredShapeLevel.length === 0) {
+	                        secondShapeNewLevel = [state.secondMeasuredShape.geom.edges.index.root];
+	                    } else {
+	                        secondShapeNewLevel = [];
+	                        var _iteratorNormalCompletion2 = true;
+	                        var _didIteratorError2 = false;
+	                        var _iteratorError2 = undefined;
+	
+	                        try {
+	                            for (var _iterator2 = state.secondMeasuredShapeLevel[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                                var _node = _step2.value;
+	
+	                                if (!_node.left.isNil()) {
+	                                    secondShapeNewLevel.push(_node.left);
+	                                }
+	                                if (!_node.right.isNil()) {
+	                                    secondShapeNewLevel.push(_node.right);
+	                                }
+	                            }
+	                        } catch (err) {
+	                            _didIteratorError2 = true;
+	                            _iteratorError2 = err;
+	                        } finally {
+	                            try {
+	                                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                                    _iterator2.return();
+	                                }
+	                            } finally {
+	                                if (_didIteratorError2) {
+	                                    throw _iteratorError2;
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	                if (state.firstMeasuredShape || state.secondMeasuredShape) {
+	                    return Object.assign({}, state, {
+	                        firstMeasuredShapeLevel: firstShapeNewLevel,
+	                        secondMeasuredShapeLevel: secondShapeNewLevel
+	                    });
+	                } else {
+	                    return state;
+	                }
+	            }
+	        case ActionTypes.MOUSE_CLICKED_ON_SHAPE:
+	            if (!state.aabbDemoToolActivated) {
+	                return state;
+	            }
+	
+	            if (state.measureShapesFirstClick) {
+	                return Object.assign({}, state, {
+	                    firstMeasuredShape: action.shape,
+	                    firstMeasuredLayer: action.layer,
+	                    firstMeasuredShapeLevel: [],
+	                    secondMeasuredShapeLevel: [],
+	                    min_stop: Number.POSITIVE_INFINITY,
+	                    tree: null,
+	                    measureShapesFirstClick: false
+	                });
+	            } else {
+	                // second click
+	                if (action.shape === state.firstMeasuredShape) {
+	                    return state; // second click on the same shape
+	                }
+	                return Object.assign({}, state, {
+	                    secondMeasuredShape: action.shape,
+	                    secondMeasuredLayer: action.layer,
+	                    measureShapesFirstClick: true
+	                });
+	            }
+	        case ActionTypes.AABB_DEMO_NEXT_DIST_STEP:
+	            if (!state.aabbDemoToolActivated) {
+	                return state;
+	            }
+	            if (!state.firstMeasuredShape || !state.secondMeasuredShape) {
+	                return state;
+	            }
+	            if (state.secondMeasuredShapeLevel.length === 0) {
+	                level = [state.secondMeasuredShape.geom.edges.index.root];
+	                min_stop = Number.POSITIVE_INFINITY;
+	                tree = new _flattenIntervalTree2.default();
+	            } else {
+	                var _Distance$minmax_tree = _distance.Distance.minmax_tree_process_level(state.firstMeasuredShape, state.secondMeasuredShapeLevel, state.min_stop, state.tree);
+	
+	                var _Distance$minmax_tree2 = _slicedToArray(_Distance$minmax_tree, 3);
+	
+	                min_stop = _Distance$minmax_tree2[0];
+	                level = _Distance$minmax_tree2[1];
+	                tree = _Distance$minmax_tree2[2];
+	            }
+	            return Object.assign({}, state, {
+	                secondMeasuredShapeLevel: level,
+	                min_stop: min_stop,
+	                tree: tree
+	            });
+	
+	        default:
+	            return state;
+	    }
+	}
+	
 	function mouse() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultMouseState;
 	    var action = arguments[1];
@@ -24328,11 +24866,261 @@
 	    app: app,
 	    layers: layers,
 	    stage: stage,
+	    measureShapesTool: measureShapesTool,
+	    aabbDemoTool: aabbDemoTool,
 	    mouse: mouse
 	});
 
 /***/ },
-/* 58 */
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.AabbDemoTool = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _easeljsNEXTCombined = __webpack_require__(6);
+	
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	__webpack_require__(2);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	// import createjs from 'easel-js';
+	
+	
+	var AabbDemoTool = exports.AabbDemoTool = function (_Component) {
+	    _inherits(AabbDemoTool, _Component);
+	
+	    function AabbDemoTool(params) {
+	        _classCallCheck(this, AabbDemoTool);
+	
+	        var _this2 = _possibleConstructorReturn(this, (AabbDemoTool.__proto__ || Object.getPrototypeOf(AabbDemoTool)).call(this));
+	
+	        _this2.boxShapes = [];
+	        _this2.edgeShapes = [];
+	        return _this2;
+	    }
+	
+	    _createClass(AabbDemoTool, [{
+	        key: 'draw',
+	        value: function draw() {
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = this.boxShapes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var shape = _step.value;
+	
+	                    this.props.stage.removeChild(shape);
+	                }
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            this.boxShapes = [];
+	            this.drawTreeLevel(this.props.firstMeasuredShapeLevel);
+	            this.drawTreeLevel(this.props.secondMeasuredShapeLevel);
+	
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = this.edgeShapes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var _shape = _step2.value;
+	
+	                    this.props.stage.removeChild(_shape);
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            this.edgeShapes = [];
+	            this.drawSelectedEdges();
+	        }
+	    }, {
+	        key: 'drawTreeLevel',
+	        value: function drawTreeLevel(level) {
+	            if (level.length === 0) return;
+	            var stage = this.props.stage;
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+	
+	            try {
+	                for (var _iterator3 = level[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var node = _step3.value;
+	
+	                    var graphics = void 0;
+	                    if (node.max) {
+	                        graphics = node.max.graphics();
+	                    }
+	                    if (graphics) {
+	                        var shape = new createjs.Shape(graphics);
+	                        stage.addChild(shape);
+	                        this.boxShapes.push(shape);
+	
+	                        var edge = new createjs.Shape(node.item.key.graphics({
+	                            strokeStyle: 3,
+	                            stroke: "blue"
+	                        }));
+	                        stage.addChild(edge);
+	                        this.boxShapes.push(edge);
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'drawSelectedEdges',
+	        value: function drawSelectedEdges() {
+	            var stage = this.props.stage;
+	            var _this = this;
+	            if (!this.props.selectedEdgesTree) return;
+	            this.props.selectedEdgesTree.forEach(function (interval, shape) {
+	                if (interval.low < _this.props.minStop) {
+	                    var edge = new createjs.Shape(shape.graphics({
+	                        strokeStyle: 3,
+	                        stroke: "blue"
+	                    }));
+	                    stage.addChild(edge);
+	                    _this.edgeShapes.push(edge);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.draw();
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed || this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) {
+	
+	                this.draw();
+	            }
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            var _iteratorNormalCompletion4 = true;
+	            var _didIteratorError4 = false;
+	            var _iteratorError4 = undefined;
+	
+	            try {
+	                for (var _iterator4 = this.boxShapes[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	                    var shape = _step4.value;
+	
+	                    this.props.stage.removeChild(shape);
+	                }
+	            } catch (err) {
+	                _didIteratorError4 = true;
+	                _iteratorError4 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                        _iterator4.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError4) {
+	                        throw _iteratorError4;
+	                    }
+	                }
+	            }
+	
+	            this.boxShapes = [];
+	            var _iteratorNormalCompletion5 = true;
+	            var _didIteratorError5 = false;
+	            var _iteratorError5 = undefined;
+	
+	            try {
+	                for (var _iterator5 = this.edgeShapes[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	                    var _shape2 = _step5.value;
+	
+	                    this.props.stage.removeChild(_shape2);
+	                }
+	            } catch (err) {
+	                _didIteratorError5 = true;
+	                _iteratorError5 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+	                        _iterator5.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError5) {
+	                        throw _iteratorError5;
+	                    }
+	                }
+	            }
+	
+	            this.edgeShapes = [];
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return null;
+	        }
+	    }]);
+
+	    return AabbDemoTool;
+	}(_react.Component);
+
+/***/ },
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24584,7 +25372,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24625,29 +25413,39 @@
 	
 	        var _this = _possibleConstructorReturn(this, (MeasureShapesTool.__proto__ || Object.getPrototypeOf(MeasureShapesTool)).call(this));
 	
-	        _this.segment = undefined;
+	        _this.segment = new createjs.Shape();
+	        params.stage.addChild(_this.segment);
 	        return _this;
 	    }
 	
 	    _createClass(MeasureShapesTool, [{
+	        key: 'draw',
+	        value: function draw() {
+	            if (this.props.shortestSegment) {
+	
+	                this.segment.graphics = this.props.shortestSegment.graphics();
+	            }
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.draw();
+	        }
+	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
+	            this.segment.graphics.clear();
 	            if (this.props.firstMeasuredShape && this.props.secondMeasuredShape && this.props.firstMeasuredLayer.displayed && this.props.secondMeasuredLayer.displayed) {
 	
-	                if (this.props.shortestSegment && this.props.stage) {
-	                    var shortest_segment = this.props.shortestSegment;
-	
-	                    if (!this.segment) {
-	                        this.segment = new createjs.Shape();
-	                        this.props.stage.addChild(this.segment);
-	                    }
-	                    this.segment.graphics.clear();
-	                    this.segment.graphics = shortest_segment.graphics();
-	                }
-	            } else {
-	                if (this.segment) {
-	                    this.segment.graphics.clear();
-	                }
+	                this.draw();
+	            }
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            if (this.segment) {
+	                this.props.stage.removeChild(this.segment);
+	                this.segment.graphics.clear();
 	            }
 	        }
 	    }, {
@@ -24661,9 +25459,9 @@
 	}(_react.Component);
 
 /***/ },
-/* 60 */
+/* 62 */
 2,
-/* 61 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24677,7 +25475,7 @@
 	 * @typechecks
 	 */
 	
-	var emptyFunction = __webpack_require__(9);
+	var emptyFunction = __webpack_require__(8);
 	
 	/**
 	 * Upstream version of event listener. Does not take into account specific
@@ -24742,7 +25540,7 @@
 	module.exports = EventListener;
 
 /***/ },
-/* 62 */
+/* 64 */
 /***/ function(module, exports) {
 
 	/**
@@ -24780,7 +25578,7 @@
 	module.exports = ExecutionEnvironment;
 
 /***/ },
-/* 63 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24794,7 +25592,7 @@
 	 * 
 	 */
 	
-	var isTextNode = __webpack_require__(67);
+	var isTextNode = __webpack_require__(69);
 	
 	/*eslint-disable no-bitwise */
 	
@@ -24822,7 +25620,7 @@
 	module.exports = containsNode;
 
 /***/ },
-/* 64 */
+/* 66 */
 /***/ function(module, exports) {
 
 	/**
@@ -24851,7 +25649,7 @@
 	module.exports = focusNode;
 
 /***/ },
-/* 65 */
+/* 67 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24892,7 +25690,7 @@
 	module.exports = getActiveElement;
 
 /***/ },
-/* 66 */
+/* 68 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24919,7 +25717,7 @@
 	module.exports = isNode;
 
 /***/ },
-/* 67 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24933,7 +25731,7 @@
 	 * @typechecks
 	 */
 	
-	var isNode = __webpack_require__(66);
+	var isNode = __webpack_require__(68);
 	
 	/**
 	 * @param {*} object The object to check.
@@ -24946,7 +25744,7 @@
 	module.exports = isTextNode;
 
 /***/ },
-/* 68 */
+/* 70 */
 /***/ function(module, exports) {
 
 	/**
@@ -25016,7 +25814,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 69 */
+/* 71 */
 /***/ function(module, exports) {
 
 	/**
@@ -25074,7 +25872,7 @@
 	module.exports = Interval;
 
 /***/ },
-/* 70 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25084,7 +25882,7 @@
 	'use strict';
 	
 	// let defaultTraits = require('../utils/numeric_traits');
-	let Interval = __webpack_require__(69);
+	let Interval = __webpack_require__(71);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(18);
 	
 	let Node = class Node {
@@ -25166,12 +25964,12 @@
 
 
 /***/ },
-/* 71 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	let IntervalTree = __webpack_require__(17);
+	let IntervalTree = __webpack_require__(11);
 	
 	module.exports = function(Flatten) {
 	    let {Polygon, Point, Segment, Arc, Circle, Line, Ray, Vector} = Flatten;
@@ -25828,7 +26626,7 @@
 	};
 
 /***/ },
-/* 72 */
+/* 74 */
 /***/ function(module, exports) {
 
 	
@@ -25945,7 +26743,7 @@
 	};
 
 /***/ },
-/* 73 */
+/* 75 */
 /***/ function(module, exports) {
 
 	/**
@@ -26349,7 +27147,7 @@
 	};
 
 /***/ },
-/* 74 */
+/* 76 */
 /***/ function(module, exports) {
 
 	/**
@@ -26507,7 +27305,7 @@
 	};
 
 /***/ },
-/* 75 */
+/* 77 */
 /***/ function(module, exports) {
 
 	/**
@@ -26745,7 +27543,7 @@
 	};
 
 /***/ },
-/* 76 */
+/* 78 */
 /***/ function(module, exports) {
 
 	/**
@@ -26843,7 +27641,7 @@
 	};
 
 /***/ },
-/* 77 */
+/* 79 */
 /***/ function(module, exports) {
 
 	/**
@@ -27054,7 +27852,7 @@
 	};
 
 /***/ },
-/* 78 */
+/* 80 */
 /***/ function(module, exports) {
 
 	/**
@@ -27346,7 +28144,7 @@
 
 
 /***/ },
-/* 79 */
+/* 81 */
 /***/ function(module, exports) {
 
 	/**
@@ -27583,7 +28381,7 @@
 
 
 /***/ },
-/* 80 */
+/* 82 */
 /***/ function(module, exports) {
 
 	/**
@@ -27761,7 +28559,7 @@
 	};
 
 /***/ },
-/* 81 */
+/* 83 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27898,7 +28696,7 @@
 	};
 
 /***/ },
-/* 82 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/**
@@ -28254,7 +29052,7 @@
 	};
 
 /***/ },
-/* 83 */
+/* 85 */
 /***/ function(module, exports) {
 
 	/**
@@ -28431,7 +29229,7 @@
 
 
 /***/ },
-/* 84 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28442,7 +29240,7 @@
 	
 	// require("babel-polyfill");
 	
-	let IntervalTree = __webpack_require__(17);
+	let IntervalTree = __webpack_require__(11);
 	
 	module.exports = function(Flatten) {
 	    /**
@@ -28530,7 +29328,7 @@
 
 
 /***/ },
-/* 85 */
+/* 87 */
 /***/ function(module, exports) {
 
 	/**
@@ -28544,7 +29342,7 @@
 
 
 /***/ },
-/* 86 */
+/* 88 */
 /***/ function(module, exports) {
 
 	/**
@@ -28596,12 +29394,12 @@
 
 
 /***/ },
-/* 87 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(19),
-	    getRawTag = __webpack_require__(90),
-	    objectToString = __webpack_require__(91);
+	    getRawTag = __webpack_require__(92),
+	    objectToString = __webpack_require__(93);
 	
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -28630,7 +29428,7 @@
 
 
 /***/ },
-/* 88 */
+/* 90 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -28641,10 +29439,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 89 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(92);
+	var overArg = __webpack_require__(94);
 	
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -28653,7 +29451,7 @@
 
 
 /***/ },
-/* 90 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(19);
@@ -28705,7 +29503,7 @@
 
 
 /***/ },
-/* 91 */
+/* 93 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -28733,7 +29531,7 @@
 
 
 /***/ },
-/* 92 */
+/* 94 */
 /***/ function(module, exports) {
 
 	/**
@@ -28754,10 +29552,10 @@
 
 
 /***/ },
-/* 93 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(88);
+	var freeGlobal = __webpack_require__(90);
 	
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -28769,7 +29567,7 @@
 
 
 /***/ },
-/* 94 */
+/* 96 */
 /***/ function(module, exports) {
 
 	/**
@@ -28804,7 +29602,7 @@
 
 
 /***/ },
-/* 95 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28917,7 +29715,7 @@
 
 
 /***/ },
-/* 96 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29035,7 +29833,7 @@
 	}
 
 /***/ },
-/* 97 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29047,9 +29845,9 @@
 	
 	'use strict';
 	
-	var emptyFunction = __webpack_require__(9);
+	var emptyFunction = __webpack_require__(8);
 	var invariant = __webpack_require__(10);
-	var ReactPropTypesSecret = __webpack_require__(99);
+	var ReactPropTypesSecret = __webpack_require__(101);
 	
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -29099,7 +29897,7 @@
 
 
 /***/ },
-/* 98 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29128,12 +29926,12 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(97)();
+	  module.exports = __webpack_require__(99)();
 	}
 
 
 /***/ },
-/* 99 */
+/* 101 */
 /***/ function(module, exports) {
 
 	/**
@@ -29151,7 +29949,7 @@
 
 
 /***/ },
-/* 100 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29164,7 +29962,7 @@
 	 LICENSE file in the root directory of this source tree.
 	 Modernizr 3.0.0pre (Custom Build) | MIT
 	*/
-	'use strict';var aa=__webpack_require__(1);__webpack_require__(10);var l=__webpack_require__(62),n=__webpack_require__(11),ba=__webpack_require__(61),ca=__webpack_require__(9),da=__webpack_require__(16),ea=__webpack_require__(68),fa=__webpack_require__(63),ha=__webpack_require__(64),ia=__webpack_require__(65);
+	'use strict';var aa=__webpack_require__(1);__webpack_require__(10);var l=__webpack_require__(64),n=__webpack_require__(12),ba=__webpack_require__(63),ca=__webpack_require__(8),da=__webpack_require__(17),ea=__webpack_require__(70),fa=__webpack_require__(65),ha=__webpack_require__(66),ia=__webpack_require__(67);
 	function w(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:w("227");
 	function ja(a){switch(a){case "svg":return"http://www.w3.org/2000/svg";case "math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}
 	var ka={Namespaces:{html:"http://www.w3.org/1999/xhtml",mathml:"http://www.w3.org/1998/Math/MathML",svg:"http://www.w3.org/2000/svg"},getIntrinsicNamespace:ja,getChildNamespace:function(a,b){return null==a||"http://www.w3.org/1999/xhtml"===a?ja(b):"http://www.w3.org/2000/svg"===a&&"foreignObject"===b?"http://www.w3.org/1999/xhtml":a}},la=null,oa={};
@@ -29413,7 +30211,7 @@
 
 
 /***/ },
-/* 101 */
+/* 103 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29434,7 +30232,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 102 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @remove-on-eject-begin
@@ -29453,20 +30251,20 @@
 	  // Rejection tracking prevents a common issue where React gets into an
 	  // inconsistent state due to an error, but it gets swallowed by a Promise,
 	  // and the user has no idea what causes React's erratic future behavior.
-	  __webpack_require__(96).enable();
-	  window.Promise = __webpack_require__(95);
+	  __webpack_require__(98).enable();
+	  window.Promise = __webpack_require__(97);
 	}
 	
 	// fetch() polyfill for making API calls.
-	__webpack_require__(103);
+	__webpack_require__(105);
 	
 	// Object.assign() is commonly used with React.
 	// It will use the native implementation if it's present and isn't buggy.
-	Object.assign = __webpack_require__(11);
+	Object.assign = __webpack_require__(12);
 
 
 /***/ },
-/* 103 */
+/* 105 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -29930,7 +30728,7 @@
 
 
 /***/ },
-/* 104 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29942,7 +30740,7 @@
 	 This source code is licensed under the MIT license found in the
 	 LICENSE file in the root directory of this source tree.
 	*/
-	'use strict';var f=__webpack_require__(11),p=__webpack_require__(16);__webpack_require__(10);var r=__webpack_require__(9);
+	'use strict';var f=__webpack_require__(12),p=__webpack_require__(17);__webpack_require__(10);var r=__webpack_require__(8);
 	function t(a){for(var b=arguments.length-1,d="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,e=0;e<b;e++)d+="\x26args[]\x3d"+encodeURIComponent(arguments[e+1]);b=Error(d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 	var u={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function v(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}v.prototype.isReactComponent={};v.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?t("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};v.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 	function w(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}function x(){}x.prototype=v.prototype;var y=w.prototype=new x;y.constructor=w;f(y,v.prototype);y.isPureReactComponent=!0;function z(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}var A=z.prototype=new x;A.constructor=z;f(A,v.prototype);A.unstable_isAsyncReactComponent=!0;A.render=function(){return this.props.children};
@@ -29959,7 +30757,7 @@
 
 
 /***/ },
-/* 105 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30022,7 +30820,7 @@
 	}
 
 /***/ },
-/* 106 */
+/* 108 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30078,7 +30876,7 @@
 	}
 
 /***/ },
-/* 107 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30226,14 +31024,14 @@
 	}
 
 /***/ },
-/* 108 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(109);
+	module.exports = __webpack_require__(111);
 
 
 /***/ },
-/* 109 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {'use strict';
@@ -30242,7 +31040,7 @@
 	  value: true
 	});
 	
-	var _ponyfill = __webpack_require__(110);
+	var _ponyfill = __webpack_require__(112);
 	
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 	
@@ -30265,10 +31063,10 @@
 	
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(115)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(117)(module)))
 
 /***/ },
-/* 110 */
+/* 112 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30296,31 +31094,31 @@
 	};
 
 /***/ },
-/* 111 */
+/* 113 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3MEYwOEQ4MDMwMzJFNDExOUZGN0MyRjAwQkZFNDkwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4NkNFODE2MzMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4NkNFODE2MjMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM3Q0UwRDg3MzgzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjcwRjA4RDgwMzAzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nXk3UAAAAjtJREFUeNrU1ktIVFEcx/FRhExEei0kULQkiijMKduo0RNCEHuQRohgggsVJbRSNy2qRSK4qIjohRARk5YgGvmoVSEWRe9EzHJVkFZEoInT9w+/gXGasjngwgMf7uDcOeee/+Nco/x+v2cuR7RnjkdM4MPh+jOBj+moxVYsxnvcQhO+Bf/48umjEe+gAHcxgM1YgkNIxGOsjHQHUYEcsIP1XHqQg7dIk36Mo8JugxfTf5swdFfBO6jDSU1+CvdRrRDdwFn8wB7XJG9XrFejCOvQhgnkoxE+3ee0gMX7E1bgmfLRgG0qBrvuwiKnKmJ8xCol0ybLxBaUoBcH8QqjrjvwKZGf8QAJeI0NWsRC9Ut/b3SpIgvRUyX6Es4rD7sxhevqgyOqtj71yz+rKThEY9iJOziAVtX9S31vE5ZhEjvwSCU9gi8K4+3QEg5ttEFYP1zBRnzVwtYHVZp8IZoRiyTE4Y2+f4KU2c6iKdV9qXaSgYfoVPwvahEr57VYjmTtxh6sW/fNzEGYM2lGrnAOWYjHGizFBZWuR6EtxFV8IAcnIjlN7SnKdbXfLECL+sXK+Ttytah1/D6X49omH1a8LVzZCmUHjqt/NuEdUl3fB2MKxXMtaP1ioWhXTuwBlqk4nBawA3CvwnVPlWRHygtcUxXuV8n+0Qf/M27qfCpGnp7WynlIrMRr9LIKX0XhRkhlpakUu1RZg3oh2ZMfQ6UdO4FOdnknDwU1ocX+p15KXh2SvrBn0bz9r+K3AAMAvVSdlmlN6ucAAAAASUVORK5CYII="
 
 /***/ },
-/* 112 */
+/* 114 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAB3RJTUUH1AgfBgU3vDbVaQAAAAlwSFlzAAAPPAAADzwBFzqfWQAAAwBQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Bz0LCAAAAAJ0Uk5T/wDltzBKAAAARUlEQVR42mNgxAIYsPEYkMUZoGwGJNVwNoLAUIWmngHVNFQ2iitQnQQTZACqRkfYVaJrg1qFUE20IMnehGtFNZhIQSAAABhlAUeIwcHOAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 113 */
+/* 115 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACWUExURezp2L3CsAAAAH91jbamy9Sx1NXVxL2u0MvA2yEeEZy460hBJUU/JAC+ACQhE4qi2Zaw5JCp3se72Ap3Hsi82cq+2qK/8XeKtWNfTb+x0nSEsG19pH6QtWFfU8S31nt1Wpax5Xp0WoeeynBrVMm92WhkVsGz02JfU21oU5m06Mq/2se62MS21bmqzsW517ipzbyu0P///wUDcXkAAAAydFJOU/////////////////////////////////////////////////////////////////8ADVCY7wAAAO1JREFUeNpiMMQCAAKIAZsgQABhFQQIIAZDeW5uZTgXwgEIIAZFKX5+aQk2iBiUAxBADDwCClyCfIwQQSgHIICAglxigny8wmAI4TACBBCDhoymkrg6KwMIsEI4jAABxGCoyskpy8gEFmSCcNgAAojBkI2RkZENqhLIMWRkMwQIIKg7YSohACCAoIIwlRAAEEBYVQIEEFaVAAHEwIwJDAECiIGZg4NJSAiE5OSYJCWZWFiYGAECCCgowi6qwi6iza6jxs6uywISBAggoKCoFoeoioiemoE+CxgwMQIEEAMzEwZgBAggBkNGTAAQYABIRSX4H75PxQAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 114 */
+/* 116 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABOUExURezp2AAAAH91jb3CsE9PT83C3CQhE7amy9Sx1ImFdL2u0AC+AMq+2si82Qp3Hsm92cvA28Gz07ipzcq/2se62LmqzsS21cW517yu0P///44+OfEAAAAadFJOU/////////////////////////////////8AFCIA2gAAAMxJREFUeNpikMQCAAKIAZsgQABhFQQIIAYWFklJTjYoD8oBCCAGIAMuJgnlAAQQUDsLG5JOMAcggBiAykGaoADCAQggBqByDhYWbj4w5GTjAJkLEEAg2xkZEIARpB4ggECCHEiCHCBBgADCqhIggLCqBAggrCoBAgirSoAAYmDCBJIAAcTAxMrKiIy4uBiZAQIIKMjLxcPPxSvCJSbIxSXKzs7OyAwQQAxMAjzCAjz8vOKCEkLsYMDIDBBADEyMGIAZIIAYJJkxAUCAAQCiZRN3sUCgAwAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 115 */
+/* 117 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -30337,4 +31135,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.e39dae48.js.map
+//# sourceMappingURL=main.9aa7d0d8.js.map
