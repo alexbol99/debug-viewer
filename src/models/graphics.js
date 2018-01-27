@@ -2,7 +2,7 @@ import Flatten from 'flatten-js';
 
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
-let {Point, Segment, Circle, Arc, Polygon} = Flatten;
+let {Point, Segment, Circle, Arc, Polygon, Box} = Flatten;
 
 /* Provide conversion methods from FlattenJS objects to CreateJS Graphics */
 
@@ -52,6 +52,17 @@ Circle.prototype.graphics = function(style) {
         .beginStroke(stroke)
         .drawCircle(this.pc.x, this.pc.y, this.r)
         .endStroke();
+};
+
+Box.prototype.graphics = function(style) {
+    let graphics = new createjs.Graphics();
+    let strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
+    let stroke = style && style.stroke ? style.stroke : "black";
+    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
+    return graphics
+        .setStrokeStyle(strokeStyle,0,0,10,true)
+        .beginStroke(stroke)
+        .drawRect(this.xmin, this.ymin, this.xmax-this.xmin, this.ymax-this.ymin);
 };
 
 function setGraphicsEdgeSegment(graphics, segment) {

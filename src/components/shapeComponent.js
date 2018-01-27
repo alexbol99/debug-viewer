@@ -17,6 +17,9 @@ export class ShapeComponent extends Component {
         this.vertexShapes = [];
         this.labelShape = undefined;
 
+        // this.level = [params.model.geom.edges.index.root];
+        // this.boxShapes = [];
+
         for (let vertex of params.model.geom.vertices) {
             let vertexShape = new createjs.Shape();
             vertexShape.geom = vertex;   // augment Shape with geom struct
@@ -136,7 +139,7 @@ export class ShapeComponent extends Component {
         }
         this.shape.alpha = this.props.displayed ? alpha : 0.0;
 
-        // let box = this.props.polygon.geom.box;
+        // let box = this.props.model.geom.box;
         // this.shape.cache(box.xmin, box.ymin, box.xmax - box.xmin, box.ymax - box.ymin);
 
         // Draw vertices
@@ -146,6 +149,45 @@ export class ShapeComponent extends Component {
         // Draw labels
         let showLabel = this.props.displayed && this.props.displayLabels;
         this.redrawLabels(showLabel);
+
+        // this.drawTree();
+    }
+
+    drawTree() {
+        // let poly = this.props.model.geom;
+        // let root = poly.edges.index.root;
+        for (let shape of this.boxShapes) {
+            this.props.stage.removeChild(shape);
+        }
+        this.boxShapes = [];
+        // this.drawTreeLevel([root]);
+        let newLevel = this.drawTreeLevel(this.level);
+        this.level = newLevel;
+    }
+
+    drawTreeLevel(level) {
+        if (level.length === 0) return;
+        let stage = this.props.stage;
+        let newLevel = [];
+        for (let node of level) {
+            let graphics;
+            if (node.max) {
+                graphics = node.max.graphics();
+            }
+            if (graphics) {
+                let shape = new createjs.Shape(graphics);
+                stage.addChild(shape);
+                this.boxShapes.push(shape);
+            }
+            if (node.left) {
+                newLevel.push(node.left);
+            }
+            if (node.right) {
+                newLevel.push(node.right);
+            }
+        }
+        // this.drawTreeLevel(newLevel);
+        return newLevel;
     }
 
     componentDidMount() {

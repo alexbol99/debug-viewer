@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {LayerComponent} from './layerComponent';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
+import {AabbDemoTool} from "../tools/aabbDemoTool";
+
 import Utils from "../utils";
 
 export class StageComponent extends Component {
@@ -55,7 +57,27 @@ export class StageComponent extends Component {
             />
         ) : null;
 
-        let components = [...layerComponents, measureShapesTool];
+        let aabbDdemoTool = this.props.aabbDemoToolActivated ? (
+            <AabbDemoTool
+                key="AabbDemoTool"
+                stage={this.props.stage}
+                firstMeasuredShape={this.props.firstMeasuredShape}
+                secondMeasuredShape={this.props.secondMeasuredShape}
+                firstMeasuredLayer={this.props.firstMeasuredLayer}
+                secondMeasuredLayer={this.props.secondMeasuredLayer}
+                firstMeasuredShapeLevel={this.props.firstMeasuredShapeLevel}
+                secondMeasuredShapeLevel={this.props.secondMeasuredShapeLevel}
+                distance={this.props.distance}
+                shortestSegment={this.props.shortestSegment}
+                selectedEdgesTree={this.props.selectedEdgesTree}
+                minStop={this.props.minStop}
+            />
+            ) : null;
+        let components = [
+            ...layerComponents,
+            measureShapesTool,
+            aabbDdemoTool
+        ];
 
         return components;
 

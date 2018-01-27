@@ -46,6 +46,9 @@ export class MainComponent extends Component {
 
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
+
+        this.aabbToolNext = this.aabbToolNext.bind(this);
+        this.nextAabbDistStep = this.nextAabbDistStep.bind(this);
     }
 
     registerStage(stage) {
@@ -230,7 +233,9 @@ export class MainComponent extends Component {
                 break;
 
             case "ArrowRight":
+                this.nextAabbDistStep();
                 break;
+
             case "ArrowLeft":
                 break;
             case "ArrowUp":
@@ -245,6 +250,18 @@ export class MainComponent extends Component {
 
     handleKeyUp(event) {
 
+    }
+
+    aabbToolNext() {
+        this.props.store.dispatch({
+            type: ActionTypes.AABB_TREE_NEXT_LEVEL
+        })
+    }
+
+    nextAabbDistStep() {
+        this.props.store.dispatch({
+            type: ActionTypes.AABB_DEMO_NEXT_DIST_STEP
+        })
     }
 
     componentWillMount() {
@@ -269,6 +286,7 @@ export class MainComponent extends Component {
         return (
             <main className="App-content">
                 <ToolbarComponent
+                    aabbDemoToolActivated={this.state.aabbDemoTool.aabbDemoToolActivated}
                     onFileSelected={this.handleFileSelect}
                     onHomeButtonPressed={this.setHomeView}
                     onPanByDragPressed={this.onPanByDragPressed}
@@ -278,6 +296,7 @@ export class MainComponent extends Component {
                     onToggleVerticesPressed={this.toggleDisplayVertices}
                     onToggleLabelsPressed={this.toggleDisplayLabels}
                     onShowAboutPopupPressed={this.showAboutPopup}
+                    onAabbToolNext={this.aabbToolNext}
                 />
 
                 <CanvasComponent
@@ -305,6 +324,11 @@ export class MainComponent extends Component {
                     secondMeasuredLayer={this.state.measureShapesTool.secondMeasuredLayer}
                     distance={this.state.measureShapesTool.distance}
                     shortestSegment={this.state.measureShapesTool.shortestSegment}
+                    aabbDemoToolActivated={this.state.aabbDemoTool.aabbDemoToolActivated}
+                    firstMeasuredShapeLevel={this.state.aabbDemoTool.firstMeasuredShapeLevel}
+                    secondMeasuredShapeLevel={this.state.aabbDemoTool.secondMeasuredShapeLevel}
+                    selectedEdgesTree={this.state.aabbDemoTool.tree}
+                    minStop={this.state.aabbDemoTool.min_stop}
                     onMouseOver={this.onMouseRollOverShape}
                     onMouseOut={this.onMouseRollOutShape}
                     onClick={this.onClickOnShape}
@@ -326,8 +350,8 @@ export class MainComponent extends Component {
                     units={this.state.app.units}
                     divisor={this.state.app.divisor}
                     decimals={this.state.app.decimals}
-                    distance={this.state.app.distance}
-                    shortestSegment={this.state.app.shortestSegment}
+                    distance={this.state.measureShapesTool.distance}
+                    shortestSegment={this.state.measureShapesTool.shortestSegment}
                     coordX={this.state.mouse.x}
                     coordY={this.state.mouse.y}
                     onUnitClicked={this.toggleUnits}

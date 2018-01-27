@@ -10,9 +10,11 @@ import { reducer } from './reducer';
 import log from './middleware/log';
 import readFiles from './middleware/readFiles';
 import pasteData from './middleware/pasteData';
-import demo from './middleware/demo';
 import stageController from './middleware/stageController';
-import matrix_test from './middleware/matrix-test';
+import demo from './middleware/demo';
+import aabb_demo from './middleware/aabb_demo';
+
+// import matrix_test from './middleware/matrix-test';
 // import webgl_test from './middleware/webgl-test';
 
 const store = createStore(reducer, compose(applyMiddleware(
@@ -20,8 +22,8 @@ const store = createStore(reducer, compose(applyMiddleware(
     readFiles,
     pasteData,
     demo,
+    aabb_demo,
     stageController,
-    matrix_test
 )));
 
 ReactDOM.render(
