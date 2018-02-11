@@ -1,8 +1,8 @@
 /**
  * Created by alexanderbol on 21/04/2017.
  */
-// import createjs from 'easel-js';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
+// import * as createjs from '../easeljs-NEXT.combined';
 
 import Flatten from 'flatten-js';
 

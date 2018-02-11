@@ -9,7 +9,7 @@ import {AsideComponent} from './components/asideComponent';
 
 import * as ActionTypes from './actions/action-types';
 
-class App extends Component {
+export class App extends Component {
     constructor(props) {
         super(props);
         this.state = this.props.store.getState();
@@ -53,7 +53,7 @@ class App extends Component {
     }
 }
 
-export default App;
+// export default App;
 
 /*
  <div className="App">

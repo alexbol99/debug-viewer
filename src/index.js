@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import {App} from './App';
 import '../public/styles/index.css';
 
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -13,6 +13,7 @@ import pasteData from './middleware/pasteData';
 import stageController from './middleware/stageController';
 import demo from './middleware/demo';
 import aabb_demo from './middleware/aabb_demo';
+import boolean_test from './middleware/boolean_test';
 
 // import matrix_test from './middleware/matrix-test';
 // import webgl_test from './middleware/webgl-test';
@@ -23,6 +24,7 @@ const store = createStore(reducer, compose(applyMiddleware(
     pasteData,
     demo,
     aabb_demo,
+    boolean_test,
     stageController,
 )));
 
