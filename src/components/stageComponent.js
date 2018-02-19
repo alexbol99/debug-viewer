@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {LayerComponent} from './layerComponent';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 import {AabbDemoTool} from "../tools/aabbDemoTool";
+import {CollisionDistanceDemoTool} from "../tools/collisionDistanceDemoTool";
 
 import Utils from "../utils";
 
@@ -73,10 +74,23 @@ export class StageComponent extends Component {
                 minStop={this.props.minStop}
             />
             ) : null;
+
+        let collisionDemoTool = this.props.collisionDistanceDemoToolActivated ? (
+            <CollisionDistanceDemoTool
+                key="CollisionDemoTool"
+                stage={this.props.stage}
+                firstMeasuredShape={this.props.firstMeasuredShape}
+                secondMeasuredShape={this.props.secondMeasuredShape}
+                firstMeasuredLayer={this.props.firstMeasuredLayer}
+                secondMeasuredLayer={this.props.secondMeasuredLayer}
+            />
+            ) : null;
+
         let components = [
             ...layerComponents,
             measureShapesTool,
-            aabbDdemoTool
+            aabbDdemoTool,
+            collisionDemoTool
         ];
 
         return components;

@@ -5,7 +5,7 @@
 import {Component} from 'react';
 // import createjs from 'easel-js';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
-
+import {graphics} from '../models/graphics';
 import '../../public/styles/App.css';
 export class AabbDemoTool extends Component {
     constructor(params) {
@@ -32,16 +32,16 @@ export class AabbDemoTool extends Component {
         if (level.length === 0) return;
         let stage = this.props.stage;
         for (let node of level) {
-            let graphics;
+            let nodeGraphics;
             if (node.max) {
-                graphics = node.max.graphics();
+                nodeGraphics = graphics(node.max);
             }
-            if (graphics) {
-                let shape = new createjs.Shape(graphics);
+            if (nodeGraphics) {
+                let shape = new createjs.Shape(nodeGraphics);
                 stage.addChild(shape);
                 this.boxShapes.push(shape);
 
-                let edge = new createjs.Shape(node.item.key.graphics({
+                let edge = new createjs.Shape(graphics(node.item.key,{
                     strokeStyle: 3,
                     stroke: "blue"
                 }));
@@ -57,7 +57,7 @@ export class AabbDemoTool extends Component {
         if (!this.props.selectedEdgesTree) return;
         this.props.selectedEdgesTree.forEach((interval, shape) => {
             if (interval.low < _this.props.minStop) {
-                let edge = new createjs.Shape(shape.graphics({
+                let edge = new createjs.Shape(graphics(shape,{
                     strokeStyle: 3,
                     stroke: "blue"
                 }));

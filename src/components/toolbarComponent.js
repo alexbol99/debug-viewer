@@ -91,13 +91,25 @@ export class ToolbarComponent extends Component {
                     {/*<img src={setting} alt="setting" />*/}
                 {/*</button>*/}
                 {this.props.aabbDemoToolActivated ? (
-                <button title="AABB Tree Demo" onClick={this.props.onAabbToolNext}>
-                    <FontAwesome
-                        name='tree'
-                        size='2x'
-                        style={{color:"grey"}}
-                    />
-                </button>) : null}
+                    <button title="AABB Tree Demo" onClick={this.props.onAabbToolNext}>
+                        <FontAwesome
+                            name='tree'
+                            size='2x'
+                            style={{color: "grey"}}
+                        />
+                    </button>
+                ) : null}
+
+                {this.props.showCollisionDemoToolButton ? (
+                    <button title="Collision Distance Demo" onClick={this.props.onCollisionDemoButtonPressed}>
+                        <FontAwesome
+                            name='arrows-h'
+                            size='2x'
+                            style={{color: "grey"}}
+                        />
+                    </button>
+                ) : null}
+
                 <button title="About" onClick={this.props.onShowAboutPopupPressed}>
                     {/*<img src={about} alt="about" />*/}
                     <FontAwesome

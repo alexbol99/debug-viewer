@@ -77,5 +77,4 @@ const boolean_test = ({ dispatch, getState }) => next => action => {
     return next(action);
 };
 
-
 export default boolean_test;

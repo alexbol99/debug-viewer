@@ -4,7 +4,7 @@
 
 import {Component} from 'react';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
-import '../models/graphics';
+import {graphics} from '../models/graphics';
 import Utils from '../utils';
 
 export class ShapeComponent extends Component {
@@ -64,11 +64,12 @@ export class ShapeComponent extends Component {
         for (let vertexShape of this.vertexShapes) {
             let vertex = vertexShape.geom;
             if (vertexShape.graphics.isEmpty()) {
-                vertexShape.graphics = vertex.graphics({
-                    stroke: stroke,     // this.props.color,
-                    fill: fill,
-                    radius: 3. / (stage.zoomFactor * stage.resolution)
-                });
+                vertexShape.graphics = graphics(vertex,   // vertex.graphics({
+                    {
+                        stroke: stroke,     // this.props.color,
+                        fill: fill,
+                        radius: 3. / (stage.zoomFactor * stage.resolution)
+                    });
             }
             else {
                 vertexShape.graphics.circle.radius = 3. / (stage.zoomFactor * stage.resolution);
@@ -109,7 +110,7 @@ export class ShapeComponent extends Component {
         let fill = (widthOn && !this.props.displayVertices) ? this.props.color : "white";
 
         if (this.shape.graphics.isEmpty()) {
-            this.shape.graphics = this.props.model.geom.graphics({
+            this.shape.graphics = graphics(this.props.model.geom,{
                 strokeStyle: strokeStyle,
                 ignoreScale: true,
                 stroke: color,

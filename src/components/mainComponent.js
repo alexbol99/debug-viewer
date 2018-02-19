@@ -49,6 +49,7 @@ export class MainComponent extends Component {
 
         this.aabbToolNext = this.aabbToolNext.bind(this);
         this.nextAabbDistStep = this.nextAabbDistStep.bind(this);
+        this.onCollisionDemoButtonPressed = this.onCollisionDemoButtonPressed.bind(this);
     }
 
     registerStage(stage) {
@@ -198,7 +199,7 @@ export class MainComponent extends Component {
         })
     }
     closeAboutPopup(event) {
-        this.props.store.dispatch({
+        this.dispatch({
             type: ActionTypes.CLOSE_ABOUT_POPUP_BUTTON_PRESSED
         })
     }
@@ -213,6 +214,24 @@ export class MainComponent extends Component {
         this.dispatch({
             type: ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED
         });
+    }
+
+    aabbToolNext() {
+        this.dispatch({
+            type: ActionTypes.AABB_TREE_NEXT_LEVEL
+        })
+    }
+
+    nextAabbDistStep() {
+        this.dispatch({
+            type: ActionTypes.AABB_DEMO_NEXT_DIST_STEP
+        })
+    }
+
+    onCollisionDemoButtonPressed() {
+        this.dispatch({
+            type: ActionTypes.COLLISION_DEMO_BUTTON_PRESSED
+        })
     }
 
     handleKeyDown(e) {
@@ -245,23 +264,9 @@ export class MainComponent extends Component {
             default:
                 break;
         }
-
     }
 
     handleKeyUp(event) {
-
-    }
-
-    aabbToolNext() {
-        this.props.store.dispatch({
-            type: ActionTypes.AABB_TREE_NEXT_LEVEL
-        })
-    }
-
-    nextAabbDistStep() {
-        this.props.store.dispatch({
-            type: ActionTypes.AABB_DEMO_NEXT_DIST_STEP
-        })
     }
 
     componentWillMount() {
@@ -287,6 +292,7 @@ export class MainComponent extends Component {
             <main className="App-content">
                 <ToolbarComponent
                     aabbDemoToolActivated={this.state.aabbDemoTool.aabbDemoToolActivated}
+                    showCollisionDemoToolButton={this.state.collisionDistanceDemoTool.showCollisionDemoToolButton}
                     onFileSelected={this.handleFileSelect}
                     onHomeButtonPressed={this.setHomeView}
                     onPanByDragPressed={this.onPanByDragPressed}
@@ -297,6 +303,7 @@ export class MainComponent extends Component {
                     onToggleLabelsPressed={this.toggleDisplayLabels}
                     onShowAboutPopupPressed={this.showAboutPopup}
                     onAabbToolNext={this.aabbToolNext}
+                    onCollisionDemoButtonPressed={this.onCollisionDemoButtonPressed}
                 />
 
                 <CanvasComponent
@@ -329,6 +336,7 @@ export class MainComponent extends Component {
                     secondMeasuredShapeLevel={this.state.aabbDemoTool.secondMeasuredShapeLevel}
                     selectedEdgesTree={this.state.aabbDemoTool.tree}
                     minStop={this.state.aabbDemoTool.min_stop}
+                    collisionDistanceDemoToolActivated={this.state.collisionDistanceDemoTool.collisionDistanceDemoToolActivated}
                     onMouseOver={this.onMouseRollOverShape}
                     onMouseOut={this.onMouseRollOutShape}
                     onClick={this.onClickOnShape}

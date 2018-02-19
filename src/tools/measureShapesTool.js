@@ -5,7 +5,7 @@
 import {Component} from 'react';
 // import createjs from 'easel-js';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
-
+import {graphics} from '../models/graphics';
 import '../../public/styles/App.css';
 export class MeasureShapesTool extends Component {
     constructor(params) {
@@ -15,8 +15,7 @@ export class MeasureShapesTool extends Component {
     }
     draw() {
         if (this.props.shortestSegment) {
-
-            this.segment.graphics = this.props.shortestSegment.graphics();
+            this.segment.graphics = graphics(this.props.shortestSegment);
         }
     }
     componentDidMount() {

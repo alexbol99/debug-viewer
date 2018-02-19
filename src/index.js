@@ -13,7 +13,8 @@ import pasteData from './middleware/pasteData';
 import stageController from './middleware/stageController';
 import demo from './middleware/demo';
 import aabb_demo from './middleware/aabb_demo';
-import boolean_test from './middleware/boolean_test';
+import collision_demo from './middleware/collision_demo';
+// import boolean_test from './middleware/boolean_test';
 
 // import matrix_test from './middleware/matrix-test';
 // import webgl_test from './middleware/webgl-test';
@@ -24,7 +25,7 @@ const store = createStore(reducer, compose(applyMiddleware(
     pasteData,
     demo,
     aabb_demo,
-    boolean_test,
+    collision_demo,
     stageController,
 )));
 
