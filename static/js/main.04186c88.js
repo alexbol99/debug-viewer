@@ -67,8 +67,8 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(104);
-	module.exports = __webpack_require__(45);
+	__webpack_require__(107);
+	module.exports = __webpack_require__(46);
 
 
 /***/ },
@@ -78,7 +78,7 @@
 	'use strict';
 	
 	if (true) {
-	  module.exports = __webpack_require__(106);
+	  module.exports = __webpack_require__(109);
 	} else {
 	  module.exports = require('./cjs/react.development.js');
 	}
@@ -158,6 +158,10 @@
 	var AABB_DEMO_URI = exports.AABB_DEMO_URI = "AABB_DEMO_URI";
 	var AABB_DEMO_NEXT_DIST_STEP = exports.AABB_DEMO_NEXT_DIST_STEP = "AABB_DEMO_NEXT_DIST_STEP";
 	var AABB_TREE_NEXT_LEVEL = exports.AABB_TREE_NEXT_LEVEL = "AABB_TREE_NEXT_LEVEL";
+	
+	/** Collision demo **/
+	var COLLISION_DEMO_URI = exports.COLLISION_DEMO_URI = "COLLISION_DEMO_URI";
+	var COLLISION_DEMO_BUTTON_PRESSED = exports.COLLISION_DEMO_BUTTON_PRESSED = "COLLISION_DEMO_BUTTON_PRESSED";
 
 /***/ },
 /* 4 */
@@ -167,10 +171,9 @@
 	 * Created by Alex Bol on 2/18/2017.
 	 */
 	'use strict';
-	// require("babel-polyfill");
 	
-	let Utils = __webpack_require__(88);
-	let Errors = __webpack_require__(87);
+	let Utils = __webpack_require__(91);
+	let Errors = __webpack_require__(90);
 	
 	/**
 	 * FlattenJS - library for 2d geometry
@@ -190,27 +193,34 @@
 	        this.INSIDE = 1;
 	        this.OUTSIDE = 0;
 	        this.BOUNDARY = 2;
+	        this.CONTAINS = 3;
+	        this.INTERLACE = 4;
+	        this.CLIP_INSIDE = 1;
+	        this.CLIP_OUTSIDE = 0;
+	        this.BOOLEAN_UNION = 1;
+	        this.BOOLEAN_INTERSECT = 2;
+	        this.BOOLEAN_SUBTRACT = 3;
+	        this.OVERLAP_SAME = 1;
+	        this.OVERLAP_OPPOSITE = 2;
 	    }
 	};
 	
 	let f = new Flatten();
 	
-	__webpack_require__(86)(f);
-	__webpack_require__(81)(f);
-	__webpack_require__(85)(f);
-	__webpack_require__(80)(f);
-	__webpack_require__(77)(f);
+	__webpack_require__(89)(f);
 	__webpack_require__(84)(f);
-	__webpack_require__(75)(f);
-	__webpack_require__(76)(f);
+	__webpack_require__(88)(f);
+	__webpack_require__(83)(f);
+	__webpack_require__(80)(f);
+	__webpack_require__(87)(f);
 	__webpack_require__(78)(f);
 	__webpack_require__(79)(f);
-	__webpack_require__(83)(f);
-	__webpack_require__(74)(f);
+	__webpack_require__(81)(f);
 	__webpack_require__(82)(f);
-	__webpack_require__(73)(f);
-	
-	// f.Point.inject(f.Distance);
+	__webpack_require__(86)(f);
+	__webpack_require__(77)(f);
+	__webpack_require__(85)(f);
+	__webpack_require__(76)(f);
 	
 	module.exports = f;
 
@@ -230,7 +240,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 20/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _layer = __webpack_require__(53);
+	var _layer = __webpack_require__(55);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -16989,6 +16999,197 @@
 
 /***/ },
 /* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.graphics = graphics;
+	
+	var _flattenJs = __webpack_require__(4);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	var _easeljsNEXTCombined = __webpack_require__(6);
+	
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Point = _flattenJs2.default.Point,
+	    Segment = _flattenJs2.default.Segment,
+	    Circle = _flattenJs2.default.Circle,
+	    Arc = _flattenJs2.default.Arc,
+	    Polygon = _flattenJs2.default.Polygon,
+	    Box = _flattenJs2.default.Box;
+	
+	/* Provide conversion methods from FlattenJS objects to CreateJS Graphics */
+	
+	function graphics(shape) {
+	    var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+	
+	    if (shape instanceof Point) {
+	        return graphics_point(shape, style);
+	    }
+	    if (shape instanceof Segment) {
+	        return graphics_segment(shape, style);
+	    }
+	    if (shape instanceof Arc) {
+	        return graphics_arc(shape, style);
+	    }
+	    if (shape instanceof Circle) {
+	        return graphics_circle(shape, style);
+	    }
+	    if (shape instanceof Box) {
+	        return graphics_box(shape, style);
+	    }
+	    if (shape instanceof Polygon) {
+	        return graphics_polygon(shape, style);
+	    }
+	    return null;
+	}
+	
+	// Point.prototype.graphics = function(style) {
+	function graphics_point(point, style) {
+	    var radius = style && style.radius ? style.radius : 3;
+	    var fill = style && style.fill ? style.fill : "#FF0303";
+	    var graphics = new createjs.Graphics();
+	    graphics.fill = graphics.beginFill(fill).command;
+	    graphics.circle = graphics.drawCircle(point.x, point.y, radius).command;
+	    return graphics;
+	};
+	
+	// Segment.prototype.graphics = function(style) {
+	function graphics_segment(segment, style) {
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle !== undefined ? style.strokeStyle : 2;
+	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
+	    var stroke = style && style.stroke ? style.stroke : "black";
+	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).moveTo(segment.ps.x, segment.ps.y).lineTo(segment.pe.x, segment.pe.y).endStroke();
+	};
+	
+	// Arc.prototype.graphics = function(style) {
+	function graphics_arc(arc, style) {
+	    // let startAngle = 2 * Math.PI - this.startAngle;
+	    // let endAngle =  2 * Math.PI - this.endAngle;
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
+	    var stroke = style && style.stroke ? style.stroke : "black";
+	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).arc(arc.pc.x, arc.pc.y, arc.r, arc.startAngle, arc.endAngle, !arc.counterClockwise).endStroke();
+	};
+	
+	// Circle.prototype.graphics = function(style) {
+	function graphics_circle(circle, style) {
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
+	    var stroke = style && style.stroke ? style.stroke : "black";
+	    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
+	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).drawCircle(circle.pc.x, circle.pc.y, circle.r).endStroke();
+	};
+	
+	// Box.prototype.graphics = function(style) {
+	function graphics_box(box, style) {
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
+	    var stroke = style && style.stroke ? style.stroke : "black";
+	    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
+	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).drawRect(box.xmin, box.ymin, box.xmax - box.xmin, box.ymax - box.ymin);
+	};
+	
+	function setGraphicsEdgeSegment(graphics, segment) {
+	    graphics.lineTo(segment.pe.x, segment.pe.y);
+	}
+	
+	function setGraphicsEdgeArc(graphics, arc) {
+	    // let startAngle = 2 * Math.PI - arc.startAngle;
+	    // let endAngle = 2 * Math.PI - arc.endAngle;
+	    graphics.arc(arc.pc.x, arc.pc.y, arc.r, arc.startAngle, arc.endAngle, !arc.counterClockwise);
+	}
+	
+	function setGraphicsEdge(graphics, edge) {
+	    if (edge.shape instanceof Segment) {
+	        setGraphicsEdgeSegment(graphics, edge.shape);
+	    } else if (edge.shape instanceof Arc) {
+	        setGraphicsEdgeArc(graphics, edge.shape);
+	    }
+	}
+	
+	function setGraphicsFace(graphics, face) {
+	    var ps = face.first.start;
+	    graphics.moveTo(ps.x, ps.y);
+	
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+	
+	    try {
+	        for (var _iterator = face[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	            var edge = _step.value;
+	
+	            setGraphicsEdge(graphics, edge);
+	        }
+	    } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	            }
+	        } finally {
+	            if (_didIteratorError) {
+	                throw _iteratorError;
+	            }
+	        }
+	    }
+	}
+	
+	// Polygon.prototype.graphics = function(style) {
+	function graphics_polygon(polygon, style) {
+	    var graphics = new createjs.Graphics();
+	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
+	    var stroke = style && style.stroke ? style.stroke : "#FF0303";
+	    var fill = style && style.fill ? style.fill : "#FF0303";
+	    graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true);
+	    graphics.stroke = graphics.beginStroke(stroke).command;
+	    graphics.fill = graphics.beginFill(fill).command;
+	
+	    var _iteratorNormalCompletion2 = true;
+	    var _didIteratorError2 = false;
+	    var _iteratorError2 = undefined;
+	
+	    try {
+	        for (var _iterator2 = polygon.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var face = _step2.value;
+	
+	            setGraphicsFace(graphics, face);
+	        }
+	    } catch (err) {
+	        _didIteratorError2 = true;
+	        _iteratorError2 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                _iterator2.return();
+	            }
+	        } finally {
+	            if (_didIteratorError2) {
+	                throw _iteratorError2;
+	            }
+	        }
+	    }
+	
+	    graphics.endStroke();
+	    return graphics;
+	};
+
+/***/ },
+/* 8 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -17034,7 +17235,7 @@
 	exports.default = Utils;
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -17075,7 +17276,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -17180,7 +17381,7 @@
 	}();
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -17238,7 +17439,7 @@
 	module.exports = invariant;
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -17246,7 +17447,7 @@
 	 */
 	'use strict';
 	
-	let Node = __webpack_require__(72);
+	let Node = __webpack_require__(75);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(18);
 	
 	let nil_node = new Node();
@@ -17775,7 +17976,7 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	/*
@@ -17871,7 +18072,7 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17945,162 +18146,6 @@
 
 	    return Modal;
 	}(_react.Component);
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _flattenJs = __webpack_require__(4);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _easeljsNEXTCombined = __webpack_require__(6);
-	
-	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Point = _flattenJs2.default.Point,
-	    Segment = _flattenJs2.default.Segment,
-	    Circle = _flattenJs2.default.Circle,
-	    Arc = _flattenJs2.default.Arc,
-	    Polygon = _flattenJs2.default.Polygon,
-	    Box = _flattenJs2.default.Box;
-	
-	/* Provide conversion methods from FlattenJS objects to CreateJS Graphics */
-	
-	Point.prototype.graphics = function (style) {
-	    var radius = style && style.radius ? style.radius : 3;
-	    var fill = style && style.fill ? style.fill : "#FF0303";
-	    var graphics = new createjs.Graphics();
-	    graphics.fill = graphics.beginFill(fill).command;
-	    graphics.circle = graphics.drawCircle(this.x, this.y, radius).command;
-	    return graphics;
-	};
-	
-	Segment.prototype.graphics = function (style) {
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle !== undefined ? style.strokeStyle : 2;
-	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
-	    var stroke = style && style.stroke ? style.stroke : "black";
-	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).moveTo(this.ps.x, this.ps.y).lineTo(this.pe.x, this.pe.y).endStroke();
-	};
-	
-	Arc.prototype.graphics = function (style) {
-	    // let startAngle = 2 * Math.PI - this.startAngle;
-	    // let endAngle =  2 * Math.PI - this.endAngle;
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
-	    var ignoreScale = style && style.ignoreScale !== undefined ? style.ignoreScale : true;
-	    var stroke = style && style.stroke ? style.stroke : "black";
-	    return graphics.setStrokeStyle(strokeStyle, 1, 0, 10, ignoreScale).beginStroke(stroke).arc(this.pc.x, this.pc.y, this.r, this.startAngle, this.endAngle, !this.counterClockwise).endStroke();
-	};
-	
-	Circle.prototype.graphics = function (style) {
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
-	    var stroke = style && style.stroke ? style.stroke : "black";
-	    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
-	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).drawCircle(this.pc.x, this.pc.y, this.r).endStroke();
-	};
-	
-	Box.prototype.graphics = function (style) {
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
-	    var stroke = style && style.stroke ? style.stroke : "black";
-	    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
-	    return graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true).beginStroke(stroke).drawRect(this.xmin, this.ymin, this.xmax - this.xmin, this.ymax - this.ymin);
-	};
-	
-	function setGraphicsEdgeSegment(graphics, segment) {
-	    graphics.lineTo(segment.pe.x, segment.pe.y);
-	}
-	
-	function setGraphicsEdgeArc(graphics, arc) {
-	    // let startAngle = 2 * Math.PI - arc.startAngle;
-	    // let endAngle = 2 * Math.PI - arc.endAngle;
-	    graphics.arc(arc.pc.x, arc.pc.y, arc.r, arc.startAngle, arc.endAngle, !arc.counterClockwise);
-	}
-	
-	function setGraphicsEdge(graphics, edge) {
-	    if (edge.shape instanceof Segment) {
-	        setGraphicsEdgeSegment(graphics, edge.shape);
-	    } else if (edge.shape instanceof Arc) {
-	        setGraphicsEdgeArc(graphics, edge.shape);
-	    }
-	}
-	
-	function setGraphicsFace(graphics, face) {
-	    var ps = face.first.start;
-	    graphics.moveTo(ps.x, ps.y);
-	
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-	
-	    try {
-	        for (var _iterator = face[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var edge = _step.value;
-	
-	            setGraphicsEdge(graphics, edge);
-	        }
-	    } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion && _iterator.return) {
-	                _iterator.return();
-	            }
-	        } finally {
-	            if (_didIteratorError) {
-	                throw _iteratorError;
-	            }
-	        }
-	    }
-	}
-	
-	Polygon.prototype.graphics = function (style) {
-	    var graphics = new createjs.Graphics();
-	    var strokeStyle = style && style.strokeStyle ? style.strokeStyle : 1;
-	    var stroke = style && style.stroke ? style.stroke : "#FF0303";
-	    var fill = style && style.fill ? style.fill : "#FF0303";
-	    graphics.setStrokeStyle(strokeStyle, 0, 0, 10, true);
-	    graphics.stroke = graphics.beginStroke(stroke).command;
-	    graphics.fill = graphics.beginFill(fill).command;
-	
-	    var _iteratorNormalCompletion2 = true;
-	    var _didIteratorError2 = false;
-	    var _iteratorError2 = undefined;
-	
-	    try {
-	        for (var _iterator2 = this.faces[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var face = _step2.value;
-	
-	            setGraphicsFace(graphics, face);
-	        }
-	    } catch (err) {
-	        _didIteratorError2 = true;
-	        _iteratorError2 = err;
-	    } finally {
-	        try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	                _iterator2.return();
-	            }
-	        } finally {
-	            if (_didIteratorError2) {
-	                throw _iteratorError2;
-	            }
-	        }
-	    }
-	
-	    graphics.endStroke();
-	    return graphics;
-	};
 
 /***/ },
 /* 15 */
@@ -18444,7 +18489,7 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(95);
+	var root = __webpack_require__(98);
 	
 	/** Built-in value references. */
 	var Symbol = root.Symbol;
@@ -18456,9 +18501,9 @@
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(89),
-	    getPrototype = __webpack_require__(91),
-	    isObjectLike = __webpack_require__(96);
+	var baseGetTag = __webpack_require__(92),
+	    getPrototype = __webpack_require__(94),
+	    isObjectLike = __webpack_require__(99);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -18526,7 +18571,7 @@
 
 	'use strict';
 	
-	var asap = __webpack_require__(28);
+	var asap = __webpack_require__(29);
 	
 	function noop() {}
 	
@@ -18777,7 +18822,7 @@
 	  // DCE check should happen before ReactDOM bundle executes so that
 	  // DevTools can report bad minification during injection.
 	  checkDCE();
-	  module.exports = __webpack_require__(102);
+	  module.exports = __webpack_require__(105);
 	} else {
 	  module.exports = require('./cjs/react-dom.development.js');
 	}
@@ -18801,11 +18846,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(100);
+	var _propTypes = __webpack_require__(103);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _screenReaderStyles = __webpack_require__(103);
+	var _screenReaderStyles = __webpack_require__(106);
 	
 	var _screenReaderStyles2 = _interopRequireDefault(_screenReaderStyles);
 	
@@ -18984,7 +19029,7 @@
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _symbolObservable = __webpack_require__(110);
+	var _symbolObservable = __webpack_require__(113);
 	
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 	
@@ -19249,15 +19294,15 @@
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _combineReducers = __webpack_require__(109);
+	var _combineReducers = __webpack_require__(112);
 	
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 	
-	var _bindActionCreators = __webpack_require__(108);
+	var _bindActionCreators = __webpack_require__(111);
 	
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 	
-	var _applyMiddleware = __webpack_require__(107);
+	var _applyMiddleware = __webpack_require__(110);
 	
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 	
@@ -19319,6 +19364,214 @@
 
 /***/ },
 /* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	let Flatten = __webpack_require__(4);
+	let {Point, Vector, Segment, Arc, Line, Box, Polygon} = Flatten;
+	
+	module.exports = class CollisionDistance {
+	    static apply(polygon1, polygon2) {
+	        let collision_distance = Number.POSITIVE_INFINITY;
+	        for (let edge of [...polygon2.edges]) {
+	            let distance = CollisionDistance.edge2polygon(edge, polygon1);
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        return collision_distance;
+	    }
+	
+	    static edge2polygon(edge2, polygon1) {
+	        let shapeBox = edge2.shape.box;
+	        let box = new Box(
+	            Number.NEGATIVE_INFINITY,
+	            shapeBox.ymin,
+	            Number.POSITIVE_INFINITY,
+	            shapeBox.ymax
+	        );
+	        let collision_distance = Number.POSITIVE_INFINITY;
+	        let resp_edges =  polygon1.edges.search(box);
+	        for (let edge1 of resp_edges) {
+	            let distance;
+	            if (edge1.shape instanceof Segment && edge2.shape instanceof Segment) {
+	                distance = CollisionDistance.segment2segment(edge1.shape, edge2.shape);
+	            }
+	            else if (edge1.shape instanceof Arc && edge2.shape instanceof Segment) {
+	                distance = CollisionDistance.segment2arc(edge2.shape, edge1.shape);
+	            }
+	            else if (edge1.shape instanceof Segment && edge2.shape instanceof Arc) {
+	                distance = CollisionDistance.segment2arc(edge1.shape, edge2.shape);
+	            }
+	            else if (edge1.shape instanceof Arc && edge2.shape instanceof Arc) {
+	                distance = CollisionDistance.arc2arc(edge1.shape, edge2.shape);
+	            }
+	
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        return collision_distance;
+	    }
+	
+	    static point2shape(point, shape) {
+	        let line = new Line(point, new Vector(0,1));
+	        let intersections = line.intersect(shape);          // segment or arc
+	        let collision_distance = Number.POSITIVE_INFINITY;
+	        for (let ip of intersections) {
+	            let [distance, shortest_segment] = point.distanceTo(ip);
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        return collision_distance;
+	    }
+	
+	    static segment2segment(segment1, segment2) {
+	        let collision_distance = Number.POSITIVE_INFINITY;
+	        for (let point of segment1.vertices) {
+	            let distance = CollisionDistance.point2shape(point, segment2);
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        for (let point of segment2.vertices) {
+	            let distance = CollisionDistance.point2shape(point, segment1);
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        return collision_distance;
+	    }
+	
+	    static segment2arc(segment, arc) {
+	        let collision_distance = Number.POSITIVE_INFINITY;
+	        let v_s = new Vector(segment.start, segment.end);
+	        v_s = v_s.normalize();
+	
+	        let v_n = [v_s.rotate90CCW().multiply(arc.r), v_s.rotate90CW().multiply(arc.r)];
+	        let distance;
+	
+	        // Distance between tangent point and segment
+	        for (let v of v_n) {
+	            let tangent_point = arc.center.translate(v);  // tangent point in direction of the normal vector
+	            if (tangent_point.on(arc)) {
+	                distance = CollisionDistance.point2shape(tangent_point, segment);
+	                if (distance < collision_distance) {
+	                    collision_distance = distance;
+	                }
+	            }
+	        }
+	
+	        for (let point of arc.vertices) {
+	            let distance = CollisionDistance.point2shape(point, segment);
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        for (let point of segment.vertices) {
+	            let distance = CollisionDistance.point2shape(point, arc);
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        return collision_distance;
+	    }
+	
+	    static arc2arc(arc1, arc2) {
+	        let collision_distance = Number.POSITIVE_INFINITY;
+	        let distance;
+	
+	        // test translation of arc2.center to arc1 enlarged by r2
+	        let arc_enlarged = arc1.clone();
+	        arc_enlarged.r += arc2.r;
+	        distance = CollisionDistance.point2shape(arc2.center, arc_enlarged);
+	        if (distance < collision_distance) {
+	            // additional check that transformed arc actually touching
+	            let [dist_tmp, shortest_segment_tmp] =
+	                arc1.distanceTo( CollisionDistance.translateArc(arc2, new Vector(-distance,0)));
+	            if (Flatten.Utils.EQ_0(dist_tmp)) {
+	                collision_distance = distance;
+	            }
+	        }
+	
+	        // test translation of arc2.center to arc1 reduced by r2
+	        if (Flatten.Utils.GT(arc1.r > arc2.r)) {
+	            let arc_reduced = arc1.clone();
+	            arc_reduced.r -= arc2.r;
+	            distance = CollisionDistance.point2shape(arc2.center, arc_reduced);
+	            if (distance < collision_distance) {
+	                // additional check that transformed arc actually touching
+	                let [dist_tmp, shortest_segment_tmp] =
+	                    arc1.distanceTo( CollisionDistance.translateArc(arc2, new Vector(-distance,0)));
+	                if (Flatten.Utils.EQ_0(dist_tmp)) {
+	                    collision_distance = distance;
+	                }
+	            }
+	        }
+	
+	        // test translation of arc1.center to arc2 reduced by r1
+	        if (Flatten.Utils.GT(arc1.r < arc2.r)) {
+	            let arc_reduced = arc2.clone();
+	            arc_reduced.r -= arc1.r;
+	            distance = CollisionDistance.point2shape(arc1.center, arc_reduced);
+	            if (distance < collision_distance) {
+	                // additional check that transformed arc actually touching
+	                let [dist_tmp, shortest_segment_tmp] =
+	                    arc1.distanceTo( CollisionDistance.translateArc(arc2, new Vector(-distance,0)));
+	                if (Flatten.Utils.EQ_0(dist_tmp)) {
+	                    collision_distance = distance;
+	                }
+	            }
+	        }
+	
+	        for (let point of arc1.vertices) {
+	            let distance = CollisionDistance.point2shape(point, arc2);
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        for (let point of arc2.vertices) {
+	            let distance = CollisionDistance.point2shape(point, arc1);
+	            if (distance < collision_distance) {
+	                collision_distance = distance;
+	            }
+	        }
+	        return collision_distance;
+	    }
+	
+	    static translateArc(arc, vec) {
+	        let arc_tmp = arc.clone();
+	        arc_tmp.pc.translate(vec);
+	        return arc_tmp;
+	    }
+	
+	    static translate(polygon, vec) {
+	        let newPolygon = new Polygon();
+	        for (let face of polygon.faces) {
+	            let shapes = [];
+	            for (let edge of face) {
+	                if (edge.shape instanceof Segment) {
+	                    shapes.push(
+	                        new Segment(edge.shape.ps.translate(vec), edge.shape.pe.translate(vec))
+	                    )
+	                }
+	                else if (edge.shape instanceof  Arc) {
+	                    let arc_trans = edge.shape.clone();
+	                    arc_trans.pc = edge.shape.pc.translate(vec);
+	                    shapes.push(arc_trans);
+	                }
+	            }
+	            newPolygon.addFace(shapes);
+	        }
+	        return newPolygon;
+	    }
+	};
+
+
+/***/ },
+/* 29 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -19548,7 +19801,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19556,6 +19809,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.App = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -19565,13 +19819,13 @@
 	
 	__webpack_require__(2);
 	
-	var _headerComponent = __webpack_require__(32);
+	var _headerComponent = __webpack_require__(33);
 	
-	var _mainComponent = __webpack_require__(38);
+	var _mainComponent = __webpack_require__(39);
 	
-	var _layersListComponent = __webpack_require__(37);
+	var _layersListComponent = __webpack_require__(38);
 	
-	var _asideComponent = __webpack_require__(30);
+	var _asideComponent = __webpack_require__(31);
 	
 	var _actionTypes = __webpack_require__(3);
 	
@@ -19589,7 +19843,7 @@
 	// import logo from './logo.svg';
 	
 	
-	var App = function (_Component) {
+	var App = exports.App = function (_Component) {
 	    _inherits(App, _Component);
 	
 	    function App(props) {
@@ -19649,7 +19903,7 @@
 	    return App;
 	}(_react.Component);
 	
-	exports.default = App;
+	// export default App;
 	
 	/*
 	 <div className="App">
@@ -19665,7 +19919,7 @@
 	 */
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19858,7 +20112,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19876,7 +20130,7 @@
 	
 	__webpack_require__(2);
 	
-	var _stage = __webpack_require__(57);
+	var _stage = __webpack_require__(59);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -19978,7 +20232,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20015,7 +20269,7 @@
 	// import logo from './logo.svg';
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20033,9 +20287,9 @@
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	__webpack_require__(14);
+	__webpack_require__(7);
 	
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -20192,7 +20446,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20208,11 +20462,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _shapeComponent = __webpack_require__(39);
+	var _shapeComponent = __webpack_require__(40);
 	
-	var _imageComponent = __webpack_require__(33);
+	var _imageComponent = __webpack_require__(34);
 	
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -20287,7 +20541,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20305,9 +20559,9 @@
 	
 	__webpack_require__(2);
 	
-	var _modalPopupComponent = __webpack_require__(13);
+	var _modalPopupComponent = __webpack_require__(14);
 	
-	var _layerEditForm = __webpack_require__(44);
+	var _layerEditForm = __webpack_require__(45);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20403,7 +20657,7 @@
 	 */
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20515,7 +20769,7 @@
 	;
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20533,9 +20787,9 @@
 	
 	__webpack_require__(2);
 	
-	var _layerListToolbarComponent = __webpack_require__(36);
+	var _layerListToolbarComponent = __webpack_require__(37);
 	
-	var _layerListElement = __webpack_require__(35);
+	var _layerListElement = __webpack_require__(36);
 	
 	var _actionTypes = __webpack_require__(3);
 	
@@ -20795,7 +21049,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20813,13 +21067,13 @@
 	
 	__webpack_require__(2);
 	
-	var _toolbarComponent = __webpack_require__(42);
+	var _toolbarComponent = __webpack_require__(43);
 	
-	var _canvasComponent = __webpack_require__(31);
+	var _canvasComponent = __webpack_require__(32);
 	
-	var _statusComponent = __webpack_require__(41);
+	var _statusComponent = __webpack_require__(42);
 	
-	var _stageComponent = __webpack_require__(40);
+	var _stageComponent = __webpack_require__(41);
 	
 	var _actionTypes = __webpack_require__(3);
 	
@@ -20827,11 +21081,11 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _measurePointsTool = __webpack_require__(60);
+	var _measurePointsTool = __webpack_require__(63);
 	
-	var _modalPopupComponent = __webpack_require__(13);
+	var _modalPopupComponent = __webpack_require__(14);
 	
-	var _aboutPopup = __webpack_require__(43);
+	var _aboutPopup = __webpack_require__(44);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -20886,6 +21140,7 @@
 	
 	        _this.aabbToolNext = _this.aabbToolNext.bind(_this);
 	        _this.nextAabbDistStep = _this.nextAabbDistStep.bind(_this);
+	        _this.onCollisionDemoButtonPressed = _this.onCollisionDemoButtonPressed.bind(_this);
 	        return _this;
 	    }
 	
@@ -21054,7 +21309,7 @@
 	    }, {
 	        key: 'closeAboutPopup',
 	        value: function closeAboutPopup(event) {
-	            this.props.store.dispatch({
+	            this.dispatch({
 	                type: ActionTypes.CLOSE_ABOUT_POPUP_BUTTON_PRESSED
 	            });
 	        }
@@ -21070,6 +21325,27 @@
 	        value: function onMeasureBetweenShapesButtonPressed() {
 	            this.dispatch({
 	                type: ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED
+	            });
+	        }
+	    }, {
+	        key: 'aabbToolNext',
+	        value: function aabbToolNext() {
+	            this.dispatch({
+	                type: ActionTypes.AABB_TREE_NEXT_LEVEL
+	            });
+	        }
+	    }, {
+	        key: 'nextAabbDistStep',
+	        value: function nextAabbDistStep() {
+	            this.dispatch({
+	                type: ActionTypes.AABB_DEMO_NEXT_DIST_STEP
+	            });
+	        }
+	    }, {
+	        key: 'onCollisionDemoButtonPressed',
+	        value: function onCollisionDemoButtonPressed() {
+	            this.dispatch({
+	                type: ActionTypes.COLLISION_DEMO_BUTTON_PRESSED
 	            });
 	        }
 	    }, {
@@ -21108,20 +21384,6 @@
 	        key: 'handleKeyUp',
 	        value: function handleKeyUp(event) {}
 	    }, {
-	        key: 'aabbToolNext',
-	        value: function aabbToolNext() {
-	            this.props.store.dispatch({
-	                type: ActionTypes.AABB_TREE_NEXT_LEVEL
-	            });
-	        }
-	    }, {
-	        key: 'nextAabbDistStep',
-	        value: function nextAabbDistStep() {
-	            this.props.store.dispatch({
-	                type: ActionTypes.AABB_DEMO_NEXT_DIST_STEP
-	            });
-	        }
-	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.dispatch = this.props.store.dispatch;
@@ -21150,6 +21412,7 @@
 	                { className: 'App-content' },
 	                _react2.default.createElement(_toolbarComponent.ToolbarComponent, {
 	                    aabbDemoToolActivated: this.state.aabbDemoTool.aabbDemoToolActivated,
+	                    showCollisionDemoToolButton: this.state.collisionDistanceDemoTool.showCollisionDemoToolButton,
 	                    onFileSelected: this.handleFileSelect,
 	                    onHomeButtonPressed: this.setHomeView,
 	                    onPanByDragPressed: this.onPanByDragPressed,
@@ -21159,7 +21422,8 @@
 	                    onToggleVerticesPressed: this.toggleDisplayVertices,
 	                    onToggleLabelsPressed: this.toggleDisplayLabels,
 	                    onShowAboutPopupPressed: this.showAboutPopup,
-	                    onAabbToolNext: this.aabbToolNext
+	                    onAabbToolNext: this.aabbToolNext,
+	                    onCollisionDemoButtonPressed: this.onCollisionDemoButtonPressed
 	                }),
 	                _react2.default.createElement(_canvasComponent.CanvasComponent, {
 	                    stage: this.state.stage,
@@ -21190,6 +21454,7 @@
 	                    secondMeasuredShapeLevel: this.state.aabbDemoTool.secondMeasuredShapeLevel,
 	                    selectedEdgesTree: this.state.aabbDemoTool.tree,
 	                    minStop: this.state.aabbDemoTool.min_stop,
+	                    collisionDistanceDemoToolActivated: this.state.collisionDistanceDemoTool.collisionDistanceDemoToolActivated,
 	                    onMouseOver: this.onMouseRollOverShape,
 	                    onMouseOut: this.onMouseRollOutShape,
 	                    onClick: this.onClickOnShape
@@ -21229,7 +21494,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21247,9 +21512,9 @@
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	__webpack_require__(14);
+	var _graphics = __webpack_require__(7);
 	
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -21278,9 +21543,6 @@
 	
 	        _this.vertexShapes = [];
 	        _this.labelShape = undefined;
-	
-	        // this.level = [params.model.geom.edges.index.root];
-	        // this.boxShapes = [];
 	
 	        var _iteratorNormalCompletion = true;
 	        var _didIteratorError = false;
@@ -21363,7 +21625,8 @@
 	
 	                    var vertex = vertexShape.geom;
 	                    if (vertexShape.graphics.isEmpty()) {
-	                        vertexShape.graphics = vertex.graphics({
+	                        vertexShape.graphics = (0, _graphics.graphics)(vertex, // vertex.graphics({
+	                        {
 	                            stroke: stroke, // this.props.color,
 	                            fill: fill,
 	                            radius: 3. / (stage.zoomFactor * stage.resolution)
@@ -21422,7 +21685,7 @@
 	            var fill = widthOn && !this.props.displayVertices ? this.props.color : "white";
 	
 	            if (this.shape.graphics.isEmpty()) {
-	                this.shape.graphics = this.props.model.geom.graphics({
+	                this.shape.graphics = (0, _graphics.graphics)(this.props.model.geom, {
 	                    strokeStyle: strokeStyle,
 	                    ignoreScale: true,
 	                    stroke: color,
@@ -21457,91 +21720,6 @@
 	            // Draw labels
 	            var showLabel = this.props.displayed && this.props.displayLabels;
 	            this.redrawLabels(showLabel);
-	
-	            // this.drawTree();
-	        }
-	    }, {
-	        key: 'drawTree',
-	        value: function drawTree() {
-	            // let poly = this.props.model.geom;
-	            // let root = poly.edges.index.root;
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-	
-	            try {
-	                for (var _iterator3 = this.boxShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var shape = _step3.value;
-	
-	                    this.props.stage.removeChild(shape);
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	
-	            this.boxShapes = [];
-	            // this.drawTreeLevel([root]);
-	            var newLevel = this.drawTreeLevel(this.level);
-	            this.level = newLevel;
-	        }
-	    }, {
-	        key: 'drawTreeLevel',
-	        value: function drawTreeLevel(level) {
-	            if (level.length === 0) return;
-	            var stage = this.props.stage;
-	            var newLevel = [];
-	            var _iteratorNormalCompletion4 = true;
-	            var _didIteratorError4 = false;
-	            var _iteratorError4 = undefined;
-	
-	            try {
-	                for (var _iterator4 = level[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	                    var node = _step4.value;
-	
-	                    var graphics = void 0;
-	                    if (node.max) {
-	                        graphics = node.max.graphics();
-	                    }
-	                    if (graphics) {
-	                        var shape = new createjs.Shape(graphics);
-	                        stage.addChild(shape);
-	                        this.boxShapes.push(shape);
-	                    }
-	                    if (node.left) {
-	                        newLevel.push(node.left);
-	                    }
-	                    if (node.right) {
-	                        newLevel.push(node.right);
-	                    }
-	                }
-	                // this.drawTreeLevel(newLevel);
-	            } catch (err) {
-	                _didIteratorError4 = true;
-	                _iteratorError4 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	                        _iterator4.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError4) {
-	                        throw _iteratorError4;
-	                    }
-	                }
-	            }
-	
-	            return newLevel;
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -21577,27 +21755,27 @@
 	            this.shape.graphics.clear();
 	            this.props.stage.removeChild(this.labelShape);
 	            this.labelShape = undefined;
-	            var _iteratorNormalCompletion5 = true;
-	            var _didIteratorError5 = false;
-	            var _iteratorError5 = undefined;
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
 	
 	            try {
-	                for (var _iterator5 = this.vertexShapes[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-	                    var vertexShape = _step5.value;
+	                for (var _iterator3 = this.vertexShapes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var vertexShape = _step3.value;
 	
 	                    this.props.stage.removeChild(vertexShape);
 	                }
 	            } catch (err) {
-	                _didIteratorError5 = true;
-	                _iteratorError5 = err;
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
 	            } finally {
 	                try {
-	                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
-	                        _iterator5.return();
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
 	                    }
 	                } finally {
-	                    if (_didIteratorError5) {
-	                        throw _iteratorError5;
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
 	                    }
 	                }
 	            }
@@ -21615,7 +21793,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21631,13 +21809,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _layerComponent = __webpack_require__(34);
+	var _layerComponent = __webpack_require__(35);
 	
-	var _measureShapesTool = __webpack_require__(61);
+	var _measureShapesTool = __webpack_require__(64);
 	
-	var _aabbDemoTool = __webpack_require__(59);
+	var _aabbDemoTool = __webpack_require__(61);
 	
-	var _utils = __webpack_require__(7);
+	var _collisionDistanceDemoTool = __webpack_require__(62);
+	
+	var _utils = __webpack_require__(8);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -21729,7 +21909,17 @@
 	                selectedEdgesTree: this.props.selectedEdgesTree,
 	                minStop: this.props.minStop
 	            }) : null;
-	            var components = [].concat(_toConsumableArray(layerComponents), [measureShapesTool, aabbDdemoTool]);
+	
+	            var collisionDemoTool = this.props.collisionDistanceDemoToolActivated ? _react2.default.createElement(_collisionDistanceDemoTool.CollisionDistanceDemoTool, {
+	                key: 'CollisionDemoTool',
+	                stage: this.props.stage,
+	                firstMeasuredShape: this.props.firstMeasuredShape,
+	                secondMeasuredShape: this.props.secondMeasuredShape,
+	                firstMeasuredLayer: this.props.firstMeasuredLayer,
+	                secondMeasuredLayer: this.props.secondMeasuredLayer
+	            }) : null;
+	
+	            var components = [].concat(_toConsumableArray(layerComponents), [measureShapesTool, aabbDdemoTool, collisionDemoTool]);
 	
 	            return components;
 	        }
@@ -21739,7 +21929,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21854,7 +22044,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21874,19 +22064,19 @@
 	
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 	
-	var _measureContour = __webpack_require__(115);
+	var _measureContour = __webpack_require__(118);
 	
 	var _measureContour2 = _interopRequireDefault(_measureContour);
 	
-	var _measurePoints = __webpack_require__(116);
+	var _measurePoints = __webpack_require__(119);
 	
 	var _measurePoints2 = _interopRequireDefault(_measurePoints);
 	
-	var _WidthOn = __webpack_require__(113);
+	var _WidthOn = __webpack_require__(116);
 	
 	var _WidthOn2 = _interopRequireDefault(_WidthOn);
 	
-	var _editContourVertextOnOff = __webpack_require__(114);
+	var _editContourVertextOnOff = __webpack_require__(117);
 	
 	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
 	
@@ -22008,6 +22198,15 @@
 	                        style: { color: "grey" }
 	                    })
 	                ) : null,
+	                this.props.showCollisionDemoToolButton ? _react2.default.createElement(
+	                    'button',
+	                    { title: 'Collision Distance Demo', onClick: this.props.onCollisionDemoButtonPressed },
+	                    _react2.default.createElement(_reactFontawesome2.default, {
+	                        name: 'arrows-h',
+	                        size: '2x',
+	                        style: { color: "grey" }
+	                    })
+	                ) : null,
 	                _react2.default.createElement(
 	                    'button',
 	                    { title: 'About', onClick: this.props.onShowAboutPopupPressed },
@@ -22027,7 +22226,7 @@
 	;
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22093,7 +22292,7 @@
 	};
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22185,7 +22384,7 @@
 	};
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22198,52 +22397,58 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _App = __webpack_require__(29);
+	var _App = __webpack_require__(30);
 	
-	var _App2 = _interopRequireDefault(_App);
-	
-	__webpack_require__(62);
+	__webpack_require__(65);
 	
 	var _redux = __webpack_require__(26);
 	
-	var _reducer = __webpack_require__(58);
+	var _reducer = __webpack_require__(60);
 	
-	var _log = __webpack_require__(48);
+	var _log = __webpack_require__(50);
 	
 	var _log2 = _interopRequireDefault(_log);
 	
-	var _readFiles = __webpack_require__(50);
+	var _readFiles = __webpack_require__(52);
 	
 	var _readFiles2 = _interopRequireDefault(_readFiles);
 	
-	var _pasteData = __webpack_require__(49);
+	var _pasteData = __webpack_require__(51);
 	
 	var _pasteData2 = _interopRequireDefault(_pasteData);
 	
-	var _stageController = __webpack_require__(51);
+	var _stageController = __webpack_require__(53);
 	
 	var _stageController2 = _interopRequireDefault(_stageController);
 	
-	var _demo = __webpack_require__(47);
+	var _demo = __webpack_require__(49);
 	
 	var _demo2 = _interopRequireDefault(_demo);
 	
-	var _aabb_demo = __webpack_require__(46);
+	var _aabb_demo = __webpack_require__(47);
 	
 	var _aabb_demo2 = _interopRequireDefault(_aabb_demo);
 	
+	var _collision_demo = __webpack_require__(48);
+	
+	var _collision_demo2 = _interopRequireDefault(_collision_demo);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// import boolean_test from './middleware/boolean_test';
 	
 	// import matrix_test from './middleware/matrix-test';
 	// import webgl_test from './middleware/webgl-test';
 	
-	// import about from './middleware/about';
-	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _pasteData2.default, _demo2.default, _aabb_demo2.default, _stageController2.default)));
+	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _pasteData2.default, _demo2.default, _aabb_demo2.default, _collision_demo2.default, _stageController2.default)));
 	
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, { store: store }), document.getElementById('root'));
+	// import about from './middleware/about';
+	
+	
+	_reactDom2.default.render(_react2.default.createElement(_App.App, { store: store }), document.getElementById('root'));
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22285,7 +22490,49 @@
 	exports.default = aabb_demo;
 
 /***/ },
-/* 47 */
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	// import { parseXML } from "../models/parserXML";
+	// import { Layers } from '../models/layers';
+	// import { Model } from "../models/model";
+	
+	// let {point, arc, segment, circle, Polygon} = Flatten;
+	
+	var collision_demo = function collision_demo(_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	        return function (action) {
+	
+	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+	                if (document.location.href.split('#')[1] === 'collision_demo') {
+	                    dispatch({
+	                        type: ActionTypes.COLLISION_DEMO_URI
+	                    });
+	                }
+	            }
+	            return next(action);
+	        };
+	    };
+	};
+	
+	exports.default = collision_demo;
+
+/***/ },
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22300,7 +22547,7 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(9);
+	var _model = __webpack_require__(10);
 	
 	var _parserODB = __webpack_require__(16);
 	
@@ -22389,7 +22636,7 @@
 	exports.default = demo;
 
 /***/ },
-/* 48 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22422,7 +22669,7 @@
 	exports.default = log;
 
 /***/ },
-/* 49 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22546,7 +22793,7 @@
 	exports.default = pasteData;
 
 /***/ },
-/* 50 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22561,13 +22808,13 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(9);
+	var _model = __webpack_require__(10);
 	
-	var _parserXML = __webpack_require__(56);
+	var _parserXML = __webpack_require__(58);
 	
 	var _parserODB = __webpack_require__(16);
 	
-	var _parsePGM = __webpack_require__(54);
+	var _parsePGM = __webpack_require__(56);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -22788,7 +23035,7 @@
 	exports.default = readFiles;
 
 /***/ },
-/* 51 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22858,7 +23105,7 @@
 	exports.default = stageController;
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23087,7 +23334,7 @@
 	}();
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23108,7 +23355,7 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _model = __webpack_require__(9);
+	var _model = __webpack_require__(10);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23315,7 +23562,7 @@
 	}();
 
 /***/ },
-/* 54 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23361,7 +23608,7 @@
 	}
 
 /***/ },
-/* 55 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23668,7 +23915,7 @@
 	}();
 
 /***/ },
-/* 56 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23978,7 +24225,7 @@
 	}
 
 /***/ },
-/* 57 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24009,8 +24256,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	// import createjs from 'easel-js';
 	
+	// import * as createjs from '../easeljs-NEXT.combined';
 	
 	// import { Shape } from '../models/shape';
 	
@@ -24222,7 +24469,7 @@
 	}(createjs.Stage);
 
 /***/ },
-/* 58 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24244,15 +24491,15 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _flattenIntervalTree = __webpack_require__(11);
+	var _flattenIntervalTree = __webpack_require__(12);
 	
 	var _flattenIntervalTree2 = _interopRequireDefault(_flattenIntervalTree);
 	
 	var _layers = __webpack_require__(5);
 	
-	var _parser = __webpack_require__(55);
+	var _parser = __webpack_require__(57);
 	
-	var _distance = __webpack_require__(52);
+	var _distance = __webpack_require__(54);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24326,6 +24573,11 @@
 	    secondMeasuredShapeLevel: [],
 	    min_stop: Number.POSITIVE_INFINITY,
 	    tree: null
+	};
+	
+	var defaultCollisionDistanceDemoToolState = {
+	    showCollisionDemoToolButton: false,
+	    collisionDistanceDemoToolActivated: false
 	};
 	
 	var defaultMouseState = {
@@ -24837,6 +25089,24 @@
 	    }
 	}
 	
+	function collisionDistanceDemoTool() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultCollisionDistanceDemoToolState;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ActionTypes.COLLISION_DEMO_URI:
+	            return Object.assign({}, state, {
+	                showCollisionDemoToolButton: true
+	            });
+	        case ActionTypes.COLLISION_DEMO_BUTTON_PRESSED:
+	            return Object.assign({}, state, {
+	                collisionDistanceDemoToolActivated: true
+	            });
+	        default:
+	            return state;
+	    }
+	}
+	
 	function mouse() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultMouseState;
 	    var action = arguments[1];
@@ -24868,11 +25138,12 @@
 	    stage: stage,
 	    measureShapesTool: measureShapesTool,
 	    aabbDemoTool: aabbDemoTool,
+	    collisionDistanceDemoTool: collisionDistanceDemoTool,
 	    mouse: mouse
 	});
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24889,6 +25160,8 @@
 	var _easeljsNEXTCombined = __webpack_require__(6);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	var _graphics = __webpack_require__(7);
 	
 	__webpack_require__(2);
 	
@@ -24991,16 +25264,16 @@
 	                for (var _iterator3 = level[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
 	                    var node = _step3.value;
 	
-	                    var graphics = void 0;
+	                    var nodeGraphics = void 0;
 	                    if (node.max) {
-	                        graphics = node.max.graphics();
+	                        nodeGraphics = (0, _graphics.graphics)(node.max);
 	                    }
-	                    if (graphics) {
-	                        var shape = new createjs.Shape(graphics);
+	                    if (nodeGraphics) {
+	                        var shape = new createjs.Shape(nodeGraphics);
 	                        stage.addChild(shape);
 	                        this.boxShapes.push(shape);
 	
-	                        var edge = new createjs.Shape(node.item.key.graphics({
+	                        var edge = new createjs.Shape((0, _graphics.graphics)(node.item.key, {
 	                            strokeStyle: 3,
 	                            stroke: "blue"
 	                        }));
@@ -25031,7 +25304,7 @@
 	            if (!this.props.selectedEdgesTree) return;
 	            this.props.selectedEdgesTree.forEach(function (interval, shape) {
 	                if (interval.low < _this.props.minStop) {
-	                    var edge = new createjs.Shape(shape.graphics({
+	                    var edge = new createjs.Shape((0, _graphics.graphics)(shape, {
 	                        strokeStyle: 3,
 	                        stroke: "blue"
 	                    }));
@@ -25120,7 +25393,134 @@
 	}(_react.Component);
 
 /***/ },
-/* 60 */
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.CollisionDistanceDemoTool = undefined;
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _easeljsNEXTCombined = __webpack_require__(6);
+	
+	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	var _graphics = __webpack_require__(7);
+	
+	__webpack_require__(2);
+	
+	var _collision_distance = __webpack_require__(28);
+	
+	var _collision_distance2 = _interopRequireDefault(_collision_distance);
+	
+	var _flattenJs = __webpack_require__(4);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by alexanderbol on 21/04/2017.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	var vector = _flattenJs2.default.vector;
+	
+	var CollisionDistanceDemoTool = exports.CollisionDistanceDemoTool = function (_Component) {
+	    _inherits(CollisionDistanceDemoTool, _Component);
+	
+	    function CollisionDistanceDemoTool(params) {
+	        _classCallCheck(this, CollisionDistanceDemoTool);
+	
+	        var _this = _possibleConstructorReturn(this, (CollisionDistanceDemoTool.__proto__ || Object.getPrototypeOf(CollisionDistanceDemoTool)).call(this));
+	
+	        _this.shape = new createjs.Shape();
+	        params.stage.addChild(_this.shape);
+	        return _this;
+	    }
+	
+	    _createClass(CollisionDistanceDemoTool, [{
+	        key: 'draw',
+	        value: function draw() {
+	            var polygon1 = this.props.firstMeasuredShape.geom;
+	            var polygon2 = this.props.secondMeasuredShape.geom;
+	            var stage = this.props.stage;
+	            var color = "magenta";
+	            var alpha = 0.6;
+	            // let widthOn = this.props.widthOn;
+	
+	            var strokeStyle = 1;
+	            var fill = "grey"; // (widthOn && !this.props.displayVertices) ? this.props.color : "white";
+	
+	            if (this.shape.graphics.isEmpty()) {
+	                var collision = _collision_distance2.default.apply(polygon1, polygon2);
+	                var polygon3 = _collision_distance2.default.translate(polygon2, vector(-collision, 0));
+	
+	                var _polygon1$distanceTo = polygon1.distanceTo(polygon3),
+	                    _polygon1$distanceTo2 = _slicedToArray(_polygon1$distanceTo, 2),
+	                    distance = _polygon1$distanceTo2[0],
+	                    shortest_segment = _polygon1$distanceTo2[1];
+	
+	                this.shape.graphics = (0, _graphics.graphics)(polygon3, {
+	                    strokeStyle: strokeStyle,
+	                    ignoreScale: true,
+	                    stroke: color,
+	                    fill: fill,
+	                    radius: 3. / (stage.zoomFactor * stage.resolution)
+	                });
+	            } else {
+	                if (this.shape.graphics.stroke) this.shape.graphics.stroke.style = color;
+	                if (this.shape.graphics.fill) this.shape.graphics.fill.style = fill;
+	            }
+	            this.shape.alpha = alpha; // this.props.displayed ? alpha : 0.0;
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            if (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed || this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) {
+	                this.draw();
+	            }
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            if (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed || this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) {
+	                this.draw();
+	            }
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            if (this.shape) {
+	                this.props.stage.removeChild(this.shape);
+	                this.shape.graphics.clear();
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return null;
+	        }
+	    }]);
+
+	    return CollisionDistanceDemoTool;
+	}(_react.Component);
+
+/***/ },
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25372,7 +25772,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 61 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25389,6 +25789,8 @@
 	var _easeljsNEXTCombined = __webpack_require__(6);
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
+	
+	var _graphics = __webpack_require__(7);
 	
 	__webpack_require__(2);
 	
@@ -25422,8 +25824,7 @@
 	        key: 'draw',
 	        value: function draw() {
 	            if (this.props.shortestSegment) {
-	
-	                this.segment.graphics = this.props.shortestSegment.graphics();
+	                this.segment.graphics = (0, _graphics.graphics)(this.props.shortestSegment);
 	            }
 	        }
 	    }, {
@@ -25459,9 +25860,9 @@
 	}(_react.Component);
 
 /***/ },
-/* 62 */
+/* 65 */
 2,
-/* 63 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25475,7 +25876,7 @@
 	 * @typechecks
 	 */
 	
-	var emptyFunction = __webpack_require__(8);
+	var emptyFunction = __webpack_require__(9);
 	
 	/**
 	 * Upstream version of event listener. Does not take into account specific
@@ -25540,7 +25941,7 @@
 	module.exports = EventListener;
 
 /***/ },
-/* 64 */
+/* 67 */
 /***/ function(module, exports) {
 
 	/**
@@ -25578,7 +25979,7 @@
 	module.exports = ExecutionEnvironment;
 
 /***/ },
-/* 65 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25592,7 +25993,7 @@
 	 * 
 	 */
 	
-	var isTextNode = __webpack_require__(69);
+	var isTextNode = __webpack_require__(72);
 	
 	/*eslint-disable no-bitwise */
 	
@@ -25620,7 +26021,7 @@
 	module.exports = containsNode;
 
 /***/ },
-/* 66 */
+/* 69 */
 /***/ function(module, exports) {
 
 	/**
@@ -25649,7 +26050,7 @@
 	module.exports = focusNode;
 
 /***/ },
-/* 67 */
+/* 70 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25690,7 +26091,7 @@
 	module.exports = getActiveElement;
 
 /***/ },
-/* 68 */
+/* 71 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25717,7 +26118,7 @@
 	module.exports = isNode;
 
 /***/ },
-/* 69 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25731,7 +26132,7 @@
 	 * @typechecks
 	 */
 	
-	var isNode = __webpack_require__(68);
+	var isNode = __webpack_require__(71);
 	
 	/**
 	 * @param {*} object The object to check.
@@ -25744,7 +26145,7 @@
 	module.exports = isTextNode;
 
 /***/ },
-/* 70 */
+/* 73 */
 /***/ function(module, exports) {
 
 	/**
@@ -25814,7 +26215,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 71 */
+/* 74 */
 /***/ function(module, exports) {
 
 	/**
@@ -25872,7 +26273,7 @@
 	module.exports = Interval;
 
 /***/ },
-/* 72 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25882,7 +26283,7 @@
 	'use strict';
 	
 	// let defaultTraits = require('../utils/numeric_traits');
-	let Interval = __webpack_require__(71);
+	let Interval = __webpack_require__(74);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(18);
 	
 	let Node = class Node {
@@ -25964,12 +26365,12 @@
 
 
 /***/ },
-/* 73 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	let IntervalTree = __webpack_require__(11);
+	let IntervalTree = __webpack_require__(12);
 	
 	module.exports = function(Flatten) {
 	    let {Polygon, Point, Segment, Arc, Circle, Line, Ray, Vector} = Flatten;
@@ -26191,10 +26592,10 @@
 	
 	            let dist_tmp, segment_tmp;
 	            [dist_tmp, segment_tmp] = Distance.point2segment(arc.start, seg);
-	            dist_and_segment.push([dist_tmp, segment_tmp.swap()]);
+	            dist_and_segment.push([dist_tmp, segment_tmp.reverse()]);
 	
 	            [dist_tmp, segment_tmp] = Distance.point2segment(arc.end, seg);
-	            dist_and_segment.push([dist_tmp, segment_tmp.swap()]);
+	            dist_and_segment.push([dist_tmp, segment_tmp.reverse()]);
 	
 	            Distance.sort(dist_and_segment);
 	            return dist_and_segment[0];
@@ -26250,7 +26651,7 @@
 	
 	            let [dist_from_center, shortest_segment_from_center] = Distance.point2line(circle.center, line);
 	            let [dist, shortest_segment] = Distance.point2circle(shortest_segment_from_center.end, circle);
-	            shortest_segment = shortest_segment.swap();
+	            shortest_segment = shortest_segment.reverse();
 	            return [dist, shortest_segment];
 	        }
 	
@@ -26357,12 +26758,12 @@
 	
 	                [dist_tmp, segment_tmp] = Distance.point2arc(arc2.start, arc1);
 	                if (segment_tmp.end.on(arc1)) {
-	                    dist_and_segment.push([dist_tmp, segment_tmp.swap()]);
+	                    dist_and_segment.push([dist_tmp, segment_tmp.reverse()]);
 	                }
 	
 	                [dist_tmp, segment_tmp] = Distance.point2arc(arc2.end, arc1);
 	                if (segment_tmp.end.on(arc1)) {
-	                    dist_and_segment.push([dist_tmp, segment_tmp.swap()]);
+	                    dist_and_segment.push([dist_tmp, segment_tmp.reverse()]);
 	                }
 	
 	                [dist_tmp, segment_tmp] = Distance.point2point(arc1.start, arc2.start);
@@ -26626,7 +27027,7 @@
 	};
 
 /***/ },
-/* 74 */
+/* 77 */
 /***/ function(module, exports) {
 
 	
@@ -26662,7 +27063,7 @@
 	        for (let edge of resp_edges) {
 	            for (let ip of ray.intersect(edge.shape)) {
 	
-	                // If intersection is equal to query point than point lays on boundary
+	                // If intersection is equal to query point then point lays on boundary
 	                if (ip.equalTo(point)) {
 	                    return Flatten.BOUNDARY;
 	                }
@@ -26680,7 +27081,7 @@
 	                return -1;
 	            }
 	            if (Flatten.Utils.GT(i1.pt.x, i2.pt.x)) {
-	                return -1;
+	                return 1;
 	            }
 	            return 0;
 	        });
@@ -26691,6 +27092,11 @@
 	        for (let i=0; i < intersections.length; i++) {
 	            let intersection = intersections[i];
 	            if (intersection.pt.equalTo(intersection.edge.shape.start)) {
+	                /* skip same point between same edges if already counted */
+	                if (i > 0 && intersection.pt.equalTo(intersections[i-1].pt) &&
+	                    intersection.edge.prev === intersections[i-1].edge) {
+	                    continue;
+	                }
 	                let prev_edge = intersection.edge.prev;
 	                let prev_tangent = prev_edge.shape.tangentInEnd();
 	                let prev_point = intersection.pt.translate(prev_tangent);
@@ -26706,6 +27112,11 @@
 	                }
 	            }
 	            else if (intersection.pt.equalTo(intersection.edge.shape.end)) {
+	                /* skip same point between same edges if already counted */
+	                if (i > 0 && intersection.pt.equalTo(intersections[i-1].pt) &&
+	                    intersection.edge.next === intersections[i-1].edge) {
+	                    continue;
+	                }
 	                let next_edge = intersection.edge.next;
 	                let next_tangent = next_edge.shape.tangentInStart();
 	                let next_point = intersection.pt.translate(next_tangent);
@@ -26743,7 +27154,7 @@
 	};
 
 /***/ },
-/* 75 */
+/* 78 */
 /***/ function(module, exports) {
 
 	/**
@@ -26754,7 +27165,7 @@
 	
 	module.exports = function(Flatten) {
 	    /**
-	     * Class representing a circlular arc
+	     * Class representing a circular arc
 	     * @type {Arc}
 	     */
 	    Flatten.Arc = class Arc {
@@ -26764,7 +27175,7 @@
 	         * @param {number} r - arc radius
 	         * @param {number} startAngle - start angle in radians from 0 to 2*PI
 	         * @param {number} endAngle - end angle in radians from 0 to 2*PI
-	         * @param counterClockwise - arc direction, true - clockwise, false - counter clockwise
+	         * @param {boolean} counterClockwise - arc direction, true - clockwise (or {@link Flatten.CCW}), false - counter clockwise (or {@link Flatten.CW)}
 	         */
 	        constructor(pc=new Flatten.Point(), r=1, startAngle=0, endAngle=2*Math.PI, counterClockwise=true) {
 	            this.pc = pc.clone();
@@ -26788,7 +27199,7 @@
 	         */
 	        get sweep() {
 	            if (Flatten.Utils.EQ(this.startAngle, this.endAngle))
-	                return 0.0;                    // or Flatten.PIx2 ? - no zero arcs
+	                return 0.0;
 	            if (Flatten.Utils.EQ(Math.abs(this.startAngle - this.endAngle), Flatten.PIx2)) {
 	                return Flatten.PIx2;
 	            }
@@ -26860,7 +27271,7 @@
 	        }
 	
 	        /**
-	         * Returns true if arc contains point
+	         * Returns true if arc contains point, false otherwise
 	         * @param {Point} pt - point to test
 	         * @returns {boolean}
 	         */
@@ -26880,9 +27291,53 @@
 	        }
 	
 	        /**
+	         * When given point belongs to arc, return array of two arcs split by this point. If points is incident
+	         * to start or end point of the arc, return clone of the arc. If point does not belong to the arcs, return
+	         * empty array.
+	         * @param {Point} pt Query point
+	         * @returns {Arc[]}
+	         */
+	        split(pt) {
+	            if (!this.contains(pt))
+	                return [];
+	
+	            if (Flatten.Utils.EQ_0(this.sweep))
+	                return [this.clone()];
+	
+	            if (this.start.equalTo(pt) || this.end.equalTo(pt))
+	                return [this.clone()];
+	
+	            let angle = new Flatten.Vector(this.pc, pt).slope;
+	
+	            return [
+	                new Flatten.Arc(this.pc, this.r, this.startAngle, angle, this.counterClockwise),
+	                new Flatten.Arc(this.pc, this.r, angle, this.endAngle, this.counterClockwise)
+	            ]
+	        }
+	
+	        /**
+	         * Return middle point of the arc
+	         * @returns {Point}
+	         */
+	        middle() {
+	            let endAngle = this.counterClockwise === Flatten.CCW ? this.startAngle + this.sweep/2 : this.startAngle - this.sweep/2;
+	            let arc = new Flatten.Arc(this.pc, this.r, this.startAngle, endAngle, this.counterClockwise);
+	            return arc.end;
+	        }
+	
+	        /**
+	         * Returns chord height ("sagitta") of the arc
+	         * @returns {number}
+	         */
+	        chordHeight() {
+	            return  (1.0 - Math.cos(Math.abs(this.sweep/2.0))) * this.r;
+	        }
+	
+	        /**
 	         * Returns array of intersection points between arc and other shape
-	         * @param shape
-	         * @returns {*}
+	         * @param {Shape} shape Shape of the one of supported types Line, Circle, Segment, Arc <br/>
+	         * TODO: support Polygon and Planar Set
+	         * @returns {Points[]}
 	         */
 	        intersect(shape) {
 	            if (shape instanceof Flatten.Line) {
@@ -26900,16 +27355,18 @@
 	        }
 	
 	        /**
-	         * Calculate distance and shortest segment from arc to shape
-	         * @param shape
-	         * @returns {Number | Segment} - distance and shortest segment from arc to shape
+	         * Calculate distance and shortest segment from arc to shape and return array [distance, shortest segment]
+	         * @param {Shape} shape Shape of the one of supported types Point, Line, Circle, Segment, Arc, Polygon or Planar Set
+	         * @returns {number} distance from arc to shape
+	         * @returns {Segment} shortest segment between arc and shape (started at arc, ended at shape)
+	
 	         */
 	        distanceTo(shape) {
 	            let {Distance} = Flatten;
 	
 	            if (shape instanceof Flatten.Point) {
 	                let [dist, shortest_segment] = Distance.point2arc(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                shortest_segment = shortest_segment.reverse();
 	                return [dist, shortest_segment];
 	            }
 	
@@ -26925,7 +27382,7 @@
 	
 	            if (shape instanceof Flatten.Segment) {
 	                let [dist, shortest_segment] = Distance.segment2arc(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                shortest_segment = shortest_segment.reverse();
 	                return [dist, shortest_segment];
 	            }
 	
@@ -26946,8 +27403,8 @@
 	        }
 	
 	        /**
-	         * Returns array of sub-arcs broken in extreme point 0, pi/2, pi, 3*pi/2
-	         * @returns {Array}
+	         * Breaks arc in extreme point 0, pi/2, pi, 3*pi/2 and returns array of sub-arcs
+	         * @returns {Arcs[]}
 	         */
 	        breakToFunctional() {
 	            let func_arcs_array = [];
@@ -27007,7 +27464,7 @@
 	
 	        /**
 	         * Return tangent unit vector in the start point in the direction from start to end
-	         * @returns {Vector} - tangent vector in start point
+	         * @returns {Vector}
 	         */
 	        tangentInStart() {
 	            let vec = new Flatten.Vector(this.pc, this.start);
@@ -27018,13 +27475,21 @@
 	
 	        /**
 	         * Return tangent unit vector in the end point in the direction from end to start
-	         * @returns {Vector} - tangent vector in end point
+	         * @returns {Vector}
 	         */
 	        tangentInEnd() {
 	            let vec = new Flatten.Vector(this.pc, this.end);
 	            let angle = this.counterClockwise ? -Math.PI/2. : Math.PI/2.;
 	            let tangent = vec.rotate(angle).normalize();
 	            return tangent;
+	        }
+	
+	        /**
+	         * Returns new arc with swapped start and end angles and reversed direction
+	         * @returns {Arc}
+	         */
+	        reverse() {
+	            return new Arc(this.pc, this.r, this.endAngle, this.startAngle, !this.counterClockwise);
 	        }
 	
 	        static intersectArc2Arc(arc1, arc2) {
@@ -27117,8 +27582,8 @@
 	
 	        /**
 	         * Return string to draw arc in svg
-	         * @param attrs - json structure with any attributes allowed to svg path element,
-	         * like "stroke", "strokeWidth", "fill"
+	         * @param {Object} attrs - json structure with attributes of svg path element,
+	         * like "stroke", "strokeWidth", "fill" <br/>
 	         * Defaults are stroke:"black", strokeWidth:"3", fill:"none"
 	         * @returns {string}
 	         */
@@ -27147,7 +27612,7 @@
 	};
 
 /***/ },
-/* 76 */
+/* 79 */
 /***/ function(module, exports) {
 
 	/**
@@ -27239,7 +27704,7 @@
 	
 	        /**
 	         * Returns true if intersected with other box
-	         * @param {Box} other_box - other box to test
+	         * @param {Box} other_box - Query box
 	         * @returns {boolean}
 	         */
 	        intersect(other_box) {
@@ -27248,7 +27713,7 @@
 	
 	        /**
 	         * Returns new box merged with other box
-	         * @param {Box} other_box - other box to merge with
+	         * @param {Box} other_box - Other box to merge with
 	         * @returns {Box}
 	         */
 	        merge(other_box) {
@@ -27262,7 +27727,7 @@
 	
 	        /**
 	         * Defines predicate "less than" between two boxes. Need for interval index
-	         * @param other_box - other box
+	         * @param {Box} other_box - other box
 	         * @returns {boolean} - true if this box less than other box, false otherwise
 	         */
 	        less_than(other_box) {
@@ -27274,9 +27739,9 @@
 	        }
 	
 	        /**
-	         * Returns true if this box equal to other box
-	         * @param other_box - other box
-	         * @returns {boolean} - true if equal, false otherwise
+	         * Returns true if this box is equal to other box, false otherwise
+	         * @param {Box} other_box - query box
+	         * @returns {boolean}
 	         */
 	        equal_to(other_box) {
 	            return (this.low.equalTo(other_box.low) && this.high.equalTo(other_box.high));
@@ -27295,6 +27760,13 @@
 	            return pt1.lessThan(pt2);
 	        }
 	
+	        /**
+	         * Set new values to the box object
+	         * @param {number} xmin - miminal x coordinate
+	         * @param {number} ymin - minimal y coordinate
+	         * @param {number} xmax - maximal x coordinate
+	         * @param {number} ymax - maximal y coordinate
+	         */
 	        set(xmin, ymin, xmax, ymax) {
 	            this.xmin = xmin;
 	            this.ymin = ymin;
@@ -27304,8 +27776,9 @@
 	    };
 	};
 
+
 /***/ },
-/* 77 */
+/* 80 */
 /***/ function(module, exports) {
 
 	/**
@@ -27383,12 +27856,12 @@
 	         * @returns {Arc}
 	         */
 	        toArc(counterclockwise=true) {
-	            return new Flatten.Arc(this.center, this.r, Math.PI, 3*Math.PI, counterclockwise);
+	            return new Flatten.Arc(this.center, this.r, Math.PI, -Math.PI, counterclockwise);
 	        }
 	
 	        /**
 	         * Returns array of intersection points between circle and other shape
-	         * @param shape
+	         * @param {Shape} shape Shape of the one of supported types Point, Line, Circle, Segment, Arc
 	         * @returns {Point[]}
 	         */
 	        intersect(shape) {
@@ -27410,38 +27883,41 @@
 	        }
 	
 	        /**
-	         * Calculate distance and shortest segment from circle to shape
-	         * @param shape
-	         * @returns {Number | Segment} - distance and shortest segment from circle to shape
+	         * Calculate distance and shortest segment from circle to shape and return array [distance, shortest segment]
+	         * @param {Shape} shape Shape of the one of supported types Point, Line, Circle, Segment, Arc, Polygon or Planar Set
+	         * @returns {number} distance from circle to shape
+	         * @returns {Segment} shortest segment between circle and shape (started at circle, ended at shape)
+	
 	         */
 	        distanceTo(shape) {
 	            let {Distance} = Flatten;
+	            let {point2circle, circle2circle, circle2line, segment2circle, arc2circle} = Distance;
 	
 	            if (shape instanceof Flatten.Point) {
-	                let [distance, shortest_segment] = Distance.point2circle(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                let [distance, shortest_segment] = point2circle(shape, this);
+	                shortest_segment = shortest_segment.reverse();
 	                return [distance, shortest_segment];
 	            }
 	
 	            if (shape instanceof Flatten.Circle) {
-	                let [distance, shortest_segment] = Distance.circle2circle(this, shape);
+	                let [distance, shortest_segment] = circle2circle(this, shape);
 	                return [distance, shortest_segment];
 	            }
 	
 	            if (shape instanceof Flatten.Line) {
-	                let [distance, shortest_segment] = Distance.circle2line(this, shape);
+	                let [distance, shortest_segment] = circle2line(this, shape);
 	                return [distance, shortest_segment];
 	            }
 	
 	            if (shape instanceof Flatten.Segment) {
-	                let [distance, shortest_segment] = Distance.segment2circle(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                let [distance, shortest_segment] = segment2circle(shape, this);
+	                shortest_segment = shortest_segment.reverse();
 	                return [distance, shortest_segment];
 	            }
 	
 	            if (shape instanceof Flatten.Arc) {
-	                let [distance, shortest_segment] = Distance.arc2circle(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                let [distance, shortest_segment] = arc2circle(shape, this);
+	                shortest_segment = shortest_segment.reverse();
 	                return [distance, shortest_segment];
 	            }
 	
@@ -27524,8 +28000,8 @@
 	
 	        /**
 	         * Return string to draw circle in svg
-	         * @param attrs - json structure with any attributes allowed to svg circle element,
-	         * like "stroke", "strokeWidth", "fill"
+	         * @param {Object} attrs - json structure with attributes of svg circle element,
+	         * like "stroke", "strokeWidth", "fill" <br/>
 	         * Defaults are stroke:"black", strokeWidth:"3", fill:"none"
 	         * @returns {string}
 	         */
@@ -27536,14 +28012,14 @@
 	    };
 	
 	    /**
-	     * Function to create circle equivalent to "new" constructor
+	     * Shortcut to create new circle
 	     * @param args
 	     */
 	    Flatten.circle = (...args) => new Flatten.Circle(...args);
 	};
 
 /***/ },
-/* 78 */
+/* 81 */
 /***/ function(module, exports) {
 
 	/**
@@ -27552,12 +28028,16 @@
 	
 	module.exports = function(Flatten) {
 	    /**
-	     * Class representing an edge of polygon. Edge shape may be Segment or Arc
-	     * Each edge points to the next and previous edges in the face (loop)
+	     * Class representing an edge of polygon. Edge shape may be Segment or Arc.
+	     * Each edge contains references to the next and previous edges in the face of the polygon.
 	     *
 	     * @type {Edge}
 	     */
 	    Flatten.Edge = class Edge {
+	        /**
+	         * Construct new instance of edge
+	         * @param {Shape} shape Shape of type Segment of Arc
+	         */
 	        constructor(shape) {
 	            /**
 	             * Shape of the edge: Segment or Arc
@@ -27571,6 +28051,36 @@
 	             * Pointer to the previous edge in the face
 	             */
 	            this.prev;
+	            /**
+	             * Pointer to the face containing this edge
+	             * @type {Face}
+	             */
+	            this.face;
+	            /**
+	             * "Arc distance" from the face start
+	             * @type {number}
+	             */
+	            this.arc_length = 0;
+	            /**
+	             * Start inclusion flag (inside/outside/boundary)
+	             * @type {Boolean}
+	             */
+	            this.bvStart = undefined;
+	            /**
+	             * End inclusion flag (inside/outside/boundary)
+	             * @type {Boolean}
+	             */
+	            this.bvEnd = undefined;
+	            /**
+	             * Edge inclusion flag (Flatten.INSIDE, Flatten.OUTSIDE, Flatten.BOUNDARY)
+	             * @type {*}
+	             */
+	            this.bv = undefined;
+	            /**
+	             * Overlap flag for boundary edge (Flatten.OVERLAP_SAME/Flatten.OVERLAP_OPPOSITE)
+	             * @type {*}
+	             */
+	            this.overlap = undefined;
 	        }
 	
 	        /**
@@ -27596,18 +28106,56 @@
 	
 	        /**
 	         * Get bounding box of the edge
-	         * @returns {*|Box}
+	         * @returns {Box}
 	         */
 	        get box() {
 	            return this.shape.box;
 	        }
 	
 	        /**
-	         * Returns true if point lays on the edge, false otherwise
-	         * @param pt - test point
+	         * Get middle point of the edge
+	         * @returns {Point}
+	         */
+	        middle() {
+	            return this.shape.middle();
+	        }
+	
+	        /**
+	         * Returns true if point belongs to the edge, false otherwise
+	         * @param {Point} pt - test point
 	         */
 	        contains(pt) {
 	            return this.shape.contains(pt);
+	        }
+	
+	        /**
+	         * Set inclusion flag of the edge with respect to another polygon
+	         * Inclusion flag is one of Flatten.INSIDE, Flatten.OUTSIDE, Flatten.BOUNDARY
+	         * @param polygon
+	         */
+	        setInclusion(polygon) {
+	            if (this.bv !== undefined) return this.bv;
+	
+	            if (this.bvStart === undefined) {
+	                this.bvStart = Flatten.ray_shoot(polygon, this.start);
+	            }
+	            if (this.bvEnd === undefined) {
+	                this.bvEnd = Flatten.ray_shoot(polygon, this.end);
+	            }
+	            /* At least one end outside - the whole edge outside */
+	            if (this.bvStart === Flatten.OUTSIDE || this.bvEnd == Flatten.OUTSIDE) {
+	                this.bv = Flatten.OUTSIDE;
+	            }
+	            /* At least one end inside - the whole edge inside */
+	            else if (this.bvStart === Flatten.INSIDE || this.bvEnd == Flatten.INSIDE) {
+	                this.bv = Flatten.INSIDE;
+	            }
+	            /* Both are boundary - check the middle point */
+	            else {
+	                let bvMiddle = Flatten.ray_shoot(polygon, this.middle());
+	                this.bv = bvMiddle;
+	            }
+	            return this.bv;
 	        }
 	
 	        svg() {
@@ -27641,7 +28189,7 @@
 	};
 
 /***/ },
-/* 79 */
+/* 82 */
 /***/ function(module, exports) {
 
 	/**
@@ -27650,13 +28198,29 @@
 	
 	"use strict";
 	
-	module.exports = function(Flatten) {
+	module.exports = function (Flatten) {
 	    let {Point, Segment, Arc, Box, Edge} = Flatten;
 	    /**
-	     * Class representing a face (closed loop) of polygon.
-	     * New face object should not be created directly, use polygon.addFace() method instead.
-	     * Face implemented as a circular bidirectional linked list of edges.
-	     * @type {Face}
+	     * Class representing a face (closed loop) in a [polygon]{@link Flatten.Polygon} object.
+	     * Face is a circular bidirectional linked list of [edges]{@link Flatten.Edge}.
+	     * Face object cannot be instantiated with a constructor.
+	     * Instead, use [polygon.addFace()]{@link Flatten.Polygon#addFace} method.
+	     * <br/>
+	     * Note, that face only set entry point to the linked list of edges but does not contain edges by itself.
+	     * Container of edges is a property of the polygon object. <br/>
+	     *
+	     * @example
+	     * // Face implements "next" iterator which enables to iterate edges in for loop:
+	     * for (let edge of face) {
+	     *      console.log(edge.shape.length)     // do something
+	     * }
+	     *
+	     * // Instead, it is possible to iterate edges as linked list, starting from face.first:
+	     * let edge = face.first;
+	     * do {
+	     *   console.log(edge.shape.length);   // do something
+	     *   edge = edge.next;
+	     * } while (edge != face.first)
 	     */
 	    Flatten.Face = class Face {
 	        constructor(polygon, ...args) {
@@ -27668,15 +28232,9 @@
 	             * Reference to the last edge in face
 	             */
 	            this.last;
-	            /**
-	             * Face orientation: clockwise, counterclockwise or not-orientable
-	             * @type {Flatten.ORIENTATION}
-	             */
-	            this.orientation = undefined;
-	            /**
-	             * Bounding box of the face
-	             */
-	            this.box = new Box();
+	
+	            this._box = undefined;  // new Box();
+	            this._orientation = undefined;
 	
 	            if (args.length == 0) {
 	                return;
@@ -27686,33 +28244,58 @@
 	             1) array of shapes that performs close loop or
 	             2) array of points that performs set of vertices
 	             */
-	            if (args.length == 1 && args[0] instanceof Array) {
-	                let shapes = args[0][0];
-	                if (shapes.length == 0)
-	                    return;
+	            if (args.length == 1) {
+	                if (args[0] instanceof Array) {
+	                    // let argsArray = args[0];
+	                    let shapes =  args[0];  // argsArray[0];
+	                    if (shapes.length == 0)
+	                        return;
 	
-	                if (shapes.every((shape) => {
-	                        return shape instanceof Point
-	                    })) {
-	                    let segments = Face.points2segments(shapes);
-	                    this.shapes2face(polygon.edges, segments);
+	                    if (shapes.every((shape) => {
+	                            return shape instanceof Point
+	                        })) {
+	                        let segments = Face.points2segments(shapes);
+	                        this.shapes2face(polygon.edges, segments);
+	                    }
+	                    else if (shapes.every((shape) => {
+	                            return (shape instanceof Segment || shape instanceof Arc)
+	                        })) {
+	                        this.shapes2face(polygon.edges, shapes);
+	                    }
 	                }
-	                else if (shapes.every((shape) => {
-	                        return (shape instanceof Segment || shape instanceof Arc)
-	                    })) {
-	                    this.shapes2face(polygon.edges, shapes);
+	                /* Create new face and copy edges into polygon.edges set */
+	                else if (args[0] instanceof Face) {
+	                    let face = args[0];
+	                    this.first = face.first;
+	                    this.last = face.last;
+	                    for (let edge of face) {
+	                        polygon.edges.add(edge);
+	                    }
 	                }
 	            }
-	
 	            /* If passed two edges, consider them as start and end of the face loop */
 	            /* THIS METHOD WILL BE USED BY BOOLEAN OPERATIONS */
+	            /* Assume that edges already copied to polygon.edges set in the clip algorithm !!! */
 	            if (args.length == 2 && args[0] instanceof Edge && args[1] instanceof Edge) {
 	                this.first = args[0];                          // first edge in face or undefined
 	                this.last = args[1];                           // last edge in face or undefined
 	                this.last.next = this.first;
 	                this.first.prev = this.last;
-	                this.box = this.getBox();
-	                this.orientation = this.getOrientation();      // face direction cw or ccw
+	
+	                // set arc length
+	                this.setArcLength();
+	                /*
+	                 let edge = this.first;
+	                 edge.arc_length = 0;
+	                 edge = edge.next;
+	                 while (edge !== this.first) {
+	                 edge.arc_length = edge.prev.arc_length + edge.prev.length;
+	                 edge = edge.next;
+	                 }
+	                 */
+	
+	                // this.box = this.getBox();
+	                // this.orientation = this.getOrientation();      // face direction cw or ccw
 	            }
 	        }
 	
@@ -27721,16 +28304,16 @@
 	            return {
 	                next: () => {
 	                    let value = edge ? edge : this.first;
-	                    let done = edge ? edge === this.first : false;
-	                    edge = value.next;
+	                    let done = this.first ? (edge ? edge === this.first : false) : true;
+	                    edge = value ? value.next : undefined;
 	                    return {value: value, done: done};
 	                }
 	            };
 	        };
 	
 	        /**
-	         * Return array of edges of the given face in the order from first to last
-	         * @returns {Array} - Array of edges
+	         * Return array of edges from first to last
+	         * @returns {Array}
 	         */
 	        get edges() {
 	            let face_edges = [];
@@ -27742,7 +28325,7 @@
 	
 	        /**
 	         * Return number of edges in the face
-	         * @returns {number} - number of edges
+	         * @returns {number}
 	         */
 	        get size() {
 	            let counter = 0;
@@ -27760,12 +28343,37 @@
 	            return segments;
 	        }
 	
-	        append(edge) {
+	        shapes2face(edges, shapes) {
+	            for (let shape of shapes) {
+	                let edge = new Edge(shape);
+	                this.append(edges, edge);
+	                // this.box = this.box.merge(shape.box);
+	                // edges.add(edge);
+	            }
+	            // this.orientation = this.getOrientation();              // face direction cw or ccw
+	        }
+	
+	        /**
+	         * Returns true if face is empty, false otherwise
+	         * @returns {boolean}
+	         */
+	        isEmpty() {
+	            return (this.first === undefined && this.last === undefined)
+	        }
+	
+	        /**
+	         * Append given edge after the last edge (and before the first edge). <br/>
+	         * This method mutates current object and does not return any value
+	         * @param {PlanarSet} edges - Container of edges
+	         * @param {Edge} edge - Edge to be appended to the linked list
+	         */
+	        append(edges, edge) {
 	            if (this.first === undefined) {
 	                edge.prev = edge;
 	                edge.next = edge;
 	                this.first = edge;
 	                this.last = edge;
+	                edge.arc_length = 0;
 	            }
 	            else {
 	                // append to end
@@ -27775,30 +28383,162 @@
 	                // update edge to be last
 	                this.last = edge;
 	
-	                // restore circlar links
+	                // restore circular links
 	                this.last.next = this.first;
 	                this.first.prev = this.last;
-	            }
-	        }
 	
-	        shapes2face(edges, shapes) {
-	            for (let shape of shapes) {
-	                let edge = new Edge(shape);
-	                this.append(edge);
-	                this.box = this.box.merge(shape.box);
-	                edges.add(edge);
+	                // set arc length
+	                edge.arc_length = edge.prev.arc_length + edge.prev.length;
 	            }
-	            this.orientation = this.getOrientation();              // face direction cw or ccw
+	            edge.face = this;
+	
+	            edges.add(edge);      // Add new edges into edges container
 	        }
 	
 	        /**
-	         * Return the area of the polygon
+	         * Insert edge newEdge into the linked list after the edge edgeBefore <br/>
+	         * This method mutates current object and does not return any value
+	         * @param {PlanarSet} edges - Container of edges
+	         * @param {Edge} newEdge - Edge to be inserted into linked list
+	         * @param {Edge} edgeBefore - Edge to insert newEdge after it
+	         */
+	        insert(edges, newEdge, edgeBefore) {
+	            if (this.first === undefined) {
+	                edge.prev = newEdge;
+	                edge.next = newEdge;
+	                this.first = newEdge;
+	                this.last = newEdge;
+	            }
+	            else {
+	                /* set links to new edge */
+	                let edgeAfter = edgeBefore.next;
+	                edgeBefore.next = newEdge;
+	                edgeAfter.prev = newEdge;
+	
+	                /* set links from new edge */
+	                newEdge.prev = edgeBefore;
+	                newEdge.next = edgeAfter;
+	
+	                /* extend chain if new edge added after last edge */
+	                if (this.last === edgeBefore)
+	                    this.first = newEdge;
+	            }
+	            newEdge.face = this;
+	
+	            edges.add(newEdge);      // Add new edges into edges container
+	        }
+	
+	        /**
+	         * Remove the given edge from the linked list of the face <br/>
+	         * This method mutates current object and does not return any value
+	         * @param {PlanarSet} edges - Container of edges
+	         * @param {Edge} edge - Edge to be removed
+	         */
+	        remove(edges, edge) {
+	            // special case if last edge removed
+	            if (edge === this.first && edge === this.last) {
+	                this.first = undefined;
+	                this.last = undefined;
+	            }
+	            else {
+	                // update linked list
+	                edge.prev.next = edge.next;
+	                edge.next.prev = edge.prev;
+	                // update first if need
+	                if (edge === this.first) {
+	                    this.first = edge.next;
+	                }
+	                // update last if need
+	                if (edge === this.last) {
+	                    this.last = edge.prev;
+	                }
+	            }
+	            edges.delete(edge);      // delete from PlanarSet of edges and update index
+	        }
+	
+	        /**
+	         * Reverse orientation of the face: first edge become last and vice a verse,
+	         * all edges starts and ends swapped, direction of arcs inverted.
+	         */
+	        reverse() {
+	            // collect edges in revert order with reverted shapes
+	            let edges = [];
+	            let edge_tmp = this.last;
+	            do {
+	                // reverse shape
+	                edge_tmp.shape = edge_tmp.shape.reverse();
+	                edges.push(edge_tmp);
+	                edge_tmp = edge_tmp.prev;
+	            } while (edge_tmp !== this.last);
+	
+	            // restore linked list
+	            this.first = undefined;
+	            this.last = undefined;
+	            for (let edge of edges) {
+	                if (this.first === undefined) {
+	                    edge.prev = edge;
+	                    edge.next = edge;
+	                    this.first = edge;
+	                    this.last = edge;
+	                    edge.arc_length = 0;
+	                }
+	                else {
+	                    // append to end
+	                    edge.prev = this.last;
+	                    this.last.next = edge;
+	
+	                    // update edge to be last
+	                    this.last = edge;
+	
+	                    // restore circular links
+	                    this.last.next = this.first;
+	                    this.first.prev = this.last;
+	
+	                    // set arc length
+	                    edge.arc_length = edge.prev.arc_length + edge.prev.length;
+	                }
+	            }
+	
+	            // Recalculate orientation, if set
+	            if (this._orientation !== undefined) {
+	                this._orientation = undefined;
+	                this._orientation = this.orientation();
+	            }
+	        }
+	
+	
+	        /**
+	         * Set arc_length property for each of the edges in the face.
+	         * Arc_length of the edge it the arc length from the first edge of the face
+	         */
+	        setArcLength() {
+	            for (let edge of this) {
+	                if (edge === this.first) {
+	                    edge.arc_length = 0.0;
+	                }
+	                else {
+	                    edge.arc_length = edge.prev.arc_length + edge.prev.length;
+	                }
+	                edge.face = this;
+	            }
+	        }
+	
+	        /**
+	         * Returns the absolute value of the area of the face
 	         * @returns {number}
 	         */
 	        area() {
 	            return Math.abs(this.signedArea());
 	        }
 	
+	        /**
+	         * Returns signed area of the simple face.
+	         * Face is simple if it has no self intersections that change its orientation.
+	         * Then the area will be positive if the orientation of the face is clockwise,
+	         * and negative if orientation is counterclockwise.
+	         * It may be zero if polygon is degenerated.
+	         * @returns {number}
+	         */
 	        signedArea() {
 	            let sArea = 0;
 	            for (let edge of this) {
@@ -27807,35 +28547,95 @@
 	            return sArea;
 	        }
 	
-	        /* According to Green theorem the area of a closed curve may be calculated as double integral,
-	        and the sign of the integral will be defined by the direction of the curve.
-	        When the integral ("signed area") will be negative, direction is counter clockwise,
-	        when positive - clockwise and when it is zero, polygon is not orientable.
-	        See http://mathinsight.org/greens_theorem_find_area
+	        /**
+	         * Return face orientation: one of Flatten.ORIENTATION.CCW, Flatten.ORIENTATION.CW, Flatten.ORIENTATION.NOT_ORIENTABLE <br/>
+	         * According to Green theorem the area of a closed curve may be calculated as double integral,
+	         * and the sign of the integral will be defined by the direction of the curve.
+	         * When the integral ("signed area") will be negative, direction is counter clockwise,
+	         * when positive - clockwise and when it is zero, polygon is not orientable.
+	         * See {@link https://mathinsight.org/greens_theorem_find_area}
+	         * @returns {number}
 	         */
-	        getOrientation() {
-	            let area = this.signedArea();
-	            if (Flatten.Utils.EQ_0(area)) {
-	                return Flatten.ORIENTATION.NOT_ORIENTABLE;
+	        orientation() {
+	            if (this._orientation === undefined) {
+	                let area = this.signedArea();
+	                if (Flatten.Utils.EQ_0(area)) {
+	                    this._orientation = Flatten.ORIENTATION.NOT_ORIENTABLE;
+	                }
+	                else if (Flatten.Utils.LT(area, 0)) {
+	                    this._orientation = Flatten.ORIENTATION.CCW;
+	                }
+	                else {
+	                    this._orientation = Flatten.ORIENTATION.CW;
+	                }
 	            }
-	            if (Flatten.Utils.LT(area, 0)) {
-	                return Flatten.ORIENTATION.CCW;
-	            }
-	            else {
-	                return Flatten.ORIENTATION.CW;
-	            }
+	            return this._orientation;
 	        }
 	
 	        /**
 	         * Return bounding box of the face
 	         * @returns {Box}
 	         */
-	        getBox() {
-	            let box = new Flatten.Box();
-	            for (let edge of this) {
-	                box = box.merge(edge.box);
+	        get box() {
+	            if (this._box === undefined) {
+	                let box = new Flatten.Box();
+	                for (let edge of this) {
+	                    box = box.merge(edge.box);
+	                }
+	                this._box = box;
 	            }
-	            return box;
+	            return this._box;
+	        }
+	
+	        /**
+	         * Check relation between face and other polygon
+	         * on strong assumption that they are NOT INTERSECTED <br/>
+	         * Then there are 4 options: <br/>
+	         * face disjoint to polygon - Flatten.OUTSIDE <br/>
+	         * face inside polygon - Flatten.INSIDE <br/>
+	         * face contains polygon - Flatten.CONTAIN <br/>
+	         * face interlaced with polygon: inside some face and contains other face - Flatten.INTERLACE <br/>
+	         * @param {Polygon} polygon - Polygon to check relation
+	         */
+	        getRelation(polygon) {
+	            this.first.bv = this.first.bvStart = this.first.bvEnd = undefined;
+	            let bvThisInOther = this.first.setInclusion(polygon);
+	            let resp = polygon.faces.search(this.box);
+	            if (resp.length === 0) {
+	                return bvThisInOther;        // OUTSIDE or INSIDE
+	            }
+	            else {                           // possible INTERLACE
+	                let polyTmp = new Flatten.Polygon();
+	                polyTmp.addFace(this);
+	
+	                let numInsideThis = 0;
+	                for (let face of resp) {
+	                    face.first.bv = face.first.bvStart = face.first.bvEnd = undefined;
+	                    let bvOtherInThis = face.first.setInclusion(polyTmp);
+	                    if (bvOtherInThis === Flatten.INSIDE) {
+	                        numInsideThis++;
+	                    }
+	                }
+	                if (bvThisInOther === Flatten.OUTSIDE) {
+	                    if (numInsideThis === 0) {                   // none inside this - outside
+	                        return Flatten.OUTSIDE;
+	                    }
+	                    else if (numInsideThis === resp.length) {      // all from resp inside this - contains or interlace
+	                        if (resp.length === polygon.faces.size) {
+	                            return Flatten.CONTAINS;               // all faces from polygon are in response - contains
+	                        }
+	                        else {
+	                            return Flatten.INTERLACE;              // some faces inside - interlace
+	                        }
+	                    }
+	                    else {
+	                        return Flatten.INTERLACE;                  // some faces inside - interlace
+	                    }
+	                }
+	                else if (bvThisInOther === Flatten.INSIDE) {
+	                    return numInsideThis === 0 ? Flatten.INSIDE : Flatten.INTERLACE;
+	                }
+	            }
 	        }
 	
 	        svg() {
@@ -27852,7 +28652,7 @@
 	};
 
 /***/ },
-/* 80 */
+/* 83 */
 /***/ function(module, exports) {
 
 	/**
@@ -27920,7 +28720,7 @@
 	        }
 	
 	        /**
-	         * Method clone returns new instance of Line
+	         * Returns cloned new instance of a line
 	         * @returns {Line}
 	         */
 	        clone() {
@@ -27937,7 +28737,7 @@
 	        }
 	
 	        /**
-	         * Standard line equation in the form Ax + By = C, get coefficients using es6 destructuring assignment:
+	         * Get coefficients [A,B,C] of a standard line equation in the form Ax + By = C
 	         * @code [A, B, C] = line.standard
 	         * @returns {number[]} - array of coefficients
 	         */
@@ -27970,7 +28770,7 @@
 	
 	        /**
 	         * Returns true if point belongs to line
-	         * @param {Point} pt
+	         * @param {Point} pt Query point
 	         * @returns {boolean}
 	         */
 	        contains(pt) {
@@ -27983,8 +28783,8 @@
 	        }
 	
 	        /**
-	         * Returns array of intersection points if intersection exists or zero-length array otherwise
-	         * @param {Shape} shape - shape to intersect with
+	         * Returns array of intersection points
+	         * @param {Shape} shape - shape to intersect with of the type Line, Circle, Segment, Arc
 	         * @returns {Point[]}
 	         */
 	        intersect(shape) {
@@ -28006,33 +28806,34 @@
 	        }
 	
 	        /**
-	         * Calculate distance and shortest segment from line to shape
-	         * @param shape
-	         * @returns {Number | Segment} - distance and shortest segment from line to shape
+	         * Calculate distance and shortest segment from line to shape and returns array [distance, shortest_segment]
+	         * @param {Shape} shape Shape of the one of the types Point, Circle, Segment, Arc, Polygon
+	         * @returns {Number}
+	         * @returns {Segment}
 	         */
 	        distanceTo(shape) {
 	            let {Distance} = Flatten;
 	
 	            if (shape instanceof Flatten.Point) {
 	                let [distance, shortest_segment] = Distance.point2line(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                shortest_segment = shortest_segment.reverse();
 	                return [distance, shortest_segment];
 	            }
 	
 	            if (shape instanceof Flatten.Circle) {
 	                let [distance, shortest_segment] = Distance.circle2line(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                shortest_segment = shortest_segment.reverse();
 	                return [distance, shortest_segment];
 	            }
 	
 	            if (shape instanceof Flatten.Segment) {
 	                let [distance, shortest_segment] = Distance.segment2line(shape, this);
-	                return [distance, shortest_segment.swap()];
+	                return [distance, shortest_segment.reverse()];
 	            }
 	
 	            if (shape instanceof Flatten.Arc) {
 	                let [distance, shortest_segment] = Distance.arc2line(shape, this);
-	                return [distance, shortest_segment.swap()];
+	                return [distance, shortest_segment.reverse()];
 	            }
 	
 	            if (shape instanceof Flatten.Polygon) {
@@ -28144,7 +28945,7 @@
 
 
 /***/ },
-/* 81 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/**
@@ -28189,7 +28990,7 @@
 	        }
 	
 	        /**
-	         * Method clone returns new instance of Point
+	         * Method clone returns new copied instance of point
 	         * @returns {Point}
 	         */
 	        clone() {
@@ -28201,8 +29002,8 @@
 	        }
 	
 	        /**
-	         * Returns true if points are equal up to DP_TOL tolerance
-	         * @param {Point} pt
+	         * Returns true if points are equal up to [Flatten.Utils.DP_TOL]{@link DP_TOL} tolerance
+	         * @param {Point} pt Query point
 	         * @returns {boolean}
 	         */
 	        equalTo(pt) {
@@ -28210,9 +29011,11 @@
 	        }
 	
 	        /**
-	         * Defines predicate "less than" between points. Need for spatial index
-	         * @param pt - other point
-	         * @returns {boolean} - true if this point less than other points, false otherwise
+	         * Defines predicate "less than" between points. Returns true if the point is less than query points, false otherwise <br/>
+	         * By definition point1 < point2 if {point1.y < point2.y || point1.y == point2.y && point1.x < point2.y <br/>
+	         * Numeric values compared with [Flatten.Utils.DP_TOL]{@link DP_TOL} tolerance
+	         * @param {Point} pt Query point
+	         * @returns {boolean}
 	         */
 	        lessThan(pt) {
 	            if (Flatten.Utils.LT(this.y, pt.y))
@@ -28225,8 +29028,9 @@
 	        /**
 	         * Returns new point rotated by given angle around given center point.
 	         * If center point is omitted, rotates around zero point (0,0).
-	         * @param {number} angle - angle in radians, positive value defines rotation
-	         * in counter clockwise direction, negative - clockwise
+	         * Positive value of angle defines rotation in counter clockwise direction,
+	         * negative angle defines rotation in clockwise clockwise direction
+	         * @param {number} angle - angle in radians
 	         * @param {Point} [center=(0,0)] center
 	         * @returns {Point}
 	         */
@@ -28239,8 +29043,9 @@
 	
 	        /**
 	         * Returns new point translated by given vector.
-	         * Translation vector may by also defined by a pair of numbers dx, dy
-	         * @param {Vector} vector - translation vector
+	         * Translation vector may by also defined by a pair of numbers.
+	         * @param {Vector} vector - Translation vector defined as Flatten.Vector or
+	         * @param {number|number} - Translation vector defined as pair of numbers
 	         * @returns {Point}
 	         */
 	        translate(...args) {
@@ -28257,7 +29062,7 @@
 	
 	        /**
 	         * Returns projection point on given line
-	         * @param {Line} line - line this point be projected on
+	         * @param {Line} line Line this point be projected on
 	         * @returns {Point}
 	         */
 	        projectionOn(line) {
@@ -28274,8 +29079,9 @@
 	        }
 	
 	        /**
-	         * Returns true if point is on "left" semi plane. Left semi plane is where line normal vector points to
-	         * @param line
+	         * Returns true if point belongs to the "left" semi-plane, which means, point belongs to the same semi plane where line normal vector points to
+	         * Return false if point belongs to the "right" semi-plane or to the line itself
+	         * @param {Line} line Query line
 	         * @returns {boolean}
 	         */
 	        leftTo(line) {
@@ -28285,9 +29091,10 @@
 	        }
 	
 	        /**
-	         * Returns distance between point and other shape
-	         * @param {Shape} shape
-	         * @returns {number}
+	         * Calculate distance and shortest segment from point to shape and return as array [distance, shortest segment]
+	         * @param {Shape} shape Shape of the one of supported types Point, Line, Circle, Segment, Arc, Polygon or Planar Set
+	         * @returns {number} distance from point to shape
+	         * @returns {Segment} shortest segment between point and shape (started at point, ended at shape)
 	         */
 	        distanceTo(shape) {
 	            let {Distance} = Flatten;
@@ -28328,8 +29135,8 @@
 	        }
 	
 	        /**
-	         * Returns true if point is on shape
-	         * @param {Shape} shape
+	         * Returns true if point is on a shape, false otherwise
+	         * @param {Shape} shape Shape of the one of supported types Point, Line, Circle, Segment, Arc, Polygon
 	         * @returns {boolean}
 	         */
 	        on(shape) {
@@ -28359,11 +29166,16 @@
 	        }
 	
 	        /**
-	         * Return string to draw point in svg as circle with radius "r", default is r:"5"
-	         * @param attrs - json structure with any attributes allowed to svg circle element,
-	         * like "r", "stroke", "strokeWidth", "fill"
-	         * Defaults are r:"5", stroke:"black", strokeWidth:"1", fill:"red"
-	         * @returns {string}
+	         * Return string to draw point in svg as circle with radius "r" <br/>
+	         * Defaults attrs is an object:
+	         * {
+	         *    r:"5",
+	         *    stroke:"black",
+	         *    strokeWidth:"1",
+	         *    fill:"red"
+	         * }
+	         * @param {Object} attrs - Attributes of svg circle element: "r", "stroke", "strokeWidth", "fill"
+	         * @returns {String}
 	         */
 	        svg(attrs = {r:"5",stroke:"black",strokeWidth:"1",fill:"red"}) {
 	            let {r, stroke, strokeWidth, fill} = attrs;
@@ -28381,7 +29193,7 @@
 
 
 /***/ },
-/* 82 */
+/* 85 */
 /***/ function(module, exports) {
 
 	/**
@@ -28395,33 +29207,33 @@
 	    let {ray_shoot} = Flatten;
 	    /**
 	     * Class representing a polygon.<br/>
-	     * Polygon in FlattenJS is a multipolygon comprised from a set of faces<br/>
-	     * Face, in turn, is a closed loop of edges, which can be a segment or a circular arc<br/>
+	     * Polygon in FlattenJS is a multipolygon comprised from a set of [faces]{@link Flatten.Face}. <br/>
+	     * Face, in turn, is a closed loop of [edges]{@link Flatten.Edge}, where edge may be segment or circular arc<br/>
 	     * @type {Polygon}
 	     */
 	    Flatten.Polygon = class Polygon {
 	        /**
 	         * Constructor creates new instance of polygon.<br/>
-	         * New polygon is empty. Add new face to the polygon using method <br/>
+	         * New polygon is empty. Add face to the polygon using method <br/>
 	         * <code>
-	         *     polygon.addFace(Points|Segments|Arcs[])
+	         *     polygon.addFace(Points[]|Segments[]|Arcs[])
 	         * </code>
 	         */
 	        constructor() {
 	            /**
-	             * Set of faces (closed loops), may be empty
+	             * Container of faces (closed loops), may be empty
 	             * @type {PlanarSet}
 	             */
 	            this.faces = new PlanarSet();
 	            /**
-	             * Set of edges. Usually is not used directly. Better access edges via faces
+	             * Container of edges
 	             * @type {PlanarSet}
 	             */
 	            this.edges = new PlanarSet();
 	        }
 	
 	        /**
-	         * Get bounding box of the polygon
+	         * (Getter) Returns bounding box of the polygon
 	         * @returns {Box}
 	         */
 	        get box() {
@@ -28429,7 +29241,7 @@
 	        }
 	
 	        /**
-	         * Return array of vertices
+	         * (Getter) Returns array of vertices
 	         * @returns {Array}
 	         */
 	        get vertices() {
@@ -28437,21 +29249,21 @@
 	        }
 	
 	        /**
-	         * Add new face to polygon
-	         * @param {Points[]|Segments|Arcs[]} args - list of points or list of shapes (segments and arcs)
+	         * Add new face to polygon. Returns added face
+	         * @param {Points[]|Segments[]|Arcs[]} args - list of points or list of shapes (segments and arcs)
 	         * which comprise a closed loop
 	         * @returns {Face}
 	         */
 	        addFace(...args) {
-	            let face = new Face(this, args);
+	            let face = new Face(this, ...args);
 	            this.faces.add(face);
 	            return face;
 	        }
 	
 	        /**
 	         * Delete existing face from polygon
-	         * @param {Face}
-	         * @returns {boolean|*}
+	         * @param {Face} face Face to be deleted
+	         * @returns {boolean}
 	         */
 	        deleteFace(face) {
 	            for (let edge of face) {
@@ -28459,6 +29271,65 @@
 	            }
 	            let deleted = this.faces.delete(face);
 	            return deleted;
+	        }
+	
+	        /**
+	         * Delete chain of edges from the face.
+	         * @param {Face} face Face to remove chain
+	         * @param {Edge} edgeFrom Start of the chain of edges to be removed
+	         * @param {Edge} edgeTo End of the chain of edges to be removed
+	         */
+	        removeChain(face, edgeFrom, edgeTo) {
+	            // Special case: all edges removed
+	            if (edgeTo.next === edgeFrom) {
+	                this.deleteFace(face);
+	                return;
+	            }
+	            for (let edge = edgeFrom; edge !== edgeTo.next; edge = edge.next ) {
+	                face.remove(this.edges, edge);
+	                // this.edges.delete(edge);      // delete from PlanarSet of edges and update index
+	                if (face.isEmpty()) {
+	                    this.deleteFace(face);    // delete from PlanarSet of faces and update index
+	                    break;
+	                }
+	            }
+	        }
+	
+	        /**
+	         * Add point as a new vertex and split edge. Point supposed to belong to an edge.
+	         * When edge is split, new edge created from the start of the edge to the new vertex
+	         * and inserted before current edge.
+	         * Current edge is trimmed and updated. Method returns new edge added.
+	         * @param {Edge} edge Edge to be split with new vertex and then trimmed from start
+	         * @param {Point} pt Point to be added as a new vertex
+	         * @returns {Edge}
+	         */
+	        addVertex(pt, edge) {
+	            let shapes = edge.shape.split(pt);
+	            if (shapes.length < 2) return;
+	            let newEdge = new Flatten.Edge(shapes[0]);
+	            let edgeBefore = edge.prev;
+	
+	            /* Insert first split edge into linked list after edgeBefore */
+	            edge.face.insert(this.edges, newEdge, edgeBefore);
+	
+	            // Remove old edge from edges container and 2d index
+	            this.edges.delete(edge);
+	
+	            // Update edge shape with second split edge keeping links
+	            edge.shape = shapes[1];
+	
+	            // Add updated edge to the edges container and 2d index
+	            this.edges.add(edge);
+	
+	            return newEdge;
+	        }
+	
+	        reverse() {
+	            for (let face of this.faces) {
+	                face.reverse();
+	            }
+	            return this;
 	        }
 	
 	        /**
@@ -28487,11 +29358,10 @@
 	        }
 	
 	        /**
-	         * Point in contour test based on ray shooting (tracing) algorithm
-	         * Returns true if point inside contour or lays on boundary,
-	         * otherwise returns false
-	         * @param point - test point
-	         * @returns {boolean} - true if inside or on boundary, false otherwise
+	         * Returns true if polygon contains point, including polygon boundary, false otherwise
+	         * Point in polygon test based on ray shooting algorithm
+	         * @param {Point} point - test point
+	         * @returns {boolean}
 	         */
 	        contains(point) {
 	            let rel = ray_shoot(this, point);
@@ -28499,8 +29369,8 @@
 	        }
 	
 	        /**
-	         * Return distance and shortest segment between polygon and other shape
-	         * @param shape
+	         * Return distance and shortest segment between polygon and other shape as array [distance, shortest_segment]
+	         * @param {Shape} shape Shape of one of the types Point, Circle, Line, Segment, Arc or Polygon
 	         * @returns {Number | Segment}
 	         */
 	        distanceTo(shape) {
@@ -28508,7 +29378,7 @@
 	
 	            if (shape instanceof Flatten.Point) {
 	                let [dist, shortest_segment] = Distance.point2polygon(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                shortest_segment = shortest_segment.reverse();
 	                return [dist, shortest_segment];
 	            }
 	
@@ -28517,7 +29387,7 @@
 	            shape instanceof Flatten.Segment ||
 	            shape instanceof Flatten.Arc) {
 	                let [dist, shortest_segment] = Distance.shape2polygon(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                shortest_segment = shortest_segment.reverse();
 	                return [dist, shortest_segment];
 	            }
 	
@@ -28540,7 +29410,7 @@
 	
 	        /**
 	         * Return string to draw polygon in svg
-	         * @param attrs  - json structure with any attributes allowed to svg path element,
+	         * @param attrs  - json structure with attributes for svg path element,
 	         * like "stroke", "strokeWidth", "fill", "fillRule"
 	         * Defaults are stroke:"black", strokeWidth:"3", fill:"lightcyan", fillRule:"evenodd"
 	         * @returns {string}
@@ -28559,7 +29429,7 @@
 	};
 
 /***/ },
-/* 83 */
+/* 86 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28567,7 +29437,7 @@
 	module.exports = function(Flatten) {
 	    let {Point, Segment, Line, Circle, Arc, Box, Vector} = Flatten;
 	    /**
-	     * Class representing a horizontal ray, used for ray shooting algorithm
+	     * Class representing a horizontal ray, used by ray shooting algorithm
 	     * @type {Ray}
 	     */
 	    Flatten.Ray = class Ray {
@@ -28633,8 +29503,8 @@
 	        }
 	
 	        /**
-	         * Intersect ray with shape
-	         * @param {Segment|Arc} - shape to intersect with ray
+	         * Returns array of intersection points between ray and segment or arc
+	         * @param {Segment|Arc} - Shape to intersect with ray
 	         * @returns {Array} array of intersection points
 	         */
 	        intersect(shape) {
@@ -28696,7 +29566,7 @@
 	};
 
 /***/ },
-/* 84 */
+/* 87 */
 /***/ function(module, exports) {
 
 	/**
@@ -28755,7 +29625,7 @@
 	        }
 	
 	        /**
-	         * Method clone returns new instance of a Segment
+	         * Method clone copies segment and returns a new instance
 	         * @returns {Segment}
 	         */
 	        clone() {
@@ -28778,6 +29648,11 @@
 	            return this.pe;
 	        }
 	
+	
+	        /**
+	         * Returns array of start and end point
+	         * @returns [Point,Point]
+	         */
 	        get vertices() {
 	            return [this.ps.clone(), this.pe.clone()];
 	        }
@@ -28813,8 +29688,8 @@
 	        }
 	
 	        /**
-	         * Function contains returns true if point belongs to segment
-	         * @param {Point} pt
+	         * Returns true if segment contains point
+	         * @param {Point} pt Query point
 	         * @returns {boolean}
 	         */
 	        contains(pt) {
@@ -28823,7 +29698,8 @@
 	
 	        /**
 	         * Returns array of intersection points between segment and other shape
-	         * @param shape - shape to intersect with
+	         * @param {Shape} shape - Shape of the one of supported types Line, Circle, Segment, Arc <br/>
+	         * TODO: support Polygon and Planar Set
 	         * @returns {Point[]}
 	         */
 	        intersect(shape) {
@@ -28845,16 +29721,17 @@
 	        }
 	
 	        /**
-	         * Calculate distance and shortest segment from segment to shape
-	         * @param shape
-	         * @returns {Number | Segment} - distance and shortest segment from segment to shape
+	         * Calculate distance and shortest segment from segment to shape and return as array [distance, shortest segment]
+	         * @param {Shape} shape Shape of the one of supported types Point, Line, Circle, Segment, Arc, Polygon or Planar Set
+	         * @returns {number} distance from segment to shape
+	         * @returns {Segment} shortest segment between segment and shape (started at segment, ended at shape)
 	         */
 	        distanceTo(shape) {
 	            let {Distance} = Flatten;
 	
 	            if (shape instanceof Flatten.Point) {
 	                let [dist, shortest_segment] = Distance.point2segment(shape, this);
-	                shortest_segment = shortest_segment.swap();
+	                shortest_segment = shortest_segment.reverse();
 	                return [dist, shortest_segment];
 	            }
 	
@@ -28890,8 +29767,8 @@
 	        }
 	
 	        /**
-	         * Return tangent unit vector in the start point in the direction from start to end
-	         * @returns {Vector} - tangent vector in start point
+	         * Returns unit vector in the direction from start to end
+	         * @returns {Vector}
 	         */
 	        tangentInStart() {
 	            let vec = new Flatten.Vector(this.start, this.end);
@@ -28899,8 +29776,8 @@
 	        }
 	
 	        /**
-	         * Return tangent unit vector in the end point in the direction from end to start
-	         * @returns {Vector} - tangent vector in end point
+	         * Return unit vector in the direction from end to start
+	         * @returns {Vector}
 	         */
 	        tangentInEnd() {
 	            let vec = new Flatten.Vector(this.end, this.start);
@@ -28908,11 +29785,42 @@
 	        }
 	
 	        /**
-	         * Return new segment with swapped start and end points
+	         * Returns new segment with swapped start and end points
 	         * @returns {Segment}
 	         */
-	        swap() {
+	        reverse() {
 	            return new Segment(this.end, this.start);
+	        }
+	
+	        /**
+	         * When point belongs to segment, return array of two segments split by given point,
+	         * if point is inside segment. Returns clone of this segment if query point is incident
+	         * to start or end point of the segment. Returns empty array if point does not belong to segment
+	         * @param {Point} pt Query point
+	         * @returns {Segment[]}
+	         */
+	        split(pt) {
+	            if (!this.contains(pt))
+	                return [];
+	
+	            if (this.start.equalTo(this.end))
+	                return [this.clone()];
+	
+	            if (this.start.equalTo(pt) || this.end.equalTo(pt))
+	                return [this];
+	
+	            return [
+	                new Flatten.Segment(this.start, pt),
+	                new Flatten.Segment(pt, this.end)
+	            ]
+	        }
+	
+	        /**
+	         * Return middle point of the segment
+	         * @returns {Point}
+	         */
+	        middle() {
+	            return new Flatten.Point((this.start.x + this.end.x)/2, (this.start.y + this.end.y)/2);
 	        }
 	
 	        distanceToPoint(pt) {
@@ -29037,8 +29945,8 @@
 	
 	        /**
 	         * Return string to draw segment in svg
-	         * @param attrs - json structure with any attributes allowed to svg path element,
-	         * like "stroke", "strokeWidth"
+	         * @param {Object} attrs - Object with attributes for svg path element,
+	         * like "stroke", "strokeWidth" <br/>
 	         * Defaults are stroke:"black", strokeWidth:"3"
 	         * @returns {string}
 	         */
@@ -29048,11 +29956,14 @@
 	        }
 	    };
 	
+	    /**
+	     * Shortcut method to create new segment
+	     */
 	    Flatten.segment = (...args) => new Flatten.Segment(...args);
 	};
 
 /***/ },
-/* 85 */
+/* 88 */
 /***/ function(module, exports) {
 
 	/**
@@ -29155,8 +30066,9 @@
 	        }
 	
 	        /**
-	         * Returns scalar product between two vectors
-	         * @param {Vector} v
+	         * Returns scalar product between two vectors <br/>
+	         * <code>dot_product = (this * v)</code>
+	         * @param {Vector} v Other vector
 	         * @returns {number}
 	         */
 	        dot(v) {
@@ -29164,8 +30076,9 @@
 	        }
 	
 	        /**
-	         * Returns vector product (magnitude) between two vectors
-	         * @param {Vector} v
+	         * Returns vector product (magnitude) between two vectors <br/>
+	         * <code>cross_product = (this x v)</code>
+	         * @param {Vector} v Other vector
 	         * @returns {number}
 	         */
 	        cross(v) {
@@ -29186,7 +30099,7 @@
 	
 	        /**
 	         * Returns new vector rotated by given angle, positive angle defines rotation in counter clockwise direction
-	         * @param {number} angle - angle in radians
+	         * @param {number} angle - Angle in radians
 	         * @returns {Vector}
 	         */
 	        rotate(angle) {
@@ -29196,7 +30109,7 @@
 	        }
 	
 	        /**
-	         * Special fast version of rotate. Returns vector rotated 90 degrees counter clockwise
+	         * Returns vector rotated 90 degrees counter clockwise
 	         * @returns {Vector}
 	         */
 	        rotate90CCW() {
@@ -29204,7 +30117,7 @@
 	        };
 	
 	        /**
-	         * Special fast version of rotate. Returns vector rotated 90 degrees clockwise
+	         * Returns vector rotated 90 degrees clockwise
 	         * @returns {Vector}
 	         */
 	        rotate90CW() {
@@ -29229,7 +30142,7 @@
 
 
 /***/ },
-/* 86 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29240,15 +30153,15 @@
 	
 	// require("babel-polyfill");
 	
-	let IntervalTree = __webpack_require__(11);
+	let IntervalTree = __webpack_require__(12);
 	
-	module.exports = function(Flatten) {
+	module.exports = function (Flatten) {
 	    /**
 	     * Class representing a planar set - a generic container with ability to keep and retrieve shapes and
-	     * perform spatial queries. Planar set is an extension of Set container, so it is possible to call directly
+	     * perform spatial queries. Planar set is an extension of Set container, so it supports
 	     * Set properties and methods
 	     */
-	     Flatten.PlanarSet = class PlanarSet extends Set {
+	    Flatten.PlanarSet = class PlanarSet extends Set {
 	        /**
 	         * Create new empty instance of PlanarSet
 	         */
@@ -29262,8 +30175,9 @@
 	         * If shape already exist, it will not be added again.
 	         * This happens with no error, it is possible to use <i>size</i> property to check if
 	         * a shape was actually added.<br/>
-	         * @param shape - shape to be added, should have valid <i>box</i> property
-	         * @returns {PlanarSet} - planar set update, so may be chained
+	         * Method returns planar set object updated and may be chained
+	         * @param {Shape} shape - shape to be added, should have valid <i>box</i> property
+	         * @returns {PlanarSet}
 	         */
 	        add(shape) {
 	            let size = this.size;
@@ -29276,9 +30190,9 @@
 	        }
 	
 	        /**
-	         * Delete shape from planar set.
-	         * @param shape - shape to be deleted
-	         * @returns {boolean} - returns true if shape was actually deleted, false otherwise
+	         * Delete shape from planar set. Returns true if shape was actually deleted, false otherwise
+	         * @param {Shape} shape - shape to be deleted
+	         * @returns {boolean}
 	         */
 	        delete(shape) {
 	            let deleted = super.delete(shape);
@@ -29288,6 +30202,15 @@
 	            return deleted;
 	        }
 	
+	        // update(shape) {
+	        //     if (super.has(shape)) {
+	        //         this.delete(shape);
+	        //     }
+	        //     this.add(shape);
+	        //
+	        //     return this;
+	        // }
+	
 	        clear() {
 	
 	        }
@@ -29295,8 +30218,8 @@
 	        /**
 	         * 2d range search in planar set.<br/>
 	         * Returns array of all shapes in planar set which bounding box is intersected with query box
-	         * @param box - query box
-	         * @returns {Array} - array of shapes
+	         * @param {Box} box - query box
+	         * @returns {Shapes[]}
 	         */
 	        search(box) {
 	            let resp = this.index.search(box);
@@ -29305,8 +30228,8 @@
 	
 	        /**
 	         * Point location test. Returns array of shapes which contains given point
-	         * @param point - query point
-	         * @returns {Array} - array of shapes which contains given point
+	         * @param {Point} point - query point
+	         * @returns {Array}
 	         */
 	        hit(point) {
 	            let box = new Flatten.Box(point.x - 1, point.y - 1, point.x + 1, point.y + 1);
@@ -29328,7 +30251,7 @@
 
 
 /***/ },
-/* 87 */
+/* 90 */
 /***/ function(module, exports) {
 
 	/**
@@ -29342,7 +30265,7 @@
 
 
 /***/ },
-/* 88 */
+/* 91 */
 /***/ function(module, exports) {
 
 	/**
@@ -29394,12 +30317,12 @@
 
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(19),
-	    getRawTag = __webpack_require__(92),
-	    objectToString = __webpack_require__(93);
+	    getRawTag = __webpack_require__(95),
+	    objectToString = __webpack_require__(96);
 	
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -29428,7 +30351,7 @@
 
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -29439,10 +30362,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(94);
+	var overArg = __webpack_require__(97);
 	
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -29451,7 +30374,7 @@
 
 
 /***/ },
-/* 92 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(19);
@@ -29503,7 +30426,7 @@
 
 
 /***/ },
-/* 93 */
+/* 96 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -29531,7 +30454,7 @@
 
 
 /***/ },
-/* 94 */
+/* 97 */
 /***/ function(module, exports) {
 
 	/**
@@ -29552,10 +30475,10 @@
 
 
 /***/ },
-/* 95 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(90);
+	var freeGlobal = __webpack_require__(93);
 	
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -29567,7 +30490,7 @@
 
 
 /***/ },
-/* 96 */
+/* 99 */
 /***/ function(module, exports) {
 
 	/**
@@ -29602,7 +30525,7 @@
 
 
 /***/ },
-/* 97 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29715,7 +30638,7 @@
 
 
 /***/ },
-/* 98 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29833,7 +30756,7 @@
 	}
 
 /***/ },
-/* 99 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29845,9 +30768,9 @@
 	
 	'use strict';
 	
-	var emptyFunction = __webpack_require__(8);
-	var invariant = __webpack_require__(10);
-	var ReactPropTypesSecret = __webpack_require__(101);
+	var emptyFunction = __webpack_require__(9);
+	var invariant = __webpack_require__(11);
+	var ReactPropTypesSecret = __webpack_require__(104);
 	
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -29897,7 +30820,7 @@
 
 
 /***/ },
-/* 100 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29926,12 +30849,12 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(99)();
+	  module.exports = __webpack_require__(102)();
 	}
 
 
 /***/ },
-/* 101 */
+/* 104 */
 /***/ function(module, exports) {
 
 	/**
@@ -29949,7 +30872,7 @@
 
 
 /***/ },
-/* 102 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -29962,7 +30885,7 @@
 	 LICENSE file in the root directory of this source tree.
 	 Modernizr 3.0.0pre (Custom Build) | MIT
 	*/
-	'use strict';var aa=__webpack_require__(1);__webpack_require__(10);var l=__webpack_require__(64),n=__webpack_require__(12),ba=__webpack_require__(63),ca=__webpack_require__(8),da=__webpack_require__(17),ea=__webpack_require__(70),fa=__webpack_require__(65),ha=__webpack_require__(66),ia=__webpack_require__(67);
+	'use strict';var aa=__webpack_require__(1);__webpack_require__(11);var l=__webpack_require__(67),n=__webpack_require__(13),ba=__webpack_require__(66),ca=__webpack_require__(9),da=__webpack_require__(17),ea=__webpack_require__(73),fa=__webpack_require__(68),ha=__webpack_require__(69),ia=__webpack_require__(70);
 	function w(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:w("227");
 	function ja(a){switch(a){case "svg":return"http://www.w3.org/2000/svg";case "math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}
 	var ka={Namespaces:{html:"http://www.w3.org/1999/xhtml",mathml:"http://www.w3.org/1998/Math/MathML",svg:"http://www.w3.org/2000/svg"},getIntrinsicNamespace:ja,getChildNamespace:function(a,b){return null==a||"http://www.w3.org/1999/xhtml"===a?ja(b):"http://www.w3.org/2000/svg"===a&&"foreignObject"===b?"http://www.w3.org/1999/xhtml":a}},la=null,oa={};
@@ -30211,7 +31134,7 @@
 
 
 /***/ },
-/* 103 */
+/* 106 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30232,7 +31155,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 104 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @remove-on-eject-begin
@@ -30251,20 +31174,20 @@
 	  // Rejection tracking prevents a common issue where React gets into an
 	  // inconsistent state due to an error, but it gets swallowed by a Promise,
 	  // and the user has no idea what causes React's erratic future behavior.
-	  __webpack_require__(98).enable();
-	  window.Promise = __webpack_require__(97);
+	  __webpack_require__(101).enable();
+	  window.Promise = __webpack_require__(100);
 	}
 	
 	// fetch() polyfill for making API calls.
-	__webpack_require__(105);
+	__webpack_require__(108);
 	
 	// Object.assign() is commonly used with React.
 	// It will use the native implementation if it's present and isn't buggy.
-	Object.assign = __webpack_require__(12);
+	Object.assign = __webpack_require__(13);
 
 
 /***/ },
-/* 105 */
+/* 108 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -30728,7 +31651,7 @@
 
 
 /***/ },
-/* 106 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -30740,7 +31663,7 @@
 	 This source code is licensed under the MIT license found in the
 	 LICENSE file in the root directory of this source tree.
 	*/
-	'use strict';var f=__webpack_require__(12),p=__webpack_require__(17);__webpack_require__(10);var r=__webpack_require__(8);
+	'use strict';var f=__webpack_require__(13),p=__webpack_require__(17);__webpack_require__(11);var r=__webpack_require__(9);
 	function t(a){for(var b=arguments.length-1,d="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,e=0;e<b;e++)d+="\x26args[]\x3d"+encodeURIComponent(arguments[e+1]);b=Error(d+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
 	var u={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function v(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}v.prototype.isReactComponent={};v.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?t("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};v.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 	function w(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}function x(){}x.prototype=v.prototype;var y=w.prototype=new x;y.constructor=w;f(y,v.prototype);y.isPureReactComponent=!0;function z(a,b,d){this.props=a;this.context=b;this.refs=p;this.updater=d||u}var A=z.prototype=new x;A.constructor=z;f(A,v.prototype);A.unstable_isAsyncReactComponent=!0;A.render=function(){return this.props.children};
@@ -30757,7 +31680,7 @@
 
 
 /***/ },
-/* 107 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30820,7 +31743,7 @@
 	}
 
 /***/ },
-/* 108 */
+/* 111 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30876,7 +31799,7 @@
 	}
 
 /***/ },
-/* 109 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31024,14 +31947,14 @@
 	}
 
 /***/ },
-/* 110 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(111);
+	module.exports = __webpack_require__(114);
 
 
 /***/ },
-/* 111 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {'use strict';
@@ -31040,7 +31963,7 @@
 	  value: true
 	});
 	
-	var _ponyfill = __webpack_require__(112);
+	var _ponyfill = __webpack_require__(115);
 	
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 	
@@ -31063,10 +31986,10 @@
 	
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(117)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(120)(module)))
 
 /***/ },
-/* 112 */
+/* 115 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31094,31 +32017,31 @@
 	};
 
 /***/ },
-/* 113 */
+/* 116 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3MEYwOEQ4MDMwMzJFNDExOUZGN0MyRjAwQkZFNDkwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4NkNFODE2MzMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4NkNFODE2MjMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM3Q0UwRDg3MzgzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjcwRjA4RDgwMzAzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nXk3UAAAAjtJREFUeNrU1ktIVFEcx/FRhExEei0kULQkiijMKduo0RNCEHuQRohgggsVJbRSNy2qRSK4qIjohRARk5YgGvmoVSEWRe9EzHJVkFZEoInT9w+/gXGasjngwgMf7uDcOeee/+Nco/x+v2cuR7RnjkdM4MPh+jOBj+moxVYsxnvcQhO+Bf/48umjEe+gAHcxgM1YgkNIxGOsjHQHUYEcsIP1XHqQg7dIk36Mo8JugxfTf5swdFfBO6jDSU1+CvdRrRDdwFn8wB7XJG9XrFejCOvQhgnkoxE+3ee0gMX7E1bgmfLRgG0qBrvuwiKnKmJ8xCol0ybLxBaUoBcH8QqjrjvwKZGf8QAJeI0NWsRC9Ut/b3SpIgvRUyX6Es4rD7sxhevqgyOqtj71yz+rKThEY9iJOziAVtX9S31vE5ZhEjvwSCU9gi8K4+3QEg5ttEFYP1zBRnzVwtYHVZp8IZoRiyTE4Y2+f4KU2c6iKdV9qXaSgYfoVPwvahEr57VYjmTtxh6sW/fNzEGYM2lGrnAOWYjHGizFBZWuR6EtxFV8IAcnIjlN7SnKdbXfLECL+sXK+Ttytah1/D6X49omH1a8LVzZCmUHjqt/NuEdUl3fB2MKxXMtaP1ioWhXTuwBlqk4nBawA3CvwnVPlWRHygtcUxXuV8n+0Qf/M27qfCpGnp7WynlIrMRr9LIKX0XhRkhlpakUu1RZg3oh2ZMfQ6UdO4FOdnknDwU1ocX+p15KXh2SvrBn0bz9r+K3AAMAvVSdlmlN6ucAAAAASUVORK5CYII="
 
 /***/ },
-/* 114 */
+/* 117 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAB3RJTUUH1AgfBgU3vDbVaQAAAAlwSFlzAAAPPAAADzwBFzqfWQAAAwBQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Bz0LCAAAAAJ0Uk5T/wDltzBKAAAARUlEQVR42mNgxAIYsPEYkMUZoGwGJNVwNoLAUIWmngHVNFQ2iitQnQQTZACqRkfYVaJrg1qFUE20IMnehGtFNZhIQSAAABhlAUeIwcHOAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 115 */
+/* 118 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACWUExURezp2L3CsAAAAH91jbamy9Sx1NXVxL2u0MvA2yEeEZy460hBJUU/JAC+ACQhE4qi2Zaw5JCp3se72Ap3Hsi82cq+2qK/8XeKtWNfTb+x0nSEsG19pH6QtWFfU8S31nt1Wpax5Xp0WoeeynBrVMm92WhkVsGz02JfU21oU5m06Mq/2se62MS21bmqzsW517ipzbyu0P///wUDcXkAAAAydFJOU/////////////////////////////////////////////////////////////////8ADVCY7wAAAO1JREFUeNpiMMQCAAKIAZsgQABhFQQIIAZDeW5uZTgXwgEIIAZFKX5+aQk2iBiUAxBADDwCClyCfIwQQSgHIICAglxigny8wmAI4TACBBCDhoymkrg6KwMIsEI4jAABxGCoyskpy8gEFmSCcNgAAojBkI2RkZENqhLIMWRkMwQIIKg7YSohACCAoIIwlRAAEEBYVQIEEFaVAAHEwIwJDAECiIGZg4NJSAiE5OSYJCWZWFiYGAECCCgowi6qwi6iza6jxs6uywISBAggoKCoFoeoioiemoE+CxgwMQIEEAMzEwZgBAggBkNGTAAQYABIRSX4H75PxQAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 116 */
+/* 119 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABOUExURezp2AAAAH91jb3CsE9PT83C3CQhE7amy9Sx1ImFdL2u0AC+AMq+2si82Qp3Hsm92cvA28Gz07ipzcq/2se62LmqzsS21cW517yu0P///44+OfEAAAAadFJOU/////////////////////////////////8AFCIA2gAAAMxJREFUeNpikMQCAAKIAZsgQABhFQQIIAYWFklJTjYoD8oBCCAGIAMuJgnlAAQQUDsLG5JOMAcggBiAykGaoADCAQggBqByDhYWbj4w5GTjAJkLEEAg2xkZEIARpB4ggECCHEiCHCBBgADCqhIggLCqBAggrCoBAgirSoAAYmDCBJIAAcTAxMrKiIy4uBiZAQIIKMjLxcPPxSvCJSbIxSXKzs7OyAwQQAxMAjzCAjz8vOKCEkLsYMDIDBBADEyMGIAZIIAYJJkxAUCAAQCiZRN3sUCgAwAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 117 */
+/* 120 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -31135,4 +32058,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.9aa7d0d8.js.map
+//# sourceMappingURL=main.04186c88.js.map
