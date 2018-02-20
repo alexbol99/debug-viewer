@@ -15,7 +15,7 @@ function zoomHome(shape, stage) {
 
 const demo = ({ dispatch, getState }) => next => action => {
 
-    if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+    if (action.type === ActionTypes.NEW_STAGE_CREATED || action.type === ActionTypes.WINDOW_HASH_CHANGED) {
         if (document.location.href.split('#')[1] === 'demo') {
             // console.log(document.location.pathname);
             // console.log(getState());

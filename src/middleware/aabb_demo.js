@@ -7,7 +7,7 @@ import * as ActionTypes from '../actions/action-types';
 
 const aabb_demo = ({ dispatch, getState }) => next => action => {
 
-    if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+    if (action.type === ActionTypes.NEW_STAGE_CREATED || action.type === ActionTypes.WINDOW_HASH_CHANGED) {
         if (document.location.href.split('#')[1] === 'aabb_demo') {
             dispatch({
                 type: ActionTypes.AABB_DEMO_URI

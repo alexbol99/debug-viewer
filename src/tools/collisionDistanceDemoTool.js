@@ -47,17 +47,25 @@ export class CollisionDistanceDemoTool extends Component {
         }
         this.shape.alpha = alpha;  // this.props.displayed ? alpha : 0.0;
     }
+    clean() {
+        if (this.shape) {
+            this.shape.graphics.clear();
+        }
+    }
 
     componentDidMount() {
-        if ( (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed) ||
+        if ( (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed) &&
             (this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) ) {
             this.draw();
         }
     }
     componentDidUpdate() {
-        if ( (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed) ||
+        if ( (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed) &&
             (this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) ) {
             this.draw();
+        }
+        else {
+            this.clean();
         }
     }
 

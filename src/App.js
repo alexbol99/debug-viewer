@@ -17,12 +17,20 @@ export class App extends Component {
             this.setState(this.props.store.getState());
         });
         this.handlePaste = this.handlePaste.bind(this);
+        this.handleHashChange = this.handleHashChange.bind(this);
     }
 
     handlePaste(event) {
         this.props.store.dispatch({
             type: ActionTypes.DATA_FROM_BUFFER_PASTED,
             data: event.clipboardData
+        });
+    }
+
+    handleHashChange(event) {
+        this.props.store.dispatch({
+            type: ActionTypes.WINDOW_HASH_CHANGED,
+            stage: this.state.stage
         });
     }
 
@@ -33,6 +41,10 @@ export class App extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState(nextProps.store.getState());
+    }
+
+    componentDidMount() {
+        window.onhashchange = this.handleHashChange;
     }
 
     render() {
