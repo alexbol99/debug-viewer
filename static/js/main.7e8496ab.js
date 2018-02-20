@@ -92,79 +92,6 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Created by alexanderbol on 13/04/2017.
-	 */
-	// export const MAIN_CANVAS_MOUNTED = "MAIN_CANVAS_MOUNTED";
-	var NEW_STAGE_CREATED = exports.NEW_STAGE_CREATED = "NEW_STAGE_CREATED";
-	var STAGE_RESIZED = exports.STAGE_RESIZED = "STAGE_RESIZED";
-	
-	var NEW_SHAPE_PASTED = exports.NEW_SHAPE_PASTED = "NEW_SHAPE_PASTED";
-	
-	var TOGGLE_UNITS_CLICKED = exports.TOGGLE_UNITS_CLICKED = "TOGGLE_UNITS_CLICKED";
-	var TOGGLE_WIDTH_MODE_CLICKED = exports.TOGGLE_WIDTH_MODE_CLICKED = "TOGGLE_WIDTH_MODE_CLICKED";
-	var TOGGLE_DISPLAY_VERTICES_CLICKED = exports.TOGGLE_DISPLAY_VERTICES_CLICKED = "TOGGLE_DISPLAY_VERTICES_CLICKED";
-	var TOGGLE_DISPLAY_LABELS_CLICKED = exports.TOGGLE_DISPLAY_LABELS_CLICKED = "TOGGLE_DISPLAY_LABELS_CLICKED";
-	
-	var MOUSE_MOVED_ON_STAGE = exports.MOUSE_MOVED_ON_STAGE = "MOUSE_MOVED_ON_STAGE";
-	var MOUSE_DOWN_ON_STAGE = exports.MOUSE_DOWN_ON_STAGE = "MOUSE_DOWN_ON_STAGE";
-	var MOUSE_UP_ON_STAGE = exports.MOUSE_UP_ON_STAGE = "MOUSE_UP_ON_STAGE";
-	var MOUSE_WHEEL_MOVE_ON_STAGE = exports.MOUSE_WHEEL_MOVE_ON_STAGE = "MOUSE_WHEEL_MOVE_ON_STAGE";
-	
-	var MOUSE_ROLL_OVER_SHAPE = exports.MOUSE_ROLL_OVER_SHAPE = "MOUSE_ROLL_OVER_SHAPE";
-	var MOUSE_ROLL_OUT_SHAPE = exports.MOUSE_ROLL_OUT_SHAPE = "MOUSE_ROLL_OUT_SHAPE";
-	var MOUSE_CLICKED_ON_SHAPE = exports.MOUSE_CLICKED_ON_SHAPE = "MOUSE_CLICKED_ON_SHAPE";
-	
-	// export const HOME_BUTTON_CLICKED = "HOME_BUTTON_CLICKED";
-	var PAN_TO_COORDINATE = exports.PAN_TO_COORDINATE = "PAN_TO_COORDINATE";
-	var PAN_AND_ZOOM_TO_SHAPE = exports.PAN_AND_ZOOM_TO_SHAPE = "PAN_AND_ZOOM_TO_SHAPE";
-	
-	var LAYER_LIST_PANEL_PRESSED = exports.LAYER_LIST_PANEL_PRESSED = "LAYER_LIST_PANEL_PRESSED";
-	var ADD_LAYER_PRESSED = exports.ADD_LAYER_PRESSED = "ADD_LAYER_PRESSED";
-	var DELETE_LAYER_BUTTON_PRESSED = exports.DELETE_LAYER_BUTTON_PRESSED = "DELETE_LAYER_BUTTON_PRESSED";
-	var SORT_LAYERS_BUTTON_PRESSED = exports.SORT_LAYERS_BUTTON_PRESSED = "SORT_LAYERS_BUTTON_PRESSED";
-	
-	var TOGGLE_DISPLAY_LAYER_PRESSED = exports.TOGGLE_DISPLAY_LAYER_PRESSED = "TOGGLE_DISPLAY_LAYER_PRESSED";
-	var TOGGLE_AFFECTED_LAYER_PRESSED = exports.TOGGLE_AFFECTED_LAYER_PRESSED = "TOGGLE_AFFECTED_LAYER_PRESSED";
-	var OPEN_LAYER_EDIT_FORM_PRESSED = exports.OPEN_LAYER_EDIT_FORM_PRESSED = "OPEN_LAYER_EDIT_FORM_PRESSED";
-	var SUBMIT_LAYER_EDIT_FORM_PRESSED = exports.SUBMIT_LAYER_EDIT_FORM_PRESSED = "SUBMIT_LAYER_EDIT_FORM_PRESSED";
-	var ESCAPE_LAYER_EDIT_FORM_PRESSED = exports.ESCAPE_LAYER_EDIT_FORM_PRESSED = "ESCAPE_LAYER_EDIT_FORM_PRESSED";
-	
-	var LAYERS_LIST_ARROW_DOWN_PRESSED = exports.LAYERS_LIST_ARROW_DOWN_PRESSED = "LAYERS_LIST_ARROW_DOWN_PRESSED";
-	var LAYERS_LIST_ARROW_UP_PRESSED = exports.LAYERS_LIST_ARROW_UP_PRESSED = "LAYERS_LIST_ARROW_UP_PRESSED";
-	
-	var TOGGLE_WATCH_EXPAND_CLICKED = exports.TOGGLE_WATCH_EXPAND_CLICKED = "TOGGLE_WATCH_EXPAND_CLICKED";
-	
-	var FILENAME_LIST_SELECTED = exports.FILENAME_LIST_SELECTED = "FILENAME_LIST_SELECTED";
-	var INPUT_FILE_LOADED = exports.INPUT_FILE_LOADED = "INPUT_FILE_LOADED";
-	var DATA_FROM_BUFFER_PASTED = exports.DATA_FROM_BUFFER_PASTED = "DATA_FROM_BUFFER_PASTED";
-	
-	/** Toolbar buttons **/
-	var PAN_BY_DRAG_BUTTON_CLICKED = exports.PAN_BY_DRAG_BUTTON_CLICKED = "PAN_BY_DRAG_BUTTON_CLICKED";
-	var MEASURE_POINTS_BUTTON_PRESSED = exports.MEASURE_POINTS_BUTTON_PRESSED = "MEASURE_POINTS_BUTTON_PRESSED";
-	var MEASURE_SHAPES_BUTTON_PRESSED = exports.MEASURE_SHAPES_BUTTON_PRESSED = "MEASURE_SHAPES_BUTTON_PRESSED";
-	var SHOW_ABOUT_POPUP_BUTTON_PRESSED = exports.SHOW_ABOUT_POPUP_BUTTON_PRESSED = "SHOW_ABOUT_POPUP_BUTTON_PRESSED";
-	
-	var CLOSE_ABOUT_POPUP_BUTTON_PRESSED = exports.CLOSE_ABOUT_POPUP_BUTTON_PRESSED = "CLOSE_ABOUT_POPUP_BUTTON_PRESSED";
-	
-	/** AABB Distance Measurement Demo **/
-	var AABB_DEMO_URI = exports.AABB_DEMO_URI = "AABB_DEMO_URI";
-	var AABB_DEMO_NEXT_DIST_STEP = exports.AABB_DEMO_NEXT_DIST_STEP = "AABB_DEMO_NEXT_DIST_STEP";
-	var AABB_TREE_NEXT_LEVEL = exports.AABB_TREE_NEXT_LEVEL = "AABB_TREE_NEXT_LEVEL";
-	
-	/** Collision demo **/
-	var COLLISION_DEMO_URI = exports.COLLISION_DEMO_URI = "COLLISION_DEMO_URI";
-	var COLLISION_DEMO_BUTTON_PRESSED = exports.COLLISION_DEMO_BUTTON_PRESSED = "COLLISION_DEMO_BUTTON_PRESSED";
-
-/***/ },
-/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -224,6 +151,80 @@
 	
 	module.exports = f;
 
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by alexanderbol on 13/04/2017.
+	 */
+	// export const MAIN_CANVAS_MOUNTED = "MAIN_CANVAS_MOUNTED";
+	var NEW_STAGE_CREATED = exports.NEW_STAGE_CREATED = "NEW_STAGE_CREATED";
+	var STAGE_RESIZED = exports.STAGE_RESIZED = "STAGE_RESIZED";
+	var WINDOW_HASH_CHANGED = exports.WINDOW_HASH_CHANGED = "WINDOW_HASH_CHANGED";
+	
+	var NEW_SHAPE_PASTED = exports.NEW_SHAPE_PASTED = "NEW_SHAPE_PASTED";
+	
+	var TOGGLE_UNITS_CLICKED = exports.TOGGLE_UNITS_CLICKED = "TOGGLE_UNITS_CLICKED";
+	var TOGGLE_WIDTH_MODE_CLICKED = exports.TOGGLE_WIDTH_MODE_CLICKED = "TOGGLE_WIDTH_MODE_CLICKED";
+	var TOGGLE_DISPLAY_VERTICES_CLICKED = exports.TOGGLE_DISPLAY_VERTICES_CLICKED = "TOGGLE_DISPLAY_VERTICES_CLICKED";
+	var TOGGLE_DISPLAY_LABELS_CLICKED = exports.TOGGLE_DISPLAY_LABELS_CLICKED = "TOGGLE_DISPLAY_LABELS_CLICKED";
+	
+	var MOUSE_MOVED_ON_STAGE = exports.MOUSE_MOVED_ON_STAGE = "MOUSE_MOVED_ON_STAGE";
+	var MOUSE_DOWN_ON_STAGE = exports.MOUSE_DOWN_ON_STAGE = "MOUSE_DOWN_ON_STAGE";
+	var MOUSE_UP_ON_STAGE = exports.MOUSE_UP_ON_STAGE = "MOUSE_UP_ON_STAGE";
+	var MOUSE_WHEEL_MOVE_ON_STAGE = exports.MOUSE_WHEEL_MOVE_ON_STAGE = "MOUSE_WHEEL_MOVE_ON_STAGE";
+	
+	var MOUSE_ROLL_OVER_SHAPE = exports.MOUSE_ROLL_OVER_SHAPE = "MOUSE_ROLL_OVER_SHAPE";
+	var MOUSE_ROLL_OUT_SHAPE = exports.MOUSE_ROLL_OUT_SHAPE = "MOUSE_ROLL_OUT_SHAPE";
+	var MOUSE_CLICKED_ON_SHAPE = exports.MOUSE_CLICKED_ON_SHAPE = "MOUSE_CLICKED_ON_SHAPE";
+	
+	// export const HOME_BUTTON_CLICKED = "HOME_BUTTON_CLICKED";
+	var PAN_TO_COORDINATE = exports.PAN_TO_COORDINATE = "PAN_TO_COORDINATE";
+	var PAN_AND_ZOOM_TO_SHAPE = exports.PAN_AND_ZOOM_TO_SHAPE = "PAN_AND_ZOOM_TO_SHAPE";
+	
+	var LAYER_LIST_PANEL_PRESSED = exports.LAYER_LIST_PANEL_PRESSED = "LAYER_LIST_PANEL_PRESSED";
+	var ADD_LAYER_PRESSED = exports.ADD_LAYER_PRESSED = "ADD_LAYER_PRESSED";
+	var DELETE_LAYER_BUTTON_PRESSED = exports.DELETE_LAYER_BUTTON_PRESSED = "DELETE_LAYER_BUTTON_PRESSED";
+	var SORT_LAYERS_BUTTON_PRESSED = exports.SORT_LAYERS_BUTTON_PRESSED = "SORT_LAYERS_BUTTON_PRESSED";
+	
+	var TOGGLE_DISPLAY_LAYER_PRESSED = exports.TOGGLE_DISPLAY_LAYER_PRESSED = "TOGGLE_DISPLAY_LAYER_PRESSED";
+	var TOGGLE_AFFECTED_LAYER_PRESSED = exports.TOGGLE_AFFECTED_LAYER_PRESSED = "TOGGLE_AFFECTED_LAYER_PRESSED";
+	var OPEN_LAYER_EDIT_FORM_PRESSED = exports.OPEN_LAYER_EDIT_FORM_PRESSED = "OPEN_LAYER_EDIT_FORM_PRESSED";
+	var SUBMIT_LAYER_EDIT_FORM_PRESSED = exports.SUBMIT_LAYER_EDIT_FORM_PRESSED = "SUBMIT_LAYER_EDIT_FORM_PRESSED";
+	var ESCAPE_LAYER_EDIT_FORM_PRESSED = exports.ESCAPE_LAYER_EDIT_FORM_PRESSED = "ESCAPE_LAYER_EDIT_FORM_PRESSED";
+	
+	var LAYERS_LIST_ARROW_DOWN_PRESSED = exports.LAYERS_LIST_ARROW_DOWN_PRESSED = "LAYERS_LIST_ARROW_DOWN_PRESSED";
+	var LAYERS_LIST_ARROW_UP_PRESSED = exports.LAYERS_LIST_ARROW_UP_PRESSED = "LAYERS_LIST_ARROW_UP_PRESSED";
+	
+	var TOGGLE_WATCH_EXPAND_CLICKED = exports.TOGGLE_WATCH_EXPAND_CLICKED = "TOGGLE_WATCH_EXPAND_CLICKED";
+	
+	var FILENAME_LIST_SELECTED = exports.FILENAME_LIST_SELECTED = "FILENAME_LIST_SELECTED";
+	var INPUT_FILE_LOADED = exports.INPUT_FILE_LOADED = "INPUT_FILE_LOADED";
+	var DATA_FROM_BUFFER_PASTED = exports.DATA_FROM_BUFFER_PASTED = "DATA_FROM_BUFFER_PASTED";
+	
+	/** Toolbar buttons **/
+	var PAN_BY_DRAG_BUTTON_CLICKED = exports.PAN_BY_DRAG_BUTTON_CLICKED = "PAN_BY_DRAG_BUTTON_CLICKED";
+	var MEASURE_POINTS_BUTTON_PRESSED = exports.MEASURE_POINTS_BUTTON_PRESSED = "MEASURE_POINTS_BUTTON_PRESSED";
+	var MEASURE_SHAPES_BUTTON_PRESSED = exports.MEASURE_SHAPES_BUTTON_PRESSED = "MEASURE_SHAPES_BUTTON_PRESSED";
+	var SHOW_ABOUT_POPUP_BUTTON_PRESSED = exports.SHOW_ABOUT_POPUP_BUTTON_PRESSED = "SHOW_ABOUT_POPUP_BUTTON_PRESSED";
+	
+	var CLOSE_ABOUT_POPUP_BUTTON_PRESSED = exports.CLOSE_ABOUT_POPUP_BUTTON_PRESSED = "CLOSE_ABOUT_POPUP_BUTTON_PRESSED";
+	
+	/** AABB Distance Measurement Demo **/
+	var AABB_DEMO_URI = exports.AABB_DEMO_URI = "AABB_DEMO_URI";
+	var AABB_DEMO_NEXT_DIST_STEP = exports.AABB_DEMO_NEXT_DIST_STEP = "AABB_DEMO_NEXT_DIST_STEP";
+	var AABB_TREE_NEXT_LEVEL = exports.AABB_TREE_NEXT_LEVEL = "AABB_TREE_NEXT_LEVEL";
+	
+	/** Collision demo **/
+	var COLLISION_DEMO_URI = exports.COLLISION_DEMO_URI = "COLLISION_DEMO_URI";
+	var COLLISION_DEMO_BUTTON_PRESSED = exports.COLLISION_DEMO_BUTTON_PRESSED = "COLLISION_DEMO_BUTTON_PRESSED";
 
 /***/ },
 /* 5 */
@@ -17008,7 +17009,7 @@
 	});
 	exports.graphics = graphics;
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -18160,7 +18161,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -18280,7 +18281,7 @@
 	
 	var _job = __webpack_require__(15);
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -19368,7 +19369,7 @@
 
 	"use strict";
 	
-	let Flatten = __webpack_require__(4);
+	let Flatten = __webpack_require__(3);
 	let {Point, Vector, Segment, Arc, Line, Box, Polygon} = Flatten;
 	
 	module.exports = class CollisionDistance {
@@ -19827,7 +19828,7 @@
 	
 	var _asideComponent = __webpack_require__(31);
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -19856,6 +19857,7 @@
 	            _this.setState(_this.props.store.getState());
 	        });
 	        _this.handlePaste = _this.handlePaste.bind(_this);
+	        _this.handleHashChange = _this.handleHashChange.bind(_this);
 	        return _this;
 	    }
 	
@@ -19868,6 +19870,14 @@
 	            });
 	        }
 	    }, {
+	        key: 'handleHashChange',
+	        value: function handleHashChange(event) {
+	            this.props.store.dispatch({
+	                type: ActionTypes.WINDOW_HASH_CHANGED,
+	                stage: this.state.stage
+	            });
+	        }
+	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            // this.dispatch = this.props.store.dispatch;
@@ -19877,6 +19887,11 @@
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
 	            this.setState(nextProps.store.getState());
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            window.onhashchange = this.handleHashChange;
 	        }
 	    }, {
 	        key: 'render',
@@ -19937,7 +19952,7 @@
 	
 	__webpack_require__(2);
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -20791,7 +20806,7 @@
 	
 	var _layerListElement = __webpack_require__(36);
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -21075,7 +21090,7 @@
 	
 	var _stageComponent = __webpack_require__(41);
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22280,7 +22295,7 @@
 	            _react2.default.createElement(
 	                'h4',
 	                null,
-	                'Build 0f24db95 09/01/2018'
+	                'Build 04186c88 20/02/2018'
 	            ),
 	            _react2.default.createElement(
 	                'button',
@@ -22457,7 +22472,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22475,7 +22490,7 @@
 	    return function (next) {
 	        return function (action) {
 	
-	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+	            if (action.type === ActionTypes.NEW_STAGE_CREATED || action.type === ActionTypes.WINDOW_HASH_CHANGED) {
 	                if (document.location.href.split('#')[1] === 'aabb_demo') {
 	                    dispatch({
 	                        type: ActionTypes.AABB_DEMO_URI
@@ -22499,17 +22514,100 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
+	var _layers = __webpack_require__(5);
+	
+	var _flattenJs = __webpack_require__(3);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	// import { parseXML } from "../models/parserXML";
-	// import { Layers } from '../models/layers';
+	var Segment = _flattenJs2.default.Segment,
+	    Arc = _flattenJs2.default.Arc,
+	    Vector = _flattenJs2.default.Vector,
+	    Polygon = _flattenJs2.default.Polygon;
 	// import { Model } from "../models/model";
+	// import file1 from '../../public/Block_53388_2parts_Cont.txt';
+	// import {parseODB} from "../models/parserODB";
 	
-	// let {point, arc, segment, circle, Polygon} = Flatten;
+	var filename = "Block_53388_2parts_Cont.txt";
+	// let filename = "polygon.txt";
+	
+	function zoomHome(shape, stage) {
+	    var box = shape.box;
+	    var x = (box.xmin + box.xmax) / 2;
+	    var y = (box.ymin + box.ymax) / 2;
+	    stage.panToCoordinate(x, y);
+	    stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
+	}
+	
+	function translate(polygon, vec) {
+	    var newPolygon = new Polygon();
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+	
+	    try {
+	        for (var _iterator = polygon.faces[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	            var face = _step.value;
+	
+	            var shapes = [];
+	            var _iteratorNormalCompletion2 = true;
+	            var _didIteratorError2 = false;
+	            var _iteratorError2 = undefined;
+	
+	            try {
+	                for (var _iterator2 = face[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var edge = _step2.value;
+	
+	                    if (edge.shape instanceof Segment) {
+	                        shapes.push(new Segment(edge.shape.ps.translate(vec), edge.shape.pe.translate(vec)));
+	                    } else if (edge.shape instanceof Arc) {
+	                        var arc_trans = edge.shape.clone();
+	                        arc_trans.pc = edge.shape.pc.translate(vec);
+	                        shapes.push(arc_trans);
+	                    }
+	                }
+	            } catch (err) {
+	                _didIteratorError2 = true;
+	                _iteratorError2 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	                        _iterator2.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError2) {
+	                        throw _iteratorError2;
+	                    }
+	                }
+	            }
+	
+	            newPolygon.addFace(shapes);
+	        }
+	    } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	            }
+	        } finally {
+	            if (_didIteratorError) {
+	                throw _iteratorError;
+	            }
+	        }
+	    }
+	
+	    return newPolygon;
+	}
 	
 	var collision_demo = function collision_demo(_ref) {
 	    var dispatch = _ref.dispatch,
@@ -22517,11 +22615,51 @@
 	    return function (next) {
 	        return function (action) {
 	
-	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+	            if (action.type === ActionTypes.NEW_STAGE_CREATED || action.type === ActionTypes.WINDOW_HASH_CHANGED) {
 	                if (document.location.href.split('#')[1] === 'collision_demo') {
-	                    dispatch({
-	                        type: ActionTypes.COLLISION_DEMO_URI
-	                    });
+	                    // let str = file1;
+	                    // let text = atob(str.split(',')[1]);
+	
+	                    var stage = action.stage;
+	                    var state = getState();
+	
+	                    var xhr = new XMLHttpRequest();
+	                    var url = ("/debug-viewer") + '/' + filename;
+	                    // let url = "./public/" + filename;
+	                    xhr.open('GET', url, true);
+	                    xhr.onreadystatechange = function (event) {
+	                        if (this.readyState === 4 && this.status === 200) {
+	                            var text = this.responseText;
+	
+	                            var layers = state.layers;
+	                            var layer = _layers.Layers.newLayer(stage, layers);
+	                            layer.name = "collision_demo";
+	                            layer.title = "collision_demo";
+	
+	                            var parser = state.app.parser;
+	                            var polygon = parser.parseToPolygon(text);
+	                            layer.add(polygon);
+	
+	                            var vec = new Vector(2 * (polygon.box.xmax - polygon.box.xmin), 0);
+	                            // let vec = new Vector(500000, 0);
+	                            var trPolygon = translate(polygon, vec);
+	                            layer.add(trPolygon);
+	
+	                            zoomHome(layer, stage);
+	                            state.layers.push(layer);
+	
+	                            dispatch({
+	                                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                                stage: stage,
+	                                shape: layer
+	                            });
+	
+	                            dispatch({
+	                                type: ActionTypes.COLLISION_DEMO_URI
+	                            });
+	                        }
+	                    };
+	                    xhr.send();
 	                }
 	            }
 	            return next(action);
@@ -22541,7 +22679,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22569,7 +22707,7 @@
 	    return function (next) {
 	        return function (action) {
 	
-	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+	            if (action.type === ActionTypes.NEW_STAGE_CREATED || action.type === ActionTypes.WINDOW_HASH_CHANGED) {
 	                if (document.location.href.split('#')[1] === 'demo') {
 	                    // console.log(document.location.pathname);
 	                    // console.log(getState());
@@ -22645,7 +22783,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22678,7 +22816,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22802,7 +22940,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -23044,7 +23182,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -23121,7 +23259,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 17/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -23351,7 +23489,7 @@
 	// import { Shape } from '../models/shape';
 	
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -23572,7 +23710,7 @@
 	});
 	exports.parseImage = parseImage;
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -23622,7 +23760,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 01/05/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -23927,7 +24065,7 @@
 	
 	var _job = __webpack_require__(15);
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -24241,7 +24379,7 @@
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -24481,13 +24619,13 @@
 	
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 	
-	var _actionTypes = __webpack_require__(3);
+	var _actionTypes = __webpack_require__(4);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
 	var _redux = __webpack_require__(26);
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -25421,7 +25559,7 @@
 	
 	var _collision_distance2 = _interopRequireDefault(_collision_distance);
 	
-	var _flattenJs = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(3);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -25488,17 +25626,26 @@
 	            this.shape.alpha = alpha; // this.props.displayed ? alpha : 0.0;
 	        }
 	    }, {
+	        key: 'clean',
+	        value: function clean() {
+	            if (this.shape) {
+	                this.shape.graphics.clear();
+	            }
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            if (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed || this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) {
+	            if (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed && this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) {
 	                this.draw();
 	            }
 	        }
 	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
-	            if (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed || this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) {
+	            if (this.props.firstMeasuredShape && this.props.firstMeasuredLayer.displayed && this.props.secondMeasuredShape && this.props.secondMeasuredLayer.displayed) {
 	                this.draw();
+	            } else {
+	                this.clean();
 	            }
 	        }
 	    }, {
@@ -32058,4 +32205,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.04186c88.js.map
+//# sourceMappingURL=main.7e8496ab.js.map
