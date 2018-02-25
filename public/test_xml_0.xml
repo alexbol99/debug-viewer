@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shapes>
     <title>
-        hello 0001 world 3.142
+        hello 0001 world 6.28 blabla
     </title>
     <profile>
         <island n_edges="655">
@@ -662,32 +662,20 @@
             <edge type="segment" xs="3459400" ys="11464400" xe="3459400" ye="12794400"/>
         </island>
     </profile>
-    <material color="#009A0C">
+    <profile color="#009A0C">
         <island n_edges="4">
-            <edge type="segment" xs="7259400" ys="11569400" xe="6459400" ye="11569400"/>
-            <edge type="segment" xs="6459400" ys="11569400" xe="6459400" ye="12689400"/>
-            <edge type="segment" xs="6459400" ys="12689400" xe="7259400" ye="12689400"/>
-            <edge type="segment" xs="7259400" ys="12689400" xe="7259400" ye="11569400"/>
+            <edge type="segment" xs="23259400" ys="12569400" xe="22459400" ye="12569400"/>
+            <edge type="segment" xs="22459400" ys="12569400" xe="22459400" ye="13689400"/>
+            <edge type="segment" xs="22459400" ys="13689400" xe="23259400" ye="13689400"/>
+            <edge type="segment" xs="23259400" ys="13689400" xe="23259400" ye="12569400"/>
         </island>
+    </profile>
+    <profile color="#009A0C">
         <island n_edges="4">
-            <edge type="segment" xs="11982440" ys="16518480" xe="11982440" ye="17718480"/>
-            <edge type="segment" xs="11982440" ys="17718480" xe="12782440" ye="17718480"/>
-            <edge type="segment" xs="12782440" ys="17718480" xe="12782440" ye="16518480"/>
-            <edge type="segment" xs="12782440" ys="16518480" xe="11982440" ye="16518480"/>
+            <edge type="segment" xs="8259400" ys="20569400" xe="7459400" ye="20569400"/>
+            <edge type="segment" xs="7459400" ys="20569400" xe="7459400" ye="21689400"/>
+            <edge type="segment" xs="7459400" ys="21689400" xe="8259400" ye="21689400"/>
+            <edge type="segment" xs="8259400" ys="21689400" xe="8259400" ye="20569400"/>
         </island>
-        <island n_edges="12">
-            <edge type="segment" xs="18905653" ys="7407980" xe="18912460" ye="7413994"/>
-            <edge type="curve" xs="18912460" ys="7413994" xe="18930240" ye="7511280" xc="18859481" yc="7473944" cw="no"/>
-            <edge type="curve" xs="18930240" ys="7511280" xe="18954972" ye="7614056" xc="19001000" yc="7548616" cw="yes"/>
-            <edge type="segment" xs="18954972" ys="7614056" xe="20189852" ye="8478743"/>
-            <edge type="curve" xs="20189852" ys="8478743" xe="20301141" ye="8459028" xc="20235625" yc="8413160" cw="yes"/>
-            <edge type="segment" xs="20301141" ys="8459028" xe="20714160" ye="7869240"/>
-            <edge type="curve" xs="20714160" ys="7869240" xe="20694520" ye="7757800" xc="20648640" yc="7823336" cw="yes"/>
-            <edge type="segment" xs="20694520" ys="7757800" xe="19459768" ye="6893229"/>
-            <edge type="curve" xs="19459768" ys="6893229" xe="19354585" ye="6905225" xc="19413975" yc="6958840" cw="yes"/>
-            <edge type="curve" xs="19354585" ys="6905225" xe="19257215" ye="6921685" xc="19295410" yc="6851400" cw="no"/>
-            <edge type="segment" xs="19257215" ys="6921685" xe="19249225" ye="6917341"/>
-            <edge type="segment" xs="19249225" ys="6917341" xe="18905653" ye="7407980"/>
-        </island>
-    </material>
+    </profile>
 </shapes>
