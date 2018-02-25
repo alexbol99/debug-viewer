@@ -19498,7 +19498,7 @@
 	        }
 	
 	        // test translation of arc2.center to arc1 reduced by r2
-	        if (Flatten.Utils.GT(arc1.r > arc2.r)) {
+	        if (Flatten.Utils.GE(arc1.r, arc2.r)) {
 	            let arc_reduced = arc1.clone();
 	            arc_reduced.r -= arc2.r;
 	            distance = CollisionDistance.point2shape(arc2.center, arc_reduced);
@@ -19513,7 +19513,7 @@
 	        }
 	
 	        // test translation of arc1.center to arc2 reduced by r1
-	        if (Flatten.Utils.GT(arc1.r < arc2.r)) {
+	        if (Flatten.Utils.LT(arc1.r, arc2.r)) {
 	            let arc_reduced = arc2.clone();
 	            arc_reduced.r -= arc1.r;
 	            distance = CollisionDistance.point2shape(arc1.center, arc_reduced);
@@ -19544,7 +19544,7 @@
 	
 	    static translateArc(arc, vec) {
 	        let arc_tmp = arc.clone();
-	        arc_tmp.pc.translate(vec);
+	        arc_tmp.pc = arc_tmp.pc.translate(vec);
 	        return arc_tmp;
 	    }
 	
@@ -32205,4 +32205,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.7e8496ab.js.map
+//# sourceMappingURL=main.362de89c.js.map
