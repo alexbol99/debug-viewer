@@ -83,6 +83,27 @@ function parseSegment(segmentXML) {
     return segment;
 }
 
+function parseCurve(curveXML) {
+    let ps = new Point(parseInt(curveXML.getAttribute('xs'),10), parseInt(curveXML.getAttribute('ys'),10));
+    let pe = new Point(parseInt(curveXML.getAttribute('xe'),10), parseInt(curveXML.getAttribute('ye'),10));
+    let pc = new Point(parseInt(curveXML.getAttribute('xc'),10), parseInt(curveXML.getAttribute('yc'),10));
+
+    let counterClockwise = curveXML.getAttribute('cw') === 'yes' ? true : false;
+
+    let startAngle = vector(pc,ps).slope;
+    let endAngle = vector(pc, pe).slope;
+
+    let r = vector(pc, ps).length;
+
+    let arc = new Arc(pc, r, startAngle, endAngle, counterClockwise);
+
+    // Augment Flatten object with label property
+    let label = curveXML.getAttribute("label");
+    arc.label = label;
+
+    return arc;
+}
+
 function parsePoint(pointXML) {
     let point = new Point(parseInt(pointXML.getAttribute('x'),10), parseInt(pointXML.getAttribute('y'),10));
 
@@ -125,6 +146,13 @@ export function parseXML(filename, str) {
     for (let segmentXML of segmentsXML) {
         let segment = parseSegment(segmentXML);
         job.shapes.push(segment);
+    }
+
+    // Parse segments
+    let curvesXML = xmlDoc.getElementsByTagName('curve');
+    for (let curveXML of curvesXML) {
+        let curve = parseCurve(curveXML);
+        job.shapes.push(curve);
     }
 
     // Parse points

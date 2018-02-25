@@ -31,7 +31,7 @@ export class CollisionDistanceDemoTool extends Component {
         if (this.shape.graphics.isEmpty()) {
             let collision = CollisionDistance.apply(polygon1, polygon2);
             let polygon3 = CollisionDistance.translate(polygon2, vector(-collision,0));
-            let [distance, shortest_segment] = polygon1.distanceTo(polygon3);
+            // let [distance, shortest_segment] = polygon1.distanceTo(polygon3);
 
             this.shape.graphics = graphics(polygon3,{
                 strokeStyle: strokeStyle,

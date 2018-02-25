@@ -25,7 +25,7 @@ export const AboutPopup = (props) => {
                  draggable="true"
             >
                 <h2>{props.title} v{props.version}</h2>
-                <h4>Build 04186c88 20/02/2018</h4>
+                <h4>Build 362de89c 25/02/2018</h4>
                 <button onClick={onCloseButtonPressed}>Close</button>
             </div>
         </div>

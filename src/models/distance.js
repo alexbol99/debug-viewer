@@ -66,7 +66,7 @@ export class Distance {
         // Merge left and right subtrees and leave only relevant subtrees
         let new_level = [...new_level_left, ...new_level_right].filter(node => {
             // Node subtree quick reject, node.max is a subtree box
-            let [mindist, maxdist] = Distance.box2box_minmax(shape.box, node.max);
+            let mindist = Distance.box2box_minmax(shape.box, node.max)[0];
             return (Flatten.Utils.LE(mindist, min_stop));
         });
 
@@ -84,7 +84,7 @@ export class Distance {
         let tree = new Flatten.IntervalTree();
         let level = [set.index.root];
         let squared_min_stop = min_stop < Number.POSITIVE_INFINITY ? min_stop * min_stop : Number.POSITIVE_INFINITY;
-        squared_min_stop = Distance.minmax_tree_process_level(shape, level, squared_min_stop, tree);
+        Distance.minmax_tree_process_level(shape, level, squared_min_stop, tree);
         return tree;
     }
 
