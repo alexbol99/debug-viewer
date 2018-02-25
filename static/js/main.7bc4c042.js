@@ -23326,12 +23326,12 @@
 	
 	                    // Estimate min-max dist to the shape stored in the node.item, using node.item.key which is shape's box
 	
-	                    var _Distance$box2box_min3 = Distance.box2box_minmax(shape.box, node.item.key);
+	                    var _Distance$box2box_min = Distance.box2box_minmax(shape.box, node.item.key);
 	
-	                    var _Distance$box2box_min4 = _slicedToArray(_Distance$box2box_min3, 2);
+	                    var _Distance$box2box_min2 = _slicedToArray(_Distance$box2box_min, 2);
 	
-	                    mindist = _Distance$box2box_min4[0];
-	                    maxdist = _Distance$box2box_min4[1];
+	                    mindist = _Distance$box2box_min2[0];
+	                    maxdist = _Distance$box2box_min2[1];
 	
 	                    if (node.item.value instanceof _flattenJs2.default.Edge) {
 	                        tree.insert([mindist, maxdist], node.item.value.shape);
@@ -23373,11 +23373,7 @@
 	            // Merge left and right subtrees and leave only relevant subtrees
 	            var new_level = [].concat(_toConsumableArray(new_level_left), _toConsumableArray(new_level_right)).filter(function (node) {
 	                // Node subtree quick reject, node.max is a subtree box
-	                var _Distance$box2box_min = Distance.box2box_minmax(shape.box, node.max),
-	                    _Distance$box2box_min2 = _slicedToArray(_Distance$box2box_min, 2),
-	                    mindist = _Distance$box2box_min2[0],
-	                    maxdist = _Distance$box2box_min2[1];
-	
+	                var mindist = Distance.box2box_minmax(shape.box, node.max)[0];
 	                return _flattenJs2.default.Utils.LE(mindist, min_stop);
 	            });
 	
@@ -23398,7 +23394,7 @@
 	            var tree = new _flattenJs2.default.IntervalTree();
 	            var level = [set.index.root];
 	            var squared_min_stop = min_stop < Number.POSITIVE_INFINITY ? min_stop * min_stop : Number.POSITIVE_INFINITY;
-	            squared_min_stop = Distance.minmax_tree_process_level(shape, level, squared_min_stop, tree);
+	            Distance.minmax_tree_process_level(shape, level, squared_min_stop, tree);
 	            return tree;
 	        }
 	    }, {
@@ -24221,6 +24217,27 @@
 	    return segment;
 	}
 	
+	function parseCurve(curveXML) {
+	    var ps = new Point(parseInt(curveXML.getAttribute('xs'), 10), parseInt(curveXML.getAttribute('ys'), 10));
+	    var pe = new Point(parseInt(curveXML.getAttribute('xe'), 10), parseInt(curveXML.getAttribute('ye'), 10));
+	    var pc = new Point(parseInt(curveXML.getAttribute('xc'), 10), parseInt(curveXML.getAttribute('yc'), 10));
+	
+	    var counterClockwise = curveXML.getAttribute('cw') === 'yes' ? true : false;
+	
+	    var startAngle = vector(pc, ps).slope;
+	    var endAngle = vector(pc, pe).slope;
+	
+	    var r = vector(pc, ps).length;
+	
+	    var arc = new Arc(pc, r, startAngle, endAngle, counterClockwise);
+	
+	    // Augment Flatten object with label property
+	    var label = curveXML.getAttribute("label");
+	    arc.label = label;
+	
+	    return arc;
+	}
+	
 	function parsePoint(pointXML) {
 	    var point = new Point(parseInt(pointXML.getAttribute('x'), 10), parseInt(pointXML.getAttribute('y'), 10));
 	
@@ -24316,7 +24333,7 @@
 	            job.shapes.push(segment);
 	        }
 	
-	        // Parse points
+	        // Parse segments
 	    } catch (err) {
 	        _didIteratorError6 = true;
 	        _iteratorError6 = err;
@@ -24332,18 +24349,20 @@
 	        }
 	    }
 	
-	    var pointsXML = xmlDoc.getElementsByTagName('point');
+	    var curvesXML = xmlDoc.getElementsByTagName('curve');
 	    var _iteratorNormalCompletion7 = true;
 	    var _didIteratorError7 = false;
 	    var _iteratorError7 = undefined;
 	
 	    try {
-	        for (var _iterator7 = pointsXML[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-	            var pointXML = _step7.value;
+	        for (var _iterator7 = curvesXML[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+	            var curveXML = _step7.value;
 	
-	            var point = parsePoint(pointXML);
-	            job.shapes.push(point);
+	            var curve = parseCurve(curveXML);
+	            job.shapes.push(curve);
 	        }
+	
+	        // Parse points
 	    } catch (err) {
 	        _didIteratorError7 = true;
 	        _iteratorError7 = err;
@@ -24355,6 +24374,33 @@
 	        } finally {
 	            if (_didIteratorError7) {
 	                throw _iteratorError7;
+	            }
+	        }
+	    }
+	
+	    var pointsXML = xmlDoc.getElementsByTagName('point');
+	    var _iteratorNormalCompletion8 = true;
+	    var _didIteratorError8 = false;
+	    var _iteratorError8 = undefined;
+	
+	    try {
+	        for (var _iterator8 = pointsXML[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+	            var pointXML = _step8.value;
+	
+	            var point = parsePoint(pointXML);
+	            job.shapes.push(point);
+	        }
+	    } catch (err) {
+	        _didIteratorError8 = true;
+	        _iteratorError8 = err;
+	    } finally {
+	        try {
+	            if (!_iteratorNormalCompletion8 && _iterator8.return) {
+	                _iterator8.return();
+	            }
+	        } finally {
+	            if (_didIteratorError8) {
+	                throw _iteratorError8;
 	            }
 	        }
 	    }
@@ -25541,8 +25587,6 @@
 	});
 	exports.CollisionDistanceDemoTool = undefined;
 	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -25606,11 +25650,7 @@
 	            if (this.shape.graphics.isEmpty()) {
 	                var collision = _collision_distance2.default.apply(polygon1, polygon2);
 	                var polygon3 = _collision_distance2.default.translate(polygon2, vector(-collision, 0));
-	
-	                var _polygon1$distanceTo = polygon1.distanceTo(polygon3),
-	                    _polygon1$distanceTo2 = _slicedToArray(_polygon1$distanceTo, 2),
-	                    distance = _polygon1$distanceTo2[0],
-	                    shortest_segment = _polygon1$distanceTo2[1];
+	                // let [distance, shortest_segment] = polygon1.distanceTo(polygon3);
 	
 	                this.shape.graphics = (0, _graphics.graphics)(polygon3, {
 	                    strokeStyle: strokeStyle,
@@ -32205,4 +32245,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.dc8d8b1b.js.map
+//# sourceMappingURL=main.7bc4c042.js.map
