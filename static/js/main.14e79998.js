@@ -67,7 +67,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(107);
+	__webpack_require__(109);
 	module.exports = __webpack_require__(46);
 
 
@@ -78,7 +78,7 @@
 	'use strict';
 	
 	if (true) {
-	  module.exports = __webpack_require__(109);
+	  module.exports = __webpack_require__(111);
 	} else {
 	  module.exports = require('./cjs/react.development.js');
 	}
@@ -92,68 +92,6 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by Alex Bol on 2/18/2017.
-	 */
-	'use strict';
-	
-	let Utils = __webpack_require__(91);
-	let Errors = __webpack_require__(90);
-	
-	/**
-	 * FlattenJS - library for 2d geometry
-	 * @type {Flatten}
-	 */
-	let Flatten = class Flatten {
-	    constructor() {
-	        this.version = "0.0.1";
-	        this.DP_TOL = Utils.DP_TOL;
-	        this.CCW = true;
-	        this.CW = false;
-	        this.ORIENTATION = {CCW:-1, CW:1, NOT_ORIENTABLE: 0};
-	        this.PIx2 = 2 * Math.PI;
-	        this.PI_2 = 0.5 * Math.PI;
-	        this.Utils = Utils;
-	        this.Errors = Errors;
-	        this.INSIDE = 1;
-	        this.OUTSIDE = 0;
-	        this.BOUNDARY = 2;
-	        this.CONTAINS = 3;
-	        this.INTERLACE = 4;
-	        this.CLIP_INSIDE = 1;
-	        this.CLIP_OUTSIDE = 0;
-	        this.BOOLEAN_UNION = 1;
-	        this.BOOLEAN_INTERSECT = 2;
-	        this.BOOLEAN_SUBTRACT = 3;
-	        this.OVERLAP_SAME = 1;
-	        this.OVERLAP_OPPOSITE = 2;
-	    }
-	};
-	
-	let f = new Flatten();
-	
-	__webpack_require__(89)(f);
-	__webpack_require__(84)(f);
-	__webpack_require__(88)(f);
-	__webpack_require__(83)(f);
-	__webpack_require__(80)(f);
-	__webpack_require__(87)(f);
-	__webpack_require__(78)(f);
-	__webpack_require__(79)(f);
-	__webpack_require__(81)(f);
-	__webpack_require__(82)(f);
-	__webpack_require__(86)(f);
-	__webpack_require__(77)(f);
-	__webpack_require__(85)(f);
-	__webpack_require__(76)(f);
-	
-	module.exports = f;
-
-
-/***/ },
-/* 4 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -227,6 +165,68 @@
 	var COLLISION_DEMO_BUTTON_PRESSED = exports.COLLISION_DEMO_BUTTON_PRESSED = "COLLISION_DEMO_BUTTON_PRESSED";
 
 /***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by Alex Bol on 2/18/2017.
+	 */
+	'use strict';
+	
+	let Utils = __webpack_require__(93);
+	let Errors = __webpack_require__(92);
+	
+	/**
+	 * FlattenJS - library for 2d geometry
+	 * @type {Flatten}
+	 */
+	let Flatten = class Flatten {
+	    constructor() {
+	        this.version = "0.0.1";
+	        this.DP_TOL = Utils.DP_TOL;
+	        this.CCW = true;
+	        this.CW = false;
+	        this.ORIENTATION = {CCW:-1, CW:1, NOT_ORIENTABLE: 0};
+	        this.PIx2 = 2 * Math.PI;
+	        this.PI_2 = 0.5 * Math.PI;
+	        this.Utils = Utils;
+	        this.Errors = Errors;
+	        this.INSIDE = 1;
+	        this.OUTSIDE = 0;
+	        this.BOUNDARY = 2;
+	        this.CONTAINS = 3;
+	        this.INTERLACE = 4;
+	        this.CLIP_INSIDE = 1;
+	        this.CLIP_OUTSIDE = 0;
+	        this.BOOLEAN_UNION = 1;
+	        this.BOOLEAN_INTERSECT = 2;
+	        this.BOOLEAN_SUBTRACT = 3;
+	        this.OVERLAP_SAME = 1;
+	        this.OVERLAP_OPPOSITE = 2;
+	    }
+	};
+	
+	let f = new Flatten();
+	
+	__webpack_require__(90)(f);
+	__webpack_require__(85)(f);
+	__webpack_require__(89)(f);
+	__webpack_require__(84)(f);
+	__webpack_require__(81)(f);
+	__webpack_require__(88)(f);
+	__webpack_require__(79)(f);
+	__webpack_require__(80)(f);
+	__webpack_require__(82)(f);
+	__webpack_require__(83)(f);
+	__webpack_require__(87)(f);
+	__webpack_require__(78)(f);
+	__webpack_require__(86)(f);
+	__webpack_require__(77)(f);
+	
+	module.exports = f;
+
+
+/***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -241,7 +241,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 20/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _layer = __webpack_require__(55);
+	var _layer = __webpack_require__(56);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -17009,7 +17009,7 @@
 	});
 	exports.graphics = graphics;
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -17448,7 +17448,7 @@
 	 */
 	'use strict';
 	
-	let Node = __webpack_require__(75);
+	let Node = __webpack_require__(76);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(18);
 	
 	let nil_node = new Node();
@@ -18161,7 +18161,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -18281,17 +18281,17 @@
 	
 	var _job = __webpack_require__(15);
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flatten = __webpack_require__(91);
 	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	var _flatten2 = _interopRequireDefault(_flatten);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Point = _flattenJs2.default.Point,
-	    Segment = _flattenJs2.default.Segment,
-	    Arc = _flattenJs2.default.Arc,
-	    Polygon = _flattenJs2.default.Polygon;
-	var vector = _flattenJs2.default.vector;
+	var Point = _flatten2.default.Point,
+	    Segment = _flatten2.default.Segment,
+	    Arc = _flatten2.default.Arc,
+	    Polygon = _flatten2.default.Polygon;
+	var vector = _flatten2.default.vector;
 	
 	
 	var inch2pixels = 10160000;
@@ -18327,11 +18327,11 @@
 	                pc = new Point(InchToPixels(terms[3]), InchToPixels(terms[4]));
 	
 	                var cwStr = terms[5];
-	                var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
+	                var counterClockwise = cwStr === 'Y' ? _flatten2.default.CW : _flatten2.default.CCW; /* sic ! */
 	
 	                var startAngle = vector(pc, ps).slope;
 	                var endAngle = vector(pc, pe).slope;
-	                if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	                if (_flatten2.default.Utils.EQ(startAngle, endAngle)) {
 	                    endAngle += 2 * Math.PI;
 	                    counterClockwise = true;
 	                }
@@ -18374,11 +18374,11 @@
 	    var pc = new Point(InchToPixels(terms[5]), InchToPixels(terms[6]));
 	
 	    var cwStr = terms[10];
-	    var counterClockwise = cwStr === 'Y' ? _flattenJs2.default.CW : _flattenJs2.default.CCW; /* sic ! */
+	    var counterClockwise = cwStr === 'Y' ? _flatten2.default.CW : _flatten2.default.CCW; /* sic ! */
 	
 	    var startAngle = vector(pc, ps).slope;
 	    var endAngle = vector(pc, pe).slope;
-	    if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	    if (_flatten2.default.Utils.EQ(startAngle, endAngle)) {
 	        endAngle += 2 * Math.PI;
 	        counterClockwise = true;
 	    }
@@ -18490,7 +18490,7 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(98);
+	var root = __webpack_require__(100);
 	
 	/** Built-in value references. */
 	var Symbol = root.Symbol;
@@ -18502,9 +18502,9 @@
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(92),
-	    getPrototype = __webpack_require__(94),
-	    isObjectLike = __webpack_require__(99);
+	var baseGetTag = __webpack_require__(94),
+	    getPrototype = __webpack_require__(96),
+	    isObjectLike = __webpack_require__(101);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -18823,7 +18823,7 @@
 	  // DCE check should happen before ReactDOM bundle executes so that
 	  // DevTools can report bad minification during injection.
 	  checkDCE();
-	  module.exports = __webpack_require__(105);
+	  module.exports = __webpack_require__(107);
 	} else {
 	  module.exports = require('./cjs/react-dom.development.js');
 	}
@@ -18847,11 +18847,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(103);
+	var _propTypes = __webpack_require__(105);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _screenReaderStyles = __webpack_require__(106);
+	var _screenReaderStyles = __webpack_require__(108);
 	
 	var _screenReaderStyles2 = _interopRequireDefault(_screenReaderStyles);
 	
@@ -19030,7 +19030,7 @@
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _symbolObservable = __webpack_require__(113);
+	var _symbolObservable = __webpack_require__(115);
 	
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 	
@@ -19295,15 +19295,15 @@
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _combineReducers = __webpack_require__(112);
+	var _combineReducers = __webpack_require__(114);
 	
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 	
-	var _bindActionCreators = __webpack_require__(111);
+	var _bindActionCreators = __webpack_require__(113);
 	
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 	
-	var _applyMiddleware = __webpack_require__(110);
+	var _applyMiddleware = __webpack_require__(112);
 	
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 	
@@ -19369,7 +19369,7 @@
 
 	"use strict";
 	
-	let Flatten = __webpack_require__(3);
+	let Flatten = __webpack_require__(4);
 	let {Point, Vector, Segment, Arc, Line, Box, Polygon} = Flatten;
 	
 	module.exports = class CollisionDistance {
@@ -19828,7 +19828,7 @@
 	
 	var _asideComponent = __webpack_require__(31);
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -19952,7 +19952,7 @@
 	
 	__webpack_require__(2);
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -20145,7 +20145,7 @@
 	
 	__webpack_require__(2);
 	
-	var _stage = __webpack_require__(59);
+	var _stage = __webpack_require__(60);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20806,7 +20806,7 @@
 	
 	var _layerListElement = __webpack_require__(36);
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -21090,13 +21090,13 @@
 	
 	var _stageComponent = __webpack_require__(41);
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
 	var _layers = __webpack_require__(5);
 	
-	var _measurePointsTool = __webpack_require__(63);
+	var _measurePointsTool = __webpack_require__(64);
 	
 	var _modalPopupComponent = __webpack_require__(14);
 	
@@ -21826,11 +21826,11 @@
 	
 	var _layerComponent = __webpack_require__(35);
 	
-	var _measureShapesTool = __webpack_require__(64);
+	var _measureShapesTool = __webpack_require__(65);
 	
-	var _aabbDemoTool = __webpack_require__(61);
+	var _aabbDemoTool = __webpack_require__(62);
 	
-	var _collisionDistanceDemoTool = __webpack_require__(62);
+	var _collisionDistanceDemoTool = __webpack_require__(63);
 	
 	var _utils = __webpack_require__(8);
 	
@@ -22079,19 +22079,19 @@
 	
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 	
-	var _measureContour = __webpack_require__(118);
+	var _measureContour = __webpack_require__(120);
 	
 	var _measureContour2 = _interopRequireDefault(_measureContour);
 	
-	var _measurePoints = __webpack_require__(119);
+	var _measurePoints = __webpack_require__(121);
 	
 	var _measurePoints2 = _interopRequireDefault(_measurePoints);
 	
-	var _WidthOn = __webpack_require__(116);
+	var _WidthOn = __webpack_require__(118);
 	
 	var _WidthOn2 = _interopRequireDefault(_WidthOn);
 	
-	var _editContourVertextOnOff = __webpack_require__(117);
+	var _editContourVertextOnOff = __webpack_require__(119);
 	
 	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
 	
@@ -22414,29 +22414,29 @@
 	
 	var _App = __webpack_require__(30);
 	
-	__webpack_require__(65);
+	__webpack_require__(66);
 	
 	var _redux = __webpack_require__(26);
 	
-	var _reducer = __webpack_require__(60);
+	var _reducer = __webpack_require__(61);
 	
-	var _log = __webpack_require__(50);
+	var _log = __webpack_require__(51);
 	
 	var _log2 = _interopRequireDefault(_log);
 	
-	var _readFiles = __webpack_require__(52);
+	var _readFiles = __webpack_require__(53);
 	
 	var _readFiles2 = _interopRequireDefault(_readFiles);
 	
-	var _pasteData = __webpack_require__(51);
+	var _pasteData = __webpack_require__(52);
 	
 	var _pasteData2 = _interopRequireDefault(_pasteData);
 	
-	var _stageController = __webpack_require__(53);
+	var _stageController = __webpack_require__(54);
 	
 	var _stageController2 = _interopRequireDefault(_stageController);
 	
-	var _demo = __webpack_require__(49);
+	var _demo = __webpack_require__(50);
 	
 	var _demo2 = _interopRequireDefault(_demo);
 	
@@ -22444,21 +22444,21 @@
 	
 	var _aabb_demo2 = _interopRequireDefault(_aabb_demo);
 	
-	var _collision_demo = __webpack_require__(48);
+	var _collision_demo = __webpack_require__(49);
 	
 	var _collision_demo2 = _interopRequireDefault(_collision_demo);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _boolean_test = __webpack_require__(48);
 	
-	// import boolean_test from './middleware/boolean_test';
+	var _boolean_test2 = _interopRequireDefault(_boolean_test);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// import matrix_test from './middleware/matrix-test';
 	// import webgl_test from './middleware/webgl-test';
 	
-	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _pasteData2.default, _demo2.default, _aabb_demo2.default, _collision_demo2.default, _stageController2.default)));
-	
 	// import about from './middleware/about';
-	
+	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _pasteData2.default, _demo2.default, _aabb_demo2.default, _collision_demo2.default, _boolean_test2.default, _stageController2.default)));
 	
 	_reactDom2.default.render(_react2.default.createElement(_App.App, { store: store }), document.getElementById('root'));
 
@@ -22472,7 +22472,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22514,13 +22514,96 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(4);
+	var _flattenJs = __webpack_require__(4);
+	
+	var _flattenJs2 = _interopRequireDefault(_flattenJs);
+	
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
 	var _layers = __webpack_require__(5);
 	
-	var _flattenJs = __webpack_require__(3);
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// import { Model } from "../models/model";
+	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
+	
+	var point = _flattenJs2.default.point,
+	    circle = _flattenJs2.default.circle,
+	    segment = _flattenJs2.default.segment,
+	    Polygon = _flattenJs2.default.Polygon;
+	// let {union, subtract, intersect, arrange} = BooleanOp;
+	
+	function zoomHome(shape, stage) {
+	    var box = shape.box;
+	    var x = (box.xmin + box.xmax) / 2;
+	    var y = (box.ymin + box.ymax) / 2;
+	    stage.panToCoordinate(x, y);
+	    stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
+	}
+	
+	var boolean_test = function boolean_test(_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	        return function (action) {
+	
+	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
+	                if (document.location.href.split('#')[1] === 'boolean_test') {
+	
+	                    var stage = action.stage;
+	                    var state = getState();
+	                    var layers = state.layers;
+	
+	                    var polygon1 = new Polygon();
+	                    polygon1.addFace([point(-20, 0), point(-20, 20), point(20, 20), point(20, 0)]);
+	
+	                    var polygon2 = new Polygon();
+	                    polygon2.addFace([point(-5, -10), point(-5, 30), point(5, 30), point(5, -10)]);
+	
+	                    var layer = _layers.Layers.newLayer(stage, layers);
+	                    layer.name = "polygon1";
+	                    layer.title = "data";
+	
+	                    layer.add(polygon1);
+	                    layer.add(polygon2);
+	
+	                    // layer = Layers.newLayer(stage, layers);
+	                    // layer.name = "polygon2";
+	                    // layer.add(polygon2);
+	                    // state.layers.push(layer);
+	
+	                    zoomHome(layer, stage);
+	                    state.layers.push(layer);
+	                }
+	            }
+	            return next(action);
+	        };
+	    };
+	};
+	
+	exports.default = boolean_test;
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _actionTypes = __webpack_require__(3);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _layers = __webpack_require__(5);
+	
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -22670,7 +22753,7 @@
 	exports.default = collision_demo;
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22679,7 +22762,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22774,7 +22857,7 @@
 	exports.default = demo;
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22783,7 +22866,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22807,7 +22890,7 @@
 	exports.default = log;
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22816,7 +22899,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22931,7 +23014,7 @@
 	exports.default = pasteData;
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22940,7 +23023,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -22948,11 +23031,11 @@
 	
 	var _model = __webpack_require__(10);
 	
-	var _parserXML = __webpack_require__(58);
+	var _parserXML = __webpack_require__(59);
 	
 	var _parserODB = __webpack_require__(16);
 	
-	var _parsePGM = __webpack_require__(56);
+	var _parsePGM = __webpack_require__(57);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -23173,7 +23256,7 @@
 	exports.default = readFiles;
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23182,7 +23265,7 @@
 	    value: true
 	});
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
@@ -23243,7 +23326,7 @@
 	exports.default = stageController;
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23259,7 +23342,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 17/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -23468,7 +23551,7 @@
 	}();
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23485,7 +23568,7 @@
 	// import { Shape } from '../models/shape';
 	
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -23696,7 +23779,7 @@
 	}();
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23706,7 +23789,7 @@
 	});
 	exports.parseImage = parseImage;
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -23742,7 +23825,7 @@
 	}
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23756,7 +23839,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 01/05/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -24049,7 +24132,7 @@
 	}();
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24061,7 +24144,7 @@
 	
 	var _job = __webpack_require__(15);
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -24409,7 +24492,7 @@
 	}
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24425,7 +24508,7 @@
 	
 	var createjs = _interopRequireWildcard(_easeljsNEXTCombined);
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -24653,7 +24736,7 @@
 	}(createjs.Stage);
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24665,13 +24748,13 @@
 	
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 	
-	var _actionTypes = __webpack_require__(4);
+	var _actionTypes = __webpack_require__(3);
 	
 	var ActionTypes = _interopRequireWildcard(_actionTypes);
 	
 	var _redux = __webpack_require__(26);
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -24681,9 +24764,9 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _parser = __webpack_require__(57);
+	var _parser = __webpack_require__(58);
 	
-	var _distance = __webpack_require__(54);
+	var _distance = __webpack_require__(55);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -25327,7 +25410,7 @@
 	});
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25577,7 +25660,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25603,7 +25686,7 @@
 	
 	var _collision_distance2 = _interopRequireDefault(_collision_distance);
 	
-	var _flattenJs = __webpack_require__(3);
+	var _flattenJs = __webpack_require__(4);
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
@@ -25707,7 +25790,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25959,7 +26042,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26047,9 +26130,9 @@
 	}(_react.Component);
 
 /***/ },
-/* 65 */
-2,
 /* 66 */
+2,
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26128,7 +26211,7 @@
 	module.exports = EventListener;
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports) {
 
 	/**
@@ -26166,7 +26249,7 @@
 	module.exports = ExecutionEnvironment;
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26180,7 +26263,7 @@
 	 * 
 	 */
 	
-	var isTextNode = __webpack_require__(72);
+	var isTextNode = __webpack_require__(73);
 	
 	/*eslint-disable no-bitwise */
 	
@@ -26208,7 +26291,7 @@
 	module.exports = containsNode;
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports) {
 
 	/**
@@ -26237,7 +26320,7 @@
 	module.exports = focusNode;
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26278,7 +26361,7 @@
 	module.exports = getActiveElement;
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26305,7 +26388,7 @@
 	module.exports = isNode;
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26319,7 +26402,7 @@
 	 * @typechecks
 	 */
 	
-	var isNode = __webpack_require__(71);
+	var isNode = __webpack_require__(72);
 	
 	/**
 	 * @param {*} object The object to check.
@@ -26332,7 +26415,7 @@
 	module.exports = isTextNode;
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports) {
 
 	/**
@@ -26402,7 +26485,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports) {
 
 	/**
@@ -26460,7 +26543,7 @@
 	module.exports = Interval;
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26470,7 +26553,7 @@
 	'use strict';
 	
 	// let defaultTraits = require('../utils/numeric_traits');
-	let Interval = __webpack_require__(74);
+	let Interval = __webpack_require__(75);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(18);
 	
 	let Node = class Node {
@@ -26552,7 +26635,7 @@
 
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27214,7 +27297,7 @@
 	};
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports) {
 
 	
@@ -27341,7 +27424,7 @@
 	};
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports) {
 
 	/**
@@ -27799,7 +27882,7 @@
 	};
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports) {
 
 	/**
@@ -27965,7 +28048,7 @@
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports) {
 
 	/**
@@ -28206,7 +28289,7 @@
 	};
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports) {
 
 	/**
@@ -28372,11 +28455,18 @@
 	                }
 	            }
 	        }
+	
+	        toJSON() {
+	            let json = this.shape.clone();
+	            // json.name = this.shape.constructor.name;          // not pass webpack minification
+	            json.name = this.shape instanceof  Flatten.Segment ? "segment" : "arc";
+	            return json;
+	        }
 	    };
 	};
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports) {
 
 	/**
@@ -28434,7 +28524,7 @@
 	            if (args.length == 1) {
 	                if (args[0] instanceof Array) {
 	                    // let argsArray = args[0];
-	                    let shapes =  args[0];  // argsArray[0];
+	                    let shapes = args[0];  // argsArray[0];
 	                    if (shapes.length == 0)
 	                        return;
 	
@@ -28448,6 +28538,24 @@
 	                            return (shape instanceof Segment || shape instanceof Arc)
 	                        })) {
 	                        this.shapes2face(polygon.edges, shapes);
+	                    }
+	                    // this is from JSON.parse object
+	                    else if (shapes.every((shape) => {
+	                            return (shape.name === "segment" || shape.name === "arc")
+	                        })) {
+	                        let flattenShapes = [];
+	                        for (let shape of shapes) {
+	                            let flattenShape;
+	                            if (shape.name === "segment") {
+	                                flattenShape = new Segment(shape.ps.x, shape.ps.y, shape.pe.x, shape.pe.y);
+	                            }
+	                            else {
+	                                flattenShape = new Arc(new Point(shape.pc.x, shape.pc.y),
+	                                    shape.r, shape.startAngle, shape.endAngle, shape.counterClockwise);
+	                            }
+	                            flattenShapes.push(flattenShape);
+	                        }
+	                        this.shapes2face(polygon.edges, flattenShapes);
 	                    }
 	                }
 	                /* Create new face and copy edges into polygon.edges set */
@@ -28825,6 +28933,10 @@
 	            }
 	        }
 	
+	        toJSON() {
+	            return this.edges.map(edge => edge.toJSON());
+	        }
+	
 	        svg() {
 	            let svgStr = `\nM${this.first.start.x},${this.first.start.y}`;
 	
@@ -28835,11 +28947,12 @@
 	            svgStr += ` z`;
 	            return svgStr;
 	        }
+	
 	    };
 	};
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/**
@@ -29132,7 +29245,7 @@
 
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports) {
 
 	/**
@@ -29380,7 +29493,7 @@
 
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports) {
 
 	/**
@@ -29612,11 +29725,15 @@
 	
 	            return svgStr;
 	        }
+	
+	        toJSON() {
+	            return [...this.faces].map(face => face.toJSON());
+	        }
 	    }
 	};
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29753,7 +29870,7 @@
 	};
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports) {
 
 	/**
@@ -30150,7 +30267,7 @@
 	};
 
 /***/ },
-/* 88 */
+/* 89 */
 /***/ function(module, exports) {
 
 	/**
@@ -30329,7 +30446,7 @@
 
 
 /***/ },
-/* 89 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30438,7 +30555,14 @@
 
 
 /***/ },
-/* 90 */
+/* 91 */
+/***/ function(module, exports) {
+
+	module.exports=function(t){var e={};function n(i){if(e[i])return e[i].exports;var r=e[i]={i:i,l:!1,exports:{}};return t[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{configurable:!1,enumerable:!0,get:i})},n.r=function(t){Object.defineProperty(t,"__esModule",{value:!0})},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=20)}([function(t,e,n){"use strict";t.exports={RB_TREE_COLOR_RED:0,RB_TREE_COLOR_BLACK:1}},function(t,e,n){"use strict";let i=n(16),{RB_TREE_COLOR_RED:r,RB_TREE_COLOR_BLACK:s}=n(0),o=new i;t.exports=class{constructor(){this.root=null}get size(){let t=0;return this.tree_walk(this.root,()=>t++),t}get keys(){let t=[];return this.tree_walk(this.root,e=>t.push(e.item.key.output())),t}get isEmpty(){return null==this.root||this.root==o}insert(t,e=t){if(void 0===t)return;let n=new i(t,e,o,o,null,r);return this.tree_insert(n),this.recalc_max(n),n}exist(t,e){let n=new i(t,e);return!!this.tree_search(this.root,n)}remove(t,e){let n=new i(t,e),r=this.tree_search(this.root,n);return r&&this.tree_delete(r),r}search(t){let e=new i(t),n=[];this.tree_search_interval(this.root,e,n);let r=[];return n.forEach(t=>{t.item.value?r.push(t.item.value):r.push(t.item.key.output())},[]),r}forEach(t){this.tree_walk(this.root,e=>t(e.item.key,e.item.value))}recalc_max(t){let e=t;for(;null!=e.parent;)e.parent.update_max(),e=e.parent}tree_insert(t){let e=this.root,n=null;if(null==this.root||this.root==o)this.root=t;else{for(;e!=o;)n=e,e=t.less_than(e)?e.left:e.right;t.parent=n,t.less_than(n)?n.left=t:n.right=t}this.insert_fixup(t)}insert_fixup(t){let e,n;for(e=t;e!=this.root&&e.parent.color==r;)e.parent==e.parent.parent.left?(n=e.parent.parent.right).color==r?(e.parent.color=s,n.color=s,e.parent.parent.color=r,e=e.parent.parent):(e==e.parent.right&&(e=e.parent,this.rotate_left(e)),e.parent.color=s,e.parent.parent.color=r,this.rotate_right(e.parent.parent)):(n=e.parent.parent.left).color==r?(e.parent.color=s,n.color=s,e.parent.parent.color=r,e=e.parent.parent):(e==e.parent.left&&(e=e.parent,this.rotate_right(e)),e.parent.color=s,e.parent.parent.color=r,this.rotate_left(e.parent.parent));this.root.color=s}tree_delete(t){let e,n;(n=(e=t.left==o||t.right==o?t:this.tree_successor(t)).left!=o?e.left:e.right)!=o&&(n.parent=e.parent),e==this.root?this.root=n:(e==e.parent.left?e.parent.left=n:e.parent.right=n,e.parent.update_max()),this.recalc_max(n),e!=t&&(t.copy_data(e),t.update_max(),this.recalc_max(t)),n!=o&&e.color==s&&this.delete_fixup(n)}delete_fixup(t){let e,n=t;for(;n!=this.root&&null!=n.parent&&n.color==s;)n==n.parent.left?((e=n.parent.right).color==r&&(e.color=s,n.parent.color=r,this.rotate_left(n.parent),e=n.parent.right),e.left.color==s&&e.right.color==s?(e.color=r,n=n.parent):(e.right.color==s&&(e.color=r,e.left.color=s,this.rotate_right(e),e=n.parent.right),e.color=n.parent.color,n.parent.color=s,e.right.color=s,this.rotate_left(n.parent),n=this.root)):((e=n.parent.left).color==r&&(e.color=s,n.parent.color=r,this.rotate_right(n.parent),e=n.parent.left),e.left.color==s&&e.right.color==s?(e.color=r,n=n.parent):(e.left.color==s&&(e.color=r,e.right.color=s,this.rotate_left(e),e=n.parent.left),e.color=n.parent.color,n.parent.color=s,e.left.color=s,this.rotate_right(n.parent),n=this.root));n.color=s}tree_search(t,e){if(null!=t&&t!=o)return e.equal_to(t)?t:e.less_than(t)?this.tree_search(t.left,e):this.tree_search(t.right,e)}tree_search_interval(t,e,n){null!=t&&t!=o&&(t.left==o||t.not_intersect_left_subtree(e)||this.tree_search_interval(t.left,e,n),t.intersect(e)&&n.push(t),t.right==o||t.not_intersect_right_subtree(e)||this.tree_search_interval(t.right,e,n))}local_minimum(t){let e=t;for(;null!=e.left&&e.left!=o;)e=e.left;return e}local_maximum(t){let e=t;for(;null!=e.right&&e.right!=o;)e=e.right;return e}tree_successor(t){let e,n,i;if(t.right!=o)e=this.local_minimum(t.right);else{for(n=t,i=t.parent;null!=i&&i.right==n;)n=i,i=i.parent;e=i}return e}rotate_left(t){let e=t.right;t.right=e.left,e.left!=o&&(e.left.parent=t),e.parent=t.parent,t==this.root?this.root=e:t==t.parent.left?t.parent.left=e:t.parent.right=e,e.left=t,t.parent=e,null!=t&&t!=o&&t.update_max(),null!=(e=t.parent)&&e!=o&&e.update_max()}rotate_right(t){let e=t.left;t.left=e.right,e.right!=o&&(e.right.parent=t),e.parent=t.parent,t==this.root?this.root=e:t==t.parent.left?t.parent.left=e:t.parent.right=e,e.right=t,t.parent=e,null!=t&&t!=o&&t.update_max(),null!=(e=t.parent)&&e!=o&&e.update_max()}tree_walk(t,e){null!=t&&t!=o&&(this.tree_walk(t.left,e),e(t),this.tree_walk(t.right,e))}testRedBlackProperty(){let t=!0;return this.tree_walk(this.root,function(e){e.color==r&&(e.left.color==s&&e.right.color==s||(t=!1))}),t}testBlackHeightProperty(t){let e=0,n=0,i=0;if(t.color==s&&e++,(n=t.left!=o?this.testBlackHeightProperty(t.left):1)!=(i=t.right!=o?this.testBlackHeightProperty(t.right):1))throw new Error("Red-black height property violated");return e+=n}}},function(t,e,n){"use strict";let i=n(1);t.exports=function(t){let{Polygon:e,Point:n,Segment:r,Arc:s,Circle:o,Line:l,Ray:h,Vector:a}=t,{vector:c}=t;t.Distance=class e{static point2point(t,e){return t.distanceTo(e)}static point2line(t,e){let n=t.projectionOn(e);return[c(t,n).length,new r(t,n)]}static point2circle(e,n){let[i,s]=e.distanceTo(n.center);if(t.Utils.EQ_0(i))return[n.r,new r(e,n.toArc().start)];{let t=Math.abs(i-n.r),s=c(n.pc,e).normalize().multiply(n.r),o=n.pc.translate(s);return[t,new r(e,o)]}}static point2segment(n,i){if(i.start.equalTo(i.end))return e.point2point(n,i.start);let s,o,l=new t.Vector(i.start,i.end),h=new t.Vector(i.start,n),a=new t.Vector(i.end,n),c=l.dot(h),u=-l.dot(a);if(t.Utils.GE(c,0)&&t.Utils.GE(u,0)){let t=i.tangentInStart();return s=Math.abs(t.cross(h)),o=i.start.translate(t.multiply(t.dot(h))),[s,new r(n,o)]}return c<0?n.distanceTo(i.start):n.distanceTo(i.end)}static point2arc(n,i){let r,s,o=new t.Circle(i.pc,i.r),l=[];return[r,s]=e.point2circle(n,o),s.end.on(i)&&l.push(e.point2circle(n,o)),l.push(e.point2point(n,i.start)),l.push(e.point2point(n,i.end)),e.sort(l),l[0]}static segment2line(t,n){let i=t.intersect(n);return i.length>0?[0,new r(i[0],i[0])]:(dist_and_segment.push(e.point2line(t.start,n)),dist_and_segment.push(e.point2line(t.end,n)),e.sort(dist_and_segment),dist_and_segment[0])}static segment2segment(t,n){let i=r.intersectSegment2Segment(t,n);if(i.length>0)return[0,new r(i[0],i[0])];let s=[];return s.push(e.point2segment(n.start,t)),s.push(e.point2segment(n.end,t)),s.push(e.point2segment(t.start,n)),s.push(e.point2segment(t.end,n)),e.sort(s),s[0]}static segment2circle(n,i){let s=n.intersect(i);if(s.length>0)return[0,new r(s[0],s[0])];let o=new t.Line(n.ps,n.pe),[l,h]=e.point2line(i.center,o);if(t.Utils.GE(l,i.r)&&h.end.on(n))return e.point2circle(h.end,i);{let[r,s]=e.point2circle(n.start,i),[o,l]=e.point2circle(n.end,i);return t.Utils.LT(r,o)?[r,s]:[o,l]}}static segment2arc(n,i){let s=n.intersect(i);if(s.length>0)return[0,new r(s[0],s[0])];let o=new t.Line(n.ps,n.pe),l=new t.Circle(i.pc,i.r),[h,a]=e.point2line(l.center,o);if(t.Utils.GE(h,l.r)&&a.end.on(n)){let[t,n]=e.point2circle(a.end,l);if(n.end.on(i))return[t,n]}let c,u,p=[];return p.push(e.point2arc(n.start,i)),p.push(e.point2arc(n.end,i)),[c,u]=e.point2segment(i.start,n),p.push([c,u.reverse()]),[c,u]=e.point2segment(i.end,n),p.push([c,u.reverse()]),e.sort(p),p[0]}static circle2circle(t,n){let i=t.intersect(n);if(i.length>0)return[0,new r(i[0],i[0])];if(t.center.equalTo(n.center)){let i=t.toArc(),r=n.toArc();return e.point2point(i.start,r.start)}{let i=new l(t.center,n.center),r=i.intersect(t),s=i.intersect(n),o=[];return o.push(e.point2point(r[0],s[0])),o.push(e.point2point(r[0],s[1])),o.push(e.point2point(r[1],s[0])),o.push(e.point2point(r[1],s[1])),e.sort(o),o[0]}}static circle2line(t,n){let i=t.intersect(n);if(i.length>0)return[0,new r(i[0],i[0])];let[s,o]=e.point2line(t.center,n),[l,h]=e.point2circle(o.end,t);return[l,h=h.reverse()]}static arc2line(n,i){let s=i.intersect(n);if(s.length>0)return[0,new r(s[0],s[0])];let o=new t.Circle(n.center,n.r),[l,h]=e.point2line(o.center,i);if(!t.Utils.GE(l,o.r)){let t=[];return t.push(e.point2line(n.start,i)),t.push(e.point2line(n.end,i)),e.sort(t),t[0]}{let[t,i]=e.point2circle(h.end,o);if(i.end.on(n))return[t,i]}}static arc2circle(n,i){let s=n.intersect(i);if(s.length>0)return[0,new r(s[0],s[0])];let o=new t.Circle(n.center,n.r),[l,h]=e.circle2circle(o,i);if(h.start.on(n))return[l,h];{let t=[];return t.push(e.point2circle(n.start,i)),t.push(e.point2circle(n.end,i)),e.sort(t),t[0]}}static arc2arc(n,i){let s=n.intersect(i);if(s.length>0)return[0,new r(s[0],s[0])];let o=new t.Circle(n.center,n.r),l=new t.Circle(i.center,i.r),[h,a]=e.circle2circle(o,l);if(a.start.on(n)&&a.end.on(i))return[h,a];{let t,r,s=[];return[t,r]=e.point2arc(n.start,i),r.end.on(i)&&s.push([t,r]),[t,r]=e.point2arc(n.end,i),r.end.on(i)&&s.push([t,r]),[t,r]=e.point2arc(i.start,n),r.end.on(n)&&s.push([t,r.reverse()]),[t,r]=e.point2arc(i.end,n),r.end.on(n)&&s.push([t,r.reverse()]),[t,r]=e.point2point(n.start,i.start),s.push([t,r]),[t,r]=e.point2point(n.start,i.end),s.push([t,r]),[t,r]=e.point2point(n.end,i.start),s.push([t,r]),[t,r]=e.point2point(n.end,i.end),s.push([t,r]),e.sort(s),s[0]}}static point2polygon(n,i){let s=[Number.POSITIVE_INFINITY,new r];for(let o of i.edges){let[i,l]=o.shape instanceof r?e.point2segment(n,o.shape):e.point2arc(n,o.shape);t.Utils.LT(i,s[0])&&(s=[i,l])}return s}static shape2polygon(e,n){let i=[Number.POSITIVE_INFINITY,new r];for(let r of n.edges){let[n,s]=e.distanceTo(r.shape);t.Utils.LT(n,i[0])&&(i=[n,s])}return i}static polygon2polygon(e,n){let i=[Number.POSITIVE_INFINITY,new t.Segment];for(let r of e.edges)for(let e of n.edges){let[n,s]=r.shape.distanceTo(e.shape);t.Utils.LT(n,i[0])&&(i=[n,s])}return i}static box2box_minmax(t,e){let n=Math.max(Math.max(t.xmin-e.xmax,0),Math.max(e.xmin-t.xmax,0)),i=Math.max(Math.max(t.ymin-e.ymax,0),Math.max(e.ymin-t.ymax,0)),r=n*n+i*i,s=t.merge(e),o=s.xmax-s.xmin,l=s.ymax-s.ymin;return[r,o*o+l*l]}static minmax_tree_process_level(n,i,r,s){let o,l;for(let h of i)[o,l]=e.box2box_minmax(n.box,h.item.key),h.item.value instanceof t.Edge?s.insert([o,l],h.item.value.shape):s.insert([o,l],h.item.value),t.Utils.LT(l,r)&&(r=l);if(0===i.length)return r;let h=i.map(t=>t.left.isNil()?void 0:t.left).filter(t=>void 0!==t),a=i.map(t=>t.right.isNil()?void 0:t.right).filter(t=>void 0!==t),c=[...h,...a].filter(i=>{let[s,o]=e.box2box_minmax(n.box,i.max);return t.Utils.LE(s,r)});return r=e.minmax_tree_process_level(n,c,r,s)}static minmax_tree(t,n,r){let s=new i,o=[n.index.root],l=r<Number.POSITIVE_INFINITY?r*r:Number.POSITIVE_INFINITY;return l=e.minmax_tree_process_level(t,o,l,s),s}static minmax_tree_calc_distance(n,i,r){let s,o;if(null!=i&&!i.isNil()){if([s,o]=e.minmax_tree_calc_distance(n,i.left,r),o)return[s,o];if(t.Utils.LT(s[0],Math.sqrt(i.item.key.low)))return[s,!0];let[l,h]=e.distance(n,i.item.value);return t.Utils.LT(l,s[0])&&(s=[l,h]),[s,o]=e.minmax_tree_calc_distance(n,i.right,s),[s,o]}return[r,!1]}static shape2planarSet(n,i,r=Number.POSITIVE_INFINITY){let s=[r,new t.Segment],o=!1;if(i instanceof t.PlanarSet){let t=e.minmax_tree(n,i,r);[s,o]=e.minmax_tree_calc_distance(n,t.root,s)}return s}static sort(e){e.sort((e,n)=>t.Utils.LT(e[0],n[0])?-1:t.Utils.GT(e[0],n[0])?1:0)}static distance(t,e){return t.distanceTo(e)}}}},function(t,e,n){"use strict";t.exports=function(t){let{Edge:e,Face:n,PlanarSet:i,Box:r}=t,{ray_shoot:s}=t;t.Polygon=class e{constructor(){this.faces=new i,this.edges=new i}get box(){return[...this.faces].reduce((t,e)=>t.merge(e.box),new r)}get vertices(){return[...this.edges].map(t=>t.start)}addFace(...t){let e=new n(this,...t);return this.faces.add(e),e}deleteFace(t){for(let e of t){this.edges.delete(e)}return this.faces.delete(t)}removeChain(t,e,n){if(n.next!==e){for(let i=e;i!==n.next;i=i.next)if(t.remove(this.edges,i),t.isEmpty()){this.deleteFace(t);break}}else this.deleteFace(t)}addVertex(e,n){let i=n.shape.split(e);if(i.length<2)return;let r=new t.Edge(i[0]),s=n.prev;return n.face.insert(this.edges,r,s),this.edges.delete(n),n.shape=i[1],this.edges.add(n),r}reverse(){for(let t of this.faces)t.reverse();return this}clone(){let t=new e;for(let e of this.faces){let n=[];for(let t of e)n.push(t.shape.clone());t.addFace(n)}return t}area(){let t=[...this.faces].reduce((t,e)=>t+e.signedArea(),0);return Math.abs(t)}contains(e){let n=s(this,e);return n==t.INSIDE||n==t.BOUNDARY}distanceTo(e){let{Distance:n}=t;if(e instanceof t.Point){let[t,i]=n.point2polygon(e,this);return[t,i=i.reverse()]}if(e instanceof t.Circle||e instanceof t.Line||e instanceof t.Segment||e instanceof t.Arc){let[t,i]=n.shape2polygon(e,this);return[t,i=i.reverse()]}if(e instanceof t.Polygon){let i,r,s=[Number.POSITIVE_INFINITY,new t.Segment];for(let o of this.edges){let l=s[0];[i,r]=n.shape2planarSet(o.shape,e.edges,l),t.Utils.LT(i,l)&&(s=[i,r])}return s}}svg(t={stroke:"black",strokeWidth:"3",fill:"lightcyan",fillRule:"evenodd"}){let{stroke:e,strokeWidth:n,fill:i,fillRule:r}=t,s=`\n<path stroke="${e}" stroke-width="${n}" fill="${i}" fill-rule="${r}" d="`;for(let t of this.faces)s+=t.svg();return s+='">\n</path>'}toJSON(){return[...this.faces].map(t=>t.toJSON())}}}},function(t,e,n){"use strict";t.exports=function(t){let{Polygon:e,Point:n,Segment:i,Arc:r,Line:s,Ray:o}=t;t.ray_shoot=function(e,n){let r=void 0;if(e.box.notIntersect(n.box))return t.OUTSIDE;let l=new o(n),h=new s(l.pt,l.norm),a=e.edges.search(l.box);if(0==a.length)return t.OUTSIDE;let c=[];for(let e of a)for(let i of l.intersect(e.shape)){if(i.equalTo(n))return t.BOUNDARY;c.push({pt:i,edge:e})}c.sort((e,n)=>t.Utils.LT(e.pt.x,n.pt.x)?-1:t.Utils.GT(e.pt.x,n.pt.x)?1:0);let u=0;for(let e=0;e<c.length;e++){let n=c[e];if(n.pt.equalTo(n.edge.shape.start)){if(e>0&&n.pt.equalTo(c[e-1].pt)&&n.edge.prev===c[e-1].edge)continue;let t=n.edge.prev.shape.tangentInEnd(),i=n.pt.translate(t),r=n.edge.shape.tangentInStart(),s=n.pt.translate(r),o=i.leftTo(h),l=s.leftTo(h);(o&&!l||!o&&l)&&u++}else if(n.pt.equalTo(n.edge.shape.end)){if(e>0&&n.pt.equalTo(c[e-1].pt)&&n.edge.next===c[e-1].edge)continue;let t=n.edge.next.shape.tangentInStart(),i=n.pt.translate(t),r=n.edge.shape.tangentInEnd(),s=n.pt.translate(r),o=i.leftTo(h),l=s.leftTo(h);(o&&!l||!o&&l)&&u++}else if(n.edge.shape instanceof i)u++;else{let e=n.edge.shape.box;t.Utils.EQ(n.pt.y,e.ymin)||t.Utils.EQ(n.pt.y,e.ymax)||u++}}return r=u%2==1?t.INSIDE:t.OUTSIDE}}},function(t,e,n){"use strict";t.exports=function(t){let{Point:e,Segment:n,Line:i,Circle:r,Arc:s,Box:o,Vector:l}=t;t.Ray=class r{constructor(...n){if(this.pt=new e,0!=n.length)if(1==n.length&&n[0]instanceof e)this.pt=n[0].clone();else{if(2!=n.length||"number"!=typeof n[0]||"number"!=typeof n[1])throw t.Errors.ILLEGAL_PARAMETERS;this.pt=new e(n[0],n[1])}}clone(){return new r(this.pt)}get box(){return new o(this.pt.x,this.pt.y,Number.POSITIVE_INFINITY,this.pt.y)}get start(){return this.pt}get norm(){return new l(0,1)}intersect(t){return t instanceof n?this.intersectRay2Segment(this,t):t instanceof s?this.intersectRay2Arc(this,t):void 0}intersectRay2Segment(e,n){let r=[];if(e.box.notIntersect(n.box))return r;let s=new i(e.start,e.norm),o=s.intersect(n);for(let n of o)t.Utils.GE(n.x,e.start.x)&&r.push(n);return 2==o.length&&1==r.length&&e.start.on(s)&&r.push(e.start),r}intersectRay2Arc(e,n){let r=[];if(e.box.notIntersect(n.box))return r;let s=new i(e.start,e.norm).intersect(n);for(let n of s)t.Utils.GE(n.x,e.start.x)&&r.push(n);return r}},t.ray=((...e)=>new t.Ray(...e))}},function(t,e,n){"use strict";t.exports=function(t){let{Point:e,Segment:n,Arc:i,Box:r,Edge:s}=t;t.Face=class r{constructor(t,...o){if(this.first,this.last,this._box=void 0,this._orientation=void 0,0!=o.length){if(1==o.length)if(o[0]instanceof Array){let s=o[0];if(0==s.length)return;if(s.every(t=>t instanceof e)){let e=r.points2segments(s);this.shapes2face(t.edges,e)}else if(s.every(t=>t instanceof n||t instanceof i))this.shapes2face(t.edges,s);else if(s.every(t=>"segment"===t.name||"arc"===t.name)){let r=[];for(let t of s){let s;s="segment"===t.name?new n(t.ps.x,t.ps.y,t.pe.x,t.pe.y):new i(new e(t.pc.x,t.pc.y),t.r,t.startAngle,t.endAngle,t.counterClockwise),r.push(s)}this.shapes2face(t.edges,r)}}else if(o[0]instanceof r){let e=o[0];this.first=e.first,this.last=e.last;for(let n of e)t.edges.add(n)}2==o.length&&o[0]instanceof s&&o[1]instanceof s&&(this.first=o[0],this.last=o[1],this.last.next=this.first,this.first.prev=this.last,this.setArcLength())}}[Symbol.iterator](){let t=void 0;return{next:()=>{let e=t||this.first,n=!this.first||!!t&&t===this.first;return t=e?e.next:void 0,{value:e,done:n}}}}get edges(){let t=[];for(let e of this)t.push(e);return t}get size(){let t=0;for(let e of this)t++;return t}static points2segments(t){let e=[];for(let i=0;i<t.length;i++)e.push(new n(t[i],t[(i+1)%t.length]));return e}shapes2face(t,e){for(let n of e){let e=new s(n);this.append(t,e)}}isEmpty(){return void 0===this.first&&void 0===this.last}append(t,e){void 0===this.first?(e.prev=e,e.next=e,this.first=e,this.last=e,e.arc_length=0):(e.prev=this.last,this.last.next=e,this.last=e,this.last.next=this.first,this.first.prev=this.last,e.arc_length=e.prev.arc_length+e.prev.length),e.face=this,t.add(e)}insert(t,e,n){if(void 0===this.first)edge.prev=e,edge.next=e,this.first=e,this.last=e;else{let t=n.next;n.next=e,t.prev=e,e.prev=n,e.next=t,this.last===n&&(this.first=e)}e.face=this,t.add(e)}remove(t,e){e===this.first&&e===this.last?(this.first=void 0,this.last=void 0):(e.prev.next=e.next,e.next.prev=e.prev,e===this.first&&(this.first=e.next),e===this.last&&(this.last=e.prev)),t.delete(e)}reverse(){let t=[],e=this.last;do{e.shape=e.shape.reverse(),t.push(e),e=e.prev}while(e!==this.last);this.first=void 0,this.last=void 0;for(let e of t)void 0===this.first?(e.prev=e,e.next=e,this.first=e,this.last=e,e.arc_length=0):(e.prev=this.last,this.last.next=e,this.last=e,this.last.next=this.first,this.first.prev=this.last,e.arc_length=e.prev.arc_length+e.prev.length);void 0!==this._orientation&&(this._orientation=void 0,this._orientation=this.orientation())}setArcLength(){for(let t of this)t===this.first?t.arc_length=0:t.arc_length=t.prev.arc_length+t.prev.length,t.face=this}area(){return Math.abs(this.signedArea())}signedArea(){let t=0;for(let e of this)t+=e.shape.definiteIntegral(this.box.ymin);return t}orientation(){if(void 0===this._orientation){let e=this.signedArea();t.Utils.EQ_0(e)?this._orientation=t.ORIENTATION.NOT_ORIENTABLE:t.Utils.LT(e,0)?this._orientation=t.ORIENTATION.CCW:this._orientation=t.ORIENTATION.CW}return this._orientation}get box(){if(void 0===this._box){let e=new t.Box;for(let t of this)e=e.merge(t.box);this._box=e}return this._box}getRelation(e){this.first.bv=this.first.bvStart=this.first.bvEnd=void 0;let n=this.first.setInclusion(e),i=e.faces.search(this.box);if(0===i.length)return n;{let r=new t.Polygon;r.addFace(this);let s=0;for(let e of i){e.first.bv=e.first.bvStart=e.first.bvEnd=void 0,e.first.setInclusion(r)===t.INSIDE&&s++}if(n===t.OUTSIDE)return 0===s?t.OUTSIDE:s===i.length&&i.length===e.faces.size?t.CONTAINS:t.INTERLACE;if(n===t.INSIDE)return 0===s?t.INSIDE:t.INTERLACE}}toJSON(){return this.edges.map(t=>t.toJSON())}svg(){let t=`\nM${this.first.start.x},${this.first.start.y}`;for(let e of this)t+=e.svg();return t+=" z"}}}},function(t,e){t.exports=function(t){t.Edge=class{constructor(t){this.shape=t,this.next,this.prev,this.face,this.arc_length=0,this.bvStart=void 0,this.bvEnd=void 0,this.bv=void 0,this.overlap=void 0}get start(){return this.shape.start}get end(){return this.shape.end}get length(){return this.shape.length}get box(){return this.shape.box}middle(){return this.shape.middle()}contains(t){return this.shape.contains(t)}setInclusion(e){if(void 0!==this.bv)return this.bv;if(void 0===this.bvStart&&(this.bvStart=t.ray_shoot(e,this.start)),void 0===this.bvEnd&&(this.bvEnd=t.ray_shoot(e,this.end)),this.bvStart===t.OUTSIDE||this.bvEnd==t.OUTSIDE)this.bv=t.OUTSIDE;else if(this.bvStart===t.INSIDE||this.bvEnd==t.INSIDE)this.bv=t.INSIDE;else{let n=t.ray_shoot(e,this.middle());this.bv=n}return this.bv}svg(){if(this.shape instanceof t.Segment)return` L${this.shape.end.x},${this.shape.end.y}`;if(this.shape instanceof t.Arc){let e,n=this.shape,i=n.counterClockwise?"1":"0";if(t.Utils.EQ(n.sweep,2*Math.PI)){let r=n.counterClockwise?1:-1,s=new t.Arc(n.pc,n.r,n.startAngle,n.startAngle+r*Math.PI,n.counterClockwise),o=new t.Arc(n.pc,n.r,n.startAngle+r*Math.PI,n.endAngle,n.counterClockwise);return e="0",` A${s.r},${s.r} 0 ${e},${i} ${s.end.x},${s.end.y}\n                    A${o.r},${o.r} 0 ${e},${i} ${o.end.x},${o.end.y}`}return e=n.sweep<=Math.PI?"0":"1",` A${n.r},${n.r} 0 ${e},${i} ${n.end.x},${n.end.y}`}}toJSON(){let e=this.shape.clone();return e.name=this.shape instanceof t.Segment?"segment":"arc",e}}}},function(t,e,n){"use strict";t.exports=function(t){t.Box=class e{constructor(t,e,n,i){this.xmin=t,this.ymin=e,this.xmax=n,this.ymax=i}clone(){return new e(this.xmin,this.ymin,this.xmax,this.ymax)}get low(){return new t.Point(this.xmin,this.ymin)}get high(){return new t.Point(this.xmax,this.ymax)}get max(){return this.clone()}notIntersect(t){return this.xmax<t.xmin||this.xmin>t.xmax||this.ymax<t.ymin||this.ymin>t.ymax}intersect(t){return!this.notIntersect(t)}merge(t){return new e(void 0===this.xmin?t.xmin:Math.min(this.xmin,t.xmin),void 0===this.ymin?t.ymin:Math.min(this.ymin,t.ymin),void 0===this.xmax?t.xmax:Math.max(this.xmax,t.xmax),void 0===this.ymax?t.ymax:Math.max(this.ymax,t.ymax))}less_than(t){return!!this.low.lessThan(t.low)||!(!this.low.equalTo(t.low)||!this.high.lessThan(t.high))}equal_to(t){return this.low.equalTo(t.low)&&this.high.equalTo(t.high)}output(){return this.clone()}maximal_val(t,e){return t.merge(e)}val_less_than(t,e){return t.lessThan(e)}set(t,e,n,i){this.xmin=t,this.ymin=e,this.xmax=n,this.ymax=i}}}},function(t,e,n){"use strict";t.exports=function(t){t.Arc=class e{constructor(e=new t.Point,n=1,i=0,r=2*Math.PI,s=!0){this.pc=e.clone(),this.r=n,this.startAngle=i,this.endAngle=r,this.counterClockwise=s}clone(){return new t.Arc(this.pc.clone(),this.r,this.startAngle,this.endAngle,this.counterClockwise)}get sweep(){if(t.Utils.EQ(this.startAngle,this.endAngle))return 0;if(t.Utils.EQ(Math.abs(this.startAngle-this.endAngle),t.PIx2))return t.PIx2;let e;return e=this.counterClockwise?t.Utils.GT(this.endAngle,this.startAngle)?this.endAngle-this.startAngle:this.endAngle-this.startAngle+t.PIx2:t.Utils.GT(this.startAngle,this.endAngle)?this.startAngle-this.endAngle:this.startAngle-this.endAngle+t.PIx2,t.Utils.GT(e,t.PIx2)&&(e-=t.PIx2),t.Utils.LT(e,0)&&(e+=t.PIx2),e}get start(){return new t.Point(this.pc.x+this.r,this.pc.y).rotate(this.startAngle,this.pc)}get end(){return new t.Point(this.pc.x+this.r,this.pc.y).rotate(this.endAngle,this.pc)}get center(){return this.pc.clone()}get vertices(){return[this.start.clone(),this.end.clone()]}get length(){return Math.abs(this.sweep*this.r)}get box(){let e=this.breakToFunctional().reduce((t,e)=>t.merge(e.start.box),new t.Box);return e=e.merge(this.end.box)}contains(e){if(!t.Utils.EQ(this.pc.distanceTo(e)[0],this.r))return!1;if(e.equalTo(this.start))return!0;let n=new t.Vector(this.pc,e).slope,i=new t.Arc(this.pc,this.r,this.startAngle,n,this.counterClockwise);return t.Utils.LE(i.length,this.length)}split(e){if(!this.contains(e))return[];if(t.Utils.EQ_0(this.sweep))return[this.clone()];if(this.start.equalTo(e)||this.end.equalTo(e))return[this.clone()];let n=new t.Vector(this.pc,e).slope;return[new t.Arc(this.pc,this.r,this.startAngle,n,this.counterClockwise),new t.Arc(this.pc,this.r,n,this.endAngle,this.counterClockwise)]}middle(){let e=this.counterClockwise===t.CCW?this.startAngle+this.sweep/2:this.startAngle-this.sweep/2;return new t.Arc(this.pc,this.r,this.startAngle,e,this.counterClockwise).end}chordHeight(){return(1-Math.cos(Math.abs(this.sweep/2)))*this.r}intersect(n){return n instanceof t.Line?n.intersect(this):n instanceof t.Circle?e.intersectArc2Circle(this,n):n instanceof t.Segment?n.intersect(this):n instanceof t.Arc?e.intersectArc2Arc(this,n):void 0}distanceTo(e){let{Distance:n}=t;if(e instanceof t.Point){let[t,i]=n.point2arc(e,this);return[t,i=i.reverse()]}if(e instanceof t.Circle){let[t,i]=n.arc2circle(this,e);return[t,i]}if(e instanceof t.Line){let[t,i]=n.arc2line(this,e);return[t,i]}if(e instanceof t.Segment){let[t,i]=n.segment2arc(e,this);return[t,i=i.reverse()]}if(e instanceof t.Arc){let[t,i]=n.arc2arc(this,e);return[t,i]}if(e instanceof t.Polygon){let[t,i]=n.shape2polygon(this,e);return[t,i]}if(e instanceof t.PlanarSet){let[t,i]=n.shape2planarSet(this,e);return[t,i]}}breakToFunctional(){let e=[],n=[0,Math.PI/2,2*Math.PI/2,3*Math.PI/2],i=[this.pc.translate(this.r,0),this.pc.translate(0,this.r),this.pc.translate(-this.r,0),this.pc.translate(0,-this.r)],r=[];for(let e=0;e<4;e++)i[e].on(this)&&r.push(new t.Arc(this.pc,this.r,this.startAngle,n[e],this.counterClockwise));if(0==r.length)e.push(this.clone());else{r.sort((t,e)=>t.length-e.length);for(let n=0;n<r.length;n++){let i,s=e.length>0?e[e.length-1]:void 0;i=s?new t.Arc(this.pc,this.r,s.endAngle,r[n].endAngle,this.counterClockwise):new t.Arc(this.pc,this.r,this.startAngle,r[n].endAngle,this.counterClockwise),t.Utils.EQ_0(i.length)||e.push(i.clone())}let n,i=e.length>0?e[e.length-1]:void 0;n=i?new t.Arc(this.pc,this.r,i.endAngle,this.endAngle,this.counterClockwise):new t.Arc(this.pc,this.r,this.startAngle,this.endAngle,this.counterClockwise),t.Utils.EQ_0(n.length)||e.push(n.clone())}return e}tangentInStart(){let e=new t.Vector(this.pc,this.start),n=this.counterClockwise?Math.PI/2:-Math.PI/2;return e.rotate(n).normalize()}tangentInEnd(){let e=new t.Vector(this.pc,this.end),n=this.counterClockwise?-Math.PI/2:Math.PI/2;return e.rotate(n).normalize()}reverse(){return new e(this.pc,this.r,this.endAngle,this.startAngle,!this.counterClockwise)}static intersectArc2Arc(e,n){var i=[];if(e.box.notIntersect(n.box))return i;if(e.pc.equalTo(n.pc)&&t.Utils.EQ(e.r,n.r)){let t;return(t=e.start).on(n)&&i.push(t),(t=e.end).on(n)&&i.push(t),(t=n.start).on(e)&&i.push(t),(t=n.end).on(e)&&i.push(t),i}let r=new t.Circle(e.pc,e.r),s=new t.Circle(n.pc,n.r),o=r.intersect(s);for(let t of o)t.on(e)&&t.on(n)&&i.push(t);return i}static intersectArc2Circle(e,n){let i=[];if(e.box.notIntersect(n.box))return i;if(n.pc.equalTo(e.pc)&&t.Utils.EQ(n.r,e.r))return i.push(e.start),i.push(e.end),i;let r=n,s=new t.Circle(e.pc,e.r),o=r.intersect(s);for(let t of o)t.on(e)&&i.push(t);return i}definiteIntegral(t=0){return this.breakToFunctional().reduce((e,n)=>e+n.circularSegmentDefiniteIntegral(t),0)}circularSegmentDefiniteIntegral(e){let n=new t.Line(this.start,this.end),i=this.pc.leftTo(n),r=new t.Segment(this.start,this.end).definiteIntegral(e),s=this.circularSegmentArea();return i?r-s:r+s}circularSegmentArea(){return.5*this.r*this.r*(this.sweep-Math.sin(this.sweep))}svg(e={stroke:"black",strokeWidth:"3",fill:"none"}){let n=this.sweep<=Math.PI?"0":"1",i=this.counterClockwise?"1":"0",{stroke:r,strokeWidth:s,fill:o}=e;if(t.Utils.EQ(this.sweep,2*Math.PI)){return new t.Circle(this.pc,this.r).svg(e)}return`\n<path d="M${this.start.x},${this.start.y}\n                             A${this.r},${this.r} 0 ${n},${i} ${this.end.x},${this.end.y}"\n                    stroke="${r}" stroke-width="${s}" fill="${o}"/>`}},t.arc=((...e)=>new t.Arc(...e))}},function(t,e,n){"use strict";t.exports=function(t){t.Segment=class e{constructor(...e){if(this.ps=new t.Point,this.pe=new t.Point,0!=e.length){if(1==e.length&&e[0]instanceof Array&&4==e[0].length){let n=e[0];return this.ps=new t.Point(n[0],n[1]),void(this.pe=new t.Point(n[2],n[3]))}if(2==e.length&&e[0]instanceof t.Point&&e[1]instanceof t.Point)return this.ps=e[0].clone(),void(this.pe=e[1].clone());if(4==e.length)return this.ps=new t.Point(e[0],e[1]),void(this.pe=new t.Point(e[2],e[3]));throw t.Errors.ILLEGAL_PARAMETERS}}clone(){return new t.Segment(this.start,this.end)}get start(){return this.ps}get end(){return this.pe}get vertices(){return[this.ps.clone(),this.pe.clone()]}get length(){return this.start.distanceTo(this.end)[0]}get slope(){return new t.Vector(this.start,this.end).slope}get box(){return new t.Box(Math.min(this.start.x,this.end.x),Math.min(this.start.y,this.end.y),Math.max(this.start.x,this.end.x),Math.max(this.start.y,this.end.y))}contains(e){return t.Utils.EQ_0(this.distanceToPoint(e))}intersect(n){return n instanceof t.Line?e.intersectSegment2Line(this,n):n instanceof t.Segment?e.intersectSegment2Segment(this,n):n instanceof t.Circle?e.intersectSegment2Circle(this,n):n instanceof t.Arc?e.intersectSegment2Arc(this,n):void 0}distanceTo(e){let{Distance:n}=t;if(e instanceof t.Point){let[t,i]=n.point2segment(e,this);return[t,i=i.reverse()]}if(e instanceof t.Circle){let[t,i]=n.segment2circle(this,e);return[t,i]}if(e instanceof t.Line){let[t,i]=n.segment2line(this,e);return[t,i]}if(e instanceof t.Segment){let[t,i]=n.segment2segment(this,e);return[t,i]}if(e instanceof t.Arc){let[t,i]=n.segment2arc(this,e);return[t,i]}if(e instanceof t.Polygon){let[t,i]=n.shape2polygon(this,e);return[t,i]}if(e instanceof t.PlanarSet){let[t,i]=n.shape2planarSet(this,e);return[t,i]}}tangentInStart(){return new t.Vector(this.start,this.end).normalize()}tangentInEnd(){return new t.Vector(this.end,this.start).normalize()}reverse(){return new e(this.end,this.start)}split(e){return this.contains(e)?this.start.equalTo(this.end)?[this.clone()]:this.start.equalTo(e)||this.end.equalTo(e)?[this]:[new t.Segment(this.start,e),new t.Segment(e,this.end)]:[]}middle(){return new t.Point((this.start.x+this.end.x)/2,(this.start.y+this.end.y)/2)}distanceToPoint(e){let[n,...i]=t.Distance.point2segment(e,this);return n}definiteIntegral(t=0){return(this.end.x-this.start.x)*(this.start.y-t+(this.end.y-t))/2}static intersectSegment2Line(e,n){let i=[],r=t.Utils.EQ_0(e.length);return e.ps.on(n)&&i.push(e.ps),e.pe.on(n)&&!r&&i.push(e.pe),i.length>0?i:e.ps.leftTo(n)&&e.pe.leftTo(n)||!e.ps.leftTo(n)&&!e.pe.leftTo(n)?i:new t.Line(e.ps,e.pe).intersect(n)}static intersectSegment2Segment(e,n){let i=[];if(e.box.notIntersect(n.box))return i;let r=new t.Line(e.ps,e.pe),s=new t.Line(n.ps,n.pe);if(r.incidentTo(s))e.ps.on(n)&&i.push(e.ps),e.pe.on(n)&&i.push(e.pe),!n.ps.on(e)||n.ps.equalTo(e.ps)||n.ps.equalTo(e.pe)||i.push(n.ps),!n.pe.on(e)||n.pe.equalTo(e.ps)||n.pe.equalTo(e.pe)||i.push(n.pe);else{let t=r.intersect(s);t.length>0&&t[0].on(e)&&t[0].on(n)&&i.push(t[0])}return i}static intersectSegment2Circle(e,n){let i=[];if(e.box.notIntersect(n.box))return i;let r=new t.Line(e.ps,e.pe).intersect(n);for(let t of r)t.on(e)&&i.push(t);return i}static intersectSegment2Arc(e,n){let i=[];if(e.box.notIntersect(n.box))return i;let r=new t.Line(e.ps,e.pe),s=new t.Circle(n.pc,n.r),o=r.intersect(s);for(let t of o)t.on(e)&&t.on(n)&&i.push(t);return i}svg(t={stroke:"black",strokeWidth:"3"}){let{stroke:e,strokeWidth:n}=t;return`\n<line x1="${this.start.x}" y1="${this.start.y}" x2="${this.end.x}" y2="${this.end.y}" stroke="${e}" stroke-width="${n}" />`}},t.segment=((...e)=>new t.Segment(...e))}},function(t,e,n){"use strict";t.exports=function(t){let{Arc:e,vector:n}=t;t.Circle=class e{constructor(t,e){this.pc=t,this.r=e}clone(){return new t.Circle(this.pc.clone(),this.r)}get center(){return this.pc}get box(){return new t.Box(this.pc.x-this.r,this.pc.y-this.r,this.pc.x+this.r,this.pc.y+this.r)}contains(e){return t.Utils.LE(e.distanceTo(this.center)[0],this.r)}toArc(e=!0){return new t.Arc(this.center,this.r,Math.PI,-Math.PI,e)}intersect(n){return n instanceof t.Line?n.intersect(this):n instanceof t.Segment?n.intersect(this):n instanceof t.Circle?e.intersectCirle2Circle(this,n):n instanceof t.Arc?n.intersect(this):void 0}distanceTo(e){let{Distance:n}=t,{point2circle:i,circle2circle:r,circle2line:s,segment2circle:o,arc2circle:l}=n;if(e instanceof t.Point){let[t,n]=i(e,this);return[t,n=n.reverse()]}if(e instanceof t.Circle){let[t,n]=r(this,e);return[t,n]}if(e instanceof t.Line){let[t,n]=s(this,e);return[t,n]}if(e instanceof t.Segment){let[t,n]=o(e,this);return[t,n=n.reverse()]}if(e instanceof t.Arc){let[t,n]=l(e,this);return[t,n=n.reverse()]}if(e instanceof t.Polygon){let[t,i]=n.shape2polygon(this,e);return[t,i]}if(e instanceof t.PlanarSet){let[t,i]=n.shape2planarSet(this,e);return[t,i]}}static intersectCirle2Circle(e,n){let i=[];if(e.box.notIntersect(n.box))return i;let r=new t.Vector(e.pc,n.pc),s=e.r,o=n.r;if(t.Utils.EQ_0(s)||t.Utils.EQ_0(o))return i;if(t.Utils.EQ_0(r.x)&&t.Utils.EQ_0(r.y)&&t.Utils.EQ(s,o))return i.push(e.pc.translate(-s,0)),i;let l,h=e.pc.distanceTo(n.pc)[0];if(t.Utils.GT(h,s+o))return i;if(t.Utils.LT(h,Math.abs(s-o)))return i;if(r.x/=h,r.y/=h,t.Utils.EQ(h,s+o)||t.Utils.EQ(h,Math.abs(s-o)))return l=e.pc.translate(s*r.x,s*r.y),i.push(l),i;let a=s*s/(2*h)-o*o/(2*h)+h/2,c=e.pc.translate(a*r.x,a*r.y),u=Math.sqrt(s*s-a*a);return l=c.translate(r.rotate90CCW().multiply(u)),i.push(l),l=c.translate(r.rotate90CW().multiply(u)),i.push(l),i}svg(t={stroke:"black",strokeWidth:"3",fill:"none"}){let{stroke:e,strokeWidth:n,fill:i}=t;return`\n<circle cx="${this.pc.x}" cy="${this.pc.y}" r="${this.r}" stroke="${e}" stroke-width="${n}" fill="${i}" />`}},t.circle=((...e)=>new t.Circle(...e))}},function(t,e,n){"use strict";t.exports=function(t){t.Line=class e{constructor(...n){if(this.pt=new t.Point,this.norm=new t.Vector(0,1),0!=n.length){if(2==n.length){let i=n[0],r=n[1];if(i instanceof t.Point&&r instanceof t.Point)return this.pt=i,void(this.norm=e.points2norm(i,r));if(i instanceof t.Point&&r instanceof t.Vector){if(t.Utils.EQ_0(r.x)&&t.Utils.EQ_0(r.y))throw t.Errors.ILLEGAL_PARAMETERS;return this.pt=i.clone(),void(this.norm=r.clone())}if(i instanceof t.Vector&&r instanceof t.Point){if(t.Utils.EQ_0(i.x)&&t.Utils.EQ_0(i.y))throw t.Errors.ILLEGAL_PARAMETERS;return this.pt=r.clone(),void(this.norm=i.clone())}}throw t.Errors.ILLEGAL_PARAMETERS}}clone(){return new t.Line(this.pt,this.norm)}get slope(){return new t.Vector(this.norm.y,-this.norm.x).slope}get standard(){return[this.norm.x,this.norm.y,this.norm.dot(this.pt)]}parallelTo(e){return t.Utils.EQ_0(this.norm.cross(e.norm))}incidentTo(t){return(this.norm.equalTo(t.norm)||this.norm.equalTo(t.norm.invert()))&&this.pt.on(t)}contains(e){if(this.pt.equalTo(e))return!0;let n=new t.Vector(this.pt,e);return t.Utils.EQ_0(this.norm.dot(n))}intersect(n){return n instanceof t.Line?e.intersectLine2Line(this,n):n instanceof t.Circle?e.intersectLine2Circle(this,n):n instanceof t.Segment?n.intersect(this):n instanceof t.Arc?e.intersectLine2Arc(this,n):void 0}distanceTo(e){let{Distance:n}=t;if(e instanceof t.Point){let[t,i]=n.point2line(e,this);return[t,i=i.reverse()]}if(e instanceof t.Circle){let[t,i]=n.circle2line(e,this);return[t,i=i.reverse()]}if(e instanceof t.Segment){let[t,i]=n.segment2line(e,this);return[t,i.reverse()]}if(e instanceof t.Arc){let[t,i]=n.arc2line(e,this);return[t,i.reverse()]}if(e instanceof t.Polygon){let[t,i]=n.shape2polygon(this,e);return[t,i]}}static points2norm(e,n){if(e.equalTo(n))throw t.Errors.ILLEGAL_PARAMETERS;return new t.Vector(e,n).normalize().rotate90CCW()}static intersectLine2Line(e,n){let i=[],[r,s,o]=e.standard,[l,h,a]=n.standard,c=r*h-s*l,u=o*h-s*a,p=r*a-o*l;if(!t.Utils.EQ_0(c)){let e=new t.Point(u/c,p/c);i.push(e)}return i}static intersectLine2Circle(e,n){let i=[],r=n.pc.projectionOn(e),s=n.pc.distanceTo(r)[0];if(t.Utils.EQ(s,n.r))i.push(r);else if(t.Utils.LT(s,n.r)){var o,l,h=Math.sqrt(n.r*n.r-s*s);o=e.norm.rotate90CCW().multiply(h),l=r.translate(o),i.push(l),o=e.norm.rotate90CW().multiply(h),l=r.translate(o),i.push(l)}return i}static intersectLine2Box(e,n){let i=[new t.Point(n.xmin,n.ymin),new t.Point(n.xmax,n.ymin),new t.Point(n.xmax,n.ymax),new t.Point(n.xmin,n.ymax)],r=[new t.Segment(i[0],i[1]),new t.Segment(i[1],i[2]),new t.Segment(i[2],i[3]),new t.Segment(i[3],i[0])],s=[];for(let t of r){let n=t.intersect(e);for(let t of n)s.push(t)}return s}static intersectLine2Arc(n,i){let r=[];if(0==e.intersectLine2Box(n,i.box).length)return r;let s=new t.Circle(i.pc,i.r),o=n.intersect(s);for(let t of o)t.on(i)&&r.push(t);return r}},t.line=((...e)=>new t.Line(...e))}},function(t,e,n){"use strict";t.exports=function(t){t.Vector=class e{constructor(...e){if(this.x=0,this.y=0,0!=e.length){if(2==e.length){let n=e[0],i=e[1];if("number"==typeof n&&"number"==typeof i)return this.x=n,void(this.y=i);if(n instanceof t.Point&&i instanceof t.Point)return this.x=i.x-n.x,void(this.y=i.y-n.y)}throw t.Errors.ILLEGAL_PARAMETERS}}clone(){return new e(this.x,this.y)}get slope(){let t=Math.atan2(this.y,this.x);return t<0&&(t=2*Math.PI+t),t}get length(){return Math.sqrt(this.dot(this))}equalTo(e){return t.Utils.EQ(this.x,e.x)&&t.Utils.EQ(this.y,e.y)}multiply(t){return new e(t*this.x,t*this.y)}dot(t){return this.x*t.x+this.y*t.y}cross(t){return this.x*t.y-this.y*t.x}normalize(){if(!t.Utils.EQ_0(this.length))return new e(this.x/this.length,this.y/this.length);throw t.Errors.ZERO_DIVISION}rotate(e){let n=new t.Point(this.x,this.y).rotate(e);return new t.Vector(n.x,n.y)}rotate90CCW(){return new t.Vector(-this.y,this.x)}rotate90CW(){return new t.Vector(this.y,-this.x)}invert(){return new t.Vector(-this.x,-this.y)}},t.vector=((...e)=>new t.Vector(...e))}},function(t,e){t.exports=function(t){t.Point=class e{constructor(t=0,e=0){this.x=Number.isNaN(t)?0:t,this.y=Number.isNaN(e)?0:e}get box(){return new t.Box(this.x,this.y,this.x,this.y)}clone(){return new t.Point(this.x,this.y)}get vertices(){return[this.clone()]}equalTo(e){return t.Utils.EQ(this.x,e.x)&&t.Utils.EQ(this.y,e.y)}lessThan(e){return!!t.Utils.LT(this.y,e.y)||!(!t.Utils.EQ(this.y,e.y)||!t.Utils.LT(this.x,e.x))}rotate(e,n={x:0,y:0}){var i=n.x+(this.x-n.x)*Math.cos(e)-(this.y-n.y)*Math.sin(e),r=n.y+(this.x-n.x)*Math.sin(e)+(this.y-n.y)*Math.cos(e);return new t.Point(i,r)}translate(...e){if(1==e.length&&e[0]instanceof t.Vector)return new t.Point(this.x+e[0].x,this.y+e[0].y);if(2==e.length&&"number"==typeof e[0]&&"number"==typeof e[1])return new t.Point(this.x+e[0],this.y+e[1]);throw t.Errors.ILLEGAL_PARAMETERS}projectionOn(e){if(this.equalTo(e.pt))return this.clone();let n=new t.Vector(this,e.pt);if(t.Utils.EQ_0(n.cross(e.norm)))return e.pt.clone();let i=n.dot(e.norm),r=e.norm.multiply(i);return this.translate(r)}leftTo(e){let n=new t.Vector(e.pt,this);return t.Utils.GT(n.dot(e.norm),0)}distanceTo(n){let{Distance:i}=t;if(n instanceof e){let e=n.x-this.x,i=n.y-this.y;return[Math.sqrt(e*e+i*i),new t.Segment(this,n)]}return n instanceof t.Line?i.point2line(this,n):n instanceof t.Circle?i.point2circle(this,n):n instanceof t.Segment?i.point2segment(this,n):n instanceof t.Arc?i.point2arc(this,n):n instanceof t.Polygon?i.point2polygon(this,n):n instanceof t.PlanarSet?i.shape2planarSet(this,n):void 0}on(e){return e instanceof t.Point?this.equalTo(e):e instanceof t.Line?e.contains(this):e instanceof t.Circle?e.contains(this):e instanceof t.Segment?e.contains(this):e instanceof t.Arc?e.contains(this):e instanceof t.Polygon?e.contains(this):void 0}svg(t={r:"5",stroke:"black",strokeWidth:"1",fill:"red"}){let{r:e,stroke:n,strokeWidth:i,fill:r}=t;return`\n<circle cx="${this.x}" cy="${this.y}" r="${e}" stroke="${n}" stroke-width="${i}" fill="${r}" />`}},t.point=((...e)=>new t.Point(...e))}},function(t,e){t.exports=class t{constructor(t,e){this.low=t,this.high=e}get max(){return this.high}interval(e,n){return new t(e,n)}clone(){return new t(this.low,this.high)}less_than(t){return this.low<t.low||this.low==t.low&&this.high<t.high}equal_to(t){return this.low==t.low&&this.high==t.high}intersect(t){return!this.not_intersect(t)}not_intersect(t){return this.high<t.low||t.high<this.low}output(){return[this.low,this.high]}maximal_val(t,e){return Math.max(t,e)}val_less_than(t,e){return t<e}}},function(t,e,n){"use strict";let i=n(15),{RB_TREE_COLOR_RED:r,RB_TREE_COLOR_BLACK:s}=n(0);t.exports=class{constructor(t,e,n=null,r=null,o=null,l=s){this.left=n,this.right=r,this.parent=o,this.color=l,this.item={key:t,value:e},t&&t instanceof Array&&2==t.length&&(Number.isNaN(t[0])||Number.isNaN(t[1])||(this.item.key=new i(Math.min(t[0],t[1]),Math.max(t[0],t[1])))),this.max=this.item.key?this.item.key.max:void 0}isNil(){return void 0===this.item.key&&void 0===this.item.value&&null===this.left&&null===this.right&&this.color===s}less_than(t){return this.item.key.less_than(t.item.key)}equal_to(t){let e=!0;return this.item.value&&t.item.value&&(e=this.item.value.equal_to?this.item.value.equal_to(t.item.value):this.item.value==t.item.value),this.item.key.equal_to(t.item.key)&&e}intersect(t){return this.item.key.intersect(t.item.key)}copy_data(t){this.item.key=t.item.key.clone(),this.item.value=t.item.value}update_max(){if(this.max=this.item.key?this.item.key.max:void 0,this.right&&this.right.max){let t=this.item.key.maximal_val;this.max=t(this.max,this.right.max)}if(this.left&&this.left.max){let t=this.item.key.maximal_val;this.max=t(this.max,this.left.max)}}not_intersect_left_subtree(t){return(0,this.item.key.val_less_than)(this.left.max.high?this.left.max.high:this.left.max,t.item.key.low)}not_intersect_right_subtree(t){let e=this.item.key.val_less_than,n=this.right.max.low?this.right.max.low:this.right.item.key.low;return e(t.item.key.high,n)}}},function(t,e,n){"use strict";let i=n(1);t.exports=function(t){t.PlanarSet=class extends Set{constructor(){super(),this.index=new i}add(t){let e=this.size;if(super.add(t),this.size>e){this.index.insert(t.box,t)}return this}delete(t){let e=super.delete(t);return e&&this.index.remove(t.box,t),e}clear(){}search(t){return this.index.search(t)}hit(e){let n=new t.Box(e.x-1,e.y-1,e.x+1,e.y+1);return this.index.search(n).filter(t=>e.on(t))}svg(){return[...this].reduce((t,e)=>t+e.svg(),"")}}}},function(t,e){t.exports={ILLEGAL_PARAMETERS:new ReferenceError("Illegal Parameters"),ZERO_DIVISION:new Error("Zero division")}},function(t,e){t.exports={DP_TOL:1e-6,EQ_0:function(t){return t<1e-6&&t>-1e-6},EQ:function(t,e){return t-e<1e-6&&t-e>-1e-6},GT:(t,e)=>t-e>1e-6,GE:(t,e)=>t-e>-1e-6,LT:(t,e)=>t-e<-1e-6,LE:(t,e)=>t-e<1e-6}},function(t,e,n){"use strict";let i=n(19),r=n(18),s=new class{constructor(){this.version="0.0.1",this.DP_TOL=i.DP_TOL,this.CCW=!0,this.CW=!1,this.ORIENTATION={CCW:-1,CW:1,NOT_ORIENTABLE:0},this.PIx2=2*Math.PI,this.PI_2=.5*Math.PI,this.Utils=i,this.Errors=r,this.INSIDE=1,this.OUTSIDE=0,this.BOUNDARY=2,this.CONTAINS=3,this.INTERLACE=4,this.CLIP_INSIDE=1,this.CLIP_OUTSIDE=0,this.BOOLEAN_UNION=1,this.BOOLEAN_INTERSECT=2,this.BOOLEAN_SUBTRACT=3,this.OVERLAP_SAME=1,this.OVERLAP_OPPOSITE=2}};n(17)(s),n(14)(s),n(13)(s),n(12)(s),n(11)(s),n(10)(s),n(9)(s),n(8)(s),n(7)(s),n(6)(s),n(5)(s),n(4)(s),n(3)(s),n(2)(s),t.exports=s}]);
+	//# sourceMappingURL=flatten.min.js.map
+
+/***/ },
+/* 92 */
 /***/ function(module, exports) {
 
 	/**
@@ -30452,7 +30576,7 @@
 
 
 /***/ },
-/* 91 */
+/* 93 */
 /***/ function(module, exports) {
 
 	/**
@@ -30504,12 +30628,12 @@
 
 
 /***/ },
-/* 92 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(19),
-	    getRawTag = __webpack_require__(95),
-	    objectToString = __webpack_require__(96);
+	    getRawTag = __webpack_require__(97),
+	    objectToString = __webpack_require__(98);
 	
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -30538,7 +30662,7 @@
 
 
 /***/ },
-/* 93 */
+/* 95 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -30549,10 +30673,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 94 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(97);
+	var overArg = __webpack_require__(99);
 	
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -30561,7 +30685,7 @@
 
 
 /***/ },
-/* 95 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(19);
@@ -30613,7 +30737,7 @@
 
 
 /***/ },
-/* 96 */
+/* 98 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -30641,7 +30765,7 @@
 
 
 /***/ },
-/* 97 */
+/* 99 */
 /***/ function(module, exports) {
 
 	/**
@@ -30662,10 +30786,10 @@
 
 
 /***/ },
-/* 98 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(93);
+	var freeGlobal = __webpack_require__(95);
 	
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -30677,7 +30801,7 @@
 
 
 /***/ },
-/* 99 */
+/* 101 */
 /***/ function(module, exports) {
 
 	/**
@@ -30712,7 +30836,7 @@
 
 
 /***/ },
-/* 100 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30825,7 +30949,7 @@
 
 
 /***/ },
-/* 101 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30943,7 +31067,7 @@
 	}
 
 /***/ },
-/* 102 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30957,7 +31081,7 @@
 	
 	var emptyFunction = __webpack_require__(9);
 	var invariant = __webpack_require__(11);
-	var ReactPropTypesSecret = __webpack_require__(104);
+	var ReactPropTypesSecret = __webpack_require__(106);
 	
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -31007,7 +31131,7 @@
 
 
 /***/ },
-/* 103 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31036,12 +31160,12 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(102)();
+	  module.exports = __webpack_require__(104)();
 	}
 
 
 /***/ },
-/* 104 */
+/* 106 */
 /***/ function(module, exports) {
 
 	/**
@@ -31059,7 +31183,7 @@
 
 
 /***/ },
-/* 105 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -31072,7 +31196,7 @@
 	 LICENSE file in the root directory of this source tree.
 	 Modernizr 3.0.0pre (Custom Build) | MIT
 	*/
-	'use strict';var aa=__webpack_require__(1);__webpack_require__(11);var l=__webpack_require__(67),n=__webpack_require__(13),ba=__webpack_require__(66),ca=__webpack_require__(9),da=__webpack_require__(17),ea=__webpack_require__(73),fa=__webpack_require__(68),ha=__webpack_require__(69),ia=__webpack_require__(70);
+	'use strict';var aa=__webpack_require__(1);__webpack_require__(11);var l=__webpack_require__(68),n=__webpack_require__(13),ba=__webpack_require__(67),ca=__webpack_require__(9),da=__webpack_require__(17),ea=__webpack_require__(74),fa=__webpack_require__(69),ha=__webpack_require__(70),ia=__webpack_require__(71);
 	function w(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:w("227");
 	function ja(a){switch(a){case "svg":return"http://www.w3.org/2000/svg";case "math":return"http://www.w3.org/1998/Math/MathML";default:return"http://www.w3.org/1999/xhtml"}}
 	var ka={Namespaces:{html:"http://www.w3.org/1999/xhtml",mathml:"http://www.w3.org/1998/Math/MathML",svg:"http://www.w3.org/2000/svg"},getIntrinsicNamespace:ja,getChildNamespace:function(a,b){return null==a||"http://www.w3.org/1999/xhtml"===a?ja(b):"http://www.w3.org/2000/svg"===a&&"foreignObject"===b?"http://www.w3.org/1999/xhtml":a}},la=null,oa={};
@@ -31321,7 +31445,7 @@
 
 
 /***/ },
-/* 106 */
+/* 108 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31342,7 +31466,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 107 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @remove-on-eject-begin
@@ -31361,12 +31485,12 @@
 	  // Rejection tracking prevents a common issue where React gets into an
 	  // inconsistent state due to an error, but it gets swallowed by a Promise,
 	  // and the user has no idea what causes React's erratic future behavior.
-	  __webpack_require__(101).enable();
-	  window.Promise = __webpack_require__(100);
+	  __webpack_require__(103).enable();
+	  window.Promise = __webpack_require__(102);
 	}
 	
 	// fetch() polyfill for making API calls.
-	__webpack_require__(108);
+	__webpack_require__(110);
 	
 	// Object.assign() is commonly used with React.
 	// It will use the native implementation if it's present and isn't buggy.
@@ -31374,7 +31498,7 @@
 
 
 /***/ },
-/* 108 */
+/* 110 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -31838,7 +31962,7 @@
 
 
 /***/ },
-/* 109 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -31867,7 +31991,7 @@
 
 
 /***/ },
-/* 110 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31930,7 +32054,7 @@
 	}
 
 /***/ },
-/* 111 */
+/* 113 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31986,7 +32110,7 @@
 	}
 
 /***/ },
-/* 112 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32134,14 +32258,14 @@
 	}
 
 /***/ },
-/* 113 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(114);
+	module.exports = __webpack_require__(116);
 
 
 /***/ },
-/* 114 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {'use strict';
@@ -32150,7 +32274,7 @@
 	  value: true
 	});
 	
-	var _ponyfill = __webpack_require__(115);
+	var _ponyfill = __webpack_require__(117);
 	
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 	
@@ -32173,10 +32297,10 @@
 	
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(120)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(122)(module)))
 
 /***/ },
-/* 115 */
+/* 117 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32204,31 +32328,31 @@
 	};
 
 /***/ },
-/* 116 */
+/* 118 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3MEYwOEQ4MDMwMzJFNDExOUZGN0MyRjAwQkZFNDkwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4NkNFODE2MzMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4NkNFODE2MjMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM3Q0UwRDg3MzgzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjcwRjA4RDgwMzAzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nXk3UAAAAjtJREFUeNrU1ktIVFEcx/FRhExEei0kULQkiijMKduo0RNCEHuQRohgggsVJbRSNy2qRSK4qIjohRARk5YgGvmoVSEWRe9EzHJVkFZEoInT9w+/gXGasjngwgMf7uDcOeee/+Nco/x+v2cuR7RnjkdM4MPh+jOBj+moxVYsxnvcQhO+Bf/48umjEe+gAHcxgM1YgkNIxGOsjHQHUYEcsIP1XHqQg7dIk36Mo8JugxfTf5swdFfBO6jDSU1+CvdRrRDdwFn8wB7XJG9XrFejCOvQhgnkoxE+3ee0gMX7E1bgmfLRgG0qBrvuwiKnKmJ8xCol0ybLxBaUoBcH8QqjrjvwKZGf8QAJeI0NWsRC9Ut/b3SpIgvRUyX6Es4rD7sxhevqgyOqtj71yz+rKThEY9iJOziAVtX9S31vE5ZhEjvwSCU9gi8K4+3QEg5ttEFYP1zBRnzVwtYHVZp8IZoRiyTE4Y2+f4KU2c6iKdV9qXaSgYfoVPwvahEr57VYjmTtxh6sW/fNzEGYM2lGrnAOWYjHGizFBZWuR6EtxFV8IAcnIjlN7SnKdbXfLECL+sXK+Ttytah1/D6X49omH1a8LVzZCmUHjqt/NuEdUl3fB2MKxXMtaP1ioWhXTuwBlqk4nBawA3CvwnVPlWRHygtcUxXuV8n+0Qf/M27qfCpGnp7WynlIrMRr9LIKX0XhRkhlpakUu1RZg3oh2ZMfQ6UdO4FOdnknDwU1ocX+p15KXh2SvrBn0bz9r+K3AAMAvVSdlmlN6ucAAAAASUVORK5CYII="
 
 /***/ },
-/* 117 */
+/* 119 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAB3RJTUUH1AgfBgU3vDbVaQAAAAlwSFlzAAAPPAAADzwBFzqfWQAAAwBQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Bz0LCAAAAAJ0Uk5T/wDltzBKAAAARUlEQVR42mNgxAIYsPEYkMUZoGwGJNVwNoLAUIWmngHVNFQ2iitQnQQTZACqRkfYVaJrg1qFUE20IMnehGtFNZhIQSAAABhlAUeIwcHOAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 118 */
+/* 120 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACWUExURezp2L3CsAAAAH91jbamy9Sx1NXVxL2u0MvA2yEeEZy460hBJUU/JAC+ACQhE4qi2Zaw5JCp3se72Ap3Hsi82cq+2qK/8XeKtWNfTb+x0nSEsG19pH6QtWFfU8S31nt1Wpax5Xp0WoeeynBrVMm92WhkVsGz02JfU21oU5m06Mq/2se62MS21bmqzsW517ipzbyu0P///wUDcXkAAAAydFJOU/////////////////////////////////////////////////////////////////8ADVCY7wAAAO1JREFUeNpiMMQCAAKIAZsgQABhFQQIIAZDeW5uZTgXwgEIIAZFKX5+aQk2iBiUAxBADDwCClyCfIwQQSgHIICAglxigny8wmAI4TACBBCDhoymkrg6KwMIsEI4jAABxGCoyskpy8gEFmSCcNgAAojBkI2RkZENqhLIMWRkMwQIIKg7YSohACCAoIIwlRAAEEBYVQIEEFaVAAHEwIwJDAECiIGZg4NJSAiE5OSYJCWZWFiYGAECCCgowi6qwi6iza6jxs6uywISBAggoKCoFoeoioiemoE+CxgwMQIEEAMzEwZgBAggBkNGTAAQYABIRSX4H75PxQAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 119 */
+/* 121 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABOUExURezp2AAAAH91jb3CsE9PT83C3CQhE7amy9Sx1ImFdL2u0AC+AMq+2si82Qp3Hsm92cvA28Gz07ipzcq/2se62LmqzsS21cW517yu0P///44+OfEAAAAadFJOU/////////////////////////////////8AFCIA2gAAAMxJREFUeNpikMQCAAKIAZsgQABhFQQIIAYWFklJTjYoD8oBCCAGIAMuJgnlAAQQUDsLG5JOMAcggBiAykGaoADCAQggBqByDhYWbj4w5GTjAJkLEEAg2xkZEIARpB4ggECCHEiCHCBBgADCqhIggLCqBAggrCoBAgirSoAAYmDCBJIAAcTAxMrKiIy4uBiZAQIIKMjLxcPPxSvCJSbIxSXKzs7OyAwQQAxMAjzCAjz8vOKCEkLsYMDIDBBADEyMGIAZIIAYJJkxAUCAAQCiZRN3sUCgAwAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 120 */
+/* 122 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -32245,4 +32369,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.7bc4c042.js.map
+//# sourceMappingURL=main.14e79998.js.map
