@@ -5,7 +5,7 @@
   "dependencies": {
     "@alexbol99/collision_distance": "^1.0.3",
     "flatten-interval-tree": "^0.1.6",
-    "flatten-js": "^0.3.0",
+    "flatten-js": "^0.3.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-fontawesome": "^1.6.1",
