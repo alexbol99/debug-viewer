@@ -82,7 +82,7 @@
 }
 
 .Layer {
-  padding: 6px;
+  padding: 3px;
   /*border-bottom: 1px solid black;*/
   display: flex;
   flex-direction: row;
@@ -93,11 +93,11 @@
   /*background-color: aliceblue;*/
 }
 
-/*
-.Layer :hover {
-  background: rgba(147, 128, 115, 0.1);
-}
-*/
+
+/*.Layer :hover {*/
+  /*background: rgba(147, 128, 115, 0.3);*/
+/*}*/
+
 .Layer h4 {
   margin-top: auto;
   margin-bottom: auto;
@@ -118,13 +118,9 @@
 }
 
 .App-toolbar button {
-  /*width:40px;*/
   height:40px;
   padding-left: 12px;
   padding-right: 12px;
-  /*background-repeat: no-repeat;*/
-  /*background-position-x: center;*/
-  /*background-position-y: center;*/
   background-size: 100%;
   background-color: transparent;
   border: none;

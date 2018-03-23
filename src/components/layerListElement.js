@@ -17,12 +17,33 @@ export class LayerListElement extends Component {
         }
     }
 
+    rgba(hex,opacity){
+        let r,g,b, percent;
+        if (hex) {
+            hex = hex.replace('#', '');
+            r = parseInt(hex.substring(0, 2), 16);
+            g = parseInt(hex.substring(2, 4), 16);
+            b = parseInt(hex.substring(4, 6), 16);
+            percent = opacity;
+        }
+        else {
+            r = 147;
+            g = 128;
+            b = 108;
+            percent = 0;
+        }
+        let result = `rgba(${r},${g},${b},${percent / 100})`;
+
+        return result;
+    }
+
     render() {
          // let style = this.props.layer.displayed ?
          //     styleSheet.displayed : styleSheet.undisplayed;
 
-        let displayed = this.props.layer.displayed ? "Layer-displayed" : "Layer-undisplayed"
-        let color = displayed ? this.props.layer.color : "black";
+        let displayed = this.props.layer.displayed ? "Layer-displayed" : "Layer-undisplayed";
+        let color = displayed ? this.rgba(this.props.layer.color,100) : this.rgba();
+        let bgcolor = displayed ? this.rgba(this.props.layer.color,30) : this.rgba();
         let alpha = this.props.layer.affected ? 1 : 0;
         return [
             <li key={1}
@@ -34,21 +55,22 @@ export class LayerListElement extends Component {
                     style={{flex: 2, marginRight: 3}}
                     onClick={this.props.onAffectedBoxClicked}
                 >
-                    <h4 style={{
-                        opacity: alpha, color: color, border: "1px solid black",
-                        width: 16, cursor: "default"
+                    <h4 style={{opacity: alpha, color: color,
+                        width: 16, marginLeft: 2, cursor: "default"
                     }}>
                         ✓
                     </h4>
                 </div>
 
-                <h4 ref="layerName"
-                    style={{flex: 8, color: color}}
-                    title={this.props.layer.name}
-                    tabIndex='1'
-                >
-                    {this.props.layer.name}
-                </h4>
+                <div style={{flex: 8, cursor: "default", padding: 3,
+                    backgroundColor: bgcolor }}>
+                    <h4 ref="layerName"
+                        title={this.props.layer.name}
+                        tabIndex='1'
+                    >
+                        {this.props.layer.name}
+                    </h4>
+                </div>
 
             </li>,
             this.props.layer.edited ? (

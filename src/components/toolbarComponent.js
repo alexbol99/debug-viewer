@@ -118,6 +118,24 @@ export class ToolbarComponent extends Component {
                         style={{color:"grey"}}
                     />
                 </button>
+
+                {/*<button>*/}
+                    {/*<FontAwesome*/}
+                        {/*name='ellipsis-v'*/}
+                        {/*size='2x'*/}
+                        {/*style={{color:"white"}}*/}
+                    {/*/>*/}
+                {/*</button>*/}
+
+                {/*<span style={{position:"relative", top:-3}}>*/}
+                    {/*Units:*/}
+                {/*</span>*/}
+                {/*<button*/}
+                    {/*style={{position:"relative", top:-3}}*/}
+                    {/*onClick={this.props.onUnitClicked}*/}
+                {/*>*/}
+                    {/*<h3>{this.props.units}</h3>*/}
+                {/*</button>*/}
             </div>
         )
     }

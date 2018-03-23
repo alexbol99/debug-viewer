@@ -291,6 +291,7 @@ export class MainComponent extends Component {
         return (
             <main className="App-content">
                 <ToolbarComponent
+                    units={this.state.app.units}
                     aabbDemoToolActivated={this.state.aabbDemoTool.aabbDemoToolActivated}
                     showCollisionDemoToolButton={this.state.collisionDistanceDemoTool.showCollisionDemoToolButton}
                     onFileSelected={this.handleFileSelect}
@@ -304,6 +305,7 @@ export class MainComponent extends Component {
                     onShowAboutPopupPressed={this.showAboutPopup}
                     onAabbToolNext={this.aabbToolNext}
                     onCollisionDemoButtonPressed={this.onCollisionDemoButtonPressed}
+                    onUnitClicked={this.toggleUnits}
                 />
 
                 <CanvasComponent

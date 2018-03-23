@@ -43,10 +43,10 @@ export class LayersListComponent extends Component {
     }
 
     onLayerDoubleClicked(layer) {
-        this.dispatch({
-            type: ActionTypes.OPEN_LAYER_EDIT_FORM_PRESSED,
-            layer: layer
-        });
+        // this.dispatch({
+        //     type: ActionTypes.OPEN_LAYER_EDIT_FORM_PRESSED,
+        //     layer: layer
+        // });
     }
 
     onSubmitLayerEditForm(layer, newLayer) {
@@ -113,9 +113,9 @@ export class LayersListComponent extends Component {
         // e.stopPropagation();
         // e.preventDefault();
 
-        if (e.target.parentElement.parentElement &&
-            e.target.parentElement.parentElement.id &&
-            e.target.parentElement.parentElement.id === "layersList") {
+        if (e.target.parentElement.parentElement.parentElement &&
+            e.target.parentElement.parentElement.parentElement.id &&
+            e.target.parentElement.parentElement.parentElement.id === "layersList") {
 
 
             switch (e.code) {
