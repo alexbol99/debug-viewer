@@ -259,9 +259,9 @@
 	            layer.name = Layers.getNewName(layers);
 	            if (layers.length === 0) {
 	                // first layer
-	                layer.color = Layers.getNextColor(layers);
-	                layer.displayed = true;
-	                layer.affected = true;
+	                // layer.color = Layers.getNextColor(layers);
+	                layer.displayed = false;
+	                layer.affected = false;
 	            }
 	            return layer;
 	        }
@@ -285,6 +285,15 @@
 	            return layers.find(function (lay) {
 	                return lay.affected;
 	            });
+	        }
+	    }, {
+	        key: "setAffected",
+	        value: function setAffected(layers, layer) {
+	            var currentAffectedLayer = Layers.getAffected(layers);
+	            if (currentAffectedLayer) {
+	                currentAffectedLayer.affected = false;
+	            }
+	            layer.affected = true;
 	        }
 	    }, {
 	        key: "getNextColor",
@@ -22923,17 +22932,21 @@
 	            var parser = state.app.parser;
 	
 	            var layer = undefined;
-	            if (layers.length === 0) {
+	            if (state.app.importDataToNewLayer) {
+	                // import data to new layer
 	                layer = _layers.Layers.newLayer(stage, layers);
-	                layer.name = "layer";
-	                layer.affected = true;
 	                layers.push(layer);
 	            } else {
+	                // import data to affected layer
 	                layer = layers.find(function (lay) {
 	                    return lay.affected;
 	                });
+	                if (!layer) {
+	                    // if no layer affected, add new
+	                    layer = _layers.Layers.newLayer(stage, layers);
+	                    layers.push(layer);
+	                }
 	            }
-	            if (!layer) return;
 	
 	            // Paste data from ClipBoard
 	            var _iteratorNormalCompletion = true;
@@ -22946,13 +22959,10 @@
 	
 	                    item.getAsString(function (string) {
 	                        var shapesArray = parser.parse(string);
+	
 	                        // TODO: add something like poly.valid()
+	
 	                        if (shapesArray.length > 0) {
-	                            // let watch = parser.parseToWatchArray(string);
-	
-	                            // let shape = new Shape(poly, this.state.stage, {}, watch);
-	                            // let shape = new Model(poly);
-	
 	                            var _iteratorNormalCompletion2 = true;
 	                            var _didIteratorError2 = false;
 	                            var _iteratorError2 = undefined;
@@ -22963,11 +22973,6 @@
 	
 	                                    layer.add(shape);
 	                                }
-	
-	                                // dispatch({
-	                                //     type: ActionTypes.NEW_SHAPE_PASTED,
-	                                //     shapesArray: shapesArray
-	                                // });
 	                            } catch (err) {
 	                                _didIteratorError2 = true;
 	                                _iteratorError2 = err;
@@ -22982,11 +22987,17 @@
 	                                    }
 	                                }
 	                            }
+	                        }
 	
+	                        if (layer.shapes.length > 0) {
 	                            dispatch({
 	                                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
 	                                shape: layer,
 	                                stage: stage
+	                            });
+	                            dispatch({
+	                                type: ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED,
+	                                layer: layer
 	                            });
 	                        }
 	                    });
@@ -23040,10 +23051,10 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	// import { Shape } from '../models/shape';
-	var readAsText = function readAsText(reader, file, stage, layers, dispatch) {
+	var readAsText = function readAsText(reader, file, stage, layers, dispatch, files) {
 	
 	    // Closure to capture file information and parameters
-	    reader.onload = function (theFile, stage, layers, dispatch) {
+	    reader.onload = function (theFile, stage, layers, dispatch, files) {
 	        return function (event) {
 	            var string = event.target.result;
 	
@@ -23151,18 +23162,23 @@
 	
 	            layers.push(layer);
 	
-	            dispatch({
-	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	                stage: stage,
-	                shape: layer
-	            });
+	            if (theFile === files[0]) {
+	                _layers.Layers.setAffected(layers, layer);
+	                layer.color = _layers.Layers.getNextColor(layers);
+	                layer.displayed = true;
+	                dispatch({
+	                    type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                    stage: stage,
+	                    shape: layer
+	                });
+	            }
 	        };
-	    }(file, stage, layers, dispatch);
+	    }(file, stage, layers, dispatch, files);
 	
 	    reader.readAsText(file);
 	};
 	
-	var readAsImage = function readAsImage(reader, file, stage, layers, dispatch) {
+	var readAsImage = function readAsImage(reader, file, stage, layers, dispatch, files) {
 	    reader.addEventListener("load", function () {
 	        // let image = {};          // TODO: to be Flatten.Image
 	        // image.uri = this.result;
@@ -23189,25 +23205,35 @@
 	
 	        layers.push(layer);
 	
-	        dispatch({
-	            type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-	            stage: stage,
-	            shape: layer
-	        });
+	        if (file === files[0]) {
+	            _layers.Layers.setAffected(layers, layer);
+	            layer.color = _layers.Layers.getNextColor(layers);
+	            layer.displayed = true;
+	            dispatch({
+	                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+	                stage: stage,
+	                shape: layer
+	            });
+	        } else {
+	            dispatch({
+	                type: ActionTypes.ADD_LAYER_PRESSED,
+	                layer: layer
+	            });
+	        }
 	    }, false);
 	
 	    reader.readAsDataURL(file);
 	};
 	
-	var readFile = function readFile(file, stage, layers, dispatch) {
+	var readFile = function readFile(file, stage, layers, dispatch, files) {
 	    if (file.type !== "" && !(file.type.match('text.*') || file.type.match('image.*'))) return; // validate type is text
 	
 	    var reader = new FileReader();
 	
 	    if (file.type.match('text.*') || file.name.match('features*')) {
-	        readAsText(reader, file, stage, layers, dispatch);
+	        readAsText(reader, file, stage, layers, dispatch, files);
 	    } else if (file.type.match('image.*')) {
-	        readAsImage(reader, file, stage, layers, dispatch);
+	        readAsImage(reader, file, stage, layers, dispatch, files);
 	    }
 	};
 	
@@ -23233,7 +23259,7 @@
 	                for (var _iterator4 = action.files[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
 	                    var file = _step4.value;
 	
-	                    readFile(file, stage, layers, dispatch);
+	                    readFile(file, stage, layers, dispatch, action.files);
 	                }
 	            } catch (err) {
 	                _didIteratorError4 = true;
@@ -24659,6 +24685,9 @@
 	    }, {
 	        key: 'zoomToLimits',
 	        value: function zoomToLimits(width, height) {
+	            // prevent zero division in case of single point box
+	            if (width === 0) width = 400000;
+	            if (height === 0) height = 400000;
 	            var resolution = Math.min(this.canvas.width / (1.1 * width), this.canvas.height / (1.1 * height));
 	            var zoomFactor = resolution / this.resolution;
 	            var ratio = zoomFactor / this.zoomFactor;
@@ -24810,7 +24839,8 @@
 	    zoomFactor: undefined,
 	    originX: undefined,
 	    originY: undefined,
-	    showAboutPopup: false
+	    showAboutPopup: false,
+	    importDataToNewLayer: true // if false, import data to affected layer
 	};
 	
 	var defaultMeasureShapesTool = {
@@ -32362,4 +32392,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.be60c338.js.map
+//# sourceMappingURL=main.11f1dfb2.js.map
