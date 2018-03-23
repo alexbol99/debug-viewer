@@ -47,7 +47,8 @@ const defaultAppState = {
     zoomFactor: undefined,
     originX: undefined,
     originY: undefined,
-    showAboutPopup: false
+    showAboutPopup: false,
+    importDataToNewLayer: true       // if false, import data to affected layer
 };
 
 const defaultMeasureShapesTool = {

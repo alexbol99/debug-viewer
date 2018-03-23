@@ -121,6 +121,9 @@ export class Stage extends createjs.Stage {
     }
 
     zoomToLimits(width, height) {
+        // prevent zero division in case of single point box
+        if (width === 0) width = 400000;
+        if (height === 0) height = 400000;
         let resolution = Math.min(this.canvas.width / (1.1*width), this.canvas.height / (1.1*height));
         let zoomFactor = resolution / this.resolution;
         let ratio = zoomFactor / this.zoomFactor;

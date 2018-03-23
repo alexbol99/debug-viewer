@@ -36,9 +36,9 @@ export class Layers {
         let layer = new Layer(stage);
         layer.name = Layers.getNewName(layers);
         if (layers.length === 0) { // first layer
-            layer.color = Layers.getNextColor(layers);
-            layer.displayed = true;
-            layer.affected = true;
+            // layer.color = Layers.getNextColor(layers);
+            layer.displayed = false;
+            layer.affected = false;
         }
         return layer;
     }
@@ -60,6 +60,14 @@ export class Layers {
 
     static getAffected(layers) {
         return layers.find((lay) => lay.affected);
+    }
+
+    static setAffected(layers, layer) {
+        let currentAffectedLayer = Layers.getAffected(layers);
+        if (currentAffectedLayer) {
+            currentAffectedLayer.affected = false;
+        }
+        layer.affected = true;
     }
 
     static getNextColor(layers) {

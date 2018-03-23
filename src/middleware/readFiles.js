@@ -6,10 +6,10 @@ import { parseXML } from '../models/parserXML';
 import { parseODB } from "../models/parserODB";
 import { parseImage } from "../models/parsePGM";
 
-const readAsText = (reader, file, stage, layers, dispatch) => {
+const readAsText = (reader, file, stage, layers, dispatch, files) => {
 
     // Closure to capture file information and parameters
-    reader.onload = (function(theFile, stage, layers, dispatch) {
+    reader.onload = (function(theFile, stage, layers, dispatch, files) {
         return (event) => {
             let string = event.target.result;
 
@@ -55,19 +55,24 @@ const readAsText = (reader, file, stage, layers, dispatch) => {
 
             layers.push(layer);
 
-            dispatch({
-                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-                stage: stage,
-                shape: layer
-            })
+            if (theFile === files[0]) {
+                Layers.setAffected(layers, layer);
+                layer.color = Layers.getNextColor(layers);
+                layer.displayed = true;
+                dispatch({
+                    type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+                    stage: stage,
+                    shape: layer
+                });
+            }
 
         }
-    })(file, stage, layers, dispatch);
+    })(file, stage, layers, dispatch, files);
 
     reader.readAsText(file);
 };
 
-const readAsImage = (reader, file, stage, layers, dispatch) => {
+const readAsImage = (reader, file, stage, layers, dispatch, files) => {
     reader.addEventListener("load", function () {
         // let image = {};          // TODO: to be Flatten.Image
         // image.uri = this.result;
@@ -94,18 +99,29 @@ const readAsImage = (reader, file, stage, layers, dispatch) => {
 
         layers.push(layer);
 
-        dispatch({
-            type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
-            stage: stage,
-            shape: layer
-        })
+        if (file === files[0]) {
+            Layers.setAffected(layers, layer);
+            layer.color = Layers.getNextColor(layers);
+            layer.displayed = true;
+            dispatch({
+                type: ActionTypes.PAN_AND_ZOOM_TO_SHAPE,
+                stage: stage,
+                shape: layer
+            });
+        }
+        else {
+            dispatch({
+                type: ActionTypes.ADD_LAYER_PRESSED,
+                layer: layer
+            })
+        }
 
     }, false);
 
     reader.readAsDataURL(file);
 };
 
-const readFile = (file, stage, layers, dispatch) => {
+const readFile = (file, stage, layers, dispatch, files) => {
     if (file.type !== "" &&
         !(file.type.match('text.*') ||
         file.type.match('image.*')) ) return;   // validate type is text
@@ -113,11 +129,11 @@ const readFile = (file, stage, layers, dispatch) => {
     let reader = new FileReader();
 
     if (file.type.match('text.*') || file.name.match('features*')) {
-        readAsText(reader, file, stage, layers, dispatch);
+        readAsText(reader, file, stage, layers, dispatch, files);
     }
 
     else if (file.type.match('image.*')) {
-        readAsImage(reader, file, stage, layers, dispatch);
+        readAsImage(reader, file, stage, layers, dispatch, files);
     }
 
 };
@@ -133,10 +149,9 @@ const readFiles = ({ dispatch, getState }) => next => action => {
 
     // Load and parse files
     for (let file of action.files) {
-        readFile(file, stage, layers, dispatch);
+        readFile(file, stage, layers, dispatch, action.files);
     }
 };
-
 
 export default readFiles;
 
