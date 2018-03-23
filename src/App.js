@@ -45,6 +45,9 @@ export class App extends Component {
 
     componentDidMount() {
         window.onhashchange = this.handleHashChange;
+        window.onbeforeunload = function () {//Prevent Ctrl+W
+            return "Really want to quit the game?";
+        };
     }
 
     render() {
