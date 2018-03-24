@@ -13,6 +13,8 @@ import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
 import {MeasurePointsTool} from '../tools/measurePointsTool';
 //import {MeasureShapesTool} from "../tools/measureShapesTool";
+// import {DisplayCoordsTool} from "../tools/displayCoordsTool";
+
 import {Modal} from "../components/modalPopupComponent";
 import {AboutPopup} from "../forms/aboutPopup";
 
@@ -339,6 +341,11 @@ export class MainComponent extends Component {
                     selectedEdgesTree={this.state.aabbDemoTool.tree}
                     minStop={this.state.aabbDemoTool.min_stop}
                     collisionDistanceDemoToolActivated={this.state.collisionDistanceDemoTool.collisionDistanceDemoToolActivated}
+                    units={this.state.app.units}
+                    divisor={this.state.app.divisor}
+                    decimals={this.state.app.decimals}
+                    coordX={this.state.mouse.x}
+                    coordY={this.state.mouse.y}
                     onMouseOver={this.onMouseRollOverShape}
                     onMouseOut={this.onMouseRollOutShape}
                     onClick={this.onClickOnShape}
@@ -354,6 +361,7 @@ export class MainComponent extends Component {
                         />
                     ) : null
                 }
+
 
                 <StatusComponent
                     stage={this.state.stage}

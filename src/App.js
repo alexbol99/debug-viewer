@@ -43,11 +43,8 @@ export class App extends Component {
         this.setState(nextProps.store.getState());
     }
 
-    componentDidMount() {
+    componentDidMount(e) {
         window.onhashchange = this.handleHashChange;
-        window.onbeforeunload = function () {//Prevent Ctrl+W
-            return "Really want to quit the game?";
-        };
     }
 
     render() {

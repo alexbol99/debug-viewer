@@ -3,6 +3,7 @@ import {LayerComponent} from './layerComponent';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 import {AabbDemoTool} from "../tools/aabbDemoTool";
 import {CollisionDistanceDemoTool} from "../tools/collisionDistanceDemoTool";
+import {DisplayCoordsTool} from "../tools/displayCoordsTool";
 
 import Utils from "../utils";
 
@@ -45,7 +46,23 @@ export class StageComponent extends Component {
                     onClick={this.props.onClick}
                 />
             );
-        let measureShapesTool = this.props.distance && this.props.shortestSegment ? (
+
+        let displayCoordsTool = this.props.stage ? (
+            <DisplayCoordsTool
+                key="displayCoordinatedTool"
+                stage={this.props.stage}
+                units={this.props.units}
+                divisor={this.props.divisor}
+                decimals={this.props.decimals}
+                coordX={this.props.coordX}
+                coordY={this.props.coordY}
+            />
+        ) : null;
+
+        let measuredLayersDisplayed = this.props.firstMeasuredShape && this.props.secondMeasuredShape &&
+            this.props.firstMeasuredLayer.displayed && this.props.secondMeasuredLayer.displayed;
+
+        let measureShapesTool = this.props.distance && this.props.shortestSegment && measuredLayersDisplayed ? (
             <MeasureShapesTool
                 key="MeasureShapesTool"
                 stage={this.props.stage}
@@ -55,6 +72,8 @@ export class StageComponent extends Component {
                 secondMeasuredLayer={this.props.secondMeasuredLayer}
                 distance={this.props.distance}
                 shortestSegment={this.props.shortestSegment}
+                divisor={this.props.divisor}
+                decimals={this.props.decimals}
             />
         ) : null;
 
@@ -88,6 +107,7 @@ export class StageComponent extends Component {
 
         let components = [
             ...layerComponents,
+            displayCoordsTool,
             measureShapesTool,
             aabbDdemoTool,
             collisionDemoTool

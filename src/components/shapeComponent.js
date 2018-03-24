@@ -96,7 +96,6 @@ export class ShapeComponent extends Component {
         let tx = stage.canvas.offsetLeft / (stage.zoomFactor * stage.resolution) + point.x + dx;
         let ty = -stage.canvas.offsetTop / (stage.zoomFactor * stage.resolution) + point.y + dy;
         this.labelShape.setTransform(tx, ty, unscale, -unscale);
-
     }
 
     redraw() {

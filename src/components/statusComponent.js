@@ -34,6 +34,17 @@ export class StatusComponent extends Component {
 
         return (
             <div className="App-status-bar">
+                <div style={{flex: 6, textAlign: "left", marginLeft: 10, padding: 5}}>
+                    <h5 style={{ margin:0, padding: 0}}>
+                        &nbsp;
+                    </h5>
+                </div>
+            </div>
+        )
+    }
+}
+
+/*
                 <div style={{flex: 4, textAlign: "left", marginLeft: 10, padding: 5}}>
                     <h5>
                         {`X: ${coordX} Y: ${coordY}`}
@@ -56,7 +67,4 @@ export class StatusComponent extends Component {
                     {this.props.units}
                 </h5>
 
-            </div>
-        )
-    }
-}
+ */
