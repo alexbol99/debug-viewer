@@ -81,8 +81,8 @@
 .App-aside {
   /* 12em is the width of the columns */
   -webkit-box-flex: 0;
-      -ms-flex: 0 0 12em;
-          flex: 0 0 12em;
+      -ms-flex: 0 0 3em;
+          flex: 0 0 3em;
   background: rgba(147, 128, 108, 0.1);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -120,7 +120,7 @@
 }
 
 .Layer {
-  padding: 6px;
+  padding: 3px;
   /*border-bottom: 1px solid black;*/
   display: -webkit-box;
   display: -ms-flexbox;
@@ -136,11 +136,11 @@
   /*background-color: aliceblue;*/
 }
 
-/*
-.Layer :hover {
-  background: rgba(147, 128, 115, 0.1);
-}
-*/
+
+/*.Layer :hover {*/
+  /*background: rgba(147, 128, 115, 0.3);*/
+/*}*/
+
 .Layer h4 {
   margin-top: auto;
   margin-bottom: auto;
@@ -161,13 +161,9 @@
 }
 
 .App-toolbar button {
-  /*width:40px;*/
   height:40px;
   padding-left: 12px;
   padding-right: 12px;
-  /*background-repeat: no-repeat;*/
-  /*background-position-x: center;*/
-  /*background-position-y: center;*/
   background-size: 100%;
   background-color: transparent;
   border: none;
@@ -303,4 +299,4 @@ html,body {
   height:100%;
 }
 
-/*# sourceMappingURL=main.e74a30e4.css.map*/
+/*# sourceMappingURL=main.aaf63d66.css.map*/
