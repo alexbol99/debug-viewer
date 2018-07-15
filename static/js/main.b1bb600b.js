@@ -67,7 +67,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(109);
+	__webpack_require__(110);
 	module.exports = __webpack_require__(46);
 
 
@@ -78,7 +78,7 @@
 	'use strict';
 	
 	if (true) {
-	  module.exports = __webpack_require__(111);
+	  module.exports = __webpack_require__(112);
 	} else {
 	  module.exports = require('./cjs/react.development.js');
 	}
@@ -99,8 +99,8 @@
 	 */
 	'use strict';
 	
-	let Utils = __webpack_require__(93);
-	let Errors = __webpack_require__(92);
+	let Utils = __webpack_require__(94);
+	let Errors = __webpack_require__(93);
 	
 	/**
 	 * FlattenJS - library for 2d geometry
@@ -108,15 +108,12 @@
 	 */
 	let Flatten = class Flatten {
 	    constructor() {
-	        this.version = "0.0.1";
 	        this.DP_TOL = Utils.DP_TOL;
 	        this.CCW = true;
 	        this.CW = false;
 	        this.ORIENTATION = {CCW:-1, CW:1, NOT_ORIENTABLE: 0};
 	        this.PIx2 = 2 * Math.PI;
 	        this.PI_2 = 0.5 * Math.PI;
-	        this.Utils = Utils;
-	        this.Errors = Errors;
 	        this.INSIDE = 1;
 	        this.OUTSIDE = 0;
 	        this.BOUNDARY = 2;
@@ -129,24 +126,27 @@
 	        this.BOOLEAN_SUBTRACT = 3;
 	        this.OVERLAP_SAME = 1;
 	        this.OVERLAP_OPPOSITE = 2;
+	        this.Utils = Utils;
+	        this.Errors = Errors;
 	    }
 	};
 	
 	let f = new Flatten();
 	
-	__webpack_require__(91)(f);
 	__webpack_require__(86)(f);
-	__webpack_require__(90)(f);
+	__webpack_require__(92)(f);
+	__webpack_require__(87)(f);
+	__webpack_require__(91)(f);
 	__webpack_require__(85)(f);
 	__webpack_require__(82)(f);
-	__webpack_require__(89)(f);
+	__webpack_require__(90)(f);
 	__webpack_require__(80)(f);
 	__webpack_require__(81)(f);
 	__webpack_require__(83)(f);
 	__webpack_require__(84)(f);
-	__webpack_require__(88)(f);
+	__webpack_require__(89)(f);
 	__webpack_require__(79)(f);
-	__webpack_require__(87)(f);
+	__webpack_require__(88)(f);
 	__webpack_require__(78)(f);
 	
 	module.exports = f;
@@ -17683,9 +17683,9 @@
 	        }
 	
 	        // remove cut_node from parent
-	        if (fix_node != nil_node) {
+	        /*if (fix_node != nil_node) {*/
 	            fix_node.parent = cut_node.parent;
-	        }
+	        /*}*/
 	
 	        if (cut_node == this.root) {
 	            this.root = fix_node;
@@ -17711,7 +17711,7 @@
 	            this.recalc_max(delete_node);       // update max property upward from delete_node to root
 	        }
 	
-	        if (fix_node != nil_node && cut_node.color == RB_TREE_COLOR_BLACK) {
+	        if (/*fix_node != nil_node && */cut_node.color == RB_TREE_COLOR_BLACK) {
 	            this.delete_fixup(fix_node);
 	        }
 	    }
@@ -18499,7 +18499,7 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(100);
+	var root = __webpack_require__(101);
 	
 	/** Built-in value references. */
 	var Symbol = root.Symbol;
@@ -18511,9 +18511,9 @@
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(94),
-	    getPrototype = __webpack_require__(96),
-	    isObjectLike = __webpack_require__(101);
+	var baseGetTag = __webpack_require__(95),
+	    getPrototype = __webpack_require__(97),
+	    isObjectLike = __webpack_require__(102);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -18832,7 +18832,7 @@
 	  // DCE check should happen before ReactDOM bundle executes so that
 	  // DevTools can report bad minification during injection.
 	  checkDCE();
-	  module.exports = __webpack_require__(107);
+	  module.exports = __webpack_require__(108);
 	} else {
 	  module.exports = require('./cjs/react-dom.development.js');
 	}
@@ -18856,11 +18856,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(105);
+	var _propTypes = __webpack_require__(106);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _screenReaderStyles = __webpack_require__(108);
+	var _screenReaderStyles = __webpack_require__(109);
 	
 	var _screenReaderStyles2 = _interopRequireDefault(_screenReaderStyles);
 	
@@ -19039,7 +19039,7 @@
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _symbolObservable = __webpack_require__(115);
+	var _symbolObservable = __webpack_require__(116);
 	
 	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
 	
@@ -19304,15 +19304,15 @@
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _combineReducers = __webpack_require__(114);
+	var _combineReducers = __webpack_require__(115);
 	
 	var _combineReducers2 = _interopRequireDefault(_combineReducers);
 	
-	var _bindActionCreators = __webpack_require__(113);
+	var _bindActionCreators = __webpack_require__(114);
 	
 	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
 	
-	var _applyMiddleware = __webpack_require__(112);
+	var _applyMiddleware = __webpack_require__(113);
 	
 	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
 	
@@ -19381,7 +19381,7 @@
 	let Flatten = __webpack_require__(3);
 	let {Point, Vector, Segment, Arc, Line, Box, Polygon} = Flatten;
 	
-	module.exports = class CollisionDistance {
+	class CollisionDistance {
 	    static apply(polygon1, polygon2) {
 	        let collision_distance = Number.POSITIVE_INFINITY;
 	        for (let edge of [...polygon2.edges]) {
@@ -19577,7 +19577,12 @@
 	        }
 	        return newPolygon;
 	    }
+	
 	};
+	
+	CollisionDistance.Flatten = Flatten;
+	
+	module.exports = CollisionDistance;
 
 
 /***/ },
@@ -21983,14 +21988,14 @@
 	    }, {
 	        key: "render",
 	        value: function render() {
-	            var stage = this.props.stage;
-	            var coordX = 0;
-	            var coordY = 0;
-	            if (stage) {
-	                coordX = this.format(stage.C2W_X(this.props.coordX));
-	                coordY = this.format(stage.C2W_Y(this.props.coordY));
-	            }
-	            var message = this.measurement();
+	            // let stage = this.props.stage;
+	            // let coordX = 0;
+	            // let coordY = 0;
+	            // if (stage) {
+	            //     coordX = this.format(stage.C2W_X(this.props.coordX));
+	            //     coordY = this.format(stage.C2W_Y(this.props.coordY));
+	            // }
+	            // let message = this.measurement();
 	
 	            return _react2.default.createElement(
 	                "div",
@@ -22057,19 +22062,19 @@
 	
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 	
-	var _measureContour = __webpack_require__(120);
+	var _measureContour = __webpack_require__(121);
 	
 	var _measureContour2 = _interopRequireDefault(_measureContour);
 	
-	var _measurePoints = __webpack_require__(121);
+	var _measurePoints = __webpack_require__(122);
 	
 	var _measurePoints2 = _interopRequireDefault(_measurePoints);
 	
-	var _WidthOn = __webpack_require__(118);
+	var _WidthOn = __webpack_require__(119);
 	
 	var _WidthOn2 = _interopRequireDefault(_WidthOn);
 	
-	var _editContourVertextOnOff = __webpack_require__(119);
+	var _editContourVertextOnOff = __webpack_require__(120);
 	
 	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
 	
@@ -22268,6 +22273,11 @@
 	 */
 	
 	var AboutPopup = exports.AboutPopup = function AboutPopup(props) {
+	    var offsetX = void 0,
+	        offsetY = void 0;
+	    var dragX = void 0,
+	        dragY = void 0;
+	
 	    var onCloseButtonPressed = function onCloseButtonPressed() {
 	        props.onCloseAboutPopupPressed();
 	    };
@@ -22276,6 +22286,35 @@
 	        if (ev.code === "Escape") {
 	            props.onCloseAboutPopupPressed();
 	        }
+	    };
+	
+	    var elementDrag = function elementDrag(ev) {
+	        ev = ev || window.event;
+	        // calculate the new cursor position:
+	        offsetX = dragX - ev.clientX;
+	        offsetY = dragY - ev.clientY;
+	        dragX = ev.clientX;
+	        dragY = ev.clientY;
+	        // set the element's new position:
+	        var element = ev.target;
+	        element.style.top = element.offsetTop - offsetY + "px";
+	        element.style.left = element.offsetLeft - offsetX + "px";
+	    };
+	
+	    var closeDragElement = function closeDragElement(ev) {
+	        /* stop moving when mouse button is released:*/
+	        ev.target.onmouseup = null;
+	        ev.target.onmousemove = null;
+	    };
+	
+	    var dragMouseDown = function dragMouseDown(ev) {
+	        ev = ev || window.event;
+	        // get the mouse cursor position at startup:
+	        dragX = ev.clientX;
+	        dragY = ev.clientY;
+	        ev.target.onmouseup = closeDragElement;
+	        // call a function whenever the cursor moves:
+	        ev.target.onmousemove = elementDrag;
 	    };
 	
 	    document.addEventListener('keydown', handleKeyDown);
@@ -22287,7 +22326,8 @@
 	            'div',
 	            { className: 'App-modal-popup',
 	                id: 'aboutPopup',
-	                draggable: 'true'
+	                onMouseDown: dragMouseDown,
+	                onMouseMove: elementDrag
 	            },
 	            _react2.default.createElement(
 	                'h2',
@@ -22536,8 +22576,6 @@
 	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
 	
 	var point = _flattenJs2.default.point,
-	    circle = _flattenJs2.default.circle,
-	    segment = _flattenJs2.default.segment,
 	    Polygon = _flattenJs2.default.Polygon;
 	// let {union, subtract, intersect, arrange} = BooleanOp;
 	
@@ -26904,18 +26942,18 @@
 	         */
 	        static point2arc(pt, arc) {
 	            let circle = new Flatten.Circle(arc.pc, arc.r);
-	            let dist_and_segments = [];
+	            let dist_and_segment = [];
 	            let dist, shortest_segment;
 	            [dist, shortest_segment] = Distance.point2circle(pt, circle);
 	            if (shortest_segment.end.on(arc)) {
-	                dist_and_segments.push(Distance.point2circle(pt, circle));
+	                dist_and_segment.push(Distance.point2circle(pt, circle));
 	            }
-	            dist_and_segments.push( Distance.point2point(pt, arc.start) );
-	            dist_and_segments.push( Distance.point2point(pt, arc.end) );
+	            dist_and_segment.push( Distance.point2point(pt, arc.start) );
+	            dist_and_segment.push( Distance.point2point(pt, arc.end) );
 	
-	            Distance.sort(dist_and_segments);
+	            Distance.sort(dist_and_segment);
 	
-	            return dist_and_segments[0];
+	            return dist_and_segment[0];
 	        }
 	
 	        /**
@@ -26929,7 +26967,7 @@
 	            if (ip.length > 0) {
 	                return [0, new Segment(ip[0],ip[0])];   // distance = 0, closest point is the first point
 	            }
-	
+	            let dist_and_segment = [];
 	            dist_and_segment.push(Distance.point2line(seg.start, line));
 	            dist_and_segment.push(Distance.point2line(seg.end, line));
 	
@@ -27931,6 +27969,59 @@
 	            return new Arc(this.pc, this.r, this.endAngle, this.startAngle, !this.counterClockwise);
 	        }
 	
+	        /**
+	         * Returns new arc translated by vector vec
+	         * @param {Vector} vec
+	         * @returns {Segment}
+	         */
+	        translate(vec) {
+	            let arc = this.clone();
+	            arc.pc = this.pc.translate(vec);
+	            return arc;
+	        }
+	
+	        /**
+	         * Return new segment rotated by given angle around given point
+	         * If point omitted, rotate around origin (0,0)
+	         * Positive value of angle defines rotation counter clockwise, negative - clockwise
+	         * @param {number} angle - rotation angle in radians
+	         * @param {Point} center - center point, default is (0,0)
+	         * @returns {Arc}
+	         */
+	        rotate(angle = 0, center = new Flatten.Point()) {
+	            let m = new Flatten.Matrix();
+	            m = m.translate(center.x, center.y).rotate(angle).translate(-center.x, -center.y);
+	            return this.transform(m);
+	        }
+	
+	        /**
+	         * Return new arc transformed using affine transformation matrix <br/>
+	         * Note, that non-equal scaling by x and y (matrix[0] != matrix[3]) produce illegal result
+	         * TODO: support non-equal scaling arc to ellipse or throw exception ?
+	         * @param {Matrix} matrix - affine transformation matrix
+	         * @returns {Arc}
+	         */
+	        transform(matrix = new Flatten.Matrix()) {
+	            let newStart = this.start.transform(matrix);
+	            let newEnd = this.end.transform(matrix);
+	            let newCenter = this.pc.transform(matrix);
+	            let arc = Arc.arcSE(newCenter, newStart, newEnd, this.counterClockwise);
+	            return arc;
+	        }
+	
+	        static arcSE(center, start, end, counterClockwise) {
+	            let {vector} = Flatten;
+	            let startAngle = vector(center,start).slope;
+	            let endAngle = vector(center, end).slope;
+	            if (Flatten.Utils.EQ(startAngle, endAngle)) {
+	                endAngle += 2*Math.PI;
+	                counterClockwise = true;
+	            }
+	            let r = vector(center, start).length;
+	
+	            return new Arc(center, r, startAngle, endAngle, counterClockwise);
+	        }
+	
 	        static intersectArc2Arc(arc1, arc2) {
 	            var ip = [];
 	
@@ -28023,13 +28114,16 @@
 	         * Return string to draw arc in svg
 	         * @param {Object} attrs - json structure with attributes of svg path element,
 	         * like "stroke", "strokeWidth", "fill" <br/>
-	         * Defaults are stroke:"black", strokeWidth:"3", fill:"none"
+	         * Defaults are stroke:"black", strokeWidth:"1", fill:"none"
 	         * @returns {string}
 	         */
-	        svg(attrs = {stroke:"black", strokeWidth:"3", fill:"none"}) {
+	        svg(attrs = {}) {
 	            let largeArcFlag = this.sweep <= Math.PI ? "0" : "1";
 	            let sweepFlag = this.counterClockwise ? "1" : "0";
-	            let {stroke, strokeWidth, fill} = attrs;
+	            let {stroke, strokeWidth, fill, id, className} = attrs;
+	            // let rest_str = Object.keys(rest).reduce( (acc, key) => acc += ` ${key}="${rest[key]}"`, "");
+	            let id_str = (id && id.length > 0) ? `id="${id}"` : "";
+	            let class_str = (className && className.length > 0) ? `class="${className}"` : "";
 	
 	            if (Flatten.Utils.EQ(this.sweep, 2*Math.PI)) {
 	                let circle = new Flatten.Circle(this.pc, this.r);
@@ -28038,7 +28132,7 @@
 	            else {
 	                return `\n<path d="M${this.start.x},${this.start.y}
 	                             A${this.r},${this.r} 0 ${largeArcFlag},${sweepFlag} ${this.end.x},${this.end.y}"
-	                    stroke="${stroke}" stroke-width="${strokeWidth}" fill="${fill}"/>`
+	                    stroke="${stroke || "black"}" stroke-width="${strokeWidth || 1}" fill="${fill || "none"}" ${id_str} ${class_str} />`
 	            }
 	        }
 	    };
@@ -28128,6 +28222,14 @@
 	        }
 	
 	        /**
+	         * Return center of the box
+	         * @returns {Point}
+	         */
+	        get center() {
+	            return new Flatten.Point( (this.xmin + this.xmax)/2, (this.ymin + this.ymax)/2 );
+	        }
+	
+	        /**
 	         * Returns true if not intersected with other box
 	         * @param {Box} other_box - other box to test
 	         * @returns {boolean}
@@ -28211,6 +28313,24 @@
 	            this.ymin = ymin;
 	            this.xmax = xmax;
 	            this.ymax = ymax;
+	        }
+	
+	        /**
+	         * Return string to draw circle in svg
+	         * @param {Object} attrs - json structure with attributes of svg rectangle element,
+	         * like "stroke", "strokeWidth", "fill" <br/>
+	         * Defaults are stroke:"black", strokeWidth:"1", fill:"none"
+	         * @returns {string}
+	         */
+	        svg(attrs = {}) {
+	            let {stroke, strokeWidth, fill, id, className} = attrs;
+	            // let rest_str = Object.keys(rest).reduce( (acc, key) => acc += ` ${key}="${rest[key]}"`, "");
+	            let id_str = (id && id.length > 0) ? `id="${id}"` : "";
+	            let class_str = (className && className.length > 0) ? `class="${className}"` : "";
+	            let width = this.xmax - this.xmin;
+	            let height = this.ymax - this.ymin;
+	
+	            return `\n<rect x="${this.xmin}" y="${this.ymin}" width=${width} height=${height} stroke="${stroke || "black"}" stroke-width="${strokeWidth || 1}" fill="${fill || "none"}" ${id_str} ${class_str} />`;
 	        }
 	    };
 	};
@@ -28441,12 +28561,16 @@
 	         * Return string to draw circle in svg
 	         * @param {Object} attrs - json structure with attributes of svg circle element,
 	         * like "stroke", "strokeWidth", "fill" <br/>
-	         * Defaults are stroke:"black", strokeWidth:"3", fill:"none"
+	         * Defaults are stroke:"black", strokeWidth:"1", fill:"none"
 	         * @returns {string}
 	         */
-	        svg(attrs = {stroke:"black",strokeWidth:"3",fill:"none"}) {
-	            let {stroke, strokeWidth, fill} = attrs;
-	            return `\n<circle cx="${this.pc.x}" cy="${this.pc.y}" r="${this.r}" stroke="${stroke}" stroke-width="${strokeWidth}" fill="${fill}" />`;
+	        svg(attrs = {}) {
+	            let {stroke, strokeWidth, fill, fillOpacity, id, className} = attrs;
+	            // let rest_str = Object.keys(rest).reduce( (acc, key) => acc += ` ${key}="${rest[key]}"`, "");
+	            let id_str = (id && id.length > 0) ? `id="${id}"` : "";
+	            let class_str = (className && className.length > 0) ? `class="${className}"` : "";
+	
+	            return `\n<circle cx="${this.pc.x}" cy="${this.pc.y}" r="${this.r}" stroke="${stroke || "black"}" stroke-width="${strokeWidth || 1}" fill="${fill || "none"}" fill-opacity="${fillOpacity || 1.0}" ${id_str} ${class_str} />`;
 	        }
 	    };
 	
@@ -28551,6 +28675,13 @@
 	            return this.shape.box;
 	        }
 	
+	        isSegment() {
+	            return this.shape instanceof Flatten.Segment;
+	        }
+	
+	        isArc() {
+	            return this.shape instanceof Flatten.Arc;
+	        }
 	        /**
 	         * Get middle point of the edge
 	         * @returns {Point}
@@ -28595,6 +28726,49 @@
 	                this.bv = bvMiddle;
 	            }
 	            return this.bv;
+	        }
+	
+	        /**
+	         * Set overlapping between two coincident boundary edges
+	         * Overlapping flag is one of Flatten.OVERLAP_SAME or Flatten.OVERLAP_OPPOSITE
+	         * @param edge
+	         */
+	        setOverlap(edge) {
+	            let flag = undefined;
+	            let shape1 = this.shape;
+	            let shape2 = edge.shape;
+	
+	            if (shape1 instanceof Flatten.Segment && shape2 instanceof Flatten.Segment) {
+	                if (shape1.start.equalTo(shape2.start) && shape1.end.equalTo(shape2.end)) {
+	                    flag = Flatten.OVERLAP_SAME;
+	                }
+	                else if (shape1.start.equalTo(shape2.end) && shape1.end.equalTo(shape2.start)) {
+	                    flag = Flatten.OVERLAP_OPPOSITE;
+	                }
+	            }
+	            else if (shape1 instanceof Flatten.Arc && shape2 instanceof Flatten.Arc) {
+	                if (shape1.start.equalTo(shape2.start) && shape1.end.equalTo(shape2.end) && shape1.counterClockwise === shape2.counterClockwise &&
+	                    shape1.middle().equalTo(shape2.middle())) {
+	                    flag = Flatten.OVERLAP_SAME;
+	                }
+	                else if (shape1.start.equalTo(shape2.end) && shape1.end.equalTo(shape2.start) && shape1.counterClockwise !== shape2.counterClockwise &&
+	                    shape1.middle().equalTo(shape2.middle())) {
+	                    flag = Flatten.OVERLAP_OPPOSITE;
+	                }
+	            }
+	            else if (shape1 instanceof Flatten.Segment && shape2 instanceof Flatten.Arc ||
+	                shape1 instanceof Flatten.Arc && shape2 instanceof Flatten.Segment) {
+	                if (shape1.start.equalTo(shape2.start) && shape1.end.equalTo(shape2.end) && shape1.middle().equalTo(shape2.middle())) {
+	                    flag = Flatten.OVERLAP_SAME;
+	                }
+	                else if (shape1.start.equalTo(shape2.end) && shape1.end.equalTo(shape2.start) && shape1.middle().equalTo(shape2.middle())) {
+	                    flag = Flatten.OVERLAP_OPPOSITE;
+	                }
+	            }
+	
+	            /* Do not update overlap flag if already set on previous chain */
+	            if (this.overlap === undefined) this.overlap = flag;
+	            if (edge.overlap === undefined) edge.overlap = flag;
 	        }
 	
 	        svg() {
@@ -28799,6 +28973,21 @@
 	            return counter;
 	        }
 	
+	        /**
+	         * Return bounding box of the face
+	         * @returns {Box}
+	         */
+	        get box() {
+	            if (this._box === undefined) {
+	                let box = new Flatten.Box();
+	                for (let edge of this) {
+	                    box = box.merge(edge.box);
+	                }
+	                this._box = box;
+	            }
+	            return this._box;
+	        }
+	
 	        static points2segments(points) {
 	            let segments = [];
 	            for (let i = 0; i < points.length; i++) {
@@ -28868,8 +29057,8 @@
 	         */
 	        insert(edges, newEdge, edgeBefore) {
 	            if (this.first === undefined) {
-	                edge.prev = newEdge;
-	                edge.next = newEdge;
+	                newEdge.prev = newEdge;
+	                newEdge.next = newEdge;
 	                this.first = newEdge;
 	                this.last = newEdge;
 	            }
@@ -28888,6 +29077,14 @@
 	                    this.first = newEdge;
 	            }
 	            newEdge.face = this;
+	
+	            // set arc length
+	            if (newEdge.prev === this.last) {
+	                newEdge.arc_length = 0;
+	            }
+	            else {
+	                newEdge.arc_length = newEdge.prev.arc_length + newEdge.prev.length;
+	            }
 	
 	            edges.add(newEdge);      // Add new edges into edges container
 	        }
@@ -29037,21 +29234,6 @@
 	        }
 	
 	        /**
-	         * Return bounding box of the face
-	         * @returns {Box}
-	         */
-	        get box() {
-	            if (this._box === undefined) {
-	                let box = new Flatten.Box();
-	                for (let edge of this) {
-	                    box = box.merge(edge.box);
-	                }
-	                this._box = box;
-	            }
-	            return this._box;
-	        }
-	
-	        /**
 	         * Check relation between face and other polygon
 	         * on strong assumption that they are NOT INTERSECTED <br/>
 	         * Then there are 4 options: <br/>
@@ -29100,6 +29282,69 @@
 	                    return numInsideThis === 0 ? Flatten.INSIDE : Flatten.INTERLACE;
 	                }
 	            }
+	        }
+	
+	        /**
+	         * Returns true if face of the polygon is simple (no self-intersection points found)
+	         * NOTE: this method is incomplete because it doe not exclude touching points
+	         * Real self intersection inverts orientation of the polygon.
+	         * But this is also good enough for the demonstration of the idea
+	         * @param {Edges} edges - reference to polygon.edges to provide search index
+	         * @returns {boolean}
+	         */
+	        isSimple(edges) {
+	            let ip = Face.getSelfIntersections(this, edges, true);
+	            return ip.length == 0;
+	        }
+	
+	        static getSelfIntersections(face, edges, exitOnFirst = false) {
+	            let int_points = [];
+	
+	            // calculate intersections
+	            for (let edge1 of face) {
+	
+	                // request edges of polygon in the box of edge1
+	                let resp = edges.search(edge1.box);
+	
+	                // for each edge2 in response
+	                for (let edge2 of resp) {
+	
+	                    // Skip itself
+	                    if (edge1 === edge2)
+	                        continue;
+	
+	                    // Skip next and previous edge if both are segment (if one of them arc - calc intersection)
+	                    if (edge1.shape instanceof Flatten.Segment && edge2.shape instanceof Flatten.Segment &&
+	                        (edge1.next === edge2 || edge1.prev === edge2))
+	                        continue;
+	
+	                    // calculate intersections between edge1 and edge2
+	                    let ip = edge1.shape.intersect(edge2.shape);
+	
+	                    // for each intersection point
+	                    for (let pt of ip) {
+	
+	                        // skip start-end connections
+	                        if (pt.equalTo(edge1.start) && pt.equalTo(edge2.end) && edge2 === edge1.prev)
+	                            continue;
+	                        if (pt.equalTo(edge1.end) && pt.equalTo(edge2.start) && edge2 === edge1.next)
+	                            continue;
+	
+	                        int_points.push(pt);
+	
+	                        if (exitOnFirst)
+	                            break;
+	                    }
+	
+	                    if (int_points.length > 0 && exitOnFirst)
+	                        break;
+	                }
+	
+	                if (int_points.length > 0 && exitOnFirst)
+	                    break;
+	
+	            }
+	            return int_points;
 	        }
 	
 	        toJSON() {
@@ -29233,8 +29478,7 @@
 	         * @returns {boolean}
 	         */
 	        incidentTo(other_line) {
-	            return ( (this.norm.equalTo(other_line.norm) || this.norm.equalTo(other_line.norm.invert())) &&
-	                this.pt.on(other_line));
+	            return this.parallelTo(other_line) && this.pt.on(other_line);
 	        }
 	
 	        /**
@@ -29309,6 +29553,22 @@
 	                let [distance, shortest_segment] = Distance.shape2polygon(this, shape);
 	                return [distance, shortest_segment];
 	            }
+	        }
+	
+	        /**
+	         * Return string to draw svg segment representing line inside given box
+	         * @param {Box} box Box representing drawing area
+	         * @param {Object} attrs - json structure with attributes of svg circle element
+	         */
+	        svg(box, attrs = {}) {
+	            let ip = Line.intersectLine2Box(this, box);
+	            if (ip.length === 0)
+	                return "";
+	            let ps = ip[0];
+	            let pe = ip.length == 2 ? ip[1] : ip.find( pt => !pt.equalTo(ps) );
+	            if (pe === undefined) pe = ps;
+	            let segment = new Flatten.Segment(ps, pe);
+	            return segment.svg(attrs);
 	        }
 	
 	        static points2norm(pt1, pt2) {
@@ -29415,6 +29675,144 @@
 
 /***/ },
 /* 86 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = function(Flatten) {
+	    /**
+	     * Class representing an affine transformation 3x3 matrix:
+	     * <pre>
+	     *      [ a  c  tx
+	     * A =    b  d  ty
+	     *        0  0  1  ]
+	     * </pre
+	     * @type {Matrix}
+	     */
+	    Flatten.Matrix = class Matrix {
+	        /**
+	         * Construct new instance of affine transformation matrix <br/>
+	         * If parameters omitted, construct identity matrix a = 1, d = 1
+	         * @param {number} a - position(0,0)   sx*cos(alpha)
+	         * @param {number} b - position (0,1)  sx*sin(alpha)
+	         * @param {number} c - position (1,0)  -sy*sin(alpha)
+	         * @param {number} d - position (1,1)  sy*cos(alpha)
+	         * @param {number} tx - position (2,0) translation by x
+	         * @param {number} ty - position (2,1) translation by y
+	         */
+	        constructor(a=1,b=0,c=0,d=1,tx=0,ty=0) {
+	            this.a = a;
+	            this.b = b;
+	            this.c = c;
+	            this.d = d;
+	            this.tx = tx;
+	            this.ty = ty;
+	        }
+	
+	        /**
+	         * Returns a clone of the Matrix instance.
+	         * @return {Matrix}
+	         **/
+	        clone() {
+	            return new Matrix(this.a, this.b, this.c, this.d, this.tx, this.ty);
+	        };
+	
+	        /**
+	         * Transform vector [x,y] using transformation matrix. <br/>
+	         * Vector [x,y] is an abstract array[2] of numbers and not a FlattenJS object <br/>
+	         * The result is also an abstract vector [x',y'] = A * [x,y]:
+	         * <code>
+	         * [x'       [ ax + by + tx
+	         *  y'   =     cx + dy + ty
+	         *  1]                    1 ]
+	         * </code>
+	         * @param {number[]} vector - array[2] of numbers
+	         * @returns {number[]} transformation result - array[2] of numbers
+	         */
+	        transform(vector) {
+	            return [
+	                vector[0]*this.a+vector[1]*this.c+this.tx,
+	                vector[0]*this.b+vector[1]*this.d+this.ty
+	            ]
+	        };
+	
+	        /**
+	         * Returns result of multiplication of this matrix by other matrix
+	         * @param {Matrix} other_matrix - matrix to multiply by
+	         * @returns {Matrix}
+	         */
+	        multiply(other_matrix) {
+	            return new Matrix(
+	                this.a*other_matrix.a + this.c*other_matrix.b,
+	                this.b*other_matrix.a + this.d*other_matrix.b,
+	                this.a*other_matrix.c + this.c*other_matrix.d,
+	                this.b*other_matrix.c + this.d*other_matrix.d,
+	                this.a*other_matrix.tx + this.c*other_matrix.ty + this.tx,
+	                this.b*other_matrix.tx + this.d*other_matrix.ty + this.ty
+	            )
+	        };
+	
+	        /**
+	         * Return new matrix as a result of multiplication of the current matrix
+	         * by the matrix(1,0,0,1,tx,ty)
+	         * @param {number} tx - translation by x
+	         * @param {number} ty - translation by y
+	         * @returns {Matrix}
+	         */
+	        translate(tx, ty) {
+	            return this.multiply(new Matrix(1,0,0,1,tx,ty))
+	        };
+	
+	        /**
+	         * Return new matrix as a result of multiplication of the current matrix
+	         * by the matrix that defines rotation by given angle (in radians) around
+	         * point (0,0) in counter clockwise direction
+	         * @param angle
+	         * @returns {Matrix}
+	         */
+	        rotate(angle) {
+	            let cos = Math.cos(angle);
+	            let sin = Math.sin(angle);
+	            return this.multiply(new Matrix(cos,sin,-sin,cos,0,0));
+	        };
+	
+	        /**
+	         * Return new matrix as result of mutiplication of the current matrix
+	         * by the matrix (sx,0,0,sy,0,0) that defines scaling
+	         * @param sx
+	         * @param sy
+	         * @returns {Matrix}
+	         */
+	        scale(sx, sy) {
+	            return this.multiply(new Matrix(sx,0,0,sy,0,0));
+	        };
+	
+	        /**
+	         * Returns true if two matrix are equal parameter by parameter
+	         * @param {Matrix} matrix - other matrix
+	         * @returns {boolean} true if equal, false otherwise
+	         */
+	        equalTo(matrix) {
+	            if (!Flatten.Utils.EQ(this.tx, matrix.tx)) return false;
+	            if (!Flatten.Utils.EQ(this.ty, matrix.ty)) return false;
+	            if (!Flatten.Utils.EQ(this.a, matrix.a)) return false;
+	            if (!Flatten.Utils.EQ(this.b, matrix.b)) return false;
+	            if (!Flatten.Utils.EQ(this.c, matrix.c)) return false;
+	            if (!Flatten.Utils.EQ(this.d, matrix.d)) return false;
+	            return true;
+	        };
+	    };
+	
+	    /**
+	     * Function to create matrix equivalent to "new" constructor
+	     * @param args
+	     */
+	    Flatten.matrix = (...args) => new Flatten.Matrix(...args);
+	};
+
+
+/***/ },
+/* 87 */
 /***/ function(module, exports) {
 
 	/**
@@ -29530,6 +29928,16 @@
 	        }
 	
 	        /**
+	         * Return new point transformed by affine transformation matrix m
+	         * @param {Matrix} m - affine transformation matrix (a,b,c,d,tx,ty)
+	         * @returns {Point}
+	         */
+	        transform(m) {
+	            let [x,y] = m.transform([this.x,this.y]);
+	            return new Flatten.Point(x,y)
+	        }
+	
+	        /**
 	         * Returns projection point on given line
 	         * @param {Line} line Line this point be projected on
 	         * @returns {Point}
@@ -29636,19 +30044,23 @@
 	
 	        /**
 	         * Return string to draw point in svg as circle with radius "r" <br/>
-	         * Defaults attrs is an object:
+	         * Accept any valid attributes of svg elements as svg object
+	         * Defaults attribues are: <br/>
 	         * {
-	         *    r:"5",
+	         *    r:"3",
 	         *    stroke:"black",
 	         *    strokeWidth:"1",
 	         *    fill:"red"
 	         * }
-	         * @param {Object} attrs - Attributes of svg circle element: "r", "stroke", "strokeWidth", "fill"
+	         * @param {Object} attrs - Any valid attributes of svg circle element, like "r", "stroke", "strokeWidth", "fill"
 	         * @returns {String}
 	         */
-	        svg(attrs = {r:"5",stroke:"black",strokeWidth:"1",fill:"red"}) {
-	            let {r, stroke, strokeWidth, fill} = attrs;
-	            return `\n<circle cx="${this.x}" cy="${this.y}" r="${r}" stroke="${stroke}" stroke-width="${strokeWidth}" fill="${fill}" />`;
+	        svg(attrs = {}) {
+	            let {r, stroke, strokeWidth, fill, id, className} = attrs;
+	            // let rest_str = Object.keys(rest).reduce( (acc, key) => acc += ` ${key}="${rest[key]}"`, "");
+	            let id_str = (id && id.length > 0) ? `id="${id}"` : "";
+	            let class_str = (className && className.length > 0) ? `class="${className}"` : "";
+	            return `\n<circle cx="${this.x}" cy="${this.y}" r="${r || 3}" stroke="${stroke || "black"}" stroke-width="${strokeWidth || 1}" fill="${fill || "red"}" ${id_str} ${class_str} />`;
 	        }
 	
 	    };
@@ -29662,7 +30074,7 @@
 
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports) {
 
 	/**
@@ -29878,19 +30290,99 @@
 	        }
 	
 	        /**
+	         * Return true if polygon is valid for boolean operations
+	         * Polygon is valid if <br/>
+	         * 1. All faces are simple polygons (there are no self-intersected polygons) <br/>
+	         * 2. All faces are orientable and there is no island inside island or hole inside hole - TODO <br/>
+	         * 3. There is no intersections between faces (excluding touching) - TODO <br/>
+	         * @returns {boolean}
+	         */
+	        isValid() {
+	            let valid = true;
+	            // 1. Polygon is invalid if at least one face is not simple
+	            for (let face of this.faces) {
+	                if (!face.isSimple(this.edges)) {
+	                    valid = false;
+	                    break;
+	                }
+	            }
+	            // 2. TODO: check if no island inside island and no hole inside hole
+	            // 3. TODO: check the there is no intersection between faces
+	            return valid;
+	        }
+	
+	        /**
+	         * Returns new polygon translated by vector vec
+	         * @param {Vector} vec
+	         * @returns {Polygon}
+	         */
+	        translate(vec) {
+	            let newPolygon = new Polygon();
+	            for (let face of this.faces) {
+	                let shapes = [];
+	                for (let edge of face) {
+	                    shapes.push(edge.shape.translate(vec));
+	                }
+	                newPolygon.addFace(shapes);
+	            }
+	            return newPolygon;
+	        }
+	
+	        /**
+	         * Return new polygon rotated by given angle around given point
+	         * If point omitted, rotate around origin (0,0)
+	         * Positive value of angle defines rotation counter clockwise, negative - clockwise
+	         * @param {number} angle - rotation angle in radians
+	         * @param {Point} center - rotation center, default is (0,0)
+	         * @returns {Polygon} - new rotated polygon
+	         */
+	        rotate(angle=0, center=new Flatten.Point()) {
+	            let newPolygon = new Polygon();
+	            for (let face of this.faces) {
+	                let shapes = [];
+	                for (let edge of face) {
+	                    shapes.push(edge.shape.rotate(angle, center));
+	                }
+	                newPolygon.addFace(shapes);
+	            }
+	            return newPolygon;
+	        }
+	
+	        /**
+	         * Return new polygon transformed using affine transformation matrix
+	         * @param {Matrix} matrix - affine transformation matrix
+	         * @returns {Polygon} - new polygon
+	         */
+	        transform(matrix = new Flatten.Matrix()) {
+	            let newPolygon = new Polygon();
+	            for (let face of this.faces) {
+	                let shapes = [];
+	                for (let edge of face) {
+	                    shapes.push(edge.shape.transform(matrix));
+	                }
+	                newPolygon.addFace(shapes);
+	            }
+	            return newPolygon;
+	        }
+	
+	        /**
 	         * Return string to draw polygon in svg
 	         * @param attrs  - json structure with attributes for svg path element,
 	         * like "stroke", "strokeWidth", "fill", "fillRule"
-	         * Defaults are stroke:"black", strokeWidth:"3", fill:"lightcyan", fillRule:"evenodd"
+	         * Defaults are stroke:"black", strokeWidth:"1", fill:"lightcyan", fillRule:"evenodd"
 	         * @returns {string}
 	         */
-	        svg(attrs = {stroke:"black", strokeWidth:"3", fill:"lightcyan", fillRule:"evenodd"}) {
-	            let {stroke, strokeWidth, fill, fillRule} = attrs;
-	            let svgStr = `\n<path stroke="${stroke}" stroke-width="${strokeWidth}" fill="${fill}" fill-rule="${fillRule}" d="`;
+	        svg(attrs = {}) {
+	            let {stroke, strokeWidth, fill, fillRule, fillOpacity, id, className} = attrs;
+	            // let restStr = Object.keys(rest).reduce( (acc, key) => acc += ` ${key}="${rest[key]}"`, "");
+	            let id_str = (id && id.length > 0) ? `id="${id}"` : "";
+	            let class_str = (className && className.length > 0) ? `class="${className}"` : "";
+	
+	            let svgStr = `\n<path stroke="${stroke || "black"}" stroke-width="${strokeWidth || 1}" fill="${fill || "lightcyan"}" fill-rule="${fillRule || "evenodd"}" fill-opacity="${fillOpacity || 1.0}" ${id_str} ${class_str} d="`;
 	            for (let face of this.faces) {
 	                svgStr += face.svg();
 	            }
-	            svgStr += `">\n</path>`;
+	            svgStr += `" >\n</path>`;
 	
 	            return svgStr;
 	        }
@@ -29902,7 +30394,7 @@
 	};
 
 /***/ },
-/* 88 */
+/* 89 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -30039,7 +30531,7 @@
 	};
 
 /***/ },
-/* 89 */
+/* 90 */
 /***/ function(module, exports) {
 
 	/**
@@ -30158,6 +30650,15 @@
 	                Math.max(this.start.x, this.end.x),
 	                Math.max(this.start.y, this.end.y)
 	            )
+	        }
+	
+	        /**
+	         * Returns true if equals to query segment, false otherwise
+	         * @param {Seg} seg - query segment
+	         * @returns {boolean}
+	         */
+	        equalTo(seg) {
+	            return this.ps.equalTo(seg.ps) && this.pe.equalTo(seg.pe);
 	        }
 	
 	        /**
@@ -30308,21 +30809,65 @@
 	            return ( dx * (dy1 + dy2) / 2 );
 	        }
 	
+	        /**
+	         * Returns new segment translated by vector vec
+	         * @param {Vector} vec
+	         * @returns {Segment}
+	         */
+	        translate(vec) {
+	            return new Segment(this.ps.translate(vec), this.pe.translate(vec));
+	        }
+	
+	        /**
+	         * Return new segment rotated by given angle around given point
+	         * If point omitted, rotate around origin (0,0)
+	         * Positive value of angle defines rotation counter clockwise, negative - clockwise
+	         * @param {number} angle - rotation angle in radians
+	         * @param {Point} center - center point, default is (0,0)
+	         * @returns {Segment}
+	         */
+	        rotate(angle = 0, center = new Flatten.Point()) {
+	            let m = new Flatten.Matrix();
+	            m = m.translate(center.x, center.y).rotate(angle).translate(-center.x, -center.y);
+	            return this.transform(m);
+	        }
+	
+	        /**
+	         * Return new segment transformed using affine transformation matrix
+	         * @param {Matrix} matrix - affine transformation matrix
+	         * @returns {Segment} - transformed segment
+	         */
+	        transform(matrix = new Flatten.Matrix()) {
+	            return new Segment(this.ps.transform(matrix), this.pe.transform(matrix))
+	        }
+	
+	        /**
+	         * Returns true if segment start is equal to segment end up to DP_TOL
+	         * @returns {boolean}
+	         */
+	        isZeroLength() {
+	            return this.ps.equalTo(this.pe)
+	        }
+	
 	        static intersectSegment2Line(seg, line) {
 	            let ip = [];
-	            let zero_segment = Flatten.Utils.EQ_0(seg.length);
 	
 	            // Boundary cases
 	            if (seg.ps.on(line)) {
 	                ip.push(seg.ps);
 	            }
 	            // If both ends lay on line, return two intersection points
-	            if (seg.pe.on(line) && !zero_segment) {
+	            if (seg.pe.on(line) && !seg.isZeroLength()) {
 	                ip.push(seg.pe);
 	            }
 	
 	            if (ip.length > 0) {
 	                return ip;          // done, intersection found
+	            }
+	
+	            // If zero-length segment and nothing found, return no intersections
+	            if (seg.isZeroLength()) {
+	                return ip;
 	            }
 	
 	            // Not a boundary case, check if both points are on the same side and
@@ -30345,6 +30890,23 @@
 	                return ip;
 	            }
 	
+	            // Special case of seg1 zero length
+	            if (seg1.isZeroLength()) {
+	                if (seg1.ps.on(seg2)) {
+	                    ip.push(seg1.ps);
+	                }
+	                return ip;
+	            }
+	
+	            // Special case of seg2 zero length
+	            if (seg2.isZeroLength()) {
+	                if (seg2.ps.on(seg1)) {
+	                    ip.push(seg2.ps);
+	                }
+	                return ip;
+	            }
+	
+	            // Neither seg1 nor seg2 is zero length
 	            let line1 = new Flatten.Line(seg1.ps, seg1.pe);
 	            let line2 = new Flatten.Line(seg2.ps, seg2.pe);
 	
@@ -30382,6 +30944,16 @@
 	                return ips;
 	            }
 	
+	            // Special case of zero length segment
+	            if (segment.isZeroLength()) {
+	                let [dist,shortest_segment] = segment.ps.distanceTo(circle.pc);
+	                if (Flatten.Utils.EQ(dist, circle.r)) {
+	                    ips.push(segment.ps);
+	                }
+	                return ips;
+	            }
+	
+	            // Non zero-length segment
 	            let line = new Flatten.Line(segment.ps, segment.pe);
 	
 	            let ips_tmp = line.intersect(circle);
@@ -30402,6 +30974,15 @@
 	                return ip;
 	            }
 	
+	            // Special case of zero-length segment
+	            if (segment.isZeroLength()) {
+	                if (segment.ps.on(arc)) {
+	                    ip.push(segment.ps);
+	                }
+	                return ip;
+	            }
+	
+	            // Non-zero length segment
 	            let line = new Flatten.Line(segment.ps, segment.pe);
 	            let circle = new Flatten.Circle(arc.pc, arc.r);
 	
@@ -30420,12 +31001,17 @@
 	         * Return string to draw segment in svg
 	         * @param {Object} attrs - Object with attributes for svg path element,
 	         * like "stroke", "strokeWidth" <br/>
-	         * Defaults are stroke:"black", strokeWidth:"3"
+	         * Defaults are stroke:"black", strokeWidth:"1"
 	         * @returns {string}
 	         */
-	        svg(attrs = {stroke: "black", strokeWidth: "3"}) {
-	            let {stroke, strokeWidth} = attrs;
-	            return `\n<line x1="${this.start.x}" y1="${this.start.y}" x2="${this.end.x}" y2="${this.end.y}" stroke="${stroke}" stroke-width="${strokeWidth}" />`;
+	        svg(attrs = {}) {
+	            let {stroke, strokeWidth, id, className} = attrs;
+	            // let rest_str = Object.keys(rest).reduce( (acc, key) => acc += ` ${key}="${rest[key]}"`, "");
+	            let id_str = (id && id.length > 0) ? `id="${id}"` : "";
+	            let class_str = (className && className.length > 0) ? `class="${className}"` : "";
+	
+	            return `\n<line x1="${this.start.x}" y1="${this.start.y}" x2="${this.end.x}" y2="${this.end.y}" stroke="${stroke || "black"}" stroke-width="${strokeWidth || 1}" ${id_str} ${class_str} />`;
+	
 	        }
 	    };
 	
@@ -30436,7 +31022,7 @@
 	};
 
 /***/ },
-/* 90 */
+/* 91 */
 /***/ function(module, exports) {
 
 	/**
@@ -30521,7 +31107,8 @@
 	        }
 	
 	        /**
-	         * Returns true if vectors are equal up to DP_TOL tolerance
+	         * Returns true if vectors are equal up to [DP_TOL]{@link http://localhost:63342/flatten-js/docs/global.html#DP_TOL}
+	         * tolerance
 	         * @param {Vector} v
 	         * @returns {boolean}
 	         */
@@ -30539,7 +31126,7 @@
 	        }
 	
 	        /**
-	         * Returns scalar product between two vectors <br/>
+	         * Returns scalar product (dot product) of two vectors <br/>
 	         * <code>dot_product = (this * v)</code>
 	         * @param {Vector} v Other vector
 	         * @returns {number}
@@ -30549,7 +31136,7 @@
 	        }
 	
 	        /**
-	         * Returns vector product (magnitude) between two vectors <br/>
+	         * Returns vector product (cross product) of two vectors <br/>
 	         * <code>cross_product = (this x v)</code>
 	         * @param {Vector} v Other vector
 	         * @returns {number}
@@ -30571,7 +31158,9 @@
 	        }
 	
 	        /**
-	         * Returns new vector rotated by given angle, positive angle defines rotation in counter clockwise direction
+	         * Returns new vector rotated by given angle,
+	         * positive angle defines rotation in counter clockwise direction,
+	         * negative - in clockwise direction
 	         * @param {number} angle - Angle in radians
 	         * @returns {Vector}
 	         */
@@ -30604,6 +31193,50 @@
 	        invert() {
 	            return new Flatten.Vector(-this.x, -this.y);
 	        }
+	
+	        /**
+	         * Return result of addition of other vector to this vector as a new vector
+	         * @param {Vector} v Other vector
+	         * @returns {Vector}
+	         */
+	        add(v) {
+	            return new Flatten.Vector(this.x + v.x, this.y + v.y);
+	        }
+	
+	        /**
+	         * Return result of subtraction of other vector from current vector as a new vector
+	         * @param {Vector} v Another vector
+	         * @returns {Vector}
+	         */
+	        subtract(v) {
+	            return new Flatten.Vector(this.x - v.x, this.y - v.y);
+	        }
+	
+	        /**
+	         * Return angle between this vector and other vector. <br/>
+	         * Angle is measured from 0 to 2*PI in the counter clockwise direction
+	         * from current vector to other.
+	         * @param {Vector} v Another vector
+	         * @returns {number}
+	         */
+	        angleTo(v) {
+	            let norm1 = this.normalize();
+	            let norm2 = v.normalize();
+	            let angle = Math.atan2(norm1.cross(norm2), norm1.dot(norm2));
+	            if (angle<0) angle += 2*Math.PI;
+	            return angle;
+	        }
+	
+	        /**
+	         * Return vector projection of the current vector on another vector
+	         * @param {Vector} v Another vector
+	         * @returns {Vector}
+	         */
+	        projectionOn(v){
+	            let n = v.normalize();
+	            let d = this.dot(n);
+	            return n.multiply(d);
+	        }
 	    };
 	
 	    /**
@@ -30615,7 +31248,7 @@
 
 
 /***/ },
-/* 91 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30724,7 +31357,7 @@
 
 
 /***/ },
-/* 92 */
+/* 93 */
 /***/ function(module, exports) {
 
 	/**
@@ -30738,7 +31371,7 @@
 
 
 /***/ },
-/* 93 */
+/* 94 */
 /***/ function(module, exports) {
 
 	/**
@@ -30790,12 +31423,12 @@
 
 
 /***/ },
-/* 94 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(19),
-	    getRawTag = __webpack_require__(97),
-	    objectToString = __webpack_require__(98);
+	    getRawTag = __webpack_require__(98),
+	    objectToString = __webpack_require__(99);
 	
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -30824,7 +31457,7 @@
 
 
 /***/ },
-/* 95 */
+/* 96 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -30835,10 +31468,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 96 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(99);
+	var overArg = __webpack_require__(100);
 	
 	/** Built-in value references. */
 	var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -30847,7 +31480,7 @@
 
 
 /***/ },
-/* 97 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(19);
@@ -30899,7 +31532,7 @@
 
 
 /***/ },
-/* 98 */
+/* 99 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -30927,7 +31560,7 @@
 
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports) {
 
 	/**
@@ -30948,10 +31581,10 @@
 
 
 /***/ },
-/* 100 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(95);
+	var freeGlobal = __webpack_require__(96);
 	
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -30963,7 +31596,7 @@
 
 
 /***/ },
-/* 101 */
+/* 102 */
 /***/ function(module, exports) {
 
 	/**
@@ -30998,7 +31631,7 @@
 
 
 /***/ },
-/* 102 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31111,7 +31744,7 @@
 
 
 /***/ },
-/* 103 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31229,7 +31862,7 @@
 	}
 
 /***/ },
-/* 104 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31243,7 +31876,7 @@
 	
 	var emptyFunction = __webpack_require__(9);
 	var invariant = __webpack_require__(11);
-	var ReactPropTypesSecret = __webpack_require__(106);
+	var ReactPropTypesSecret = __webpack_require__(107);
 	
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -31293,7 +31926,7 @@
 
 
 /***/ },
-/* 105 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31322,12 +31955,12 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(104)();
+	  module.exports = __webpack_require__(105)();
 	}
 
 
 /***/ },
-/* 106 */
+/* 107 */
 /***/ function(module, exports) {
 
 	/**
@@ -31345,7 +31978,7 @@
 
 
 /***/ },
-/* 107 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -31607,7 +32240,7 @@
 
 
 /***/ },
-/* 108 */
+/* 109 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31628,7 +32261,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 109 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @remove-on-eject-begin
@@ -31647,12 +32280,12 @@
 	  // Rejection tracking prevents a common issue where React gets into an
 	  // inconsistent state due to an error, but it gets swallowed by a Promise,
 	  // and the user has no idea what causes React's erratic future behavior.
-	  __webpack_require__(103).enable();
-	  window.Promise = __webpack_require__(102);
+	  __webpack_require__(104).enable();
+	  window.Promise = __webpack_require__(103);
 	}
 	
 	// fetch() polyfill for making API calls.
-	__webpack_require__(110);
+	__webpack_require__(111);
 	
 	// Object.assign() is commonly used with React.
 	// It will use the native implementation if it's present and isn't buggy.
@@ -31660,7 +32293,7 @@
 
 
 /***/ },
-/* 110 */
+/* 111 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -32124,7 +32757,7 @@
 
 
 /***/ },
-/* 111 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -32153,7 +32786,7 @@
 
 
 /***/ },
-/* 112 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32216,7 +32849,7 @@
 	}
 
 /***/ },
-/* 113 */
+/* 114 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32272,7 +32905,7 @@
 	}
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32420,14 +33053,14 @@
 	}
 
 /***/ },
-/* 115 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(116);
+	module.exports = __webpack_require__(117);
 
 
 /***/ },
-/* 116 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {'use strict';
@@ -32436,7 +33069,7 @@
 	  value: true
 	});
 	
-	var _ponyfill = __webpack_require__(117);
+	var _ponyfill = __webpack_require__(118);
 	
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 	
@@ -32459,10 +33092,10 @@
 	
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(122)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(123)(module)))
 
 /***/ },
-/* 117 */
+/* 118 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32490,31 +33123,31 @@
 	};
 
 /***/ },
-/* 118 */
+/* 119 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3MEYwOEQ4MDMwMzJFNDExOUZGN0MyRjAwQkZFNDkwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4NkNFODE2MzMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4NkNFODE2MjMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM3Q0UwRDg3MzgzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjcwRjA4RDgwMzAzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nXk3UAAAAjtJREFUeNrU1ktIVFEcx/FRhExEei0kULQkiijMKduo0RNCEHuQRohgggsVJbRSNy2qRSK4qIjohRARk5YgGvmoVSEWRe9EzHJVkFZEoInT9w+/gXGasjngwgMf7uDcOeee/+Nco/x+v2cuR7RnjkdM4MPh+jOBj+moxVYsxnvcQhO+Bf/48umjEe+gAHcxgM1YgkNIxGOsjHQHUYEcsIP1XHqQg7dIk36Mo8JugxfTf5swdFfBO6jDSU1+CvdRrRDdwFn8wB7XJG9XrFejCOvQhgnkoxE+3ee0gMX7E1bgmfLRgG0qBrvuwiKnKmJ8xCol0ybLxBaUoBcH8QqjrjvwKZGf8QAJeI0NWsRC9Ut/b3SpIgvRUyX6Es4rD7sxhevqgyOqtj71yz+rKThEY9iJOziAVtX9S31vE5ZhEjvwSCU9gi8K4+3QEg5ttEFYP1zBRnzVwtYHVZp8IZoRiyTE4Y2+f4KU2c6iKdV9qXaSgYfoVPwvahEr57VYjmTtxh6sW/fNzEGYM2lGrnAOWYjHGizFBZWuR6EtxFV8IAcnIjlN7SnKdbXfLECL+sXK+Ttytah1/D6X49omH1a8LVzZCmUHjqt/NuEdUl3fB2MKxXMtaP1ioWhXTuwBlqk4nBawA3CvwnVPlWRHygtcUxXuV8n+0Qf/M27qfCpGnp7WynlIrMRr9LIKX0XhRkhlpakUu1RZg3oh2ZMfQ6UdO4FOdnknDwU1ocX+p15KXh2SvrBn0bz9r+K3AAMAvVSdlmlN6ucAAAAASUVORK5CYII="
 
 /***/ },
-/* 119 */
+/* 120 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAB3RJTUUH1AgfBgU3vDbVaQAAAAlwSFlzAAAPPAAADzwBFzqfWQAAAwBQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Bz0LCAAAAAJ0Uk5T/wDltzBKAAAARUlEQVR42mNgxAIYsPEYkMUZoGwGJNVwNoLAUIWmngHVNFQ2iitQnQQTZACqRkfYVaJrg1qFUE20IMnehGtFNZhIQSAAABhlAUeIwcHOAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 120 */
+/* 121 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACWUExURezp2L3CsAAAAH91jbamy9Sx1NXVxL2u0MvA2yEeEZy460hBJUU/JAC+ACQhE4qi2Zaw5JCp3se72Ap3Hsi82cq+2qK/8XeKtWNfTb+x0nSEsG19pH6QtWFfU8S31nt1Wpax5Xp0WoeeynBrVMm92WhkVsGz02JfU21oU5m06Mq/2se62MS21bmqzsW517ipzbyu0P///wUDcXkAAAAydFJOU/////////////////////////////////////////////////////////////////8ADVCY7wAAAO1JREFUeNpiMMQCAAKIAZsgQABhFQQIIAZDeW5uZTgXwgEIIAZFKX5+aQk2iBiUAxBADDwCClyCfIwQQSgHIICAglxigny8wmAI4TACBBCDhoymkrg6KwMIsEI4jAABxGCoyskpy8gEFmSCcNgAAojBkI2RkZENqhLIMWRkMwQIIKg7YSohACCAoIIwlRAAEEBYVQIEEFaVAAHEwIwJDAECiIGZg4NJSAiE5OSYJCWZWFiYGAECCCgowi6qwi6iza6jxs6uywISBAggoKCoFoeoioiemoE+CxgwMQIEEAMzEwZgBAggBkNGTAAQYABIRSX4H75PxQAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 121 */
+/* 122 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABOUExURezp2AAAAH91jb3CsE9PT83C3CQhE7amy9Sx1ImFdL2u0AC+AMq+2si82Qp3Hsm92cvA28Gz07ipzcq/2se62LmqzsS21cW517yu0P///44+OfEAAAAadFJOU/////////////////////////////////8AFCIA2gAAAMxJREFUeNpikMQCAAKIAZsgQABhFQQIIAYWFklJTjYoD8oBCCAGIAMuJgnlAAQQUDsLG5JOMAcggBiAykGaoADCAQggBqByDhYWbj4w5GTjAJkLEEAg2xkZEIARpB4ggECCHEiCHCBBgADCqhIggLCqBAggrCoBAgirSoAAYmDCBJIAAcTAxMrKiIy4uBiZAQIIKMjLxcPPxSvCJSbIxSXKzs7OyAwQQAxMAjzCAjz8vOKCEkLsYMDIDBBADEyMGIAZIIAYJJkxAUCAAQCiZRN3sUCgAwAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 122 */
+/* 123 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -32531,4 +33164,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.b333984c.js.map
+//# sourceMappingURL=main.b1bb600b.js.map

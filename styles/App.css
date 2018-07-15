@@ -177,6 +177,8 @@
   border-style: solid;
   border-radius: 5px;
   font-size: 16px;
+  cursor: move;
+  position: absolute;
 }
 
 .App-modal-popup input, label, textarea {
