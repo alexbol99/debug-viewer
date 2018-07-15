@@ -6,6 +6,9 @@ import React from 'react';
 import '../../public/styles/App.css';
 
 export const AboutPopup = (props) => {
+    let offsetX, offsetY;
+    let dragX, dragY;
+
     let onCloseButtonPressed = () => {
         props.onCloseAboutPopupPressed();
     };
@@ -16,13 +19,43 @@ export const AboutPopup = (props) => {
         }
     };
 
+    let elementDrag = (ev) => {
+        ev = ev || window.event;
+        // calculate the new cursor position:
+        offsetX = dragX - ev.clientX;
+        offsetY = dragY - ev.clientY;
+        dragX = ev.clientX;
+        dragY = ev.clientY;
+        // set the element's new position:
+        let element = ev.target;
+        element.style.top = (element.offsetTop - offsetY) + "px";
+        element.style.left = (element.offsetLeft - offsetX) + "px";
+    }
+
+    let closeDragElement = (ev) => {
+        /* stop moving when mouse button is released:*/
+        ev.target.onmouseup = null;
+        ev.target.onmousemove = null;
+    }
+
+    let dragMouseDown = (ev) => {
+        ev = ev || window.event;
+        // get the mouse cursor position at startup:
+        dragX = ev.clientX;
+        dragY = ev.clientY;
+        ev.target.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        ev.target.onmousemove = elementDrag;
+    }
+
     document.addEventListener('keydown', handleKeyDown);
 
     return (
         <div className="modal">
             <div className="App-modal-popup"
                  id="aboutPopup"
-                 draggable="true"
+                 onMouseDown={dragMouseDown}
+                 onMouseMove={elementDrag}
             >
                 <h2>{props.title} v{props.version}</h2>
                 <h4>Build 362de89c 25/02/2018</h4>

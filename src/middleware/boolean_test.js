@@ -4,7 +4,7 @@ import { Layers } from '../models/layers';
 // import { Model } from "../models/model";
 // import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
-let {point, circle, segment, Polygon} = Flatten;
+let {point, /*circle, segment,*/ Polygon} = Flatten;
 // let {union, subtract, intersect, arrange} = BooleanOp;
 
 function zoomHome(shape, stage) {

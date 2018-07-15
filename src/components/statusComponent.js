@@ -23,14 +23,14 @@ export class StatusComponent extends Component {
     }
 
     render() {
-        let stage = this.props.stage;
-        let coordX = 0;
-        let coordY = 0;
-        if (stage) {
-            coordX = this.format(stage.C2W_X(this.props.coordX));
-            coordY = this.format(stage.C2W_Y(this.props.coordY));
-        }
-        let message = this.measurement();
+        // let stage = this.props.stage;
+        // let coordX = 0;
+        // let coordY = 0;
+        // if (stage) {
+        //     coordX = this.format(stage.C2W_X(this.props.coordX));
+        //     coordY = this.format(stage.C2W_Y(this.props.coordY));
+        // }
+        // let message = this.measurement();
 
         return (
             <div className="App-status-bar">
