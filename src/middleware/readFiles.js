@@ -6,6 +6,7 @@ import { parseXML } from '../models/parserXML';
 import { parseODB } from "../models/parserODB";
 import { parseImage } from "../models/parsePGM";
 import { parseCSV } from "../models/parseCSV";
+import { parseTXT } from "../models/parseTXT";
 
 const readAsText = (reader, file, stage, layers, dispatch, files) => {
 
@@ -22,6 +23,9 @@ const readAsText = (reader, file, stage, layers, dispatch, files) => {
             }
             else if (extension === 'csv') {
                 job = parseCSV(theFile.name, string);
+            }
+            else if (extension === 'txt') {
+                job = parseTXT(theFile.name, string);
             }
             else {
                 job = parseODB(theFile.name, string);
