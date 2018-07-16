@@ -23293,7 +23293,7 @@
 	};
 	
 	var readFile = function readFile(file, stage, layers, dispatch, files) {
-	    if (file.type !== "" && !(file.type.match('text.*') || file.type.match('image.*'))) return; // validate type is text
+	    if (file.type !== "" && !(file.type.match('text.*') || file.type.match('application.*') || file.type.match('image.*'))) return; // validate type is text
 	
 	    var reader = new FileReader();
 	
@@ -33379,4 +33379,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.561f6a39.js.map
+//# sourceMappingURL=main.32b84c23.js.map
