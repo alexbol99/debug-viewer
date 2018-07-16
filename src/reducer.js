@@ -48,7 +48,9 @@ const defaultAppState = {
     originX: undefined,
     originY: undefined,
     showAboutPopup: false,
-    importDataToNewLayer: true       // if false, import data to affected layer
+    importDataToNewLayer: true,       // if false, import data to affected layer
+    showSkeletonRecognitionButton: false,
+    applySkeletonRecognition: false
 };
 
 const defaultMeasureShapesTool = {
@@ -170,6 +172,14 @@ function app(state = defaultAppState, action) {
                     shortestSegment: null
                 });
             }
+        case ActionTypes.SKELETON_RECOGNITION_URI:
+            return Object.assign({}, state, {
+                showSkeletonRecognitionButton: true
+            });
+        case ActionTypes.SKELETON_RECOGNITION_BUTTON_PRESSED:
+            return Object.assign({}, state, {
+                applySkeletonRecognition: true
+            });
         case ActionTypes.LAYER_LIST_PANEL_PRESSED:
             return state;  // only to cause refresh of layers list component
         case ActionTypes.AABB_TREE_NEXT_LEVEL:

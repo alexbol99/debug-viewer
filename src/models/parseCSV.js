@@ -1,11 +1,10 @@
 import { Job } from '../models/job';
 import Flatten from 'flatten-js';
 
-let {point} = Flatten;
-let { vector } = Flatten;
+let {point, vector, line} = Flatten;
 
 const micron2pixels = 400;
-function MicronToPixels(str) {
+function micronToPixels(str) {
     return Math.round(Number(str)*micron2pixels,0);
 }
 
@@ -19,9 +18,13 @@ export function parseCSV(filename, str) {
         let line = arrayOfLines[i];
         let terms = line.split(',');
 
-        let x = MicronToPixels(terms[0]);
-        let y = MicronToPixels(terms[1]);
-        let shape = point(x,y);
+        let px = micronToPixels(terms[0]);
+        let py = micronToPixels(terms[1]);
+        let nx = Number(terms[2]);
+        let ny = Number(terms[3]);
+        let shape = point(px,py);
+        shape.nx = nx
+        shape.ny = ny;
         job.shapes.push(shape)
     }
 

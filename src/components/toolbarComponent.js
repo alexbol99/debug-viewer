@@ -110,6 +110,16 @@ export class ToolbarComponent extends Component {
                     </button>
                 ) : null}
 
+                {this.props.showSkeletonRecognitionButton ? (
+                    <button title="Skeleton Recognition Demo" onClick={this.props.onSkeletonRecognitionButtonPressed}>
+                        <FontAwesome
+                            name='tree'
+                            size='2x'
+                            style={{color: "grey"}}
+                        />
+                    </button>
+                ) : null}
+
                 <button title="About" onClick={this.props.onShowAboutPopupPressed}>
                     {/*<img src={about} alt="about" />*/}
                     <FontAwesome

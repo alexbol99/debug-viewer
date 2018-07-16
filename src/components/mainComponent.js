@@ -52,6 +52,7 @@ export class MainComponent extends Component {
         this.aabbToolNext = this.aabbToolNext.bind(this);
         this.nextAabbDistStep = this.nextAabbDistStep.bind(this);
         this.onCollisionDemoButtonPressed = this.onCollisionDemoButtonPressed.bind(this);
+        this.onSkeletonRecognitionButtonPressed = this.onSkeletonRecognitionButtonPressed.bind(this)
     }
 
     registerStage(stage) {
@@ -236,6 +237,12 @@ export class MainComponent extends Component {
         })
     }
 
+    onSkeletonRecognitionButtonPressed() {
+        this.dispatch({
+            type: ActionTypes.SKELETON_RECOGNITION_BUTTON_PRESSED
+        })
+    }
+
     handleKeyDown(e) {
         // let ctrl = e.ctrlKey;
         if (e.target.id !== "mainCanvas")
@@ -296,6 +303,7 @@ export class MainComponent extends Component {
                     units={this.state.app.units}
                     aabbDemoToolActivated={this.state.aabbDemoTool.aabbDemoToolActivated}
                     showCollisionDemoToolButton={this.state.collisionDistanceDemoTool.showCollisionDemoToolButton}
+                    showSkeletonRecognitionButton={this.state.app.showSkeletonRecognitionButton}
                     onFileSelected={this.handleFileSelect}
                     onHomeButtonPressed={this.setHomeView}
                     onPanByDragPressed={this.onPanByDragPressed}
@@ -307,6 +315,7 @@ export class MainComponent extends Component {
                     onShowAboutPopupPressed={this.showAboutPopup}
                     onAabbToolNext={this.aabbToolNext}
                     onCollisionDemoButtonPressed={this.onCollisionDemoButtonPressed}
+                    onSkeletonRecognitionButtonPressed={this.onSkeletonRecognitionButtonPressed}
                     onUnitClicked={this.toggleUnits}
                 />
 

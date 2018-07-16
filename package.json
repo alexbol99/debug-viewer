@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@alexbol99/collision_distance": "^1.0.6",
-    "algorithmia": "^0.3.10",
     "flatten-interval-tree": "^0.1.7",
     "flatten-js": "^0.5.2",
     "react": "^16.0.0",
