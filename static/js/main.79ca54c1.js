@@ -23297,7 +23297,7 @@
 	
 	    var reader = new FileReader();
 	
-	    if (file.type.match('text.*') || file.name.match('features*')) {
+	    if (file.type.match('text.*') || file.type.match('application.*') || file.name.match('features*')) {
 	        readAsText(reader, file, stage, layers, dispatch, files);
 	    } else if (file.type.match('image.*')) {
 	        readAsImage(reader, file, stage, layers, dispatch, files);
@@ -33379,4 +33379,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.32b84c23.js.map
+//# sourceMappingURL=main.79ca54c1.js.map
