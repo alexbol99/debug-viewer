@@ -127,7 +127,7 @@ const readAsImage = (reader, file, stage, layers, dispatch, files) => {
 
 const readFile = (file, stage, layers, dispatch, files) => {
     if (file.type !== "" &&
-        !(file.type.match('text.*') ||
+        !(file.type.match('text.*') || file.type.match('application.*') ||
         file.type.match('image.*')) ) return;   // validate type is text
 
     let reader = new FileReader();
