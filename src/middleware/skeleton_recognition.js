@@ -47,10 +47,17 @@ const skeleton_recognition = ({ dispatch, getState }) => next => action => {
                         // newLayer.displayed = true;
 
                         for (let row of output.result) {
-                            let seg = segment(
-                                point(row[0]*400,row[1]*400),
-                                point(row[2]*400,row[3]*400))
-                            newLayer.add(seg)
+                            let shape;
+                            if (row[0] instanceof Array && row[0].length === 2) {
+                                let pc = point(row[0[0]*400,row[0][1]*400])
+                                shape = arc(pc, row[1], row[2], Flatten.CCW)
+                            }
+                            else {
+                                shape = segment(
+                                    point(row[0] * 400, row[1] * 400),
+                                    point(row[2] * 400, row[3] * 400))
+                            }
+                            newLayer.add(shape)
                         }
                         layers.push(newLayer);
 
