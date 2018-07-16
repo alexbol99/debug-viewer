@@ -23739,9 +23739,10 @@
 	
 	                                    var shape = void 0;
 	                                    if (row[0] instanceof Array && row[0].length === 2) {
-	                                        var pc = point(row[(0[0] * 400, row[0][1] * 400)]);
+	                                        var pc = point(row[0][0] * 400, row[0][1] * 400);
+	                                        var r = row[1] * 400;
 	                                        /********center radius startAng endAng **********/
-	                                        shape = arc(pc, row[1], row[2], row[3], _flattenJs2.default.CCW);
+	                                        shape = arc(pc, r, row[2], row[3], _flattenJs2.default.CCW);
 	                                    } else {
 	                                        shape = segment(point(row[0] * 400, row[1] * 400), point(row[2] * 400, row[3] * 400));
 	                                    }
@@ -33451,4 +33452,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.77587b93.js.map
+//# sourceMappingURL=main.86b40236.js.map
