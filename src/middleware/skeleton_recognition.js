@@ -49,9 +49,10 @@ const skeleton_recognition = ({ dispatch, getState }) => next => action => {
                         for (let row of output.result) {
                             let shape;
                             if (row[0] instanceof Array && row[0].length === 2) {
-                                let pc = point(row[0[0]*400,row[0][1]*400]);
+                                let pc = point(row[0][0]*400,row[0][1]*400);
+                                let r = row[1]*400;
                                 /********center radius startAng endAng **********/
-                                shape = arc(pc, row[1], row[2], row[3], Flatten.CCW)
+                                shape = arc(pc, r, row[2], row[3], Flatten.CCW)
                             }
                             else {
                                 shape = segment(
