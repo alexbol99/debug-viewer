@@ -23746,6 +23746,9 @@
 	                                    } else {
 	                                        shape = segment(point(row[0] * 400, row[1] * 400), point(row[2] * 400, row[3] * 400));
 	                                    }
+	                                    if (row[4]) {
+	                                        shape.label = row[4];
+	                                    }
 	                                    newLayer.add(shape);
 	                                }
 	                            } catch (err) {
@@ -33452,4 +33455,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.86b40236.js.map
+//# sourceMappingURL=main.7108eaf4.js.map
