@@ -59,6 +59,9 @@ const skeleton_recognition = ({ dispatch, getState }) => next => action => {
                                     point(row[0] * 400, row[1] * 400),
                                     point(row[2] * 400, row[3] * 400))
                             }
+                            if (row[4]) {
+                                shape.label = row[4]
+                            }
                             newLayer.add(shape)
                         }
                         layers.push(newLayer);
