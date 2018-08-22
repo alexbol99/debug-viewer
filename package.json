@@ -4,12 +4,12 @@
   "private": true,
   "dependencies": {
     "@alexbol99/collision_distance": "^1.0.6",
-    "flatten-interval-tree": "^0.1.7",
-    "flatten-js": "^0.5.2",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "flatten-interval-tree": "^0.2.1",
+    "flatten-js": "^0.6.3",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-fontawesome": "^1.6.1",
-    "redux": "^3.6.0"
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "enzyme": "^3.3.0",
