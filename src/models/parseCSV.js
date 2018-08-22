@@ -1,7 +1,7 @@
 import { Job } from '../models/job';
 import Flatten from 'flatten-js';
 
-let {point, vector, line} = Flatten;
+let {point} = Flatten;
 
 const micron2pixels = 400;
 function micronToPixels(str) {

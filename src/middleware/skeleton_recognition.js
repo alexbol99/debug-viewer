@@ -19,10 +19,10 @@ let {point, arc, segment} = Flatten;
 const skeleton_recognition = ({ dispatch, getState }) => next => action => {
 
     if (action.type === ActionTypes.NEW_STAGE_CREATED || action.type === ActionTypes.WINDOW_HASH_CHANGED ||
-        action.type == ActionTypes.SKELETON_RECOGNITION_BUTTON_PRESSED) {
+        action.type === ActionTypes.SKELETON_RECOGNITION_BUTTON_PRESSED) {
         if (document.location.href.split('#')[1] === 'skeleton') {
             // console.log(document.location.pathname);
-            if (action.type == ActionTypes.SKELETON_RECOGNITION_BUTTON_PRESSED) {
+            if (action.type === ActionTypes.SKELETON_RECOGNITION_BUTTON_PRESSED) {
                 let state = getState();
                 let stage = state.stage;
 

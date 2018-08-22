@@ -19,66 +19,28 @@ import {Modal} from "../components/modalPopupComponent";
 import {AboutPopup} from "../forms/aboutPopup";
 
 export class MainComponent extends Component {
-    constructor() {
-        super();
-        this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
-        this.handleMouseWheelMove = this.handleMouseWheelMove.bind(this);
-        this.registerStage = this.registerStage.bind(this);
-        this.toggleUnits = this.toggleUnits.bind(this);
-
-        this.onMouseRollOverShape = this.onMouseRollOverShape.bind(this);
-        this.onMouseRollOutShape = this.onMouseRollOutShape.bind(this);
-        this.onClickOnShape = this.onClickOnShape.bind(this);
-
-        this.resizeStage = this.resizeStage.bind(this);
-
-        this.handleFileSelect = this.handleFileSelect.bind(this);
-        this.setHomeView = this.setHomeView.bind(this);
-        this.toggleWidthMode = this.toggleWidthMode.bind(this);
-        this.toggleDisplayVertices = this.toggleDisplayVertices.bind(this);
-        this.toggleDisplayLabels = this.toggleDisplayLabels.bind(this);
-        this.showAboutPopup = this.showAboutPopup.bind(this);
-        this.closeAboutPopup = this.closeAboutPopup.bind(this);
-
-        this.onMeasurePointsButtonPressed = this.onMeasurePointsButtonPressed.bind(this);
-        this.onMeasureBetweenShapesButtonPressed = this.onMeasureBetweenShapesButtonPressed.bind(this);
-        this.onPanByDragPressed = this.onPanByDragPressed.bind(this);
-
-        this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleKeyUp = this.handleKeyUp.bind(this);
-
-        this.aabbToolNext = this.aabbToolNext.bind(this);
-        this.nextAabbDistStep = this.nextAabbDistStep.bind(this);
-        this.onCollisionDemoButtonPressed = this.onCollisionDemoButtonPressed.bind(this);
-        this.onSkeletonRecognitionButtonPressed = this.onSkeletonRecognitionButtonPressed.bind(this)
-    }
-
-    registerStage(stage) {
-        // let layer = Layers.newLayer(stage, this.state.layers);
+    registerStage = (stage) => {
         this.dispatch({
             type: ActionTypes.NEW_STAGE_CREATED,
             stage: stage,
-            /*layer: layer*/
         });
-    }
+    };
 
-    resizeStage() {
+    resizeStage = () => {
         // alert("resized")
         this.dispatch({
             type: ActionTypes.STAGE_RESIZED,
             stage: this.state.stage
         });
-    }
+    };
 
-    toggleUnits() {
+    toggleUnits = () => {
         this.dispatch({
             type: ActionTypes.TOGGLE_UNITS_CLICKED
         });
-    }
+    };
 
-    handleMouseMove(stageX, stageY) {
+    handleMouseMove = (stageX, stageY) => {
         this.dispatch({
             type: ActionTypes.MOUSE_MOVED_ON_STAGE,
             stage: this.state.stage,
@@ -87,9 +49,9 @@ export class MainComponent extends Component {
             dx: this.state.mouse.startX ? stageX - this.state.mouse.startX : undefined,
             dy: this.state.mouse.startY ? stageY - this.state.mouse.startY : undefined
         });
-    }
+    };
 
-    handleMouseDown(stageX, stageY) {
+    handleMouseDown = (stageX, stageY) => {
         // start pan stage
         this.dispatch({
             type: ActionTypes.MOUSE_DOWN_ON_STAGE,
@@ -97,9 +59,9 @@ export class MainComponent extends Component {
             x: stageX,
             y: stageY
         })
-    }
+    };
 
-    handleMouseUp(stageX, stageY) {
+    handleMouseUp = (stageX, stageY) => {
         // stop pan stage
         // Patch bug in Firefox when dispatch is not fired
         this.state.stage.panByMouseStop();
@@ -109,9 +71,9 @@ export class MainComponent extends Component {
             x: event.stageX,
             y: event.stageY
         })
-    }
+    };
 
-    handleMouseWheelMove(stageX, stageY, delta) {
+    handleMouseWheelMove = (stageX, stageY, delta) => {
         if (delta !== 0) {
             this.dispatch({
                 type: ActionTypes.MOUSE_WHEEL_MOVE_ON_STAGE,
@@ -121,30 +83,30 @@ export class MainComponent extends Component {
                 delta: delta
             });
         }
-    }
+    };
 
-    onMouseRollOverShape(shape) {
+    onMouseRollOverShape = (shape) => {
         this.dispatch({
             type: ActionTypes.MOUSE_ROLL_OVER_SHAPE,
             shape: shape
         })
-    }
+    };
 
-    onMouseRollOutShape() {
+    onMouseRollOutShape = () => {
         this.dispatch({
             type: ActionTypes.MOUSE_ROLL_OUT_SHAPE,
         })
-    }
+    };
 
-    onClickOnShape(shape, layer) {
+    onClickOnShape = (shape, layer) => {
         this.dispatch({
             type: ActionTypes.MOUSE_CLICKED_ON_SHAPE,
             shape: shape,
             layer: layer
         })
-    }
+    };
 
-    handleFileSelect(event) {
+    handleFileSelect = (event) => {
         if (!(File && FileReader && FileList)) return;
 
         let files = event.target.files; // FileList object
@@ -155,9 +117,9 @@ export class MainComponent extends Component {
             stage: this.state.stage,
             layers: this.state.layers
         });
-    }
+    };
 
-    setHomeView() {
+    setHomeView = () => {
         let layer = Layers.getAffected(this.state.layers);
         if (!layer) return;
         // TODO: dispatch PAN_AND_ZOOM instead ?
@@ -166,84 +128,83 @@ export class MainComponent extends Component {
             stage: this.state.stage,
             shape: layer
         })
-    }
+    };
 
-    onPanByDragPressed() {
+    onPanByDragPressed = () => {
         this.dispatch({
             type: ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED
         })
-    }
+    };
 
-    toggleWidthMode() {
+    toggleWidthMode = () => {
         this.dispatch({
             type: ActionTypes.TOGGLE_WIDTH_MODE_CLICKED,
             widthOn: this.state.app.widthOn
         })
 
-    }
+    };
 
-    toggleDisplayVertices() {
-        // if (this.state.app.widthOn)
-        //     return;
+    toggleDisplayVertices = () => {
         this.dispatch({
             type: ActionTypes.TOGGLE_DISPLAY_VERTICES_CLICKED
         })
-    }
+    };
 
-    toggleDisplayLabels() {
+    toggleDisplayLabels = () => {
         this.dispatch({
             type: ActionTypes.TOGGLE_DISPLAY_LABELS_CLICKED
         })
-    }
+    };
 
-    showAboutPopup() {
+    showAboutPopup = () => {
         this.dispatch({
             type: ActionTypes.SHOW_ABOUT_POPUP_BUTTON_PRESSED
         })
-    }
-    closeAboutPopup(event) {
+    };
+
+    closeAboutPopup = () => {
         this.dispatch({
             type: ActionTypes.CLOSE_ABOUT_POPUP_BUTTON_PRESSED
         })
-    }
+    };
 
-    onMeasurePointsButtonPressed() {
+    onMeasurePointsButtonPressed = () => {
         this.dispatch({
             type: ActionTypes.MEASURE_POINTS_BUTTON_PRESSED
         });
-    }
+    };
 
-    onMeasureBetweenShapesButtonPressed() {
+    onMeasureBetweenShapesButtonPressed = () => {
         this.dispatch({
             type: ActionTypes.MEASURE_SHAPES_BUTTON_PRESSED
         });
-    }
+    };
 
-    aabbToolNext() {
+    aabbToolNext = () => {
         this.dispatch({
             type: ActionTypes.AABB_TREE_NEXT_LEVEL
         })
-    }
+    };
 
-    nextAabbDistStep() {
+    nextAabbDistStep = () => {
         this.dispatch({
             type: ActionTypes.AABB_DEMO_NEXT_DIST_STEP
         })
-    }
+    };
 
-    onCollisionDemoButtonPressed() {
+    onCollisionDemoButtonPressed = () => {
         this.dispatch({
             type: ActionTypes.COLLISION_DEMO_BUTTON_PRESSED
         })
-    }
+    };
 
-    onSkeletonRecognitionButtonPressed() {
+    onSkeletonRecognitionButtonPressed = () => {
         this.dispatch({
             type: ActionTypes.SKELETON_RECOGNITION_BUTTON_PRESSED
         })
-    }
+    };
 
-    handleKeyDown(e) {
+    handleKeyDown = (e) => {
         // let ctrl = e.ctrlKey;
         if (e.target.id !== "mainCanvas")
             return;
@@ -273,10 +234,9 @@ export class MainComponent extends Component {
             default:
                 break;
         }
-    }
+    };
 
-    handleKeyUp(event) {
-    }
+    handleKeyUp = (event) => {}
 
     componentWillMount() {
         this.dispatch = this.props.store.dispatch;

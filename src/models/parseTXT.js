@@ -1,8 +1,5 @@
 import { Job } from '../models/job';
-import Flatten from 'flatten-js';
 import {Parser} from '../models/parser';
-
-let {point, vector, line} = Flatten;
 
 export function parseTXT(filename, str) {
     let job = new Job();

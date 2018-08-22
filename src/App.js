@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import logo from './logo.svg';
 import '../public/styles/App.css';
 
 import {HeaderComponent} from './components/headerComponent';
@@ -16,23 +15,21 @@ export class App extends Component {
         this.props.store.subscribe(() => {
             this.setState(this.props.store.getState());
         });
-        this.handlePaste = this.handlePaste.bind(this);
-        this.handleHashChange = this.handleHashChange.bind(this);
     }
 
-    handlePaste(event) {
+    handlePaste = (event) => {
         this.props.store.dispatch({
             type: ActionTypes.DATA_FROM_BUFFER_PASTED,
             data: event.clipboardData
         });
-    }
+    };
 
-    handleHashChange(event) {
+    handleHashChange = (event) => {
         this.props.store.dispatch({
             type: ActionTypes.WINDOW_HASH_CHANGED,
             stage: this.state.stage
         });
-    }
+    };
 
     componentWillMount() {
         // this.dispatch = this.props.store.dispatch;
