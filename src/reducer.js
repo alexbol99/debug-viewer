@@ -5,7 +5,7 @@
 import * as ActionTypes from './actions/action-types';
 import {combineReducers} from 'redux';
 
-import Flatten from 'flatten-js/dist/flatten.commonjs2';
+import Flatten from 'flatten-js';
 // import IntervalTree from 'flatten-interval-tree';
 
 // import {Stage} from './models/stage';

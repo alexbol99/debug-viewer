@@ -1,11 +1,11 @@
 import * as ActionTypes from '../actions/action-types';
 import {Layers} from "../models/layers";
 
-let Algorithmia = Window.Algorithmia
+let Algorithmia = Window.Algorithmia;
 
 // import { Model } from "../models/model";
 
-import Flatten from 'flatten-js/dist/flatten.commonjs2';
+import Flatten from 'flatten-js';
 let {point, arc, segment} = Flatten;
 
 // function zoomHome(shape, stage) {

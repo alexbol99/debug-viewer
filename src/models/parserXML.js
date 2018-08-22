@@ -1,5 +1,5 @@
 import { Job } from '../models/job';
-import Flatten from 'flatten-js/dist/flatten.commonjs2';
+import Flatten from 'flatten-js';
 
 let {Point, Segment, Arc, Polygon} = Flatten;
 let { vector } = Flatten;

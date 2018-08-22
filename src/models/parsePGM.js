@@ -1,4 +1,4 @@
-import Flatten from 'flatten-js/dist/flatten.commonjs2';
+import Flatten from 'flatten-js';
 
 const pgmResolution = 25.500025;
 const microns2pixels = 400;

@@ -2,7 +2,7 @@
  * Created by alexanderbol on 17/04/2017.
  */
 
-import Flatten from 'flatten-js/dist/flatten.commonjs2';
+import Flatten from 'flatten-js';
 // import { Shape } from '../models/shape';
 import { Model } from './model';
 
