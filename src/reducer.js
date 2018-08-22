@@ -5,8 +5,8 @@
 import * as ActionTypes from './actions/action-types';
 import {combineReducers} from 'redux';
 
-import Flatten from 'flatten-js';
-import IntervalTree from 'flatten-interval-tree';
+import Flatten from 'flatten-js/dist/flatten.commonjs2';
+// import IntervalTree from 'flatten-interval-tree';
 
 // import {Stage} from './models/stage';
 // import {Layer} from './models/layer';
@@ -532,7 +532,7 @@ function aabbDemoTool(state = defaultAabbDemoToolState, action) {
             if (state.secondMeasuredShapeLevel.length === 0) {
                 level = [state.secondMeasuredShape.geom.edges.index.root];
                 min_stop = Number.POSITIVE_INFINITY;
-                tree = new IntervalTree();
+                tree = {}; // new IntervalTree();
             }
             else {
                 [min_stop, level, tree] = Distance.minmax_tree_process_level(state.firstMeasuredShape,

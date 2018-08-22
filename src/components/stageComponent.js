@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {LayerComponent} from './layerComponent';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 import {AabbDemoTool} from "../tools/aabbDemoTool";
-import {CollisionDistanceDemoTool} from "../tools/collisionDistanceDemoTool";
+// import {CollisionDistanceDemoTool} from "../tools/collisionDistanceDemoTool";
 import {DisplayCoordsTool} from "../tools/displayCoordsTool";
 
 import Utils from "../utils";
@@ -94,23 +94,22 @@ export class StageComponent extends Component {
             />
             ) : null;
 
-        let collisionDemoTool = this.props.collisionDistanceDemoToolActivated ? (
-            <CollisionDistanceDemoTool
-                key="CollisionDemoTool"
-                stage={this.props.stage}
-                firstMeasuredShape={this.props.firstMeasuredShape}
-                secondMeasuredShape={this.props.secondMeasuredShape}
-                firstMeasuredLayer={this.props.firstMeasuredLayer}
-                secondMeasuredLayer={this.props.secondMeasuredLayer}
-            />
-            ) : null;
+        // let collisionDemoTool = this.props.collisionDistanceDemoToolActivated ? (
+        //     <CollisionDistanceDemoTool
+        //         key="CollisionDemoTool"
+        //         stage={this.props.stage}
+        //         firstMeasuredShape={this.props.firstMeasuredShape}
+        //         secondMeasuredShape={this.props.secondMeasuredShape}
+        //         firstMeasuredLayer={this.props.firstMeasuredLayer}
+        //         secondMeasuredLayer={this.props.secondMeasuredLayer}
+        //     />
+        //     ) : null;
 
         let components = [
             ...layerComponents,
             displayCoordsTool,
             measureShapesTool,
-            aabbDdemoTool,
-            collisionDemoTool
+            aabbDdemoTool
         ];
 
         return components;

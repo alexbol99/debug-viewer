@@ -7,7 +7,7 @@ import * as createjs from '../../public/easeljs-NEXT.combined.js';
 import {graphics} from '../models/graphics';
 import '../../public/styles/App.css';
 import CollisionDistance from '@alexbol99/collision_distance';
-import Flatten from 'flatten-js';
+import Flatten from 'flatten-js/dist/flatten.commonjs2';
 let {vector} = Flatten;
 
 export class CollisionDistanceDemoTool extends Component {

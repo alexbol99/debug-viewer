@@ -5,7 +5,7 @@ import { Layers } from '../models/layers';
 // import file1 from '../../public/Block_53388_2parts_Cont.txt';
 // import {parseODB} from "../models/parserODB";
 
-import Flatten from 'flatten-js';
+import Flatten from 'flatten-js/dist/flatten.commonjs2';
 
 let {Segment, Arc, Vector, Polygon} = Flatten;
 
