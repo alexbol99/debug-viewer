@@ -8,7 +8,7 @@ import {AsideComponent} from './components/asideComponent';
 
 import * as ActionTypes from './actions/action-types';
 
-export class App extends Component {
+class App extends Component {
     constructor(props) {
         super(props);
         this.state = this.props.store.getState();
@@ -55,24 +55,14 @@ export class App extends Component {
                         stage={this.state.stage}
                         layers={this.state.layers}
                     />
-                    <AsideComponent {...this.props} />
+                    <AsideComponent />
                 </div>
             </div>
         );
     }
 }
 
-// export default App;
+export default App;
 
-/*
- <div className="App">
- <div className="App-header">
- <h2>Debug Viewer</h2>
- </div>
-
- </div>
-*/
-
-/*
- <img src={logo} className="App-logo" alt="logo" />
- */
+// TODO: Fix bug when Point2PointMeasurementTool is not released
+// TODO: Fix bug (?) with display circle

@@ -3,16 +3,17 @@
  */
 
 import {Component} from 'react';
-// import createjs from 'easel-js';
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 import {graphics} from '../models/graphics';
 import '../../public/styles/App.css';
+
 export class AabbDemoTool extends Component {
     constructor(params) {
         super();
         this.boxShapes = [];
         this.edgeShapes = [];
     }
+
     draw() {
         for (let shape of this.boxShapes) {
             this.props.stage.removeChild(shape);

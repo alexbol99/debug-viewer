@@ -12,44 +12,31 @@ import { Layers } from '../models/layers';
 export class LayersListComponent extends Component {
     constructor(param) {
         super();
-        this.onLayerListClicked = this.onLayerListClicked.bind(this);
-        this.onLayerClicked = this.onLayerClicked.bind(this);
-        this.onLayerDoubleClicked = this.onLayerDoubleClicked.bind(this);
-        this.onSubmitLayerEditForm = this.onSubmitLayerEditForm.bind(this);
-        this.onEscapeLayerEditForm = this.onEscapeLayerEditForm.bind(this);
-
-        this.onAddLayerSelected = this.onAddLayerSelected.bind(this);
-        this.onEditLayerSelected = this.onEditLayerSelected.bind(this);
-        this.onDeleteLayerSelected = this.onDeleteLayerSelected.bind(this);
-        this.onSortLayersSelected = this.onSortLayersSelected.bind(this);
-
-        this.onAffectedBoxClicked = this.onAffectedBoxClicked.bind(this);
-        this.handleKeyDown = this.handleKeyDown.bind(this);
         this.height = 0;
         this.dispatch = param.dispatch;
     }
 
-    onLayerListClicked() {
+    onLayerListClicked = () => {
         this.dispatch({
             type: ActionTypes.LAYER_LIST_PANEL_PRESSED
         });
-    }
+    };
 
-    onLayerClicked(layer) {
+    onLayerClicked = (layer) => {
         this.dispatch({
             type: ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED,
             layer: layer
         });
-    }
+    };
 
-    onLayerDoubleClicked(layer) {
+    onLayerDoubleClicked = (layer) => {
         // this.dispatch({
         //     type: ActionTypes.OPEN_LAYER_EDIT_FORM_PRESSED,
         //     layer: layer
         // });
-    }
+    };
 
-    onSubmitLayerEditForm(layer, newLayer) {
+    onSubmitLayerEditForm = (layer, newLayer) => {
         this.dispatch({
             type: ActionTypes.SUBMIT_LAYER_EDIT_FORM_PRESSED,
             layer: layer,
@@ -57,21 +44,21 @@ export class LayersListComponent extends Component {
         });
     };
 
-    onEscapeLayerEditForm(layer) {
+    onEscapeLayerEditForm = (layer) => {
         this.dispatch({
             type: ActionTypes.ESCAPE_LAYER_EDIT_FORM_PRESSED,
             layer: layer
         });
-    }
+    };
 
-    onAffectedBoxClicked(layer) {
+    onAffectedBoxClicked = (layer) => {
         this.dispatch({
             type: ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED,
             layer: layer
         });
-    }
+    };
 
-    onAddLayerSelected() {
+    onAddLayerSelected = () => {
         let layer = Layers.newLayer(this.props.stage, this.props.layers);
 
         this.dispatch({
@@ -79,9 +66,9 @@ export class LayersListComponent extends Component {
             stage: this.props.stage,
             layer: layer
         })
-    }
+    };
 
-    onEditLayerSelected() {
+    onEditLayerSelected = () => {
         let layer = Layers.getAffected(this.props.layers);
         if (!layer) return;
 
@@ -89,9 +76,9 @@ export class LayersListComponent extends Component {
             type: ActionTypes.OPEN_LAYER_EDIT_FORM_PRESSED,
             layer: layer
         });
-    }
+    };
 
-    onDeleteLayerSelected() {
+    onDeleteLayerSelected = () => {
         let layer = Layers.getAffected(this.props.layers);
         if (!layer) return;
 
@@ -100,16 +87,16 @@ export class LayersListComponent extends Component {
             layers: this.props.layers,
             layer: layer
         });
-    }
+    };
 
-    onSortLayersSelected() {
+    onSortLayersSelected = () => {
         this.dispatch({
             type: ActionTypes.SORT_LAYERS_BUTTON_PRESSED,
             layers: this.props.layers
         });
-    }
+    };
 
-    handleKeyDown(e) {
+    handleKeyDown = (e) => {
         // e.stopPropagation();
         // e.preventDefault();
 
@@ -150,7 +137,7 @@ export class LayersListComponent extends Component {
             }
         }
 
-    }
+    };
 
     componentDidMount() {
         // Keyboard event
@@ -168,26 +155,6 @@ export class LayersListComponent extends Component {
     }
 
     render() {
-        // let addLayer =
-        //     (<div
-        //         style={{padding:4, backgroundColor: "lightgray"}}
-        //         onClick={this.onAddLayerSelected}>
-        //         <h5 style={{margin:0}}>Add layer</h5>
-        //     </div>)
-
-        // let layers = this.props.layers.slice();
-        // layers.sort( function(l1, l2) {
-        //     let name1 = l1.name.toUpperCase();
-        //     let name2 = l2.name.toUpperCase();
-        //     if (name1 < name2) {
-        //         return -1;
-        //     }
-        //     if (name1 > name2) {
-        //         return 1;
-        //     }
-        //     return 0;
-        // });
-
         return (
             <div className="App-layers"
                  ref="layersComponent"

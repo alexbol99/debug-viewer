@@ -19,19 +19,9 @@ import vertices from '../../public/icons/editContourVertextOnOff.png';
 import '../../public/styles/App.css';
 
 export class ToolbarComponent extends Component {
-    constructor() {
-        super();
-        this.openJobButtonClicked = this.openJobButtonClicked.bind(this);
-        this.notImplemented = this.notImplemented.bind(this);
-    }
+    openJobButtonClicked = () => this.refs.browseFiles.click();
 
-    openJobButtonClicked() {
-        document.getElementById("browseFiles").click();
-    }
-
-    notImplemented() {
-        alert("Not implemented yet")
-    }
+    notImplemented = () => alert("Not implemented yet");
 
     render() {
         return (
@@ -47,7 +37,7 @@ export class ToolbarComponent extends Component {
                 </button>
 
                 <input style={{fontSize: 16, marginTop: 5, marginBottom: 5, display: "none"}}
-                       type="file" id="browseFiles" name="files[]" multiple
+                       type="file" id="browseFiles" ref="browseFiles" name="files[]" multiple
                        onChange={this.props.onFileSelected}
                 />
 

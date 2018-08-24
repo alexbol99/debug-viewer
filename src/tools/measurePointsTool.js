@@ -9,23 +9,13 @@ import React, {Component} from 'react';
 import '../../public/styles/App.css';
 
 export class MeasurePointsTool extends Component {
-    constructor() {
-        super();
-        this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
+    startX = undefined;
+    startY = undefined;
+    endX = undefined;
+    endY = undefined;
+    measureStarted = false;
 
-        this.handleMouseWheel = this.handleMouseWheel.bind(this);
-        this.handleMouseWheelFox = this.handleMouseWheelFox.bind(this);
-
-        this.startX = undefined;
-        this.startY = undefined;
-        this.endX = undefined;
-        this.endY = undefined;
-        this.measureStarted = false;
-    }
-
-    handleMouseDown(event) {
+    handleMouseDown = (event) => {
         event.preventDefault();
 
         let canvas = this.refs.measureCanvas;
@@ -50,10 +40,10 @@ export class MeasurePointsTool extends Component {
             this.measureStarted = true;
             canvas.style.cursor = "crosshair";
         }
-    }
+    };
 
 
-    handleMouseMove(event) {
+    handleMouseMove = (event) => {
         let stage = this.props.stage;
 
         let coordX = event.offsetX /*|| event.originalEvent ? event.originalEvent.layerX : undefined*/;    // layerX for Firefox
@@ -65,27 +55,26 @@ export class MeasurePointsTool extends Component {
 
             this.draw();
         }
-    }
+    };
 
-    handleMouseUp(event) {
-    }
+    handleMouseUp = (event) => {}
 
-    handleMouseWheel(event) {
+    handleMouseWheel = (event) => {
         event.preventDefault();
 
         let delta = event.detail || event.wheelDelta;
         if (delta !== 0) {
             this.props.onMouseWheelMove(event.offsetX, event.offsetY, delta);
         }
-    }
+    };
 
-    handleMouseWheelFox(event) {
+    handleMouseWheelFox = (event) => {
         event.preventDefault();
 
         if (event.detail !== 0) {
             this.props.onMousewheelMove(event.layerX, event.layerY, -event.detail);
         }
-    }
+    };
 
     draw() {
         let canvas = this.refs.measureCanvas;

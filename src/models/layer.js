@@ -96,12 +96,12 @@ export class Layer {
         return this.shapes;
     }
 
-    toggleExpanded(shapeToggle) {
-        for(let shape of this.shapes) {
-            if (shape === shapeToggle) {
-                shape.expanded = !shape.expanded;
-            }
-        }
-        return this;
-    }
+    // toggleExpanded(shapeToggle) {
+    //     for(let shape of this.shapes) {
+    //         if (shape === shapeToggle) {
+    //             shape.expanded = !shape.expanded;
+    //         }
+    //     }
+    //     return this;
+    // }
 }

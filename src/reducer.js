@@ -254,15 +254,15 @@ function layers(state = [], action) {
                 }
             });
 
-        case ActionTypes.TOGGLE_WATCH_EXPAND_CLICKED:
-            return state.map((layer) => {
-                if (layer.affected) {
-                    return layer.toggleExpanded(action.shape);
-                }
-                else {
-                    return layer;
-                }
-            });
+        // case ActionTypes.TOGGLE_WATCH_EXPAND_CLICKED:
+        //     return state.map((layer) => {
+        //         if (layer.affected) {
+        //             return layer.toggleExpanded(action.shape);
+        //         }
+        //         else {
+        //             return layer;
+        //         }
+        //     });
 
         case ActionTypes.OPEN_LAYER_EDIT_FORM_PRESSED:
             return state.map((layer) => {

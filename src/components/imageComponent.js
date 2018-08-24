@@ -30,25 +30,19 @@ export class ImageComponent extends Component {
             this.labelShape.geom = params.model.geom;     // augment label Shape with geom struct
             params.stage.addChild(this.labelShape);
         }
-
-
-        // this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleMouseOver = this.handleMouseOver.bind(this);
-        this.handleMouseOut = this.handleMouseOut.bind(this);
-        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleMouseOver(event) {
+    handleMouseOver = (event) => {
         this.props.onMouseOver(this.props.model);
-    }
+    };
 
-    handleMouseOut(event) {
+    handleMouseOut = (event) => {
         this.props.onMouseOut();
-    }
+    };
 
-    handleClick(event) {
+    handleClick = (event) => {
         this.props.onClick(this.props.model, this.props.layer);
-    }
+    };
 
     redrawLabels(showLabel) {
         if (!this.labelShape) return;
