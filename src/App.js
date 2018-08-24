@@ -64,5 +64,4 @@ class App extends Component {
 
 export default App;
 
-// TODO: Fix bug when Point2PointMeasurementTool is not released
 // TODO: Fix bug (?) with display circle

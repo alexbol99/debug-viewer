@@ -67,10 +67,12 @@ export class Layer {
     }
 
     setAffected(affected) {
-        return Object.assign(this.clone(),
-            {
-                affected : affected
-            });
+        this.affected = affected;
+        return this;
+        // return Object.assign(this.clone(),
+        //     {
+        //         affected : affected
+        //     });
     }
 
     setEdited(edited) {

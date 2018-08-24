@@ -51,7 +51,8 @@ export class LayersListComponent extends Component {
         });
     };
 
-    onAffectedBoxClicked = (layer) => {
+    onAffectedBoxClicked = (event, layer) => {
+        event.stopPropagation();
         this.dispatch({
             type: ActionTypes.TOGGLE_AFFECTED_LAYER_PRESSED,
             layer: layer
@@ -100,7 +101,8 @@ export class LayersListComponent extends Component {
         // e.stopPropagation();
         // e.preventDefault();
 
-        if (e.target.parentElement.parentElement.parentElement &&
+        if (e.target.parentElement.parentElement &&
+            e.target.parentElement.parentElement.parentElement &&
             e.target.parentElement.parentElement.parentElement.id &&
             e.target.parentElement.parentElement.parentElement.id === "layersList") {
 
@@ -173,7 +175,7 @@ export class LayersListComponent extends Component {
                     <LayerListElement
                         onLayerClicked={() => this.onLayerClicked(layer)}
                         onLayerDoubleClicked={() => this.onLayerDoubleClicked(layer)}
-                        onAffectedBoxClicked={() => this.onAffectedBoxClicked(layer)}
+                        onAffectedBoxClicked={(event) => this.onAffectedBoxClicked(event, layer)}
                         onSubmitLayerEditForm={this.onSubmitLayerEditForm}
                         onEscapeLayerEditForm={this.onEscapeLayerEditForm}
                         key={layer.name}

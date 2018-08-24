@@ -112,6 +112,7 @@ export class MeasureShapesTool extends Component {
         this.props.stage.removeChild(this.labelShape);
         this.labelShape.text = "";
     }
+
     render() {
         return null;
     }

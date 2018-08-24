@@ -102,7 +102,7 @@ function app(state = defaultAppState, action) {
             return Object.assign({}, state, {
                 zoomFactor: action.stage.zoomFactor * action.stage.resolution,
                 originX: action.stage.origin.x,
-                originY: action.stage.origin.y
+                originY: action.stage.origin.y,
             });
         case ActionTypes.MOUSE_MOVED_ON_STAGE:
             return Object.assign({}, state, {
@@ -147,6 +147,11 @@ function app(state = defaultAppState, action) {
         case ActionTypes.CLOSE_ABOUT_POPUP_BUTTON_PRESSED:
             return Object.assign({}, state, {
                 showAboutPopup: false
+            });
+
+        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
+            return Object.assign({}, state, {
+                measurePointsActive: false
             });
 
         case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
@@ -366,7 +371,7 @@ function measureShapesTool(state = defaultMeasureShapesTool, action) {
             return Object.assign({}, defaultMeasureShapesTool, {
                 measureShapesActive: true
             });
-            case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
+        case ActionTypes.PAN_BY_DRAG_BUTTON_CLICKED:
             return Object.assign({}, defaultMeasureShapesTool);
 
         case ActionTypes.MEASURE_POINTS_BUTTON_PRESSED:
@@ -436,6 +441,26 @@ function measureShapesTool(state = defaultMeasureShapesTool, action) {
                     shortestSegment: null
                 });
             }
+
+        case ActionTypes.DELETE_LAYER_BUTTON_PRESSED:
+            if (action.layer === state.firstMeasuredLayer ||
+            action.layer === state.secondMeasuredLayer) {
+                return Object.assign({}, defaultMeasureShapesTool);
+            }
+            else {
+                return state;
+            }
+
+        case ActionTypes.TOGGLE_DISPLAY_LAYER_PRESSED:
+            if (action.layer.displayed &&
+                (action.layer === state.firstMeasuredLayer ||
+                    action.layer === state.secondMeasuredLayer)) {
+                return Object.assign({}, defaultMeasureShapesTool);
+            }
+            else {
+                return state;
+            }
+
         default:
             return state;
     }

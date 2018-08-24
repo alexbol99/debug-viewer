@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {LayerComponent} from './layerComponent';
-import {MeasureShapesTool} from "../tools/measureShapesTool";
 import {AabbDemoTool} from "../tools/aabbDemoTool";
 // import {CollisionDistanceDemoTool} from "../tools/collisionDistanceDemoTool";
-import {DisplayCoordsTool} from "../tools/displayCoordsTool";
 
 import Utils from "../utils";
 
@@ -47,35 +45,6 @@ export class StageComponent extends Component {
                 />
             );
 
-        let displayCoordsTool = this.props.stage ? (
-            <DisplayCoordsTool
-                key="displayCoordinatedTool"
-                stage={this.props.stage}
-                units={this.props.units}
-                divisor={this.props.divisor}
-                decimals={this.props.decimals}
-                coordX={this.props.coordX}
-                coordY={this.props.coordY}
-            />
-        ) : null;
-
-        let measuredLayersDisplayed = this.props.firstMeasuredShape && this.props.secondMeasuredShape &&
-            this.props.firstMeasuredLayer.displayed && this.props.secondMeasuredLayer.displayed;
-
-        let measureShapesTool = this.props.distance && this.props.shortestSegment && measuredLayersDisplayed ? (
-            <MeasureShapesTool
-                key="MeasureShapesTool"
-                stage={this.props.stage}
-                firstMeasuredShape={this.props.firstMeasuredShape}
-                secondMeasuredShape={this.props.secondMeasuredShape}
-                firstMeasuredLayer={this.props.firstMeasuredLayer}
-                secondMeasuredLayer={this.props.secondMeasuredLayer}
-                distance={this.props.distance}
-                shortestSegment={this.props.shortestSegment}
-                divisor={this.props.divisor}
-                decimals={this.props.decimals}
-            />
-        ) : null;
 
         let aabbDdemoTool = this.props.aabbDemoToolActivated ? (
             <AabbDemoTool
@@ -107,12 +76,15 @@ export class StageComponent extends Component {
 
         let components = [
             ...layerComponents,
-            displayCoordsTool,
-            measureShapesTool,
             aabbDdemoTool
         ];
 
-        return components;
+        return (
+            <React.Fragment>
+                {components}
+                {this.props.children}
+            </React.Fragment>
+        )
 
     }
 }
