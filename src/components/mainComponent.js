@@ -8,12 +8,16 @@ import {ToolbarComponent} from './toolbarComponent';
 import {CanvasComponent} from './canvasComponent';
 import {StatusComponent} from './statusComponent';
 import {StageComponent} from "./stageComponent";
+import LayersComponent from './layersComponent';
 
 import * as ActionTypes from '../actions/action-types';
 import {Layers} from '../models/layers';
 import {MeasurePointsTool} from '../tools/measurePointsTool';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 import {DisplayCoordsTool} from "../tools/displayCoordsTool";
+import {AabbDemoTool} from "../tools/aabbDemoTool";
+import {CollisionDistanceDemoTool} from "../tools/collisionDistanceDemoTool";
+
 import {Modal} from "../components/modalPopupComponent";
 import {AboutPopup} from "../forms/aboutPopup";
 
@@ -299,6 +303,34 @@ export class MainComponent extends Component {
             />
         ) : null;
 
+        let aabbDemoTool = this.state.aabbDemoTool.aabbDemoToolActivated ? (
+            <AabbDemoTool
+                key="AabbDemoTool"
+                stage={this.state.stage}
+                firstMeasuredShape={this.state.measureShapesTool.firstMeasuredShape}
+                secondMeasuredShape={this.state.measureShapesTool.secondMeasuredShape}
+                firstMeasuredLayer={this.state.measureShapesTool.firstMeasuredLayer}
+                secondMeasuredLayer={this.state.measureShapesTool.secondMeasuredLayer}
+                firstMeasuredShapeLevel={this.state.aabbDemoTool.firstMeasuredShapeLevel}
+                secondMeasuredShapeLevel={this.state.aabbDemoTool.secondMeasuredShapeLevel}
+                distance={this.state.measureShapesTool.distance}
+                shortestSegment={this.state.measureShapesTool.shortestSegment}
+                selectedEdgesTree={this.state.aabbDemoTool.selectedEdgesTree}
+                minStop={this.state.aabbDemoTool.minStop}
+            />
+        ) : null;
+
+        let collisionDemoTool = this.state.collisionDistanceDemoToolActivated ? (
+            <CollisionDistanceDemoTool
+                key="CollisionDemoTool"
+                stage={this.props.stage}
+                firstMeasuredShape={this.state.measureShapesTool.firstMeasuredShape}
+                secondMeasuredShape={this.state.measureShapesTool.secondMeasuredShape}
+                firstMeasuredLayer={this.state.measureShapesTool.firstMeasuredLayer}
+                secondMeasuredLayer={this.state.measureShapesTool.secondMeasuredLayer}
+            />
+            ) : null;
+
         return (
             <main className="App-content">
                 <ToolbarComponent
@@ -332,29 +364,28 @@ export class MainComponent extends Component {
 
                 <StageComponent
                     stage={this.state.stage}
-                    layers={this.state.layers}
-                    displayVertices={this.state.app.displayVertices}
-                    displayLabels={this.state.app.displayLabels}
-                    widthOn={this.state.app.widthOn}
-                    zoomFactor={this.state.app.zoomFactor}
                     originX={this.state.app.originX}
                     originY={this.state.app.originY}
-                    hoveredShape={this.state.measureShapesTool.hoveredShape}
-                    firstMeasuredShape={this.state.measureShapesTool.firstMeasuredShape}
-                    secondMeasuredShape={this.state.measureShapesTool.secondMeasuredShape}
-                    aabbDemoToolActivated={this.state.aabbDemoTool.aabbDemoToolActivated}
-                    firstMeasuredShapeLevel={this.state.aabbDemoTool.firstMeasuredShapeLevel}
-                    secondMeasuredShapeLevel={this.state.aabbDemoTool.secondMeasuredShapeLevel}
-                    selectedEdgesTree={this.state.aabbDemoTool.tree}
-                    minStop={this.state.aabbDemoTool.min_stop}
-                    collisionDistanceDemoToolActivated={this.state.collisionDistanceDemoTool.collisionDistanceDemoToolActivated}
-                    onMouseOver={this.onMouseRollOverShape}
-                    onMouseOut={this.onMouseRollOutShape}
-                    onClick={this.onClickOnShape}
                 >
+                    <LayersComponent
+                        stage={this.state.stage}
+                        layers={this.state.layers}
+                        displayVertices={this.state.app.displayVertices}
+                        displayLabels={this.state.app.displayLabels}
+                        widthOn={this.state.app.widthOn}
+                        zoomFactor={this.state.app.zoomFactor}
+                        hoveredShape={this.state.measureShapesTool.hoveredShape}
+                        firstMeasuredShape={this.state.measureShapesTool.firstMeasuredShape}
+                        secondMeasuredShape={this.state.measureShapesTool.secondMeasuredShape}
+                        onMouseOver={this.onMouseRollOverShape}
+                        onMouseOut={this.onMouseRollOutShape}
+                        onClick={this.onClickOnShape}
+                    />
                     {displayCoordsTool}
                     {measurePointsTool}
                     {measureShapesTool}
+                    {aabbDemoTool}
+                    {collisionDemoTool}
                 </StageComponent>
 
                 <StatusComponent
