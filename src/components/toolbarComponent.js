@@ -90,15 +90,15 @@ export class ToolbarComponent extends Component {
                     </button>
                 ) : null}
 
-                {this.props.showCollisionDemoToolButton ? (
-                    <button title="Collision Distance Demo" onClick={this.props.onCollisionDemoButtonPressed}>
-                        <FontAwesome
-                            name='arrows-h'
-                            size='2x'
-                            style={{color: "grey"}}
-                        />
-                    </button>
-                ) : null}
+                {/*{this.props.showCollisionDemoToolButton ? (*/}
+                    {/*<button title="Collision Distance Demo" onClick={this.props.onCollisionDemoButtonPressed}>*/}
+                        {/*<FontAwesome*/}
+                            {/*name='arrows-h'*/}
+                            {/*size='2x'*/}
+                            {/*style={{color: "grey"}}*/}
+                        {/*/>*/}
+                    {/*</button>*/}
+                {/*) : null}*/}
 
                 {this.props.showSkeletonRecognitionButton ? (
                     <button title="Skeleton Recognition Demo" onClick={this.props.onSkeletonRecognitionButtonPressed}>

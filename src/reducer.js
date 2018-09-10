@@ -82,10 +82,10 @@ const defaultAabbDemoToolState = {
     tree: null
 };
 
-const defaultCollisionDistanceDemoToolState = {
-    showCollisionDemoToolButton: false,
-    collisionDistanceDemoToolActivated: false
-};
+// const defaultCollisionDistanceDemoToolState = {
+//     showCollisionDemoToolButton: false,
+//     collisionDistanceDemoToolActivated: false
+// };
 
 const defaultMouseState = {
     x: 0,
@@ -575,20 +575,20 @@ function aabbDemoTool(state = defaultAabbDemoToolState, action) {
     }
 }
 
-function collisionDistanceDemoTool(state = defaultCollisionDistanceDemoToolState, action) {
-    switch(action.type) {
-        case ActionTypes.COLLISION_DEMO_URI:
-            return Object.assign({}, state, {
-                showCollisionDemoToolButton: true
-            });
-        case ActionTypes.COLLISION_DEMO_BUTTON_PRESSED:
-            return Object.assign({}, state, {
-                collisionDistanceDemoToolActivated: true
-            });
-        default:
-            return state;
-    }
-}
+// function collisionDistanceDemoTool(state = defaultCollisionDistanceDemoToolState, action) {
+//     switch(action.type) {
+//         case ActionTypes.COLLISION_DEMO_URI:
+//             return Object.assign({}, state, {
+//                 showCollisionDemoToolButton: true
+//             });
+//         case ActionTypes.COLLISION_DEMO_BUTTON_PRESSED:
+//             return Object.assign({}, state, {
+//                 collisionDistanceDemoToolActivated: true
+//             });
+//         default:
+//             return state;
+//     }
+// }
 
 function mouse(state = defaultMouseState, action) {
     switch (action.type) {
@@ -618,6 +618,5 @@ export let reducer = combineReducers({
     stage,
     measureShapesTool,
     aabbDemoTool,
-    collisionDistanceDemoTool,
     mouse
 });

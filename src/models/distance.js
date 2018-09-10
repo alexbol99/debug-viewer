@@ -116,6 +116,7 @@ export class Distance {
     }
     static shape2planarSet(shape, set, min_stop = Number.POSITIVE_INFINITY) {
         let min_dist_and_segment = [min_stop, new Flatten.Segment()];
+        // eslint-disable-next-line
         let stop = false;
         if (set instanceof Flatten.PlanarSet) {
             let tree = Distance.minmax_tree(shape, set, min_stop);

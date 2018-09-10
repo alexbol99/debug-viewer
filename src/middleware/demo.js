@@ -27,6 +27,8 @@ const demo = ({ dispatch, getState }) => next => action => {
             let layer = Layers.newLayer(stage, layers);
             layer.name = "features";
             layer.title = "features";
+            layer.affected = true;
+            layer.displayed = true;
 
             let xhr = new XMLHttpRequest();
             xhr.open('GET',process.env.PUBLIC_URL + '/features',true);

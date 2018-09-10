@@ -16,7 +16,6 @@ import {MeasurePointsTool} from '../tools/measurePointsTool';
 import {MeasureShapesTool} from "../tools/measureShapesTool";
 import {DisplayCoordsTool} from "../tools/displayCoordsTool";
 import {AabbDemoTool} from "../tools/aabbDemoTool";
-import {CollisionDistanceDemoTool} from "../tools/collisionDistanceDemoTool";
 
 import {Modal} from "../components/modalPopupComponent";
 import {AboutPopup} from "../forms/aboutPopup";
@@ -320,23 +319,22 @@ export class MainComponent extends Component {
             />
         ) : null;
 
-        let collisionDemoTool = this.state.collisionDistanceDemoToolActivated ? (
-            <CollisionDistanceDemoTool
-                key="CollisionDemoTool"
-                stage={this.props.stage}
-                firstMeasuredShape={this.state.measureShapesTool.firstMeasuredShape}
-                secondMeasuredShape={this.state.measureShapesTool.secondMeasuredShape}
-                firstMeasuredLayer={this.state.measureShapesTool.firstMeasuredLayer}
-                secondMeasuredLayer={this.state.measureShapesTool.secondMeasuredLayer}
-            />
-            ) : null;
+        // let collisionDemoTool = this.state.collisionDistanceDemoToolActivated ? (
+        //     <CollisionDistanceDemoTool
+        //         key="CollisionDemoTool"
+        //         stage={this.props.stage}
+        //         firstMeasuredShape={this.state.measureShapesTool.firstMeasuredShape}
+        //         secondMeasuredShape={this.state.measureShapesTool.secondMeasuredShape}
+        //         firstMeasuredLayer={this.state.measureShapesTool.firstMeasuredLayer}
+        //         secondMeasuredLayer={this.state.measureShapesTool.secondMeasuredLayer}
+        //     />
+        //     ) : null;
 
         return (
             <main className="App-content">
                 <ToolbarComponent
                     units={this.state.app.units}
                     aabbDemoToolActivated={this.state.aabbDemoTool.aabbDemoToolActivated}
-                    showCollisionDemoToolButton={this.state.collisionDistanceDemoTool.showCollisionDemoToolButton}
                     showSkeletonRecognitionButton={this.state.app.showSkeletonRecognitionButton}
                     onFileSelected={this.handleFileSelect}
                     onHomeButtonPressed={this.setHomeView}
@@ -348,7 +346,6 @@ export class MainComponent extends Component {
                     onToggleLabelsPressed={this.toggleDisplayLabels}
                     onShowAboutPopupPressed={this.showAboutPopup}
                     onAabbToolNext={this.aabbToolNext}
-                    onCollisionDemoButtonPressed={this.onCollisionDemoButtonPressed}
                     onSkeletonRecognitionButtonPressed={this.onSkeletonRecognitionButtonPressed}
                     onUnitClicked={this.toggleUnits}
                 />
@@ -385,7 +382,6 @@ export class MainComponent extends Component {
                     {measurePointsTool}
                     {measureShapesTool}
                     {aabbDemoTool}
-                    {collisionDemoTool}
                 </StageComponent>
 
                 <StatusComponent
