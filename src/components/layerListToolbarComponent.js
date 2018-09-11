@@ -1,11 +1,11 @@
 /**
  * Created by alexanderbol on 17/04/2017.
  */
-
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 
 import '../../public/styles/App.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 export const LayerListToolbarComponent = (props) => {
     return (
@@ -21,7 +21,7 @@ export const LayerListToolbarComponent = (props) => {
             <button title="Edit selected layer's name and info" onClick={props.onEditLayerButtonClicked}>
                 {/*<img src={icon_edit} alt="edit_layer" />*/}
                 <FontAwesome
-                    name='pencil'
+                    name='pencil-alt'
                     size='2x'
                     style={{color: "grey"}}
                 />
@@ -37,7 +37,7 @@ export const LayerListToolbarComponent = (props) => {
             <button title="Sort layer list" onClick={props.onSortLayersButtonClicked}>
                 {/*<img src={icon_sort} alt="toggle_sorting_layer_list" />*/}
                 <FontAwesome
-                    name='sort-alpha-asc'
+                    name='sort-alpha-down'
                     size='2x'
                     style={{color: "grey"}}
                 />

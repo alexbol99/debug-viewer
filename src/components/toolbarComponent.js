@@ -17,6 +17,7 @@ import vertices from '../../public/icons/editContourVertextOnOff.png';
 // import about from '../../public/icons/About.png';
 
 import '../../public/styles/App.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 export class ToolbarComponent extends Component {
     openJobButtonClicked = () => this.refs.browseFiles.click();
@@ -30,7 +31,7 @@ export class ToolbarComponent extends Component {
                 <button title="Open file" onClick={this.openJobButtonClicked}>
                     {/*<img src={open} alt="open" />*/}
                     <FontAwesome
-                        name='folder-open-o'
+                        name='folder-open'
                         size='2x'
                         style={{color:"grey"}}
                     />
@@ -52,7 +53,7 @@ export class ToolbarComponent extends Component {
                 <button title="Pan by drag" onClick={this.props.onPanByDragPressed}>
                     {/*<img src={pan} alt="panByDrag" />*/}
                     <FontAwesome
-                        name='arrows'
+                        name='arrows-alt'
                         size='2x'
                         style={{color:"grey"}}
                     />

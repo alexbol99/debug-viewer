@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.3.1",
     "flatten-interval-tree": "^0.2.1",
     "flatten-js": "^0.6.3",
     "react": "^16.4.2",
