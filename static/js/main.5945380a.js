@@ -349,6 +349,9 @@
 	                return l !== layer;
 	            });
 	            return newLayers;
+	            // another option to delete from array:
+	            // const newLayers = [...layers]
+	            // return newLayers.splice( index, 1);
 	        }
 	    }, {
 	        key: "sort",
@@ -20241,7 +20244,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CanvasComponent.__proto__ || Object.getPrototypeOf(CanvasComponent)).call.apply(_ref, [this].concat(args))), _this), _this.handleMouseMove = function (event) {
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CanvasComponent.__proto__ || Object.getPrototypeOf(CanvasComponent)).call.apply(_ref, [this].concat(args))), _this), _this.canvasElement = _react2.default.createRef(), _this.handleMouseMove = function (event) {
 	            _this.props.stage.canvas.focus();
 	            _this.props.onMouseMove(event.stageX, event.stageY);
 	        }, _this.handleMouseDown = function (event) {
@@ -20272,7 +20275,7 @@
 	    _createClass(CanvasComponent, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            var stage = new _stage.Stage(this.refs.canvas);
+	            var stage = new _stage.Stage(this.canvasElement.current);
 	
 	            // stage.setClearColor("#FFFFFF");
 	            // stage.update();
@@ -20289,7 +20292,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('canvas', { tabIndex: '1', ref: 'canvas', id: 'mainCanvas', className: 'App-canvas' });
+	            return _react2.default.createElement('canvas', { tabIndex: '1', ref: this.canvasElement, id: 'mainCanvas', className: 'App-canvas' });
 	        }
 	    }]);
 
@@ -32177,4 +32180,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.006ff225.js.map
+//# sourceMappingURL=main.5945380a.js.map
