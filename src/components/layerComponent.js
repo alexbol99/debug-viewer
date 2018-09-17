@@ -1,16 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {ShapeComponent} from './shapeComponent';
 import {ImageComponent} from "./imageComponent";
-import Utils from "../utils";
 
-export class LayerComponent extends Component {
-    shouldComponentUpdate(nextProps, nextState) {
-        if (Utils.is_equal(this.props, nextProps)) {
-            return false;
-        }
-        return true;
-    }
-
+export class LayerComponent extends PureComponent {
     render() {
         return (
             this.props.layer.shapes.map((shape, index) => {

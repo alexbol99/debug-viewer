@@ -2,11 +2,7 @@
  * Created by alexanderbol on 21/04/2017.
  */
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
-// import * as createjs from '../easeljs-NEXT.combined';
-
 import Flatten from 'flatten-js';
-
-// import { Shape } from '../models/shape';
 
 export class Stage extends createjs.Stage {
     constructor(canvas) {

@@ -361,8 +361,6 @@ export class MainComponent extends Component {
 
                 <StageComponent
                     stage={this.state.stage}
-                    originX={this.state.app.originX}
-                    originY={this.state.app.originY}
                 >
                     <LayersComponent
                         stage={this.state.stage}

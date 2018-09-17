@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
-import Utils from "../utils";
+// import Utils from "../utils";
 
 export class StageComponent extends Component {
-    shouldComponentUpdate(nextProps, nextState) {
-        if (Utils.is_equal(this.props, nextProps)) {
-            return false;
-        }
-        return true;
-    }
+    // shouldComponentUpdate useless because always returns "true",
+    // Don't know why, maybe because of children?
+    // ----------------------------------------------------------
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if (Utils.is_equal(this.props, nextProps)) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     componentDidUpdate() {
         if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {

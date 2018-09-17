@@ -11,7 +11,6 @@ export const LayerListToolbarComponent = (props) => {
     return (
         <div className="App-toolbar">
             <button title="Add layer" onClick={props.onAddLayerButtonClicked}>
-                {/*<img src={icon_add} alt="add_layer" />*/}
                 <FontAwesome
                     name='plus'
                     size='2x'
@@ -19,7 +18,6 @@ export const LayerListToolbarComponent = (props) => {
                 />
             </button>
             <button title="Edit selected layer's name and info" onClick={props.onEditLayerButtonClicked}>
-                {/*<img src={icon_edit} alt="edit_layer" />*/}
                 <FontAwesome
                     name='pencil-alt'
                     size='2x'
@@ -27,7 +25,6 @@ export const LayerListToolbarComponent = (props) => {
                 />
             </button>
             <button title="Delete selected layer" onClick={props.onDeleteLayerButtonClicked}>
-                {/*<img src={icon_delete} alt="add_layer" />*/}
                 <FontAwesome
                     name='times'
                     size='2x'
@@ -35,7 +32,6 @@ export const LayerListToolbarComponent = (props) => {
                 />
             </button>
             <button title="Sort layer list" onClick={props.onSortLayersButtonClicked}>
-                {/*<img src={icon_sort} alt="toggle_sorting_layer_list" />*/}
                 <FontAwesome
                     name='sort-alpha-down'
                     size='2x'
