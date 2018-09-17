@@ -17330,52 +17330,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var Utils = {
-	    is_equal: function is_equal(obj1, obj2) {
-	        var equal = true;
-	        var _iteratorNormalCompletion = true;
-	        var _didIteratorError = false;
-	        var _iteratorError = undefined;
-	
-	        try {
-	            for (var _iterator = Object.keys(obj2)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                var key = _step.value;
-	
-	                if (obj2[key] !== obj1[key]) {
-	                    equal = false;
-	                    break;
-	                }
-	            }
-	        } catch (err) {
-	            _didIteratorError = true;
-	            _iteratorError = err;
-	        } finally {
-	            try {
-	                if (!_iteratorNormalCompletion && _iterator.return) {
-	                    _iterator.return();
-	                }
-	            } finally {
-	                if (_didIteratorError) {
-	                    throw _iteratorError;
-	                }
-	            }
-	        }
-	
-	        return equal;
-	    }
-	};
-	
-	exports.default = Utils;
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -17473,7 +17427,7 @@
 	}();
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -17514,7 +17468,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -17572,7 +17526,7 @@
 	module.exports = invariant;
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports) {
 
 	/*
@@ -17668,7 +17622,7 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17744,7 +17698,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18051,7 +18005,7 @@
 	}();
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18230,6 +18184,52 @@
 	    }
 	    return job;
 	}
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var Utils = {
+	    is_equal: function is_equal(obj1, obj2) {
+	        var equal = true;
+	        var _iteratorNormalCompletion = true;
+	        var _didIteratorError = false;
+	        var _iteratorError = undefined;
+	
+	        try {
+	            for (var _iterator = Object.keys(obj2)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                var key = _step.value;
+	
+	                if (obj2[key] !== obj1[key]) {
+	                    equal = false;
+	                    break;
+	                }
+	            }
+	        } catch (err) {
+	            _didIteratorError = true;
+	            _iteratorError = err;
+	        } finally {
+	            try {
+	                if (!_iteratorNormalCompletion && _iterator.return) {
+	                    _iterator.return();
+	                }
+	            } finally {
+	                if (_didIteratorError) {
+	                    throw _iteratorError;
+	                }
+	            }
+	        }
+	
+	        return equal;
+	    }
+	};
+	
+	exports.default = Utils;
 
 /***/ },
 /* 17 */
@@ -20353,7 +20353,7 @@
 	
 	__webpack_require__(7);
 	
-	var _utils = __webpack_require__(9);
+	var _utils = __webpack_require__(16);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -20522,10 +20522,6 @@
 	
 	var _imageComponent = __webpack_require__(30);
 	
-	var _utils = __webpack_require__(9);
-	
-	var _utils2 = _interopRequireDefault(_utils);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20534,8 +20530,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var LayerComponent = exports.LayerComponent = function (_Component) {
-	    _inherits(LayerComponent, _Component);
+	var LayerComponent = exports.LayerComponent = function (_PureComponent) {
+	    _inherits(LayerComponent, _PureComponent);
 	
 	    function LayerComponent() {
 	        _classCallCheck(this, LayerComponent);
@@ -20544,14 +20540,6 @@
 	    }
 	
 	    _createClass(LayerComponent, [{
-	        key: 'shouldComponentUpdate',
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            if (_utils2.default.is_equal(this.props, nextProps)) {
-	                return false;
-	            }
-	            return true;
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -20594,7 +20582,7 @@
 	    }]);
 
 	    return LayerComponent;
-	}(_react.Component);
+	}(_react.PureComponent);
 
 /***/ },
 /* 32 */
@@ -20615,7 +20603,7 @@
 	
 	__webpack_require__(2);
 	
-	var _modalPopupComponent = __webpack_require__(14);
+	var _modalPopupComponent = __webpack_require__(13);
 	
 	var _layerEditForm = __webpack_require__(42);
 	
@@ -21159,7 +21147,7 @@
 	
 	var _aabbDemoTool = __webpack_require__(59);
 	
-	var _modalPopupComponent = __webpack_require__(14);
+	var _modalPopupComponent = __webpack_require__(13);
 	
 	var _aboutPopup = __webpack_require__(41);
 	
@@ -21470,9 +21458,7 @@
 	                _react2.default.createElement(
 	                    _stageComponent.StageComponent,
 	                    {
-	                        stage: this.state.stage,
-	                        originX: this.state.app.originX,
-	                        originY: this.state.app.originY
+	                        stage: this.state.stage
 	                    },
 	                    _react2.default.createElement(_layersComponent2.default, {
 	                        stage: this.state.stage,
@@ -21542,7 +21528,7 @@
 	
 	var _graphics = __webpack_require__(7);
 	
-	var _utils = __webpack_require__(9);
+	var _utils = __webpack_require__(16);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -21830,10 +21816,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _utils = __webpack_require__(9);
-	
-	var _utils2 = _interopRequireDefault(_utils);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21841,6 +21823,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// import Utils from "../utils";
 	
 	var StageComponent = exports.StageComponent = function (_Component) {
 	    _inherits(StageComponent, _Component);
@@ -21852,15 +21836,18 @@
 	    }
 	
 	    _createClass(StageComponent, [{
-	        key: 'shouldComponentUpdate',
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            if (_utils2.default.is_equal(this.props, nextProps)) {
-	                return false;
-	            }
-	            return true;
-	        }
-	    }, {
 	        key: 'componentDidUpdate',
+	
+	        // shouldComponentUpdate useless because always returns "true",
+	        // Don't know why, maybe because of children?
+	        // ----------------------------------------------------------
+	        // shouldComponentUpdate(nextProps, nextState) {
+	        //     if (Utils.is_equal(this.props, nextProps)) {
+	        //         return false;
+	        //     }
+	        //     return true;
+	        // }
+	
 	        value: function componentDidUpdate() {
 	            if (this.props.stage.canvas && this.props.stage.canvas.getContext('2d')) {
 	
@@ -22530,9 +22517,9 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(10);
+	var _model = __webpack_require__(9);
 	
-	var _parserODB = __webpack_require__(16);
+	var _parserODB = __webpack_require__(15);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -22795,11 +22782,11 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _model = __webpack_require__(10);
+	var _model = __webpack_require__(9);
 	
 	var _parserXML = __webpack_require__(56);
 	
-	var _parserODB = __webpack_require__(16);
+	var _parserODB = __webpack_require__(15);
 	
 	var _parsePGM = __webpack_require__(54);
 	
@@ -23362,7 +23349,7 @@
 	
 	var _flattenJs2 = _interopRequireDefault(_flattenJs);
 	
-	var _model = __webpack_require__(10);
+	var _model = __webpack_require__(9);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23658,7 +23645,7 @@
 	
 	var _job = __webpack_require__(8);
 	
-	var _parser = __webpack_require__(15);
+	var _parser = __webpack_require__(14);
 	
 	function parseTXT(filename, str) {
 	    var job = new _job.Job();
@@ -24327,7 +24314,7 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _parser = __webpack_require__(15);
+	var _parser = __webpack_require__(14);
 	
 	var _distance = __webpack_require__(51);
 	
@@ -31191,8 +31178,8 @@
 	
 	'use strict';
 	
-	var emptyFunction = __webpack_require__(11);
-	var invariant = __webpack_require__(12);
+	var emptyFunction = __webpack_require__(10);
+	var invariant = __webpack_require__(11);
 	var ReactPropTypesSecret = __webpack_require__(93);
 	
 	module.exports = function() {
@@ -31310,7 +31297,7 @@
 	/*
 	 Modernizr 3.0.0pre (Custom Build) | MIT
 	*/
-	'use strict';var aa=__webpack_require__(12),ba=__webpack_require__(1),m=__webpack_require__(64),p=__webpack_require__(13),v=__webpack_require__(11),da=__webpack_require__(66),ea=__webpack_require__(69),fa=__webpack_require__(65),ha=__webpack_require__(18);
+	'use strict';var aa=__webpack_require__(11),ba=__webpack_require__(1),m=__webpack_require__(64),p=__webpack_require__(12),v=__webpack_require__(10),da=__webpack_require__(66),ea=__webpack_require__(69),fa=__webpack_require__(65),ha=__webpack_require__(18);
 	function A(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);aa(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}ba?void 0:A("227");
 	function ia(a,b,c,d,e,f,g,h,k){this._hasCaughtError=!1;this._caughtError=null;var n=Array.prototype.slice.call(arguments,3);try{b.apply(c,n)}catch(r){this._caughtError=r,this._hasCaughtError=!0}}
 	var B={_caughtError:null,_hasCaughtError:!1,_rethrowError:null,_hasRethrowError:!1,invokeGuardedCallback:function(a,b,c,d,e,f,g,h,k){ia.apply(B,arguments)},invokeGuardedCallbackAndCatchFirstError:function(a,b,c,d,e,f,g,h,k){B.invokeGuardedCallback.apply(this,arguments);if(B.hasCaughtError()){var n=B.clearCaughtError();B._hasRethrowError||(B._hasRethrowError=!0,B._rethrowError=n)}},rethrowCaughtError:function(){return ka.apply(B,arguments)},hasCaughtError:function(){return B._hasCaughtError},clearCaughtError:function(){if(B._hasCaughtError){var a=
@@ -31590,7 +31577,7 @@
 	
 	// Object.assign() is commonly used with React.
 	// It will use the native implementation if it's present and isn't buggy.
-	Object.assign = __webpack_require__(13);
+	Object.assign = __webpack_require__(12);
 
 
 /***/ },
@@ -32070,7 +32057,7 @@
 	 * LICENSE file in the root directory of this source tree.
 	 */
 	
-	'use strict';var k=__webpack_require__(13),n=__webpack_require__(12),p=__webpack_require__(18),q=__webpack_require__(11),r="function"===typeof Symbol&&Symbol.for,t=r?Symbol.for("react.element"):60103,u=r?Symbol.for("react.portal"):60106,v=r?Symbol.for("react.fragment"):60107,w=r?Symbol.for("react.strict_mode"):60108,x=r?Symbol.for("react.profiler"):60114,y=r?Symbol.for("react.provider"):60109,z=r?Symbol.for("react.context"):60110,A=r?Symbol.for("react.async_mode"):60111,B=
+	'use strict';var k=__webpack_require__(12),n=__webpack_require__(11),p=__webpack_require__(18),q=__webpack_require__(10),r="function"===typeof Symbol&&Symbol.for,t=r?Symbol.for("react.element"):60103,u=r?Symbol.for("react.portal"):60106,v=r?Symbol.for("react.fragment"):60107,w=r?Symbol.for("react.strict_mode"):60108,x=r?Symbol.for("react.profiler"):60114,y=r?Symbol.for("react.provider"):60109,z=r?Symbol.for("react.context"):60110,A=r?Symbol.for("react.async_mode"):60111,B=
 	r?Symbol.for("react.forward_ref"):60112;r&&Symbol.for("react.timeout");var C="function"===typeof Symbol&&Symbol.iterator;function D(a){for(var b=arguments.length-1,e="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=0;c<b;c++)e+="&args[]="+encodeURIComponent(arguments[c+1]);n(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",e)}
 	var E={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function F(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||E}F.prototype.isReactComponent={};F.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?D("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};F.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function G(){}
 	G.prototype=F.prototype;function H(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||E}var I=H.prototype=new G;I.constructor=H;k(I,F.prototype);I.isPureReactComponent=!0;var J={current:null},K=Object.prototype.hasOwnProperty,L={key:!0,ref:!0,__self:!0,__source:!0};
@@ -32190,4 +32177,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.be66f7c2.js.map
+//# sourceMappingURL=main.006ff225.js.map
