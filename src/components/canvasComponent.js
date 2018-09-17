@@ -7,6 +7,8 @@ import '../../public/styles/App.css';
 import {Stage} from '../models/stage';
 
 export class CanvasComponent extends Component {
+    canvasElement = React.createRef();
+
     handleMouseMove = (event) => {
         this.props.stage.canvas.focus();
         this.props.onMouseMove(event.stageX, event.stageY);
@@ -44,7 +46,7 @@ export class CanvasComponent extends Component {
     };
 
     componentDidMount() {
-        let stage = new Stage(this.refs.canvas);
+        let stage = new Stage(this.canvasElement.current);
 
         // stage.setClearColor("#FFFFFF");
         // stage.update();
@@ -61,7 +63,7 @@ export class CanvasComponent extends Component {
 
     render() {
         return (
-            <canvas tabIndex="1" ref="canvas" id="mainCanvas" className="App-canvas">
+            <canvas tabIndex="1" ref={this.canvasElement} id="mainCanvas" className="App-canvas">
             </canvas>
         )
     }

@@ -86,6 +86,9 @@ export class Layers {
         // let index = layers.findIndex((l) => l === layer);
         let newLayers = layers.filter(l => l !== layer);
         return newLayers;
+        // another option to delete from array:
+        // const newLayers = [...layers]
+        // return newLayers.splice( index, 1);
     }
 
     static sort(layers) {
