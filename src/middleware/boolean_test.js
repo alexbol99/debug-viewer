@@ -1,11 +1,12 @@
 import Flatten from 'flatten-js';
+import BooleanOp from 'flatten-boolean-op';
 import * as ActionTypes from '../actions/action-types';
 import { Layers } from '../models/layers';
 // import { Model } from "../models/model";
 // import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
-let {point, /*circle, segment,*/ Polygon} = Flatten;
-// let {union, subtract, intersect, arrange} = BooleanOp;
+let {point, arc, Polygon} = Flatten;
+let {subtract, intersect} = BooleanOp;
 
 function zoomHome(shape, stage) {
     let box = shape.box;
@@ -24,37 +25,51 @@ const boolean_test = ({ dispatch, getState }) => next => action => {
             let state = getState();
             let layers = state.layers;
 
+            let myPoly = new Polygon();
+            myPoly.addFace([point(6, 6), point(6,114), point(114, 114), point(114, 6)]);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myPoly);  // 0
 
-            let polygon1 = new Polygon();
-            polygon1.addFace([
-                point(-20, 0),
-                point(-20, 20),
-                point(20, 20),
-                point(20, 0)
-            ]);
+            let myCircle = new Polygon();
+            myCircle.addFace([arc(point(0,0),84.5779281026111, 0, 2*Math.PI, Flatten.CW)]);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myCircle);  // 1
 
-            let polygon2 = new Polygon();
-            polygon2.addFace([
-                point(-5, -10),
-                point(-5, 30),
-                point(5, 30),
-                point(5, -10)
-            ]);
+            myPoly = intersect(myPoly,myCircle);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myPoly);   // 2
 
-            let layer = Layers.newLayer(stage, layers);
-            layer.name = "polygon1";
-            layer.title = "data";
+            myCircle = new Polygon();
+            myCircle.addFace([arc(point(0,0),84.49938828627135, 0, 2*Math.PI, Flatten.CW)]);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myCircle);  // 3
 
-            layer.add(polygon1);
-            layer.add(polygon2);
+            myPoly = subtract(myPoly,myCircle);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myPoly);   // 4
 
-            // layer = Layers.newLayer(stage, layers);
-            // layer.name = "polygon2";
-            // layer.add(polygon2);
-            // state.layers.push(layer);
+            myCircle = new Polygon();
+            myCircle.addFace([arc(point(0,120),84.8710637077582, 0, 2*Math.PI, Flatten.CW)]);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myCircle);  // 5
 
-            zoomHome(layer, stage);
-            state.layers.push(layer);
+            myPoly = intersect(myPoly,myCircle);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myPoly);   // 6
+
+            myCircle = new Polygon();
+            myCircle.addFace([arc(point(0,120),84.79252389141845, 0, 2*Math.PI, Flatten.CW)]);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myCircle);  // 7
+
+            myPoly = subtract(myPoly,myCircle);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myPoly);   // 8
+
+            myCircle = new Polygon();
+            myCircle.addFace([arc(point(120,120),85.20624291591454, 0, 2*Math.PI, Flatten.CW)]);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myCircle);  // 9
+
+            myPoly = intersect(myPoly,myCircle);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myPoly);   // 10
+
+            myCircle = new Polygon();
+            myCircle.addFace([arc(point(120,120), 85.1277030995748, 0, 2*Math.PI, Flatten.CW)]);
+            state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myCircle);  // 11
+
+            // myPoly = subtract(myPoly,myCircle);
+            // state.layers[state.layers.length] = Layers.newLayer(stage, layers).add(myPoly);   // 12
         }
     }
     return next(action);
