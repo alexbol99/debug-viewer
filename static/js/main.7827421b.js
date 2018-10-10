@@ -67,7 +67,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(96);
+	__webpack_require__(95);
 	module.exports = __webpack_require__(43);
 
 
@@ -78,7 +78,7 @@
 	'use strict';
 	
 	if (true) {
-	  module.exports = __webpack_require__(98);
+	  module.exports = __webpack_require__(97);
 	} else {
 	  module.exports = require('./cjs/react.development.js');
 	}
@@ -99,8 +99,8 @@
 	 */
 	'use strict';
 	
-	let Utils = __webpack_require__(88);
-	let Errors = __webpack_require__(87);
+	let Utils = __webpack_require__(87);
+	let Errors = __webpack_require__(86);
 	
 	/**
 	 * FlattenJS - library for 2d geometry
@@ -119,11 +119,6 @@
 	        this.BOUNDARY = 2;
 	        this.CONTAINS = 3;
 	        this.INTERLACE = 4;
-	        // this.CLIP_INSIDE = 1;
-	        // this.CLIP_OUTSIDE = 0;
-	        // this.BOOLEAN_UNION = 1;
-	        // this.BOOLEAN_INTERSECT = 2;
-	        // this.BOOLEAN_SUBTRACT = 3;
 	        this.OVERLAP_SAME = 1;
 	        this.OVERLAP_OPPOSITE = 2;
 	        this.Utils = Utils;
@@ -133,21 +128,21 @@
 	
 	let f = new Flatten();
 	
-	__webpack_require__(78)(f);
-	__webpack_require__(84)(f);
 	__webpack_require__(79)(f);
+	__webpack_require__(85)(f);
+	__webpack_require__(80)(f);
+	__webpack_require__(84)(f);
+	__webpack_require__(78)(f);
+	__webpack_require__(75)(f);
 	__webpack_require__(83)(f);
-	__webpack_require__(77)(f);
+	__webpack_require__(73)(f);
 	__webpack_require__(74)(f);
+	__webpack_require__(76)(f);
+	__webpack_require__(77)(f);
 	__webpack_require__(82)(f);
 	__webpack_require__(72)(f);
-	__webpack_require__(73)(f);
-	__webpack_require__(75)(f);
-	__webpack_require__(76)(f);
 	__webpack_require__(81)(f);
 	__webpack_require__(71)(f);
-	__webpack_require__(80)(f);
-	__webpack_require__(70)(f);
 	
 	module.exports = f;
 
@@ -244,7 +239,7 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by alexanderbol on 20/04/2017.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _layer = __webpack_require__(52);
+	var _layer = __webpack_require__(51);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -18267,7 +18262,7 @@
 	 */
 	'use strict';
 	
-	let Node = __webpack_require__(86);
+	let Node = __webpack_require__(70);
 	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(20);
 	
 	let nil_node = new Node();
@@ -19067,7 +19062,7 @@
 	  // DCE check should happen before ReactDOM bundle executes so that
 	  // DevTools can report bad minification during injection.
 	  checkDCE();
-	  module.exports = __webpack_require__(94);
+	  module.exports = __webpack_require__(93);
 	} else {
 	  module.exports = require('./cjs/react-dom.development.js');
 	}
@@ -19091,11 +19086,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(92);
+	var _propTypes = __webpack_require__(91);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _screenReaderStyles = __webpack_require__(95);
+	var _screenReaderStyles = __webpack_require__(94);
 	
 	var _screenReaderStyles2 = _interopRequireDefault(_screenReaderStyles);
 	
@@ -19229,7 +19224,7 @@
 	
 	function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 	
-	var $$observable = _interopDefault(__webpack_require__(99));
+	var $$observable = _interopDefault(__webpack_require__(98));
 	
 	/**
 	 * These are private action types reserved by Redux.
@@ -20218,7 +20213,7 @@
 	
 	__webpack_require__(2);
 	
-	var _stage = __webpack_require__(57);
+	var _stage = __webpack_require__(56);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21142,13 +21137,13 @@
 	
 	var _layers = __webpack_require__(5);
 	
-	var _measurePointsTool = __webpack_require__(61);
+	var _measurePointsTool = __webpack_require__(60);
 	
-	var _measureShapesTool = __webpack_require__(62);
+	var _measureShapesTool = __webpack_require__(61);
 	
-	var _displayCoordsTool = __webpack_require__(60);
+	var _displayCoordsTool = __webpack_require__(59);
 	
-	var _aabbDemoTool = __webpack_require__(59);
+	var _aabbDemoTool = __webpack_require__(58);
 	
 	var _modalPopupComponent = __webpack_require__(13);
 	
@@ -21931,19 +21926,19 @@
 	
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
 	
-	var _measureContour = __webpack_require__(103);
+	var _measureContour = __webpack_require__(102);
 	
 	var _measureContour2 = _interopRequireDefault(_measureContour);
 	
-	var _measurePoints = __webpack_require__(104);
+	var _measurePoints = __webpack_require__(103);
 	
 	var _measurePoints2 = _interopRequireDefault(_measurePoints);
 	
-	var _WidthOn = __webpack_require__(101);
+	var _WidthOn = __webpack_require__(100);
 	
 	var _WidthOn2 = _interopRequireDefault(_WidthOn);
 	
-	var _editContourVertextOnOff = __webpack_require__(102);
+	var _editContourVertextOnOff = __webpack_require__(101);
 	
 	var _editContourVertextOnOff2 = _interopRequireDefault(_editContourVertextOnOff);
 	
@@ -22329,29 +22324,29 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	__webpack_require__(63);
+	__webpack_require__(62);
 	
 	var _redux = __webpack_require__(24);
 	
-	var _reducer = __webpack_require__(58);
+	var _reducer = __webpack_require__(57);
 	
-	var _log = __webpack_require__(47);
+	var _log = __webpack_require__(46);
 	
 	var _log2 = _interopRequireDefault(_log);
 	
-	var _readFiles = __webpack_require__(49);
+	var _readFiles = __webpack_require__(48);
 	
 	var _readFiles2 = _interopRequireDefault(_readFiles);
 	
-	var _pasteData = __webpack_require__(48);
+	var _pasteData = __webpack_require__(47);
 	
 	var _pasteData2 = _interopRequireDefault(_pasteData);
 	
-	var _stageController = __webpack_require__(50);
+	var _stageController = __webpack_require__(49);
 	
 	var _stageController2 = _interopRequireDefault(_stageController);
 	
-	var _demo = __webpack_require__(46);
+	var _demo = __webpack_require__(45);
 	
 	var _demo2 = _interopRequireDefault(_demo);
 	
@@ -22359,25 +22354,20 @@
 	
 	var _aabb_demo2 = _interopRequireDefault(_aabb_demo);
 	
-	var _boolean_test = __webpack_require__(45);
-	
-	var _boolean_test2 = _interopRequireDefault(_boolean_test);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// import collision_demo from './middleware/collision_demo';
+	// import boolean_test from './middleware/boolean_test';
 	// import skeleton_recognition from './middleware/skeleton_recognition'
 	
 	// import matrix_test from './middleware/matrix-test';
 	// import webgl_test from './middleware/webgl-test';
 	
-	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _pasteData2.default, _demo2.default, _aabb_demo2.default, _boolean_test2.default,
+	// import about from './middleware/about';
+	var store = (0, _redux.createStore)(_reducer.reducer, (0, _redux.compose)((0, _redux.applyMiddleware)(_log2.default, _readFiles2.default, _pasteData2.default, _demo2.default, _aabb_demo2.default,
+	/*boolean_test,*/
 	/*skeleton_recognition,*/
 	_stageController2.default)));
-	// import collision_demo from './middleware/collision_demo';
-	
-	
-	// import about from './middleware/about';
-	
 	
 	_reactDom2.default.render(_react2.default.createElement(_App2.default, { store: store }), document.getElementById('root'));
 
@@ -22425,87 +22415,6 @@
 
 /***/ },
 /* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _flattenJs = __webpack_require__(3);
-	
-	var _flattenJs2 = _interopRequireDefault(_flattenJs);
-	
-	var _actionTypes = __webpack_require__(4);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _layers = __webpack_require__(5);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// import { Model } from "../models/model";
-	// import * as createjs from '../../public/easeljs-NEXT.combined.js';
-	
-	var point = _flattenJs2.default.point,
-	    Polygon = _flattenJs2.default.Polygon;
-	// let {union, subtract, intersect, arrange} = BooleanOp;
-	
-	function zoomHome(shape, stage) {
-	    var box = shape.box;
-	    var x = (box.xmin + box.xmax) / 2;
-	    var y = (box.ymin + box.ymax) / 2;
-	    stage.panToCoordinate(x, y);
-	    stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
-	}
-	
-	var boolean_test = function boolean_test(_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	        return function (action) {
-	
-	            if (action.type === ActionTypes.NEW_STAGE_CREATED) {
-	                if (document.location.href.split('#')[1] === 'boolean_test') {
-	
-	                    var stage = action.stage;
-	                    var state = getState();
-	                    var layers = state.layers;
-	
-	                    var polygon1 = new Polygon();
-	                    polygon1.addFace([point(-20, 0), point(-20, 20), point(20, 20), point(20, 0)]);
-	
-	                    var polygon2 = new Polygon();
-	                    polygon2.addFace([point(-5, -10), point(-5, 30), point(5, 30), point(5, -10)]);
-	
-	                    var layer = _layers.Layers.newLayer(stage, layers);
-	                    layer.name = "polygon1";
-	                    layer.title = "data";
-	
-	                    layer.add(polygon1);
-	                    layer.add(polygon2);
-	
-	                    // layer = Layers.newLayer(stage, layers);
-	                    // layer.name = "polygon2";
-	                    // layer.add(polygon2);
-	                    // state.layers.push(layer);
-	
-	                    zoomHome(layer, stage);
-	                    state.layers.push(layer);
-	                }
-	            }
-	            return next(action);
-	        };
-	    };
-	};
-	
-	exports.default = boolean_test;
-
-/***/ },
-/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22611,7 +22520,7 @@
 	exports.default = demo;
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22644,7 +22553,7 @@
 	exports.default = log;
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22770,7 +22679,7 @@
 	exports.default = pasteData;
 
 /***/ },
-/* 49 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22787,15 +22696,15 @@
 	
 	var _model = __webpack_require__(9);
 	
-	var _parserXML = __webpack_require__(56);
+	var _parserXML = __webpack_require__(55);
 	
 	var _parserODB = __webpack_require__(15);
 	
-	var _parsePGM = __webpack_require__(54);
+	var _parsePGM = __webpack_require__(53);
 	
-	var _parseCSV = __webpack_require__(53);
+	var _parseCSV = __webpack_require__(52);
 	
-	var _parseTXT = __webpack_require__(55);
+	var _parseTXT = __webpack_require__(54);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -23035,7 +22944,7 @@
 	exports.default = readFiles;
 
 /***/ },
-/* 50 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23105,7 +23014,7 @@
 	exports.default = stageController;
 
 /***/ },
-/* 51 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23331,7 +23240,7 @@
 	}();
 
 /***/ },
-/* 52 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23540,7 +23449,7 @@
 	}();
 
 /***/ },
-/* 53 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23590,7 +23499,7 @@
 	}
 
 /***/ },
-/* 54 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23636,7 +23545,7 @@
 	}
 
 /***/ },
-/* 55 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23689,7 +23598,7 @@
 	}
 
 /***/ },
-/* 56 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23743,6 +23652,10 @@
 	
 	                var startAngle = vector(pc, _ps).slope;
 	                var endAngle = vector(pc, _pe).slope;
+	
+	                if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	                    endAngle = counterClockwise ? endAngle + 2 * Math.PI : endAngle - 2 * Math.PI;
+	                }
 	
 	                var r = vector(pc, _ps).length;
 	
@@ -23866,6 +23779,10 @@
 	
 	    var startAngle = vector(pc, ps).slope;
 	    var endAngle = vector(pc, pe).slope;
+	
+	    if (_flattenJs2.default.Utils.EQ(startAngle, endAngle)) {
+	        endAngle = counterClockwise ? endAngle + 2 * Math.PI : endAngle - 2 * Math.PI;
+	    }
 	
 	    var r = vector(pc, ps).length;
 	
@@ -24049,7 +23966,7 @@
 	}
 
 /***/ },
-/* 57 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24293,7 +24210,7 @@
 	}(createjs.Stage);
 
 /***/ },
-/* 58 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24319,7 +24236,7 @@
 	
 	var _parser = __webpack_require__(14);
 	
-	var _distance = __webpack_require__(51);
+	var _distance = __webpack_require__(50);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24993,7 +24910,7 @@
 	});
 
 /***/ },
-/* 59 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25240,7 +25157,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 60 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25283,7 +25200,7 @@
 	    */
 
 /***/ },
-/* 61 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25514,7 +25431,7 @@
 	}(_react.Component);
 
 /***/ },
-/* 62 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25678,9 +25595,9 @@
 	}(_react.Component);
 
 /***/ },
-/* 63 */
+/* 62 */
 2,
-/* 64 */
+/* 63 */
 /***/ function(module, exports) {
 
 	/**
@@ -25718,7 +25635,7 @@
 	module.exports = ExecutionEnvironment;
 
 /***/ },
-/* 65 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25732,7 +25649,7 @@
 	 * 
 	 */
 	
-	var isTextNode = __webpack_require__(68);
+	var isTextNode = __webpack_require__(67);
 	
 	/*eslint-disable no-bitwise */
 	
@@ -25760,7 +25677,7 @@
 	module.exports = containsNode;
 
 /***/ },
-/* 66 */
+/* 65 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25801,7 +25718,7 @@
 	module.exports = getActiveElement;
 
 /***/ },
-/* 67 */
+/* 66 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25828,7 +25745,7 @@
 	module.exports = isNode;
 
 /***/ },
-/* 68 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25842,7 +25759,7 @@
 	 * @typechecks
 	 */
 	
-	var isNode = __webpack_require__(67);
+	var isNode = __webpack_require__(66);
 	
 	/**
 	 * @param {*} object The object to check.
@@ -25855,7 +25772,7 @@
 	module.exports = isTextNode;
 
 /***/ },
-/* 69 */
+/* 68 */
 /***/ function(module, exports) {
 
 	/**
@@ -25925,7 +25842,157 @@
 	module.exports = shallowEqual;
 
 /***/ },
+/* 69 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by Alex Bol on 4/1/2017.
+	 */
+	
+	let Interval = class Interval {
+	    constructor(low, high) {
+	        this.low = low;
+	        this.high = high;
+	    }
+	
+	    get max() {
+	        return this.high;
+	    }
+	
+	    interval(low, high) {
+	        return new Interval(low, high);
+	    }
+	
+	    clone() {
+	        return new Interval(this.low, this.high);
+	    }
+	
+	    less_than(other_interval) {
+	        return this.low < other_interval.low ||
+	            this.low == other_interval.low && this.high < other_interval.high;
+	    }
+	
+	    equal_to(other_interval) {
+	        return this.low == other_interval.low && this.high == other_interval.high;
+	    }
+	
+	    intersect(other_interval) {
+	        return !this.not_intersect(other_interval);
+	    }
+	
+	    not_intersect(other_interval) {
+	        return (this.high < other_interval.low || other_interval.high < this.low);
+	    }
+	
+	    output() {
+	        return [this.low, this.high];
+	    }
+	
+	    maximal_val(val1, val2) {
+	        return Math.max(val1, val2);
+	    }
+	
+	    val_less_than(val1, val2 ) {     // trait to compare max property with item ?
+	        return val1 < val2;
+	    }
+	};
+	
+	module.exports = Interval;
+
+/***/ },
 /* 70 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by Alex Bol on 4/1/2017.
+	 */
+	
+	'use strict';
+	
+	// let defaultTraits = require('../utils/numeric_traits');
+	let Interval = __webpack_require__(69);
+	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(20);
+	
+	let Node = class Node {
+	    constructor(key = undefined, value = undefined,
+	                left = null, right = null, parent = null, color = RB_TREE_COLOR_BLACK) {
+	        this.left = left;                     // reference to left child node
+	        this.right = right;                   // reference to right child node
+	        this.parent = parent;                 // reference to parent node
+	        this.color = color;
+	
+	        this.item = {key: key, value: value};   // key is supposed to be       instance of Interval
+	
+	        /* If not, this should by an array of two numbers */
+	        if (key && key instanceof Array && key.length == 2) {
+	            if (!Number.isNaN(key[0]) && !Number.isNaN(key[1])) {
+	                this.item.key = new Interval(Math.min(key[0], key[1]), Math.max(key[0], key[1]));
+	            }
+	        }
+	        this.max = this.item.key ? this.item.key.max : undefined;
+	    }
+	
+	    isNil() {
+	        return (this.item.key === undefined && this.item.value === undefined &&
+	            this.left === null && this.right === null && this.color === RB_TREE_COLOR_BLACK);
+	    }
+	
+	    less_than(other_node) {
+	        return this.item.key.less_than(other_node.item.key);
+	    }
+	
+	    equal_to(other_node) {
+	        let value_equal = true;
+	        if (this.item.value && other_node.item.value) {
+	            value_equal = this.item.value.equal_to ? this.item.value.equal_to(other_node.item.value) :
+	                this.item.value == other_node.item.value;
+	        }
+	        return this.item.key.equal_to(other_node.item.key) && value_equal;
+	    }
+	
+	    intersect(other_node) {
+	        return this.item.key.intersect(other_node.item.key);
+	    }
+	
+	    copy_data(other_node) {
+	        this.item.key = other_node.item.key.clone();
+	        this.item.value = other_node.item.value;
+	    }
+	
+	    update_max() {
+	        // use key (Interval) max property instead of key.high
+	        this.max = this.item.key ? this.item.key.max : undefined;
+	        if (this.right && this.right.max) {
+	            let maximal_val = this.item.key.maximal_val;
+	            this.max = maximal_val(this.max, this.right.max);
+	        }
+	        if (this.left && this.left.max) {
+	            let maximal_val = this.item.key.maximal_val;
+	            this.max = maximal_val(this.max, this.left.max);
+	        }
+	    }
+	
+	    // Other_node does not intersect any node of left subtree, if this.left.max < other_node.item.key.low
+	    not_intersect_left_subtree(search_node) {
+	        let val_less_than = this.item.key.val_less_than;
+	        let high = this.left.max.high ? this.left.max.high : this.left.max;
+	        return val_less_than(high, search_node.item.key.low);
+	    }
+	
+	    // Other_node does not intersect right subtree if other_node.item.key.high < this.right.key.low
+	    not_intersect_right_subtree(search_node) {
+	        let val_less_than = this.item.key.val_less_than;
+	        let low = this.right.max.low ? this.right.max.low : this.right.item.key.low;
+	        return val_less_than(search_node.item.key.high, low);
+	    }
+	};
+	
+	module.exports = Node;
+	
+
+
+/***/ },
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26587,7 +26654,7 @@
 	};
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports) {
 
 	
@@ -26714,7 +26781,7 @@
 	};
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports) {
 
 	/**
@@ -26778,11 +26845,11 @@
 	            }
 	            else {
 	                let [pc, r, startAngle, endAngle, counterClockwise] = [...args];
-	                this.pc = pc.clone();
-	                this.r = r;
-	                this.startAngle = startAngle;
-	                this.endAngle = endAngle;
-	                this.counterClockwise = counterClockwise;
+	                if (pc && pc instanceof Flatten.Point) this.pc = pc.clone();
+	                if (r !== undefined) this.r = r;
+	                if (startAngle !== undefined) this.startAngle = startAngle;
+	                if (endAngle!== undefined) this.endAngle = endAngle;
+	                if (counterClockwise !== undefined) this.counterClockwise = counterClockwise;
 	                return;
 	            }
 	
@@ -27286,7 +27353,7 @@
 	};
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports) {
 
 	/**
@@ -27472,13 +27539,21 @@
 	            let height = this.ymax - this.ymin;
 	
 	            return `\n<rect x="${this.xmin}" y="${this.ymin}" width=${width} height=${height} stroke="${stroke || "black"}" stroke-width="${strokeWidth || 1}" fill="${fill || "none"}" ${id_str} ${class_str} />`;
-	        }
+	        };
 	    };
+	
+	    /**
+	     * Shortcut to create new circle
+	     * @param args
+	     * @returns {Box}
+	     */
+	    Flatten.box = (...args) => new Flatten.Box(...args);
+	
 	};
 
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports) {
 
 	/**
@@ -27519,8 +27594,8 @@
 	            }
 	            else {
 	                let [pc, r] = [...args];
-	                this.pc = pc.clone();
-	                this.r = r;
+	                if (pc && pc instanceof Flatten.Point) this.pc = pc.clone();
+	                if (r !== undefined) this.r = r;
 	                return;
 	            }
 	
@@ -27753,7 +27828,7 @@
 	};
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports) {
 
 	/**
@@ -27918,11 +27993,11 @@
 	                }
 	            }
 	            else if (shape1 instanceof Flatten.Arc && shape2 instanceof Flatten.Arc) {
-	                if (shape1.start.equalTo(shape2.start) && shape1.end.equalTo(shape2.end) && shape1.counterClockwise === shape2.counterClockwise &&
+	                if (shape1.start.equalTo(shape2.start) && shape1.end.equalTo(shape2.end) && /*shape1.counterClockwise === shape2.counterClockwise &&*/
 	                    shape1.middle().equalTo(shape2.middle())) {
 	                    flag = Flatten.OVERLAP_SAME;
 	                }
-	                else if (shape1.start.equalTo(shape2.end) && shape1.end.equalTo(shape2.start) && shape1.counterClockwise !== shape2.counterClockwise &&
+	                else if (shape1.start.equalTo(shape2.end) && shape1.end.equalTo(shape2.start) && /*shape1.counterClockwise !== shape2.counterClockwise &&*/
 	                    shape1.middle().equalTo(shape2.middle())) {
 	                    flag = Flatten.OVERLAP_OPPOSITE;
 	                }
@@ -27977,17 +28052,19 @@
 	};
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports) {
 
 	/**
 	 * Created by Alex Bol on 3/17/2017.
 	 */
 	
+	
 	"use strict";
 	
 	module.exports = function (Flatten) {
-	    let {Point, Segment, Arc, Box, Edge} = Flatten;
+	    let {Point, point, Segment, segment, Arc, Box, Edge, Circle} = Flatten;
+	
 	    /**
 	     * Class representing a face (closed loop) in a [polygon]{@link Flatten.Polygon} object.
 	     * Face is a circular bidirectional linked list of [edges]{@link Flatten.Edge}.
@@ -28076,6 +28153,20 @@
 	                    for (let edge of face) {
 	                        polygon.edges.add(edge);
 	                    }
+	                }
+	                /* Instantiate face from circle circle in CCW orientation */
+	                else if (args[0] instanceof Circle) {
+	                    this.shapes2face(polygon.edges, [args[0].toArc(Flatten.CCW)]);
+	                }
+	                /* Instantiate face from a box in CCW orientation */
+	                else if (args[0] instanceof Box) {
+	                    let box = args[0];
+	                    this.shapes2face(polygon.edges, [
+	                        segment(point(box.xmin, box.ymin), point(box.xmax, box.ymin)),
+	                        segment(point(box.xmax, box.ymin), point(box.xmax, box.ymax)),
+	                        segment(point(box.xmax, box.ymax), point(box.xmin, box.ymax)),
+	                        segment(point(box.xmin, box.ymax), point(box.xmin, box.ymin))
+	                    ]);
 	                }
 	            }
 	            /* If passed two edges, consider them as start and end of the face loop */
@@ -28369,8 +28460,9 @@
 	         */
 	        signedArea() {
 	            let sArea = 0;
+	            let ymin = this.box.ymin;
 	            for (let edge of this) {
-	                sArea += edge.shape.definiteIntegral(this.box.ymin);
+	                sArea += edge.shape.definiteIntegral(ymin);
 	            }
 	            return sArea;
 	        }
@@ -28398,57 +28490,6 @@
 	                }
 	            }
 	            return this._orientation;
-	        }
-	
-	        /**
-	         * Check relation between face and other polygon
-	         * on strong assumption that they are NOT INTERSECTED <br/>
-	         * Then there are 4 options: <br/>
-	         * face disjoint to polygon - Flatten.OUTSIDE <br/>
-	         * face inside polygon - Flatten.INSIDE <br/>
-	         * face contains polygon - Flatten.CONTAIN <br/>
-	         * face interlaced with polygon: inside some face and contains other face - Flatten.INTERLACE <br/>
-	         * @param {Polygon} polygon - Polygon to check relation
-	         */
-	        getRelation(polygon) {
-	            this.first.bv = this.first.bvStart = this.first.bvEnd = undefined;
-	            let bvThisInOther = this.first.setInclusion(polygon);
-	            let resp = polygon.faces.search(this.box);
-	            if (resp.length === 0) {
-	                return bvThisInOther;        // OUTSIDE or INSIDE
-	            }
-	            else {                           // possible INTERLACE
-	                let polyTmp = new Flatten.Polygon();
-	                polyTmp.addFace(this);
-	
-	                let numInsideThis = 0;
-	                for (let face of resp) {
-	                    face.first.bv = face.first.bvStart = face.first.bvEnd = undefined;
-	                    let bvOtherInThis = face.first.setInclusion(polyTmp);
-	                    if (bvOtherInThis === Flatten.INSIDE) {
-	                        numInsideThis++;
-	                    }
-	                }
-	                if (bvThisInOther === Flatten.OUTSIDE) {
-	                    if (numInsideThis === 0) {                   // none inside this - outside
-	                        return Flatten.OUTSIDE;
-	                    }
-	                    else if (numInsideThis === resp.length) {      // all from resp inside this - contains or interlace
-	                        if (resp.length === polygon.faces.size) {
-	                            return Flatten.CONTAINS;               // all faces from polygon are in response - contains
-	                        }
-	                        else {
-	                            return Flatten.INTERLACE;              // some faces inside - interlace
-	                        }
-	                    }
-	                    else {
-	                        return Flatten.INTERLACE;                  // some faces inside - interlace
-	                    }
-	                }
-	                else if (bvThisInOther === Flatten.INSIDE) {
-	                    return numInsideThis === 0 ? Flatten.INSIDE : Flatten.INTERLACE;
-	                }
-	            }
 	        }
 	
 	        /**
@@ -28535,7 +28576,7 @@
 	};
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports) {
 
 	/**
@@ -28701,7 +28742,7 @@
 	            }
 	
 	            if (shape instanceof Flatten.Polygon) {
-	                return Flatten.Polygon.intersectShape2Polygon(this, shape);
+	                return Flatten.Polygon.intersectLine2Polygon(this, shape);
 	            }
 	
 	        }
@@ -28871,7 +28912,7 @@
 
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29021,7 +29062,7 @@
 
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports) {
 
 	/**
@@ -29322,7 +29363,7 @@
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports) {
 
 	/**
@@ -29387,8 +29428,12 @@
 	
 	        /**
 	         * Add new face to polygon. Returns added face
-	         * @param {Points[]|Segments[]|Arcs[]} args - list of points or list of shapes (segments and arcs)
-	         * which comprise a closed loop
+	         * @param {Points[]|Segments[]|Arcs[]|Circle|Box} args -  new face may be create with one of the following ways: <br/>
+	         * 1) array of points that describe closed path (edges are segments) <br/>
+	         * 2) array of shapes (segments and arcs) which describe closed path <br/>
+	         * 3) circle - will be added as counterclockwise arc <br/>
+	         * 4) box - will be added as counterclockwise rectangle <br/>
+	         * You can chain method face.reverse() is you need to change direction of the creates face
 	         * @returns {Face}
 	         */
 	        addFace(...args) {
@@ -29555,14 +29600,17 @@
 	                return this.contains(shape) ? [shape] : [];
 	            }
 	
+	            if (shape instanceof Flatten.Line) {
+	                return Polygon.intersectLine2Polygon(shape, this);
+	            }
+	
 	            if (shape instanceof Flatten.Circle ||
-	                shape instanceof Flatten.Line ||
 	                shape instanceof Flatten.Segment ||
 	                shape instanceof Flatten.Arc) {
 	                return Polygon.intersectShape2Polygon(shape, this);
 	            }
 	
-	            if (shape instanceof  Flatten.Polygon) {
+	            if (shape instanceof Flatten.Polygon) {
 	                return Polygon.intersectPolygon2Polygon(shape, this);
 	            }
 	        }
@@ -29646,7 +29694,7 @@
 	        static intersectShape2Polygon(shape, polygon) {
 	            let ip = [];
 	
-	            if (polygon.isEmpty() || shape.box.not_intersect(polygon.box)) {
+	            if ( polygon.isEmpty() || shape.box.not_intersect(polygon.box) ) {
 	                return ip;
 	            }
 	
@@ -29654,6 +29702,22 @@
 	
 	            for (let edge of resp_edges) {
 	                for (let pt of shape.intersect(edge.shape)) {
+	                    ip.push(pt);
+	                }
+	            }
+	
+	            return ip;
+	        }
+	
+	        static intersectLine2Polygon(line, polygon) {
+	            let ip = [];
+	
+	            if ( polygon.isEmpty() ) {
+	                return ip;
+	            }
+	
+	            for (let edge of polygon.edges) {
+	                for (let pt of line.intersect(edge.shape)) {
 	                    ip.push(pt);
 	                }
 	            }
@@ -29714,7 +29778,7 @@
 	};
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29851,7 +29915,7 @@
 	};
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports) {
 
 	/**
@@ -30366,7 +30430,7 @@
 	};
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/**
@@ -30618,7 +30682,7 @@
 
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30722,157 +30786,7 @@
 
 
 /***/ },
-/* 85 */
-/***/ function(module, exports) {
-
-	/**
-	 * Created by Alex Bol on 4/1/2017.
-	 */
-	
-	let Interval = class Interval {
-	    constructor(low, high) {
-	        this.low = low;
-	        this.high = high;
-	    }
-	
-	    get max() {
-	        return this.high;
-	    }
-	
-	    interval(low, high) {
-	        return new Interval(low, high);
-	    }
-	
-	    clone() {
-	        return new Interval(this.low, this.high);
-	    }
-	
-	    less_than(other_interval) {
-	        return this.low < other_interval.low ||
-	            this.low == other_interval.low && this.high < other_interval.high;
-	    }
-	
-	    equal_to(other_interval) {
-	        return this.low == other_interval.low && this.high == other_interval.high;
-	    }
-	
-	    intersect(other_interval) {
-	        return !this.not_intersect(other_interval);
-	    }
-	
-	    not_intersect(other_interval) {
-	        return (this.high < other_interval.low || other_interval.high < this.low);
-	    }
-	
-	    output() {
-	        return [this.low, this.high];
-	    }
-	
-	    maximal_val(val1, val2) {
-	        return Math.max(val1, val2);
-	    }
-	
-	    val_less_than(val1, val2 ) {     // trait to compare max property with item ?
-	        return val1 < val2;
-	    }
-	};
-	
-	module.exports = Interval;
-
-/***/ },
 /* 86 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by Alex Bol on 4/1/2017.
-	 */
-	
-	'use strict';
-	
-	// let defaultTraits = require('../utils/numeric_traits');
-	let Interval = __webpack_require__(85);
-	let {RB_TREE_COLOR_RED, RB_TREE_COLOR_BLACK} = __webpack_require__(20);
-	
-	let Node = class Node {
-	    constructor(key = undefined, value = undefined,
-	                left = null, right = null, parent = null, color = RB_TREE_COLOR_BLACK) {
-	        this.left = left;                     // reference to left child node
-	        this.right = right;                   // reference to right child node
-	        this.parent = parent;                 // reference to parent node
-	        this.color = color;
-	
-	        this.item = {key: key, value: value};   // key is supposed to be       instance of Interval
-	
-	        /* If not, this should by an array of two numbers */
-	        if (key && key instanceof Array && key.length == 2) {
-	            if (!Number.isNaN(key[0]) && !Number.isNaN(key[1])) {
-	                this.item.key = new Interval(Math.min(key[0], key[1]), Math.max(key[0], key[1]));
-	            }
-	        }
-	        this.max = this.item.key ? this.item.key.max : undefined;
-	    }
-	
-	    isNil() {
-	        return (this.item.key === undefined && this.item.value === undefined &&
-	            this.left === null && this.right === null && this.color === RB_TREE_COLOR_BLACK);
-	    }
-	
-	    less_than(other_node) {
-	        return this.item.key.less_than(other_node.item.key);
-	    }
-	
-	    equal_to(other_node) {
-	        let value_equal = true;
-	        if (this.item.value && other_node.item.value) {
-	            value_equal = this.item.value.equal_to ? this.item.value.equal_to(other_node.item.value) :
-	                this.item.value == other_node.item.value;
-	        }
-	        return this.item.key.equal_to(other_node.item.key) && value_equal;
-	    }
-	
-	    intersect(other_node) {
-	        return this.item.key.intersect(other_node.item.key);
-	    }
-	
-	    copy_data(other_node) {
-	        this.item.key = other_node.item.key.clone();
-	        this.item.value = other_node.item.value;
-	    }
-	
-	    update_max() {
-	        // use key (Interval) max property instead of key.high
-	        this.max = this.item.key ? this.item.key.max : undefined;
-	        if (this.right && this.right.max) {
-	            let maximal_val = this.item.key.maximal_val;
-	            this.max = maximal_val(this.max, this.right.max);
-	        }
-	        if (this.left && this.left.max) {
-	            let maximal_val = this.item.key.maximal_val;
-	            this.max = maximal_val(this.max, this.left.max);
-	        }
-	    }
-	
-	    // Other_node does not intersect any node of left subtree, if this.left.max < other_node.item.key.low
-	    not_intersect_left_subtree(search_node) {
-	        let val_less_than = this.item.key.val_less_than;
-	        let high = this.left.max.high ? this.left.max.high : this.left.max;
-	        return val_less_than(high, search_node.item.key.low);
-	    }
-	
-	    // Other_node does not intersect right subtree if other_node.item.key.high < this.right.key.low
-	    not_intersect_right_subtree(search_node) {
-	        let val_less_than = this.item.key.val_less_than;
-	        let low = this.right.max.low ? this.right.max.low : this.right.item.key.low;
-	        return val_less_than(search_node.item.key.high, low);
-	    }
-	};
-	
-	module.exports = Node;
-	
-
-
-/***/ },
-/* 87 */
 /***/ function(module, exports) {
 
 	/**
@@ -30886,49 +30800,60 @@
 
 
 /***/ },
-/* 88 */
+/* 87 */
 /***/ function(module, exports) {
 
 	/**
 	 * Created by Alex Bol on 2/18/2017.
 	 */
 	
+	/**
+	 * Global constant DP_TOL is used for comparison of floating point numbers.
+	 * It is set to 0.000001.
+	 * @type {number}
+	 */
 	const DP_TOL = 0.000001;
 	const DECIMALS = 3;
 	
 	module.exports = {
 	    DP_TOL: DP_TOL,
 	    /**
+	     * Returns *true* if value comparable to zero
 	     * @return {boolean}
 	     */
 	    EQ_0: function(x) {
 	        return ( (x) < DP_TOL && (x) > -DP_TOL );
 	    },
 	    /**
+	     * Returns *true* if two values are equal up to DP_TOL
 	     * @return {boolean}
 	     */
 	    EQ: function(x,y) {
 	        return ( (x)-(y) <  DP_TOL && (x)-(y) > -DP_TOL );
 	    },
 	    /**
+	     * Returns *true* if first argument greater than second argument up to DP_TOL
 	     * @return {boolean}
 	     */
 	    GT: (x,y) => {
 	        return ( (x)-(y) >  DP_TOL );
 	    },
 	    /**
+	     * Returns *true* if first argument greater than or equal to second argument up to DP_TOL
 	     * @return {boolean}
 	     */
 	    GE: (x,y) => {
 	        return ( (x)-(y) > -DP_TOL );
 	    },
 	    /**
+	     * Returns *true* if first argument less than second argument up to DP_TOL
 	     * @return {boolean}
 	     */
 	    LT: (x,y) => {
 	        return ( (x)-(y) < -DP_TOL )
 	    },
 	    /**
+	     * Returns *true* if first argument less than or equal to second argument up to DP_TOL
 	     * @return {boolean}
 	     */
 	    LE: (x,y) => {
@@ -30938,7 +30863,7 @@
 
 
 /***/ },
-/* 89 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31051,7 +30976,7 @@
 
 
 /***/ },
-/* 90 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31169,7 +31094,7 @@
 	}
 
 /***/ },
-/* 91 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31183,7 +31108,7 @@
 	
 	var emptyFunction = __webpack_require__(10);
 	var invariant = __webpack_require__(11);
-	var ReactPropTypesSecret = __webpack_require__(93);
+	var ReactPropTypesSecret = __webpack_require__(92);
 	
 	module.exports = function() {
 	  function shim(props, propName, componentName, location, propFullName, secret) {
@@ -31233,7 +31158,7 @@
 
 
 /***/ },
-/* 92 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31262,12 +31187,12 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(91)();
+	  module.exports = __webpack_require__(90)();
 	}
 
 
 /***/ },
-/* 93 */
+/* 92 */
 /***/ function(module, exports) {
 
 	/**
@@ -31285,7 +31210,7 @@
 
 
 /***/ },
-/* 94 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @license React v16.4.2
@@ -31300,7 +31225,7 @@
 	/*
 	 Modernizr 3.0.0pre (Custom Build) | MIT
 	*/
-	'use strict';var aa=__webpack_require__(11),ba=__webpack_require__(1),m=__webpack_require__(64),p=__webpack_require__(12),v=__webpack_require__(10),da=__webpack_require__(66),ea=__webpack_require__(69),fa=__webpack_require__(65),ha=__webpack_require__(18);
+	'use strict';var aa=__webpack_require__(11),ba=__webpack_require__(1),m=__webpack_require__(63),p=__webpack_require__(12),v=__webpack_require__(10),da=__webpack_require__(65),ea=__webpack_require__(68),fa=__webpack_require__(64),ha=__webpack_require__(18);
 	function A(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);aa(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}ba?void 0:A("227");
 	function ia(a,b,c,d,e,f,g,h,k){this._hasCaughtError=!1;this._caughtError=null;var n=Array.prototype.slice.call(arguments,3);try{b.apply(c,n)}catch(r){this._caughtError=r,this._hasCaughtError=!0}}
 	var B={_caughtError:null,_hasCaughtError:!1,_rethrowError:null,_hasRethrowError:!1,invokeGuardedCallback:function(a,b,c,d,e,f,g,h,k){ia.apply(B,arguments)},invokeGuardedCallbackAndCatchFirstError:function(a,b,c,d,e,f,g,h,k){B.invokeGuardedCallback.apply(this,arguments);if(B.hasCaughtError()){var n=B.clearCaughtError();B._hasRethrowError||(B._hasRethrowError=!0,B._rethrowError=n)}},rethrowCaughtError:function(){return ka.apply(B,arguments)},hasCaughtError:function(){return B._hasCaughtError},clearCaughtError:function(){if(B._hasCaughtError){var a=
@@ -31531,7 +31456,7 @@
 
 
 /***/ },
-/* 95 */
+/* 94 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31552,7 +31477,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 96 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @remove-on-eject-begin
@@ -31571,12 +31496,12 @@
 	  // Rejection tracking prevents a common issue where React gets into an
 	  // inconsistent state due to an error, but it gets swallowed by a Promise,
 	  // and the user has no idea what causes React's erratic future behavior.
-	  __webpack_require__(90).enable();
-	  window.Promise = __webpack_require__(89);
+	  __webpack_require__(89).enable();
+	  window.Promise = __webpack_require__(88);
 	}
 	
 	// fetch() polyfill for making API calls.
-	__webpack_require__(97);
+	__webpack_require__(96);
 	
 	// Object.assign() is commonly used with React.
 	// It will use the native implementation if it's present and isn't buggy.
@@ -31584,7 +31509,7 @@
 
 
 /***/ },
-/* 97 */
+/* 96 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -32048,7 +31973,7 @@
 
 
 /***/ },
-/* 98 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @license React v16.4.2
@@ -32076,7 +32001,7 @@
 
 
 /***/ },
-/* 99 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {'use strict';
@@ -32085,7 +32010,7 @@
 	  value: true
 	});
 	
-	var _ponyfill = __webpack_require__(100);
+	var _ponyfill = __webpack_require__(99);
 	
 	var _ponyfill2 = _interopRequireDefault(_ponyfill);
 	
@@ -32108,10 +32033,10 @@
 	
 	var result = (0, _ponyfill2['default'])(root);
 	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(105)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(104)(module)))
 
 /***/ },
-/* 100 */
+/* 99 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32139,31 +32064,31 @@
 	};
 
 /***/ },
-/* 101 */
+/* 100 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3MEYwOEQ4MDMwMzJFNDExOUZGN0MyRjAwQkZFNDkwMSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4NkNFODE2MzMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4NkNFODE2MjMyM0QxMUU0OTc2NkEyNzVGRDRDQUREMiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM3Q0UwRDg3MzgzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjcwRjA4RDgwMzAzMkU0MTE5RkY3QzJGMDBCRkU0OTAxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nXk3UAAAAjtJREFUeNrU1ktIVFEcx/FRhExEei0kULQkiijMKduo0RNCEHuQRohgggsVJbRSNy2qRSK4qIjohRARk5YgGvmoVSEWRe9EzHJVkFZEoInT9w+/gXGasjngwgMf7uDcOeee/+Nco/x+v2cuR7RnjkdM4MPh+jOBj+moxVYsxnvcQhO+Bf/48umjEe+gAHcxgM1YgkNIxGOsjHQHUYEcsIP1XHqQg7dIk36Mo8JugxfTf5swdFfBO6jDSU1+CvdRrRDdwFn8wB7XJG9XrFejCOvQhgnkoxE+3ee0gMX7E1bgmfLRgG0qBrvuwiKnKmJ8xCol0ybLxBaUoBcH8QqjrjvwKZGf8QAJeI0NWsRC9Ut/b3SpIgvRUyX6Es4rD7sxhevqgyOqtj71yz+rKThEY9iJOziAVtX9S31vE5ZhEjvwSCU9gi8K4+3QEg5ttEFYP1zBRnzVwtYHVZp8IZoRiyTE4Y2+f4KU2c6iKdV9qXaSgYfoVPwvahEr57VYjmTtxh6sW/fNzEGYM2lGrnAOWYjHGizFBZWuR6EtxFV8IAcnIjlN7SnKdbXfLECL+sXK+Ttytah1/D6X49omH1a8LVzZCmUHjqt/NuEdUl3fB2MKxXMtaP1ioWhXTuwBlqk4nBawA3CvwnVPlWRHygtcUxXuV8n+0Qf/M27qfCpGnp7WynlIrMRr9LIKX0XhRkhlpakUu1RZg3oh2ZMfQ6UdO4FOdnknDwU1ocX+p15KXh2SvrBn0bz9r+K3AAMAvVSdlmlN6ucAAAAASUVORK5CYII="
 
 /***/ },
-/* 102 */
+/* 101 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAB3RJTUUH1AgfBgU3vDbVaQAAAAlwSFlzAAAPPAAADzwBFzqfWQAAAwBQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Bz0LCAAAAAJ0Uk5T/wDltzBKAAAARUlEQVR42mNgxAIYsPEYkMUZoGwGJNVwNoLAUIWmngHVNFQ2iitQnQQTZACqRkfYVaJrg1qFUE20IMnehGtFNZhIQSAAABhlAUeIwcHOAAAAAElFTkSuQmCC"
 
 /***/ },
-/* 103 */
+/* 102 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAACWUExURezp2L3CsAAAAH91jbamy9Sx1NXVxL2u0MvA2yEeEZy460hBJUU/JAC+ACQhE4qi2Zaw5JCp3se72Ap3Hsi82cq+2qK/8XeKtWNfTb+x0nSEsG19pH6QtWFfU8S31nt1Wpax5Xp0WoeeynBrVMm92WhkVsGz02JfU21oU5m06Mq/2se62MS21bmqzsW517ipzbyu0P///wUDcXkAAAAydFJOU/////////////////////////////////////////////////////////////////8ADVCY7wAAAO1JREFUeNpiMMQCAAKIAZsgQABhFQQIIAZDeW5uZTgXwgEIIAZFKX5+aQk2iBiUAxBADDwCClyCfIwQQSgHIICAglxigny8wmAI4TACBBCDhoymkrg6KwMIsEI4jAABxGCoyskpy8gEFmSCcNgAAojBkI2RkZENqhLIMWRkMwQIIKg7YSohACCAoIIwlRAAEEBYVQIEEFaVAAHEwIwJDAECiIGZg4NJSAiE5OSYJCWZWFiYGAECCCgowi6qwi6iza6jxs6uywISBAggoKCoFoeoioiemoE+CxgwMQIEEAMzEwZgBAggBkNGTAAQYABIRSX4H75PxQAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 104 */
+/* 103 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABOUExURezp2AAAAH91jb3CsE9PT83C3CQhE7amy9Sx1ImFdL2u0AC+AMq+2si82Qp3Hsm92cvA28Gz07ipzcq/2se62LmqzsS21cW517yu0P///44+OfEAAAAadFJOU/////////////////////////////////8AFCIA2gAAAMxJREFUeNpikMQCAAKIAZsgQABhFQQIIAYWFklJTjYoD8oBCCAGIAMuJgnlAAQQUDsLG5JOMAcggBiAykGaoADCAQggBqByDhYWbj4w5GTjAJkLEEAg2xkZEIARpB4ggECCHEiCHCBBgADCqhIggLCqBAggrCoBAgirSoAAYmDCBJIAAcTAxMrKiIy4uBiZAQIIKMjLxcPPxSvCJSbIxSXKzs7OyAwQQAxMAjzCAjz8vOKCEkLsYMDIDBBADEyMGIAZIIAYJJkxAUCAAQCiZRN3sUCgAwAAAABJRU5ErkJggg=="
 
 /***/ },
-/* 105 */
+/* 104 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -32180,4 +32105,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.5945380a.js.map
+//# sourceMappingURL=main.7827421b.js.map
