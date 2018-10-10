@@ -27,6 +27,10 @@ function parseEdges(edgesXML) {
             let startAngle = vector(pc,ps).slope;
             let endAngle = vector(pc, pe).slope;
 
+            if (Flatten.Utils.EQ(startAngle, endAngle)) {
+                endAngle = counterClockwise ? endAngle + 2*Math.PI : endAngle - 2*Math.PI;
+            }
+
             let r = vector(pc, ps).length;
 
             edges.push(new Arc(pc, r, startAngle, endAngle, counterClockwise));
@@ -92,6 +96,10 @@ function parseCurve(curveXML) {
 
     let startAngle = vector(pc,ps).slope;
     let endAngle = vector(pc, pe).slope;
+
+    if (Flatten.Utils.EQ(startAngle, endAngle)) {
+        endAngle = counterClockwise ? endAngle + 2*Math.PI : endAngle - 2*Math.PI;
+    }
 
     let r = vector(pc, ps).length;
 
