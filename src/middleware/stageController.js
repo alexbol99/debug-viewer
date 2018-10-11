@@ -28,6 +28,7 @@ const stageController = ({ getState, dispatch }) => next => action => {
             case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
                 let center = action.shape.center;
                 let box = action.shape.box;
+                if (isNaN(center.x) || isNaN(center.y)) return;
                 stage.panToCoordinate(center.x, center.y);
                 stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
                 break;

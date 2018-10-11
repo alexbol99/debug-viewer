@@ -45,6 +45,7 @@ export class LayerListElement extends Component {
         let color = displayed ? this.rgba(this.props.layer.color,100) : this.rgba();
         let bgcolor = displayed ? this.rgba(this.props.layer.color,30) : this.rgba();
         let alpha = this.props.layer.affected ? 1 : 0;
+        let layerNameOpacity = this.props.layer.shapes.length === 0 ? 0.6 : 1.0;
         return [
             <li key={1}
                 className={`Layer ${displayed}`}
@@ -63,7 +64,7 @@ export class LayerListElement extends Component {
                 </div>
 
                 <div style={{flex: 8, cursor: "default", padding: 3,
-                    backgroundColor: bgcolor }}>
+                    backgroundColor: bgcolor, opacity: layerNameOpacity }}>
                     <h4 ref="layerName"
                         title={this.props.layer.name}
                         tabIndex='1'
