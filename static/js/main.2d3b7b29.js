@@ -22991,6 +22991,7 @@
 	                    case ActionTypes.PAN_AND_ZOOM_TO_SHAPE:
 	                        var center = action.shape.center;
 	                        var box = action.shape.box;
+	                        if (isNaN(center.x) || isNaN(center.y)) return;
 	                        stage.panToCoordinate(center.x, center.y);
 	                        stage.zoomToLimits(box.xmax - box.xmin, box.ymax - box.ymin);
 	                        break;
@@ -32105,4 +32106,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.7827421b.js.map
+//# sourceMappingURL=main.2d3b7b29.js.map
