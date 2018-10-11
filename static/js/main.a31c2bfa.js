@@ -20666,6 +20666,7 @@
 	            var color = displayed ? this.rgba(this.props.layer.color, 100) : this.rgba();
 	            var bgcolor = displayed ? this.rgba(this.props.layer.color, 30) : this.rgba();
 	            var alpha = this.props.layer.affected ? 1 : 0;
+	            var layerNameOpacity = this.props.layer.shapes.length === 0 ? 0.6 : 1.0;
 	            return [_react2.default.createElement(
 	                'li',
 	                { key: 1,
@@ -20689,7 +20690,7 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { style: { flex: 8, cursor: "default", padding: 3,
-	                            backgroundColor: bgcolor } },
+	                            backgroundColor: bgcolor, opacity: layerNameOpacity } },
 	                    _react2.default.createElement(
 	                        'h4',
 	                        { ref: 'layerName',
@@ -32106,4 +32107,4 @@
 
 /***/ }
 /******/ ])));
-//# sourceMappingURL=main.2d3b7b29.js.map
+//# sourceMappingURL=main.a31c2bfa.js.map
