@@ -1,28 +1,22 @@
 .App {
   text-align: center;
-  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   min-height: 100vh;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+      flex-direction: column;
   overflow: hidden;
 }
 
 .App-body {
-  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-flex:1;
-      -ms-flex:1 0 auto;
-          flex:1 0 auto;
+  -ms-flex:1 0 auto;
+      flex:1 0 auto;
 }
 
 .App-logo {
-  -webkit-animation: App-logo-spin infinite 20s linear;
-          animation: App-logo-spin infinite 20s linear;
+  animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
@@ -31,15 +25,13 @@
   /*height: 150px;*/
   /*padding: 20px;*/
   color: white;
-  -webkit-box-flex: 0;
-      -ms-flex: none;
-          flex: none;
+  -ms-flex: none;
+      flex: none;
 }
 
 .App-footer {
-  -webkit-box-flex:0;
-      -ms-flex:none;
-          flex:none;
+  -ms-flex:none;
+      flex:none;
 }
 
 .App-intro {
@@ -47,30 +39,24 @@
 }
 
 .App-content {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-    display: -webkit-box;
+    -ms-flex: 1;
+        flex: 1;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+        flex-direction: column;
 }
 
 .App-layers {
   /* put the layer list on the left */
   /*list-style-type:none;*/
   /* 12em is the width of the columns */
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 12em;
-          flex: 0 0 12em;
+  -ms-flex: 0 0 12em;
+      flex: 0 0 12em;
   -ms-flex-positive: 0;
       flex-grow: 0;
-  -webkit-box-ordinal-group: 0;
-      -ms-flex-order: -1;
-          order: -1;
+  -ms-flex-order: -1;
+      order: -1;
   background: rgba(147, 128, 108, 0.1);
   overflow-y: auto;
   padding-left: 0px;
@@ -80,26 +66,21 @@
 
 .App-aside {
   /* 12em is the width of the columns */
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 3em;
-          flex: 0 0 3em;
+  -ms-flex: 0 0 3em;
+      flex: 0 0 3em;
   background: rgba(147, 128, 108, 0.1);
-  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+      flex-direction: column;
   /*height: 100%;*/
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
 
 .Watch-container {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  -ms-flex-positive: 1;
+      flex-grow: 1;
   overflow-y: auto;
   /*max-height: 400px;*/
 }
@@ -108,7 +89,6 @@
   height: 25px;
   line-height: 25px;
   overflow: hidden;
-  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
@@ -122,13 +102,10 @@
 .Layer {
   padding: 3px;
   /*border-bottom: 1px solid black;*/
-  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+      flex-direction: row;
   tab-index: 1;
   z-index: -1;
   /*margin-bottom: 2px;*/
@@ -178,33 +155,26 @@
 }
 
 .App-canvas-wrapper {
-    display:-webkit-box;
     display:-ms-flexbox;
     display:flex;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
 }
 
 .App-canvas {
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 0px;
-            flex: 1 1 0;
+    -ms-flex: 1 1 0px;
+        flex: 1 1 0;
     min-width: 0;
 }
 
 .App-status-bar {
-  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+      flex-direction: row;
   background: rgba(147, 128, 108, 0.1);
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+      align-items: center;
 }
 
 #modal-root {
@@ -219,15 +189,12 @@
   width: 100%;
   top: 0;
   left: 0;
-  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
 }
 
 .App-modal-popup {
@@ -264,34 +231,24 @@
 
 @media (min-width: 768px) {
   .HolyGrail-body {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-box-flex:1;
-        -ms-flex:1;
-            flex:1;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex:1;
+        flex:1;
   }
   .HolyGrail-content {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
+    -ms-flex: 1;
+        flex: 1;
   }
   .HolyGrail-layers, .HolyGrail-ads {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 12em;
-            flex: 0 0 12em;
+    -ms-flex: 0 0 12em;
+        flex: 0 0 12em;
   }
-}
-
-@-webkit-keyframes App-logo-spin {
-  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
-  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 }
 
 @keyframes App-logo-spin {
-  from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
-  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 /*!
  * Font Awesome Free 5.3.1 by @fontawesome - https://fontawesome.com
@@ -395,63 +352,45 @@
   margin-left: .3em; }
 
 .fa-spin {
-  -webkit-animation: fa-spin 2s infinite linear;
-          animation: fa-spin 2s infinite linear; }
+  animation: fa-spin 2s infinite linear; }
 
 .fa-pulse {
-  -webkit-animation: fa-spin 1s infinite steps(8);
-          animation: fa-spin 1s infinite steps(8); }
-
-@-webkit-keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); } }
+  animation: fa-spin 1s infinite steps(8); }
 
 @keyframes fa-spin {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg); }
+    transform: rotate(0deg); }
   100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg); } }
+    transform: rotate(360deg); } }
 
 .fa-rotate-90 {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
-  -webkit-transform: rotate(90deg);
-          -ms-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
       transform: rotate(90deg); }
 
 .fa-rotate-180 {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
-  -webkit-transform: rotate(180deg);
-          -ms-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
       transform: rotate(180deg); }
 
 .fa-rotate-270 {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
-  -webkit-transform: rotate(270deg);
-          -ms-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
       transform: rotate(270deg); }
 
 .fa-flip-horizontal {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
-  -webkit-transform: scale(-1, 1);
-          -ms-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
       transform: scale(-1, 1); }
 
 .fa-flip-vertical {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
-  -webkit-transform: scale(1, -1);
-          -ms-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
       transform: scale(1, -1); }
 
 .fa-flip-horizontal.fa-flip-vertical {
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
-  -webkit-transform: scale(-1, -1);
-          -ms-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
       transform: scale(-1, -1); }
 
 :root .fa-rotate-90,
@@ -459,8 +398,7 @@
 :root .fa-rotate-270,
 :root .fa-flip-horizontal,
 :root .fa-flip-vertical {
-  -webkit-filter: none;
-          filter: none; }
+  filter: none; }
 
 .fa-stack {
   display: inline-block;
@@ -4116,4 +4054,4 @@ html,body {
   height:100%;
 }
 
-/*# sourceMappingURL=main.2d76f605.css.map*/
+/*# sourceMappingURL=main.284222b4.css.map*/
