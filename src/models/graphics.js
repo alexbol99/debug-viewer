@@ -1,4 +1,4 @@
-import Flatten from 'flatten-js';
+import Flatten from '@flatten-js/core';
 
 import * as createjs from '../../public/easeljs-NEXT.combined.js';
 
