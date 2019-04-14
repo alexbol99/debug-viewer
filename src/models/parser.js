@@ -3,7 +3,7 @@
  */
 
 import Flatten from '@flatten-js/core';
-let {Point, Segment, Arc, Polygon} = Flatten;
+let {Point, Segment, Arc, Polygon, Circle, Box} = Flatten;
 let { vector } = Flatten;
 
 /*
@@ -87,6 +87,35 @@ export class Parser {
         return new Arc(pc, r, startAngle, endAngle, counterClockwise);
     }
 
+    parseToCircle(line) {
+        let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
+        let termArr = parenth.split(' ');             // array of terms "attr=value"
+
+        let pcArr = termArr[0].split('=')[1].split(',');
+        let pc = new Point(parseInt(pcArr[0],10), parseInt(pcArr[1],10));
+        let r = parseInt(termArr[1].split('=')[1],10);
+        let circle = new Circle(pc, r);
+        let polygon = new Polygon();
+        polygon.addFace(circle);
+        return polygon;
+    }
+
+    parseToRectangle(line) {
+        let parenth = line.match(/\{([^)]+)\}/)[1];   // string inside {..}
+        let termArr = parenth.split(' ');             // array of terms "attr=value"
+
+        let pllArr = termArr[0].split('=')[1].split(',');
+        let xmin = parseInt(pllArr[0],10);
+        let ymin = parseInt(pllArr[1],10);
+        let width = parseInt(termArr[1].split('=')[1],10);
+        let height = parseInt(termArr[2].split('=')[1],10);
+
+        let box = new Box(xmin, ymin, xmin + width, ymin + height);
+        let polygon = new Polygon();
+        polygon.addFace(box);
+        return polygon;
+    }
+
     parseToPolygon(str) {
         let polygon = new Polygon();
         // let mulitystr = debug_str;
@@ -168,18 +197,24 @@ export class Parser {
         return points;
     }
 
-    parseToSegmentsArcs(str) {
+    parseToShapes(str) {
         let shapes = [];
+        let shape;
         let arrayOfLines = str.match(/[^\r\n]+/g);
         for (let line of arrayOfLines) {
             if (line.search('mat_seg_struc') >= 0) {
-                let segment = this.parseToSegment(line);
-                shapes.push(segment);
+                shape = this.parseToSegment(line);
             }
             else if (line.search('mat_curve_struc') >= 0) {
-                let arc = this.parseToArc(line);
-                shapes.push(arc);
+                shape = this.parseToArc(line);
             }
+            else if (line.search('mat_circle_struc') >= 0) {
+                shape = this.parseToCircle(line);
+            }
+            else if (line.search('mat_rect_struc') >= 0) {
+                shape = this.parseToRectangle(line);
+            }
+            shapes.push(shape);
         }
         return shapes;
     }
@@ -198,7 +233,7 @@ export class Parser {
         }
 
         /* try array of segments and arcs */
-        let shapes = this.parseToSegmentsArcs(str);
+        let shapes = this.parseToShapes(str);
         if (shapes.length > 0) {
             return shapes;
         }

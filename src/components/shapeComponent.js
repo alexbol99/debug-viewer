@@ -17,12 +17,14 @@ export class ShapeComponent extends Component {
         this.vertexShapes = [];
         this.labelShape = undefined;
 
-        for (let vertex of params.model.geom.vertices) {
-            let vertexShape = new createjs.Shape();
-            vertexShape.geom = vertex;   // augment Shape with geom struct
-            vertexShape.mouseEnabled = false;
-            params.stage.addChild(vertexShape);
-            this.vertexShapes.push(vertexShape);
+        if (params.model.geom.vertices) {
+            for (let vertex of params.model.geom.vertices) {
+                let vertexShape = new createjs.Shape();
+                vertexShape.geom = vertex;   // augment Shape with geom struct
+                vertexShape.mouseEnabled = false;
+                params.stage.addChild(vertexShape);
+                this.vertexShapes.push(vertexShape);
+            }
         }
 
         if (params.model.label && params.model.label.trim() !== "") {

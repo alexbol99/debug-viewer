@@ -70,8 +70,12 @@ function graphics_arc(arc, style) {
 function graphics_circle(circle, style) {
     let graphics = new createjs.Graphics();
     let strokeStyle = style && style.strokeStyle ? style.strokeStyle : 2;
-    let stroke = style && style.stroke ? style.stroke : "black";
-    // graphics.setStrokeStyle(2).beginStroke("black").beginFill("red").drawCircle(pcx, pcy, r);
+    let stroke = style && style.stroke ? style.stroke : "#FF0303";
+    let fill = style && style.fill ? style.fill : "#FF0303";
+    graphics.setStrokeStyle(strokeStyle,0,0,10,true);
+    graphics.stroke = graphics.beginStroke(stroke).command;
+    graphics.fill = graphics.beginFill(fill).command;
+
     return graphics
         .setStrokeStyle(strokeStyle,0,0,10,true)
         .beginStroke(stroke)
