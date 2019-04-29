@@ -1,0 +1,261 @@
+.App {
+  text-align: center;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  overflow: hidden;
+}
+
+.App-body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex:1 0 auto;
+      flex:1 0 auto;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  /*height: 150px;*/
+  /*padding: 20px;*/
+  color: white;
+  -ms-flex: none;
+      flex: none;
+}
+
+.App-footer {
+  -ms-flex:none;
+      flex:none;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-content {
+    -ms-flex: 1;
+        flex: 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+}
+
+.App-layers {
+  /* put the layer list on the left */
+  /*list-style-type:none;*/
+  /* 12em is the width of the columns */
+  -ms-flex: 0 0 12em;
+      flex: 0 0 12em;
+  -ms-flex-positive: 0;
+      flex-grow: 0;
+  -ms-flex-order: -1;
+      order: -1;
+  background: rgba(147, 128, 108, 0.1);
+  overflow-y: auto;
+  padding-left: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.App-aside {
+  /* 12em is the width of the columns */
+  -ms-flex: 0 0 3em;
+      flex: 0 0 3em;
+  background: rgba(147, 128, 108, 0.1);
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  /*height: 100%;*/
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.Watch-container {
+  -ms-flex-positive: 1;
+      flex-grow: 1;
+  overflow-y: auto;
+  /*max-height: 400px;*/
+}
+
+.Watch-element-title {
+  height: 25px;
+  line-height: 25px;
+  overflow: hidden;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.Aside-add-sample-polygon {
+  position: absolute;
+  bottom: 5px;
+  font-size: small;
+}
+
+.Layer {
+  padding: 3px;
+  /*border-bottom: 1px solid black;*/
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  tab-index: 1;
+  z-index: -1;
+  /*margin-bottom: 2px;*/
+  /*margin-right: 2px;*/
+  /*background-color: aliceblue;*/
+}
+
+
+/*.Layer :hover {*/
+  /*background: rgba(147, 128, 115, 0.3);*/
+/*}*/
+
+.Layer h4 {
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: left;
+}
+.Layer-displayed {
+  /*background-color: aquamarine;*/
+}
+
+.Layer-undisplayed {
+  /*background-color: aliceblue;*/
+}
+
+.App-toolbar {
+  background: rgba(147, 128, 108, 0.1);
+  /*padding: 10px;*/
+  text-align: left;
+}
+
+.App-toolbar button {
+  height:40px;
+  padding-left: 12px;
+  padding-right: 12px;
+  background-size: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+.App-toolbar button:hover {
+  background: rgba(147, 128, 115, 0.1);
+}
+
+.App-toolbar img {
+  height: 20px;
+}
+
+.App-canvas-wrapper {
+    display:-ms-flexbox;
+    display:flex;
+    -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+}
+
+.App-canvas {
+    -ms-flex: 1 1 0px;
+        flex: 1 1 0;
+    min-width: 0;
+}
+
+.App-status-bar {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  background: rgba(147, 128, 108, 0.1);
+  -ms-flex-align: center;
+      align-items: center;
+}
+
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
+
+.modal {
+  background-color: rgba(0,0,0,0.2);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+}
+
+.App-modal-popup {
+  background-color: rgba(240, 240, 240, 1.0);
+  padding: 1.2em;
+  border-color: rgba(147, 128, 108, 0.1);
+  border-width: 0.1em;
+  border-top-width: 2.4em;
+  border-style: solid;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: move;
+  position: absolute;
+}
+
+.App-modal-popup input, label, textarea {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+
+.App-modal-popup input, textarea {
+  font-size: 12px;
+  border: none;
+  padding: 0.2em;
+}
+
+.App-modal-popup button {
+  float: right;
+  height: 24px;
+  border-radius: 5px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+@media (min-width: 768px) {
+  .HolyGrail-body {
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex:1;
+        flex:1;
+  }
+  .HolyGrail-content {
+    -ms-flex: 1;
+        flex: 1;
+  }
+  .HolyGrail-layers, .HolyGrail-ads {
+    -ms-flex: 0 0 12em;
+        flex: 0 0 12em;
+  }
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+html,body {
+  margin: 0;
+  padding: 0;
+  font-family: "Times New Roman";
+  width:100%;
+  height:100%;
+}
+
+/*# sourceMappingURL=main.9b4e2681.css.map*/
