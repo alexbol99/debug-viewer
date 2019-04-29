@@ -1,67 +1,30 @@
 import React, {Component} from 'react';
 import '../public/styles/App.css';
 
-import {HeaderComponent} from './components/headerComponent';
-import {MainComponent} from './components/mainComponent';
-import {LayersListComponent} from './components/layersListComponent';
-import {AsideComponent} from './components/asideComponent';
-
-import * as ActionTypes from './actions/action-types';
-
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = this.props.store.getState();
-        this.props.store.subscribe(() => {
-            this.setState(this.props.store.getState());
-        });
+    constructor() {
+        super();
+        this.state = {
+            seconds: 7
+        }
     }
-
-    handlePaste = (event) => {
-        this.props.store.dispatch({
-            type: ActionTypes.DATA_FROM_BUFFER_PASTED,
-            data: event.clipboardData
-        });
-    };
-
-    handleHashChange = (event) => {
-        this.props.store.dispatch({
-            type: ActionTypes.WINDOW_HASH_CHANGED,
-            stage: this.state.stage
-        });
-    };
-
-    componentWillMount() {
-        // this.dispatch = this.props.store.dispatch;
-        this.setState(this.props.store.getState());
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState(nextProps.store.getState());
-    }
-
-    componentDidMount(e) {
-        window.onhashchange = this.handleHashChange;
+    componentDidMount() {
+        setInterval( () => {
+            if (this.state.seconds == 1) {
+                window.location.href = "https://debugviewer.com";
+            }
+            this.setState({seconds: this.state.seconds - 1})
+        }, 1000);
     }
 
     render() {
         return (
             <div className="App">
-                <HeaderComponent {...this.props} />
-                <div className="App-body" onPaste={this.handlePaste}>
-                    <MainComponent {...this.props} />
-                    <LayersListComponent
-                        dispatch={this.props.store.dispatch}
-                        stage={this.state.stage}
-                        layers={this.state.layers}
-                    />
-                    <AsideComponent />
-                </div>
+                <h4>You will be redirected in {this.state.seconds} seconds</h4>
+                <h4>to the new version of the Debug Viewer</h4>
             </div>
         );
     }
 }
 
 export default App;
-
-// TODO: Fix bug (?) with display circle

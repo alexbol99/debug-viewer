@@ -3,24 +3,14 @@
   "version": "0.5.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.3.1",
-    "@flatten-js/interval-tree": "^1.0.6",
-    "@flatten-js/core": "^1.0.14",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-fontawesome": "^1.6.1",
-    "redux": "^4.0.0",
-    "source-map-explorer": "^1.6.0"
+    "react-dom": "^16.4.2"
   },
   "devDependencies": {
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
     "gh-pages": "^1.0.0",
-    "react-scripts": "0.9.5",
-    "react-test-renderer": "^16.2.0"
+    "react-scripts": "0.9.5"
   },
   "scripts": {
-    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
